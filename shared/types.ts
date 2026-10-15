@@ -170,6 +170,8 @@ export type ContactStatus =
   | "consent_declined"
   | "no_contact_on_file"
   | "dialing"
+  /** Demo only: phone calls are off, so the contact's call rings in a browser tab instead. */
+  | "ringing_web"
   | "reached"
   | "no_answer"
   | "not_configured";
@@ -184,6 +186,7 @@ export interface ContactOutcome {
 
 export interface ContactCall {
   status: ContactStatus;
+  channel?: "phone" | "web" | "text-eval";
   requested_at?: string;
   updated_at?: string;
   execution_id?: string;

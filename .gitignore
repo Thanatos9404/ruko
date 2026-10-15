@@ -13,4 +13,4 @@ tsconfig.tsbuildinfo
 .DS_Store
 
 # third-party reference PDFs are cited by URL, not redistributed
-docs/*.pdf
+docs/sources/
