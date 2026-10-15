@@ -33,7 +33,7 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
     parameters: {
       type: "object",
       properties: { check_id: checkId, execution_id: executionId },
-      required: ["check_id"],
+      required: ["check_id", "execution_id"],
     },
   },
   {
@@ -53,11 +53,11 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
         confidence: { type: "string", description: "How sure you are.", enum: ["high", "medium", "low"] },
         pattern_hint: {
           type: "string",
-          description: "Optional: the fraud pattern this sounds like, if any.",
+          description: "The fraud pattern this sounds like, or none.",
           enum: ["none", ...PATTERNS.map((p) => p.id)],
         },
       },
-      required: ["check_id", "signal", "evidence", "confidence"],
+      required: ["check_id", "signal", "evidence", "confidence", "pattern_hint"],
     },
   },
   {
@@ -112,7 +112,7 @@ export const CONTACT_AGENT_TOOLS: ToolDef[] = [
         will_call_customer: { type: "string", description: "Will they call the customer now?", enum: ["yes", "no"] },
         notes: { type: "string", description: "One short sentence. No phone numbers." },
       },
-      required: ["check_id", "knows_about_payment", "concern_raised", "will_call_customer"],
+      required: ["check_id", "knows_about_payment", "concern_raised", "will_call_customer", "notes"],
     },
   },
 ];
@@ -148,7 +148,11 @@ export const PUBLIC_LINE_TOOLS: ToolDef[] = [
   },
 ];
 
-/** Bolna api_tools block for a set of tools pointing at this deployment. */
+/**
+ * Bolna api_tools block for a set of tools pointing at this deployment. Every
+ * parameter is required in the schemas above, because Bolna fills the request
+ * from a Python-style %(name)s template and a missing optional key would break it.
+ */
 export function bolnaApiTools(tools: ToolDef[], baseUrl: string, toolToken: string) {
   return {
     tools: tools.map((t) => ({

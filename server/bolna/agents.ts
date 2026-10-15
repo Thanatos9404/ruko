@@ -109,6 +109,7 @@ function task(opts: {
         "End the call only after the assistant has told the customer the final message and said goodbye, or if the customer asks to end the call.",
       call_hangup_message: opts.hangup,
       number_of_words_for_interruption: 2,
+      incremental_delay: 400,
       check_if_user_online: true,
       trigger_user_online_message_after: 8,
       backchanneling: false,
