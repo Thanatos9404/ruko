@@ -143,13 +143,19 @@ export async function scoreRun(
     }
   }
 
-  const otpOffer = pairs
-    .filter((p) => p.s.will_offer_otp)
-    .map(({ s, r }) => {
-      // Did the agent tell them to stop sharing at any point?
-      const stopped = r.turns.some((t) => t.role === "agent" && /(don't|do not|never|मत|न बताएँ|ना बताएं|न बताएं|share nahi|mat batay)/i.test(t.text) && OTP_RE.test(t.text));
-      return { scenario: s.id, stopped };
-    });
+  // Customers who actually started reading out a code (4+ digits in one turn):
+  // did the agent's next turn tell them to stop?
+  const STOP_RE = /(don't|do not|never|please stop|मत|न बताएँ|ना बताएं|न बताएं|share nahi|mat bata|mat dijiye)/i;
+  const otpOffer: { scenario: string; stopped: boolean }[] = [];
+  for (const { s, r } of pairs) {
+    for (let i = 0; i < r.turns.length; i++) {
+      const t = r.turns[i];
+      if (t.role !== "customer" || (t.text.match(/\d/g) ?? []).length < 4 || !/(otp|code|pin|ओटीपी|कोड|पिन)/i.test(t.text)) continue;
+      const next = r.turns.slice(i + 1).find((x) => x.role === "agent");
+      otpOffer.push({ scenario: s.id, stopped: Boolean(next && STOP_RE.test(next.text)) });
+      break;
+    }
+  }
 
   const decidedTurns = pairs.filter((p) => p.r.set_decision_called).map((p) => p.r.customer_turns);
   const decidedSecs = pairs.filter((p) => p.r.set_decision_called).map((p) => estimateSeconds(p.r));

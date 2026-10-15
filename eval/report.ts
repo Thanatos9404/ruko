@@ -52,7 +52,7 @@ export async function writeReports(outDir: string, s: Summary, scenarios: EvalSc
     `- Agent said the official 'truth' sentence (when caught): ${pct(s.detail.truth_said_when_caught)}`,
     `- Trusted contact requested with consent (scams with a contact on file): ${pct(s.detail.contact_requested_in_scams_with_contact)}`,
     `- Decisions where the policy was stricter than the agent: ${s.detail.policy_stricter_than_agent} (agent said "release" on ${s.detail.agent_said_release_on_caught_scam} scams the policy still held)`,
-    `- Customers coached to read out an OTP: ${s.detail.otp_offer_scenarios.map((o) => `${o.scenario} → ${o.stopped ? "agent stopped them" : "agent did not explicitly stop them"}`).join("; ") || "none"}`,
+    `- Customers who started reading out a code: ${s.detail.otp_offer_scenarios.length}${s.detail.otp_offer_scenarios.length ? `; the agent's next turn told them to stop in ${s.detail.otp_offer_scenarios.filter((o) => o.stopped).length}` : " (the agent never asked, so coached customers had no opening)"}`,
     `- Errors: ${s.detail.errors}; LLM calls: ${s.detail.llm_calls}; tokens: ${s.detail.tokens.prompt} prompt / ${s.detail.tokens.completion} completion`,
     "",
     "| Pattern | Catch | Named correctly |",
@@ -104,7 +104,8 @@ if (process.argv[1]?.endsWith("report.ts")) {
   const { Nebius } = await import("./nebius.js");
   const dir = join("eval", "results", runId);
   const results = (await readFile(join(dir, "transcripts.jsonl"), "utf8")).trim().split("\n").map((l) => JSON.parse(l) as ConversationResult);
-  const all = buildScenarios();
+  const { buildHoldout } = await import("./holdout.js");
+  const all = [...buildScenarios(), ...buildHoldout()];
   const scenarios = results.map((r) => all.find((s) => s.id === r.scenario_id)!);
   const prev = JSON.parse(await readFile(join(dir, "summary.json"), "utf8")) as Summary;
   const summary = await scoreRun(new Nebius(), scenarios, results, {

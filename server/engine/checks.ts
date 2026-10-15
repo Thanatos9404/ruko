@@ -273,6 +273,10 @@ export class CheckService {
     return this.kv.get<string>(`exec:${executionId}`);
   }
 
+  async noteEvent(id: string, type: string, detail: string): Promise<void> {
+    await this.mutate(id, (c) => this.event(c, type, detail));
+  }
+
   async linkExecution(id: string, executionId: string, agentId?: string): Promise<void> {
     const c = await this.require(id);
     if (c.call?.execution_id === executionId) return;
@@ -475,8 +479,16 @@ export class CheckService {
             delay_minutes: c.decision.delay_minutes,
             pattern: c.decision.pattern,
             reasons: c.decision.reasons,
+            escalated_over_agent: c.decision.escalated_over_agent,
+            agent_recommendation: c.decision.agent_recommendation,
           }
         : null,
+      risk: { score: c.risk.score, band: c.risk.band, reasons: c.risk.reasons },
+      customer_name: c.customer.name,
+      language: c.customer.language,
+      trusted_contact: c.customer.trusted_contact ? { name: c.customer.trusted_contact.name, relation: c.customer.trusted_contact.relation } : null,
+      created_at: c.created_at,
+      events: c.events.slice(-40),
     };
   }
 }

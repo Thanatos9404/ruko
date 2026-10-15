@@ -123,6 +123,6 @@ describe("public text check", () => {
     const r = await app.handle(req("POST", "/api/public/text-check", { text: "A CBI officer on video call said I am under digital arrest for money laundering", language: "en" }));
     const j = await r.json();
     expect(j.matches[0].id).toBe("digital_arrest");
-    expect(j.matches[0].truth).toMatch(/no such thing/);
+    expect(j.matches[0].truth).toMatch(/no 'digital arrest' in Indian law/);
   });
 });

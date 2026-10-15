@@ -245,5 +245,12 @@ export interface AppStatus {
   call?: Pick<CallInfo, "channel" | "status">;
   signals: Pick<Signal, "type" | "severity" | "evidence">[];
   contact?: Pick<ContactCall, "status">;
-  decision?: Pick<Decision, "outcome" | "customer_message" | "delay_minutes" | "pattern" | "reasons"> | null;
+  decision?: Pick<Decision, "outcome" | "customer_message" | "delay_minutes" | "pattern" | "reasons" | "escalated_over_agent" | "agent_recommendation"> | null;
+  risk: Pick<RiskAssessment, "score" | "band" | "reasons">;
+  customer_name: string;
+  language: Lang;
+  trusted_contact?: { name: string; relation: string } | null;
+  created_at: string;
+  /** The engine's audit trail for this check, newest last. */
+  events: AuditEvent[];
 }

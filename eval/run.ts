@@ -5,6 +5,7 @@
  *   npm run eval -- --limit 6          # quick smoke run
  *   npm run eval -- --only scam        # one kind
  *   npm run eval -- --agent-model openai/gpt-oss-120b
+ *   npm run eval -- --set holdout      # held-out stories, never used for tuning
  *
  * Never calls Bolna. LLM calls go to Nebius Token Factory and are cached in
  * eval/.cache, so re-running with the same settings is free and reproducible.
@@ -13,6 +14,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { Nebius } from "./nebius.js";
 import { buildScenarios, type EvalScenario } from "./scenarios.js";
+import { buildHoldout } from "./holdout.js";
 import { runConversation, type ConversationResult } from "./conversation.js";
 import { scoreRun } from "./score.js";
 import { writeReports } from "./report.js";
@@ -38,7 +40,8 @@ const noCache = arg("no-cache") === "true";
 const runId = arg("run-id", `${new Date().toISOString().slice(0, 10)}-${opts.agentModel.split("/").pop()}`)!;
 const outDir = join("eval", "results", runId);
 
-let scenarios: EvalScenario[] = buildScenarios();
+const set = arg("set", "dev");
+let scenarios: EvalScenario[] = set === "holdout" ? buildHoldout() : set === "all" ? [...buildScenarios(), ...buildHoldout()] : buildScenarios();
 if (only) scenarios = scenarios.filter((s) => s.kind === only || s.id.includes(only));
 if (limit > 0) {
   // Spread a small run across kinds and languages instead of taking the first N.

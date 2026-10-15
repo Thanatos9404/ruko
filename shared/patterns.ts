@@ -62,8 +62,8 @@ export const PATTERNS: ScamPattern[] = [
       "गिरफ्तार", "डिजिटल अरेस्ट", "पुलिस", "सीबीआई", "वीडियो कॉल", "giraftar", "arrest kar",
     ],
     truth: {
-      en: "There is no such thing as a 'digital arrest' in Indian law; it is only fraud. Police, CBI, ED or courts never arrest or question anyone over a phone or video call, and never ask for money to clear your name.",
-      hi: "कानून में 'डिजिटल अरेस्ट' जैसी कोई व्यवस्था नहीं है, यह सिर्फ़ धोखा है। पुलिस, सीबीआई, ईडी या अदालत कभी फ़ोन या वीडियो कॉल पर न गिरफ़्तार करते हैं, न पूछताछ करते हैं, और नाम साफ़ करने के लिए पैसे नहीं माँगते।",
+      en: "There's no 'digital arrest' in Indian law; it's a fraud. Police, CBI or courts never arrest or question anyone on a video call.",
+      hi: "कानून में 'डिजिटल अरेस्ट' जैसी कोई व्यवस्था नहीं है, यह सिर्फ़ धोखा है। पुलिस, सीबीआई या अदालत वीडियो कॉल पर न गिरफ़्तार करती है, न पूछताछ।",
       ta: "இந்திய சட்டத்தில் 'டிஜிட்டல் கைது' என்று எதுவும் இல்லை; இது மோசடி மட்டுமே. காவல்துறை, சிபிஐ அல்லது நீதிமன்றம் தொலைபேசி அல்லது வீடியோ அழைப்பில் யாரையும் கைது செய்வதில்லை, பணமும் கேட்பதில்லை.",
       bn: "ভারতীয় আইনে 'ডিজিটাল অ্যারেস্ট' বলে কিছু নেই; এটা শুধুই প্রতারণা। পুলিশ, সিবিআই বা আদালত কখনও ফোন বা ভিডিও কলে কাউকে গ্রেপ্তার করে না, টাকাও চায় না।",
       mr: "भारतीय कायद्यात 'डिजिटल अरेस्ट' असे काहीही नाही; ही फक्त फसवणूक आहे. पोलीस, सीबीआय किंवा न्यायालय कधीही फोन किंवा व्हिडिओ कॉलवर अटक करत नाहीत आणि पैसे मागत नाहीत.",
@@ -105,8 +105,8 @@ export const PATTERNS: ScamPattern[] = [
     signals: { authority_threat: 2, pay_to_receive: 1, coached_on_call: 1, urgency_pressure: 1, secrecy_demand: 1 },
     keywords: ["parcel", "courier", "fedex", "dhl", "blue dart", "customs", "package", "drugs", "passport", "पार्सल", "कूरियर", "कस्टम"],
     truth: {
-      en: "Real police and investigating agencies never pressure you to send money immediately, and a courier company never settles a police case over the phone.",
-      hi: "असली पुलिस या जाँच एजेंसी कभी तुरंत पैसे भेजने का दबाव नहीं डालती, और कोई कूरियर कंपनी फ़ोन पर पुलिस केस नहीं निपटाती।",
+      en: "Real police never pressure you to send money immediately, and no courier company settles a police case over the phone.",
+      hi: "असली पुलिस कभी तुरंत पैसे भेजने का दबाव नहीं डालती, और कोई कूरियर कंपनी फ़ोन पर पुलिस केस नहीं निपटाती।",
     },
     advice: {
       en: [
@@ -140,8 +140,8 @@ export const PATTERNS: ScamPattern[] = [
     signals: { account_block_threat: 3, remote_access: 1, urgency_pressure: 1 },
     keywords: ["kyc", "pan", "aadhaar link", "account block", "blocked", "update", "expire", "केवाईसी", "खाता बंद", "block ho"],
     truth: {
-      en: "Your bank and RBI will never ask for your OTP, PIN or CVV, and your bank doesn't block accounts over a phone call. Update KYC only at your branch or through the bank's official app.",
-      hi: "आपका बैंक या आरबीआई कभी आपका ओटीपी, पिन या सीवीवी नहीं माँगता, और बैंक फ़ोन कॉल पर खाता बंद नहीं करता। केवाईसी सिर्फ़ अपनी शाखा या बैंक के आधिकारिक ऐप से अपडेट करें।",
+      en: "Your bank never blocks accounts over a phone call, and never asks for your OTP or PIN. Update KYC only at your branch or official app.",
+      hi: "आपका बैंक फ़ोन पर खाता बंद नहीं करता, और ओटीपी या पिन कभी नहीं माँगता। केवाईसी सिर्फ़ शाखा या आधिकारिक ऐप से करें।",
       ta: "உங்கள் வங்கியோ RBI-யோ உங்கள் OTP, PIN அல்லது CVV-ஐ ஒருபோதும் கேட்காது. KYC-ஐ உங்கள் கிளையிலோ வங்கியின் அதிகாரப்பூர்வ செயலியிலோ மட்டும் புதுப்பிக்கவும்.",
       bn: "আপনার ব্যাংক বা RBI কখনও আপনার OTP, পিন বা CVV চায় না। KYC শুধু আপনার শাখায় বা ব্যাংকের অফিসিয়াল অ্যাপে আপডেট করুন।",
       mr: "तुमची बँक किंवा आरबीआय कधीही तुमचा ओटीपी, पिन किंवा सीव्हीव्ही मागत नाही. केवायसी फक्त तुमच्या शाखेत किंवा बँकेच्या अधिकृत अॅपवर अपडेट करा.",
@@ -179,8 +179,8 @@ export const PATTERNS: ScamPattern[] = [
     signals: { promised_returns: 3, payee_unknown: 1, urgency_pressure: 1 },
     keywords: ["invest", "trading", "stock", "ipo", "returns", "profit", "crypto", "tips", "telegram", "whatsapp group", "निवेश", "मुनाफ़ा", "share market"],
     truth: {
-      en: "Guaranteed returns in the share market are a scam, and there is no such thing as a special 'institutional account' for ordinary investors. A real platform never charges a fee to release your own money.",
-      hi: "शेयर बाज़ार में पक्के मुनाफ़े की गारंटी धोखा है, और आम निवेशकों के लिए कोई ख़ास 'इंस्टीट्यूशनल अकाउंट' नहीं होता। असली प्लेटफ़ॉर्म आपका अपना पैसा निकालने के लिए फ़ीस नहीं माँगता।",
+      en: "Guaranteed returns in the share market are a scam. A real platform never charges a fee to release your own money.",
+      hi: "शेयर बाज़ार में पक्के मुनाफ़े की गारंटी धोखा है। असली प्लेटफ़ॉर्म आपका अपना पैसा निकालने के लिए फ़ीस नहीं माँगता।",
     },
     advice: {
       en: [
@@ -210,8 +210,8 @@ export const PATTERNS: ScamPattern[] = [
     signals: { pay_to_earn: 3, urgency_pressure: 1, payee_unknown: 1 },
     keywords: ["task", "part time", "part-time", "job", "like videos", "youtube", "review", "rating", "commission", "prepaid", "work from home", "टास्क", "नौकरी"],
     truth: {
-      en: "A genuine company offering a job will never ask you for money. Never pay to unlock earnings or the next task.",
-      hi: "नौकरी देने वाली कोई भी असली कंपनी आपसे पैसे नहीं माँगती। कमाई या अगला टास्क खुलवाने के लिए कभी पैसे न दें।",
+      en: "A genuine company offering a job will never ask you for money.",
+      hi: "नौकरी देने वाली कोई भी असली कंपनी आपसे पैसे नहीं माँगती।",
     },
     advice: {
       en: ["Stop paying; deposits are not returned.", "Report at cybercrime.gov.in or call 1930."],
@@ -237,8 +237,8 @@ export const PATTERNS: ScamPattern[] = [
     signals: { pay_to_receive: 2, remote_access: 2, payee_unknown: 1 },
     keywords: ["refund", "customer care", "helpline", "cashback", "approve request", "collect request", "receive money", "anydesk", "teamviewer", "रिफ़ंड", "कस्टमर केयर"],
     truth: {
-      en: "You never need to enter your UPI PIN or scan a QR code to receive money. The PIN is only for sending money, and real customer care never asks for it.",
-      hi: "पैसे पाने के लिए कभी यूपीआई पिन डालने या क्यूआर कोड स्कैन करने की ज़रूरत नहीं होती। पिन सिर्फ़ पैसे भेजने के लिए है, और असली कस्टमर केयर इसे कभी नहीं माँगता।",
+      en: "You never need a UPI PIN or a QR scan to receive money. The PIN is only for sending money.",
+      hi: "पैसे पाने के लिए कभी यूपीआई पिन या क्यूआर स्कैन की ज़रूरत नहीं होती। पिन सिर्फ़ पैसे भेजने के लिए है।",
       ta: "பணம் பெற UPI PIN உள்ளிடவோ QR குறியீட்டை ஸ்கேன் செய்யவோ தேவையில்லை. PIN பணம் அனுப்ப மட்டுமே.",
       bn: "টাকা পেতে কখনও UPI পিন দিতে বা QR কোড স্ক্যান করতে হয় না। পিন শুধু টাকা পাঠানোর জন্য।",
       mr: "पैसे मिळवण्यासाठी कधीही यूपीआय पिन टाकावा किंवा क्यूआर कोड स्कॅन करावा लागत नाही. पिन फक्त पैसे पाठवण्यासाठी असतो.",
@@ -271,8 +271,8 @@ export const PATTERNS: ScamPattern[] = [
     signals: { remote_access: 3, coached_on_call: 1 },
     keywords: ["anydesk", "teamviewer", "quicksupport", "screen share", "screen sharing", "apk", "install app", "remote", "स्क्रीन शेयर"],
     truth: {
-      en: "Never install a screen-sharing or remote-access app for anyone who calls you. Please uninstall it, and never share your screen while paying.",
-      hi: "फ़ोन करने वाले किसी के कहने पर कभी स्क्रीन-शेयरिंग या रिमोट-एक्सेस ऐप न डालें। उसे हटा दें, और भुगतान करते समय कभी स्क्रीन शेयर न करें।",
+      en: "Never install a screen-sharing app for someone who calls you. Please uninstall it now.",
+      hi: "फ़ोन करने वाले के कहने पर कभी स्क्रीन-शेयरिंग ऐप न डालें। उसे अभी हटा दें।",
     },
     advice: {
       en: ["Uninstall the app now.", "Change your banking passwords from a safe device.", "Call 1930 if money has moved."],
@@ -294,8 +294,8 @@ export const PATTERNS: ScamPattern[] = [
     signals: { account_block_threat: 2, urgency_pressure: 2, remote_access: 1 },
     keywords: ["electricity", "bijli", "power cut", "disconnect", "bill", "light", "बिजली", "connection kat"],
     truth: {
-      en: "Don't call the number in that message or install any app it asks for. Check and pay your bill only on your electricity company's official website or app.",
-      hi: "उस मैसेज में दिए नंबर पर कॉल न करें, न कोई ऐप डालें। बिल सिर्फ़ अपनी बिजली कंपनी की आधिकारिक वेबसाइट या ऐप पर देखें और भरें।",
+      en: "Don't call the number in that message. Pay your bill only on your electricity company's official app or website.",
+      hi: "उस मैसेज वाले नंबर पर कॉल न करें। बिल सिर्फ़ बिजली कंपनी के आधिकारिक ऐप या वेबसाइट पर भरें।",
     },
     advice: {
       en: ["Check your bill on the official website or app.", "Report the SMS on Sanchar Saathi (Chakshu)."],
@@ -317,8 +317,8 @@ export const PATTERNS: ScamPattern[] = [
     signals: { relative_emergency: 3, urgency_pressure: 1, secrecy_demand: 1, distress: 1 },
     keywords: ["son", "daughter", "nephew", "accident", "hospital", "arrested", "beta", "beti", "relative", "बेटा", "बेटी", "एक्सीडेंट"],
     truth: {
-      en: "Before sending money, hang up and call your relative yourself on the number you already have. Voices and video can be faked with AI.",
-      hi: "पैसे भेजने से पहले फ़ोन काटें और अपने रिश्तेदार को उसी नंबर पर ख़ुद कॉल करें जो आपके पास पहले से है। आवाज़ और वीडियो AI से नकली बनाए जा सकते हैं।",
+      en: "Please hang up and call your relative yourself on their usual number. Voices can be faked with AI.",
+      hi: "कृपया फ़ोन काटकर अपने रिश्तेदार को उनके पुराने नंबर पर ख़ुद कॉल करें। आवाज़ AI से नकली बनाई जा सकती है।",
     },
     advice: {
       en: ["Call the relative directly on their known number.", "Agree a family code word for emergencies.", "Report at cybercrime.gov.in or call 1930."],
@@ -340,8 +340,8 @@ export const PATTERNS: ScamPattern[] = [
     signals: { pay_to_receive: 3, urgency_pressure: 1 },
     keywords: ["lottery", "prize", "won", "kbc", "lucky draw", "gift", "customs duty", "processing fee", "इनाम", "लॉटरी"],
     truth: {
-      en: "You can't win a lottery you never entered, and a real prize never asks for a fee or tax first. RBI never calls anyone about lottery winnings.",
-      hi: "जिस लॉटरी में आपने हिस्सा ही नहीं लिया, उसे आप जीत नहीं सकते, और असली इनाम पहले कोई फ़ीस या टैक्स नहीं माँगता। आरबीआई लॉटरी के बारे में कभी कॉल नहीं करता।",
+      en: "You can't win a lottery you never entered, and a real prize never asks for a fee first.",
+      hi: "जिस लॉटरी में आपने हिस्सा नहीं लिया, वह आप जीत नहीं सकते, और असली इनाम पहले फ़ीस नहीं माँगता।",
     },
     advice: {
       en: ["Do not pay any fee.", "Report at cybercrime.gov.in or call 1930."],
@@ -363,8 +363,8 @@ export const PATTERNS: ScamPattern[] = [
     signals: { account_block_threat: 2, authority_threat: 2, urgency_pressure: 1 },
     keywords: ["trai", "dot", "telecom", "sim", "mobile number", "disconnect", "सिम", "नंबर बंद"],
     truth: {
-      en: "The telecom department never calls people threatening disconnection, and no regulator investigates or collects payments over phone or video calls.",
-      hi: "दूरसंचार विभाग कभी भी नागरिकों को कनेक्शन काटने की धमकी देने वाली कॉल नहीं करता, और कोई भी नियामक संस्था फ़ोन या वीडियो कॉल पर जाँच नहीं करती या पैसे नहीं लेती।",
+      en: "The telecom department never calls to threaten disconnection, and no regulator collects payments over a phone or video call.",
+      hi: "दूरसंचार विभाग कनेक्शन काटने की धमकी देने वाली कॉल नहीं करता, और कोई नियामक फ़ोन या वीडियो कॉल पर पैसे नहीं लेता।",
     },
     advice: {
       en: ["Hang up.", "Report the call on Sanchar Saathi (Chakshu).", "Call 1930 if you were asked for money."],
@@ -386,8 +386,8 @@ export const PATTERNS: ScamPattern[] = [
     signals: { secrecy_demand: 2, urgency_pressure: 2, distress: 1, authority_threat: 1 },
     keywords: ["video", "blackmail", "photos", "morphed", "viral", "contacts", "sextortion", "ब्लैकमेल"],
     truth: {
-      en: "Paying never ends blackmail; it brings more demands. Stop replying, keep the evidence and report it at cybercrime.gov.in or on 1930.",
-      hi: "पैसे देने से ब्लैकमेल ख़त्म नहीं होता, माँगें बढ़ती हैं। जवाब देना बंद करें, सबूत रखें और cybercrime.gov.in या 1930 पर शिकायत करें।",
+      en: "Paying never ends blackmail. Stop replying, keep the evidence and report it on 1930.",
+      hi: "पैसे देने से ब्लैकमेल ख़त्म नहीं होता। जवाब देना बंद करें, सबूत रखें और 1930 पर शिकायत करें।",
     },
     advice: {
       en: ["Do not pay.", "Keep screenshots and the numbers used.", "Report at cybercrime.gov.in or call 1930."],

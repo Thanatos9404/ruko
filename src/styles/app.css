@@ -1,0 +1,137 @@
+@import "../kit/styles/tokens.css";
+
+/*
+ * Ruko theme: the kit's carbon (dark) variant, retinted to sit next to Bolna's
+ * Symphony look: a near-black canvas with a green cast, green "sound" arcs for the
+ * voice, and an orange (the YC orange) reserved for the hold moment.
+ * Contrast on --paper: ink 16.7:1, ink-2 11.7:1, muted 6.9:1, accent 6.9:1, go 9.8:1.
+ */
+:root,
+[data-theme="carbon"] {
+  --paper: #070807;
+  --paper-2: #0d0f0d;
+  --paper-3: #151815;
+  --surface: #101210;
+  --ink: #eeefea;
+  --ink-2: #c8cac3;
+  --muted: #9a9c94;
+  --hair: rgba(238, 239, 234, 0.08);
+  --hair-strong: rgba(238, 239, 234, 0.16);
+  --glass: rgba(238, 239, 234, 0.05);
+  --glass-border: rgba(238, 239, 234, 0.1);
+  --shadow-soft: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 12px 32px -12px rgba(0, 0, 0, 0.7);
+  --shadow-lift: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 40px 90px -30px rgba(0, 0, 0, 0.9);
+
+  --accent: #f46622;
+  --accent-soft: color-mix(in oklab, var(--accent) 16%, #070807);
+  --accent-ink: #0b0c0b;
+  --go: #7acf7e;
+  --go-soft: color-mix(in oklab, var(--go) 14%, #070807);
+  --go-hi: #9ce66f;
+  --go-lo: #2f7434;
+  --stop: #ff5a4f;
+  --stop-soft: color-mix(in oklab, var(--stop) 14%, #070807);
+  --pos: var(--go);
+  --neg: var(--stop);
+
+  --sky-top: #0c120c;
+  --sky-mid: #090b09;
+  --sky-bottom: #070807;
+  color-scheme: dark;
+}
+
+@theme {
+  --color-go: var(--go);
+  --color-go-soft: var(--go-soft);
+  --color-stop: var(--stop);
+  --color-stop-soft: var(--stop-soft);
+}
+
+@layer components {
+  .t-pixel {
+    font-family: var(--font-pixel);
+    letter-spacing: 0.02em;
+  }
+  .ring-focus:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .grid-lines {
+    background-image:
+      linear-gradient(to right, var(--hair) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--hair) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--hair);
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .kbd {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    border: 1px solid var(--hair-strong);
+    border-radius: 6px;
+    padding: 1px 6px;
+    color: var(--ink-2);
+  }
+}
+
+html,
+body {
+  background: var(--paper);
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 12px;
+}
+
+@keyframes ruko-pulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+@keyframes ruko-blink {
+  50% {
+    opacity: 0.35;
+  }
+}
+.animate-ring {
+  animation: ruko-pulse 1.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+.animate-blink {
+  animation: ruko-blink 1.2s ease-in-out infinite;
+}

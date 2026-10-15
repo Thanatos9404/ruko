@@ -45,7 +45,7 @@ describe("Bolna custom function endpoints", () => {
     const first = await (await call(app, "record_signal", { check_id: c.id, signal: "authority_threat", evidence: "CBI officer said arrest, my OTP is 482913", confidence: "high", pattern_hint: "digital_arrest" })).json();
     expect(first.recorded).toBe(true);
     expect(first.likely_pattern).toBe("Digital arrest");
-    expect(first.say_this).toMatch(/no such thing as a 'digital arrest'/);
+    expect(first.say_this).toMatch(/no 'digital arrest' in Indian law/);
     const stored = await app.checks.require(c.id);
     expect(stored.signals[0].evidence).not.toMatch(/482913/);
     expect(stored.signals[0].evidence).toMatch(/\[number removed\]/);

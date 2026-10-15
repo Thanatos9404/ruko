@@ -186,16 +186,15 @@ function describe(xs: Signal[]): string {
 export function customerMessage(outcome: Outcome, lang: Lang, amount: number, delay?: number): string {
   const amt = amountForSpeech(amount, lang);
   if (lang === "hi") {
-    if (outcome === "release")
-      return `धन्यवाद। आपका ${amt} का भुगतान अब भेजा जा रहा है।`;
+    if (outcome === "release") return `धन्यवाद। आपका ${amt} का भुगतान अब जा रहा है।`;
     if (outcome === "block")
-      return `आपकी सुरक्षा के लिए यह ${amt} का भुगतान रोक दिया गया है। पैसा आपके खाते में सुरक्षित है। अगर किसी ने आपको डराया है, तो 1930 पर कॉल करें या cybercrime.gov.in पर शिकायत करें।`;
-    return `आपका ${amt} का भुगतान अभी ${hiDelay(delay)} के लिए रुका है। पैसा आपके खाते में सुरक्षित है। किसी भरोसेमंद व्यक्ति से बात कर लें। बैंक आपको अपने आधिकारिक नंबर से फिर संपर्क करेगा।`;
+      return `आपकी सुरक्षा के लिए यह भुगतान रोक दिया गया है। पैसा आपके खाते में सुरक्षित है। अगर किसी ने दबाव डाला है, तो 1930 पर कॉल करें।`;
+    return `आपका भुगतान ${hiDelay(delay)} के लिए रुका है। पैसा सुरक्षित है। किसी भरोसेमंद व्यक्ति से बात कर लें; बैंक अपने आधिकारिक नंबर से फिर कॉल करेगा।`;
   }
   if (outcome === "release") return `Thank you. Your payment of ${amt} is going through now.`;
   if (outcome === "block")
-    return `For your safety, this payment of ${amt} has been stopped. The money is safe in your account. If someone has been pressuring you, call 1930 or report it at cybercrime.gov.in.`;
-  return `Your payment of ${amt} is on hold for ${minutesLabel(delay) || "a few hours"}. The money is safe in your account. Please talk to someone you trust. The bank will contact you again from its official number.`;
+    return "For your safety, this payment is stopped. Your money is safe in your account. If someone has been pressuring you, call 1930.";
+  return `Your payment is on hold for ${minutesLabel(delay) || "a few hours"}. Your money is safe. Please talk to someone you trust; the bank will call from its official number.`;
 }
 
 function hiDelay(min?: number): string {

@@ -44,6 +44,7 @@ export async function getCheckContext(deps: ToolDeps, args: Args): Promise<ToolR
   const id = checkIdFrom(args);
   const execId = str(args.execution_id).replace(/["'{}\s]/g, "");
   if (execId && /^[0-9a-f-]{20,}$/i.test(execId)) await deps.checks.linkExecution(id, execId);
+  await deps.checks.noteEvent(id, "context.read", "Agent read the check context.");
   const c = await deps.checks.require(id);
   const l = lang(c);
   const tc = c.customer.trusted_contact;

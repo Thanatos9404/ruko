@@ -16,9 +16,9 @@ export const SIGNALS: SignalDef[] = [
   {
     type: "coached_on_call",
     severity: "critical",
-    label: "Someone on another call is directing them",
+    label: "A stranger or 'official' is directing them on another call",
     listen_for:
-      "A person the customer does not know personally (or who claims to be an official) is on another phone or video call, or was on one, telling them what to do or say.",
+      "Someone the customer does not know personally, or who claims to be an official, is on another phone or video call (or was) telling them what to do or say. NOT a family member or friend who is helping: use family_helping for that.",
   },
   {
     type: "authority_threat",
@@ -92,6 +92,12 @@ export const SIGNALS: SignalDef[] = [
     severity: "medium",
     label: "Sounds afraid or distressed",
     listen_for: "The customer sounds frightened, is crying, or says they are scared.",
+  },
+  {
+    type: "family_helping",
+    severity: "mitigating",
+    label: "A family member or friend is helping",
+    listen_for: "A family member or friend they know personally is on the phone or with them, helping with the app or the payment.",
   },
   {
     type: "knows_payee",
