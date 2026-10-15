@@ -14,3 +14,5 @@ tsconfig.tsbuildinfo
 
 # third-party reference PDFs are cited by URL, not redistributed
 docs/sources/
+# eval: keep summaries and transcripts of named runs, not the LLM cache or smoke runs
+eval/results/smoke-*/

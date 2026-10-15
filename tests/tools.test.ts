@@ -88,7 +88,12 @@ describe("Bolna custom function endpoints", () => {
     const c = await heldCheck(app);
     const no = await (await call(app, "call_trusted_contact", { check_id: c.id, customer_consent: "no" })).json();
     expect(no.status).toBe("not_called");
+    // Data minimisation: no warning sign recorded yet, so the contact is not called.
+    const early = await (await call(app, "call_trusted_contact", { check_id: c.id, customer_consent: "yes" })).json();
+    expect(early.status).toBe("not_needed");
+    await call(app, "record_signal", { check_id: c.id, signal: "secrecy_demand", evidence: "told to keep it secret", confidence: "high", pattern_hint: "none" });
     const yes = await (await call(app, "call_trusted_contact", { check_id: c.id, customer_consent: "yes" })).json();
+    expect(yes.next).toMatch(/set_decision/);
     expect(yes.status).toBe("ringing_web");
     expect((await app.checks.require(c.id)).contact?.status).toBe("ringing_web");
   });

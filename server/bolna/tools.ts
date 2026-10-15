@@ -63,7 +63,7 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
   {
     name: "call_trusted_contact",
     description:
-      "Phone the customer's trusted contact (a family member they chose in advance) so they can talk before any money moves. Only call this after the customer clearly says yes when you offer it.",
+      "Phone the customer's trusted contact (a family member they chose in advance) so they can talk before any money moves. Only after you recorded a warning sign, offered the call, and the customer said yes to that offer.",
     pre_call_message: "One moment, I'm asking them to call you.",
     parameters: {
       type: "object",
@@ -76,7 +76,7 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
   },
   {
     name: "check_trusted_contact",
-    description: "Check whether the trusted contact has been reached and what they said.",
+    description: "Only if the customer asks: check whether the trusted contact has been reached yet. Never wait on the line for it.",
     parameters: { type: "object", properties: { check_id: checkId }, required: ["check_id"] },
   },
   {

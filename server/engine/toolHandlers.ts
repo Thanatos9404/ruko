@@ -84,9 +84,7 @@ export async function recordSignal(deps: ToolDeps, args: Args, source: "agent" |
     likely_pattern: g.likely_pattern ?? "not clear yet",
     say_this: g.say_this ?? "",
     ask_next: g.ask_next ?? "",
-    tip: g.say_this
-      ? "Say the sentence in say_this calmly, in your own voice, then ask the next question."
-      : "Acknowledge briefly and ask the next question.",
+    tip: g.say_this ? `Say the sentence in say_this calmly. ${g.tip}` : g.tip,
   };
 }
 
@@ -98,6 +96,15 @@ export async function callTrustedContact(deps: ToolDeps, args: Args): Promise<To
   if (!yes(args.customer_consent)) {
     await deps.checks.setContact(id, { status: "consent_declined", requested_at: new Date().toISOString() });
     return { status: "not_called", say: l === "hi" ? "ठीक है, हम उन्हें कॉल नहीं करेंगे।" : "Okay, we won't call them." };
+  }
+  // Data minimisation: the contact is only called when the check found a reason to.
+  const warnings = c.signals.filter((s) => s.confidence !== "low" && ["critical", "high", "medium"].includes(s.severity));
+  if (!warnings.length) {
+    return {
+      status: "not_needed",
+      say: l === "hi" ? "अभी किसी और को कॉल करने की ज़रूरत नहीं है।" : "There's no need to call anyone else right now.",
+      next: "No warning signs are recorded, so the contact is not called. Continue, then call set_decision.",
+    };
   }
   if (!tc) {
     await deps.checks.setContact(id, { status: "no_contact_on_file" });
@@ -135,6 +142,7 @@ export async function callTrustedContact(deps: ToolDeps, args: Args): Promise<To
       l === "hi"
         ? `मैंने ${tc.name} को कॉल करने के लिए कह दिया है। जब तक आप उनसे बात नहीं कर लेते, पैसा आपके खाते में ही रहेगा।`
         : `I've asked ${tc.name} to be called now. The money stays in your account until you've talked.`,
+    next: "Say this, then call set_decision now with recommendation delay. Do not wait for the contact on this call.",
   };
 }
 

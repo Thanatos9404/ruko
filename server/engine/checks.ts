@@ -325,6 +325,7 @@ export class CheckService {
     say_this: string | null;
     ask_next: string | null;
     strong_signs: number;
+    tip: string;
   } {
     const lang = c.customer.language;
     const inferred = inferPattern(c.signals);
@@ -340,11 +341,24 @@ export class CheckService {
             ? "क्या इस समय कोई और फ़ोन या वीडियो कॉल पर आपको बता रहा है कि क्या करना है?"
             : "Is anyone on another call or video call with you right now, telling you what to do?";
     }
+    const mitigating = c.signals.filter((s) => s.confidence !== "low" && s.severity === "mitigating").length;
+    const hasContact = Boolean(c.customer.trusted_contact);
+    let tip: string;
+    if (strong >= 2)
+      tip = hasContact
+        ? "Several warning signs. Offer the trusted contact call, then call set_decision (block or delay)."
+        : "Several warning signs. Call set_decision now (block or delay).";
+    else if (strong === 1) tip = "One warning sign. Ask the next question to understand it, then decide.";
+    else if (mitigating >= 2) {
+      tip = "No warning signs so far. If you have asked whether anyone else is on the call, finish with set_decision (release).";
+      ask = null;
+    } else tip = "Acknowledge briefly and ask the next question.";
     return {
       likely_pattern: p ? p.name[lang] : null,
       say_this: p && strong > 0 ? truthFor(p, lang) : null,
       ask_next: ask,
       strong_signs: strong,
+      tip,
     };
   }
 
