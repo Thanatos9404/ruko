@@ -14,7 +14,7 @@ import { safeEqual, sha256 } from "./engine/ids.js";
 import { BolnaClient, BolnaError } from "./bolna/client.js";
 import { checkUserData, contactUserData, lineUserData } from "./bolna/agents.js";
 import { handleExecutionWebhook, logSpend, type SpendEntry } from "./bolna/webhook.js";
-import { publicChat, readStats } from "./public.js";
+import { publicChat, publicStatsView, readStats } from "./public.js";
 
 export interface AppDeps {
   kv: KV;
@@ -314,13 +314,19 @@ export function createApp(deps: AppDeps) {
 
   r.on("POST", "/api/public/chat", async (req) => {
     const body = await readJson(req, 16_000);
-    const reply = await publicChat(kv, body, { visitorKey: visitorKey(req), dailyCap: cfg.chatDailyCap, perHour: cfg.env === "production" ? 40 : 1000 });
+    const host = new URL(req.url).hostname;
+    const count = cfg.countPublicStats && !req.headers.get("x-ruko-test") && !/^(localhost|127\.|\[::1\])/.test(host);
+    const reply = await publicChat(kv, body, { visitorKey: visitorKey(req), dailyCap: cfg.chatDailyCap, perHour: cfg.env === "production" ? 40 : 1000, count });
     return json(reply);
   });
 
   r.on("GET", "/api/public/stats", async () => {
     const s = await readStats(kv);
-    return json({ ...s, note: "Anonymous counts of checks run on Ruko's public checker. No text, names or numbers are stored with them." });
+    return json({
+      ...publicStatsView(s, cfg.statsMinPerPattern),
+      counting: cfg.countPublicStats,
+      note: "Anonymous counts of real checks on Ruko's public checker since launch. Test, preview and local traffic is not counted; patterns with fewer than the minimum are grouped.",
+    });
   });
 
   r.on("POST", "/api/public/session", async (req) => {

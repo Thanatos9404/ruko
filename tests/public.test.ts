@@ -79,3 +79,31 @@ describe("free sandbox", () => {
     expect(other.status).toBe(201);
   });
 });
+
+import { publicStatsView } from "../server/public.js";
+import { loadConfig } from "../server/config.js";
+
+describe("public counters stay clean", () => {
+  it("only count on the production deployment, never preview or local", () => {
+    expect(loadConfig({ VERCEL_ENV: "production", NODE_ENV: "production" }).countPublicStats).toBe(true);
+    expect(loadConfig({ VERCEL_ENV: "preview", NODE_ENV: "production" }).countPublicStats).toBe(false);
+    expect(loadConfig({ NODE_ENV: "development" }).countPublicStats).toBe(false);
+  });
+
+  it("group small pattern counts so a single check is not identifiable", () => {
+    const v = publicStatsView(
+      { since: "2026-10-20T00:00:00.000Z", checks: 12, conversations: 10, by_pattern: { digital_arrest: 7, task_job: 2, kyc_block: 3 }, by_language: {}, by_risk: {} },
+      5,
+    );
+    expect(v.by_pattern).toEqual({ digital_arrest: 7 });
+    expect(v.other_patterns).toBe(5);
+  });
+
+  it("does not count dev traffic through the API", async () => {
+    const app = makeApp();
+    await app.handle(req("POST", "/api/public/chat", { language: "en", messages: [{ role: "user", content: "Someone asked me to pay a fee to get my lottery prize" }] }));
+    const s = await (await app.handle(req("GET", "/api/public/stats"))).json();
+    expect(s.checks).toBe(0);
+    expect(s.counting).toBe(false);
+  });
+});

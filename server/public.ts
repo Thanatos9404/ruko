@@ -91,7 +91,7 @@ export async function limitCounter(kv: KV, key: string, max: number, ttl: number
 export async function publicChat(
   kv: KV,
   body: unknown,
-  opts: { visitorKey: string; dailyCap: number; perHour: number; llm?: typeof nebiusChat },
+  opts: { visitorKey: string; dailyCap: number; perHour: number; llm?: typeof nebiusChat; count?: boolean },
 ): Promise<ChatReply> {
   const b = (body ?? {}) as { messages?: { role?: string; content?: string }[]; language?: string };
   const lang: Lang = b.language === "hi" ? "hi" : "en";
@@ -160,9 +160,30 @@ export async function publicChat(
   }
 
   const firstMessage = clean.filter((m) => m.role === "user").length === 1;
-  await bump(kv, { newConversation: firstMessage, pattern: reply.pattern?.id ?? null, lang, risk: reply.risk });
-  if (firstMessage) await logRedacted(kv, clean[clean.length - 1].content, reply.pattern?.id ?? null, lang, "text");
+  // Counters are public, so they only count real production traffic (never dev, preview, e2e or tagged tests).
+  if (opts.count !== false) {
+    await bump(kv, { newConversation: firstMessage, pattern: reply.pattern?.id ?? null, lang, risk: reply.risk });
+    if (firstMessage) await logRedacted(kv, clean[clean.length - 1].content, reply.pattern?.id ?? null, lang, "text");
+  }
   return reply;
 }
 
 export const CHANNELS = OFFICIAL_CHANNELS;
+
+/** Public view of the counters: patterns below the threshold are folded into "other" so no single check stands out. */
+export function publicStatsView(s: PublicStats, minPerPattern: number) {
+  const shown: Record<string, number> = {};
+  let other = 0;
+  for (const [k, v] of Object.entries(s.by_pattern)) {
+    if (v >= minPerPattern) shown[k] = v;
+    else other += v;
+  }
+  return {
+    since: s.checks > 0 ? s.since : null,
+    checks: s.checks,
+    conversations: s.conversations,
+    by_pattern: shown,
+    other_patterns: other,
+    min_per_pattern: minPerPattern,
+  };
+}

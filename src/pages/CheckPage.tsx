@@ -24,7 +24,9 @@ interface Stats {
   checks: number;
   conversations: number;
   by_pattern: Record<string, number>;
-  since: string;
+  other_patterns: number;
+  since: string | null;
+  counting: boolean;
 }
 
 const COPY = {
@@ -272,13 +274,13 @@ export default function CheckPage() {
             <p className="mt-2 text-[11.5px] text-muted">{lang === "hi" ? "लाइव वॉइस के लिए एक्सेस कोड चाहिए (डेमो का क्रेडिट सीमित है)।" : "Live voice needs an access code (the demo runs on a small credit budget)."}</p>
           </div>
 
-          {stats && stats.checks > 0 && (
+          {stats && stats.counting && stats.checks > 0 && stats.since && (
             <div className="card p-5">
               <p className="t-eyebrow">{lang === "hi" ? "अब तक" : "So far"}</p>
               <p className="t-num mt-2 text-[30px]">{stats.checks}</p>
               <p className="text-[13px] text-ink-2">
                 {lang === "hi" ? "जाँचें, " : "checks run since "}
-                {new Date(stats.since).toLocaleDateString(lang === "hi" ? "hi-IN" : "en-IN", { day: "numeric", month: "short" })}
+                {new Date(stats.since!).toLocaleDateString(lang === "hi" ? "hi-IN" : "en-IN", { day: "numeric", month: "short" })}
               </p>
               {topPatterns.length > 0 && (
                 <ul className="mt-3 space-y-1 text-[12.5px] text-muted">

@@ -7,8 +7,9 @@ export const SPRING_SNAPPY: Transition = { type: "spring", stiffness: 420, dampi
 
 // Blur-up entrance used by Reveal, WordReveal and Stagger children.
 export const blurUp: Variants = {
-  hidden: { opacity: 0, y: 24, filter: "blur(10px)" },
-  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.9, ease: EASE } },
+  hidden: { opacity: 0, y: 18, filter: "blur(8px)" },
+  // 0.55 s so above-the-fold copy is crisp by ~600 ms (Ruko tweak of the kit's 0.9 s).
+  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.55, ease: EASE } },
 };
 
 export const stagger = (gap = 0.07, delay = 0): Variants => ({

@@ -56,14 +56,25 @@ for (const sc of scenarios.data) {
   await clickText(page, "Pay ₹1,90,000");
   await sleep(2500);
   await clickText(page, "Watch the recorded run");
+  // The engine panel must show the risk decision while the phone is on hold.
+  const panelAtHold = await page.evaluate(() => document.querySelector('[aria-label="Ruko engine"]')?.textContent ?? "");
+  const riskShown = /Pre-payment risk/.test(panelAtHold) && /always holds|First payment|On a call while paying/.test(panelAtHold) && /HOLD/.test(panelAtHold);
+  console.log(`${riskShown ? "PASS" : "FAIL"} risk card at hold  → ${riskShown ? "score, rules and HOLD shown" : panelAtHold.slice(0, 120)}`);
+  if (!riskShown) failures++;
+  await clickText(page, "Watch the recorded run");
   let decided = "";
-  for (let i = 0; i < 40 && !decided; i++) {
+  let resets = 0;
+  for (let i = 0; i < 45 && !decided; i++) {
     await sleep(2000);
     const t = await phoneText(page);
+    if (/Pay ₹1,90,000/.test(t)) resets++;
     decided = /Payment stopped/.test(t) ? "block" : /Payment on hold/.test(t) ? "delay" : /Payment sent/.test(t) ? "release" : "";
   }
-  console.log(`${decided ? "PASS" : "FAIL"} recorded run       → ${decided || "no decision in 80 s"}`);
-  if (!decided) failures++;
+  const phone = await phoneText(page);
+  const panel = await page.evaluate(() => document.querySelector('[aria-label="Ruko engine"]')?.textContent ?? "");
+  const blocked = decided === "block" && /Why|WHY/.test(phone) && /warning sign/i.test(phone) && /Policy: BLOCK/.test(panel) && /Digital arrest/.test(phone);
+  console.log(`${blocked ? "PASS" : "FAIL"} recorded run       → ${decided || "no decision in 90 s"}${blocked ? " (Blocked screen with reasons, pattern and policy row)" : ""}${resets ? ` [page reset ${resets}x]` : ""}`);
+  if (!blocked) failures++;
   await ctx.close();
 }
 

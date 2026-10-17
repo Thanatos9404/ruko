@@ -1,6 +1,6 @@
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Languages, PhoneIncoming, RotateCcw } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Lang } from "../../../shared/types";
 import { formatINR } from "../../../shared/format";
 import { api, type DemoScenarioView, type LiveStatus } from "../../lib/api";
@@ -37,6 +37,19 @@ export function DemoExperience({ compact = false, scenarios: only }: { compact?:
   const sc = scenarios.find((s) => s.id === d.scenario);
   const liveAvailable = Boolean(live && (live.live || live.reason === "daily_cap") && live.reason !== "not_configured");
 
+  const stageRef = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const scrolledFor = useRef<string | null>(null);
+  useEffect(() => {
+    // After Pay, bring the phone and the engine panel fully into view, below the floating nav.
+    if (!d.check || scrolledFor.current === d.check.id || !(d.phase === "hold" || d.phase === "allowed")) return;
+    scrolledFor.current = d.check.id;
+    const el = stageRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    if (r.top < 88 || r.top > window.innerHeight * 0.35) el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  }, [d.check, d.phase, reduce]);
+
   const answer = () => {
     if (readAccessCode()) void d.startLive();
     else setAskCode(true);
@@ -45,10 +58,14 @@ export function DemoExperience({ compact = false, scenarios: only }: { compact?:
   const locked = d.phase !== "pay";
 
   return (
-    <div className={cn("grid gap-6 lg:gap-10", compact ? "lg:grid-cols-[340px_minmax(0,1fr)]" : "lg:grid-cols-[360px_minmax(0,1fr)]")}>
+    <div>
+      <Controls d={d} list={list} locked={locked} />
+      <div
+        ref={stageRef}
+        className={cn("mt-5 grid scroll-mt-24 gap-6 lg:gap-10", compact ? "lg:grid-cols-[340px_minmax(0,1fr)]" : "lg:grid-cols-[360px_minmax(0,1fr)]")}
+      >
       <div>
-        <Controls d={d} list={list} locked={locked} />
-        <div className="mt-4">
+        <div>
           <Phone label="Sandbox bank app">
             <AnimatePresence mode="wait">
               <motion.div key={d.phase} className="flex flex-1 flex-col" exit={{ opacity: 0, filter: "blur(6px)" }} transition={{ duration: 0.25 }}>
@@ -87,6 +104,7 @@ export function DemoExperience({ compact = false, scenarios: only }: { compact?:
       </div>
 
       <EnginePanel d={d} elapsed={elapsed} compact={compact} liveAvailable={liveAvailable} />
+      </div>
       <AccessDialog
         open={askCode}
         onClose={() => setAskCode(false)}
@@ -252,8 +270,10 @@ function EnginePanel({ d, elapsed, compact, liveAvailable }: { d: DemoState; ela
         </Lane>
       </div>
 
-      <div className="mt-5 min-h-0 flex-1 overflow-y-auto pr-1 scrollbar-none">
-        <Timeline status={s} />
+      {d.check && <RiskCard d={d} />}
+
+      <div className="mt-4 min-h-0 flex-1 overflow-y-auto pr-1 scrollbar-none">
+        <Timeline status={s} hideCreated={Boolean(d.check)} />
       </div>
 
       {s?.decision && (
@@ -280,5 +300,64 @@ function EnginePanel({ d, elapsed, compact, liveAvailable }: { d: DemoState; ela
         </motion.div>
       )}
     </motion.section>
+  );
+}
+
+/** The pre-payment risk decision, shown the instant the payment is held: score, every rule that fired, and what happens next. */
+function RiskCard({ d }: { d: DemoState }) {
+  const c = d.check!;
+  const reduce = useReducedMotion();
+  const hold = c.action === "hold";
+  const decided = Boolean(d.status?.decision);
+  const next = !hold
+    ? "ALLOW → payment sent, no call"
+    : decided
+      ? "HOLD → call finished, policy decided"
+      : d.phase === "call"
+        ? d.mode === "live"
+          ? "HOLD → on the call with the customer"
+          : "HOLD → replaying the recorded call"
+        : "HOLD → calling the customer";
+  const reasons = c.risk.reasons;
+  return (
+    <motion.div
+      initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10, filter: "blur(6px)" }}
+      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      transition={{ duration: 0.5, ease: EASE }}
+      className={cn("mt-4 rounded-2xl border p-4", hold ? "glow-coral border-transparent bg-stop-soft" : "border-[color-mix(in_oklab,var(--go)_35%,transparent)] bg-go-soft")}
+    >
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <span className="t-eyebrow !text-[11px]">Pre-payment risk</span>
+        <span className={cn("t-num text-[26px] leading-none", hold ? "text-stop" : "text-go")}>
+          {c.risk.score}
+          <span className="text-[14px] text-muted">/100</span>
+        </span>
+        <span className="text-[12px] font-semibold uppercase tracking-wide text-ink-2">{c.risk.band}</span>
+        <span className={cn("ml-auto inline-flex items-center gap-1.5 font-mono text-[12px] font-semibold", hold ? "text-stop" : "text-go")}>
+          {next}
+          {hold && !decided && <span className="inline-block size-1.5 animate-pulse rounded-full bg-[var(--coral)]" aria-hidden />}
+        </span>
+      </div>
+      <ul className="mt-3 space-y-1.5">
+        {reasons.map((r, i) => (
+          <motion.li
+            key={r.code}
+            initial={reduce ? false : { opacity: 0, x: -6 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, ease: EASE, delay: reduce ? 0 : 0.08 * i }}
+            className="flex items-start gap-2.5"
+          >
+            <span className={cn("mt-0.5 w-9 shrink-0 text-right font-mono text-[12px] tabular-nums", r.weight > 0 ? "text-stop" : "text-go")}>
+              {r.weight > 0 ? `+${r.weight}` : r.weight}
+            </span>
+            <span className="min-w-0 text-[12.5px] leading-snug text-ink-2">
+              <span className="font-semibold text-ink">{r.title}</span>
+              {r.hard && <span className="ml-1.5 rounded-full border border-hair px-1.5 py-px text-[10px] font-semibold uppercase tracking-wide text-ink-2">always holds</span>}
+              <span className="block truncate text-muted">{r.detail}</span>
+            </span>
+          </motion.li>
+        ))}
+      </ul>
+    </motion.div>
   );
 }

@@ -97,12 +97,12 @@ function rows(status: AppStatus): Row[] {
 }
 
 /** The engine's live view of a check: every tool call and policy step as it lands, with real timings. */
-export function Timeline({ status, className }: { status: AppStatus | null; className?: string }) {
+export function Timeline({ status, className, hideCreated = false }: { status: AppStatus | null; className?: string; hideCreated?: boolean }) {
   const reduce = useReducedMotion();
-  const list = status ? rows(status) : [];
+  const list = (status ? rows(status) : []).filter((r) => !(hideCreated && r.key.startsWith("check.created")));
   return (
     <ol className={cn("relative space-y-2", className)} aria-live="polite" aria-label="Engine timeline">
-      {!list.length && <li className="text-[13px] text-muted">Waiting for a payment…</li>}
+      {!list.length && <li className="text-[13px] text-muted">{status ? "Waiting for the call to start…" : "Waiting for a payment…"}</li>}
       <AnimatePresence initial={false}>
         {list.map((r) => (
           <motion.li
