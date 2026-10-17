@@ -14,24 +14,28 @@ import {
   Timer,
 } from "lucide-react";
 import { Button, Panel, Reveal, Segmented, StatTile, cn } from "../../kit";
-import { api, type ConsoleOverview } from "../../lib/api";
+import type { ConsoleOverview } from "../../lib/api";
 import { navigate } from "../../lib/router";
 import { formatINR } from "../../../shared/format";
 import type { Check } from "../../../shared/types";
 import { useNow, useResource } from "./hooks";
+import { consoleData, originOf, TENANT_LABEL, type TenantView } from "./data";
 import { ago, agoShort, clockTime, duration, int, LANG_NAME, pct, usd } from "./fmt";
-import { EmptyState, ErrorState, OutcomeBadge, RiskCell, Skeleton, StaleBanner, StatusPill, TileFrame, TileHead } from "./ui";
+import { EmptyState, ErrorState, OriginTag, OutcomeBadge, RiskCell, Skeleton, StaleBanner, StatusPill, TileFrame, TileHead } from "./ui";
 import { SignalsChart } from "./SignalsChart";
 
 const POLL_MS = 3000;
+/** The API caps a page at 200; filters and counts work over this window. */
+const CHECKS_LIMIT = 200;
 
-export function Overview() {
-  const overview = useResource(() => api.consoleOverview(), [], POLL_MS);
-  const checks = useResource(() => api.consoleChecks(60), [], POLL_MS);
+export function Overview({ tenant }: { tenant: TenantView }) {
+  const overview = useResource(() => consoleData.overview(tenant), [tenant], POLL_MS);
+  const checks = useResource(() => consoleData.checks(tenant, CHECKS_LIMIT), [tenant], POLL_MS);
   const m = overview.data?.metrics;
 
   return (
     <div className="space-y-4">
+      <TenantSwitch tenant={tenant} />
       {overview.error && overview.data && <StaleBanner error={overview.error} onRetry={overview.reload} />}
 
       {/* Figures */}
@@ -63,7 +67,13 @@ export function Overview() {
               icon={<Timer />}
               label="Friction for genuine payers"
               value={duration(m.median_release_seconds)}
-              hint={m.released ? `Median added time on ${int(m.released)} released ${m.released === 1 ? "payment" : "payments"}` : "No payment has been released after a call yet"}
+              hint={
+                m.median_release_seconds !== null
+                  ? `Median hold-to-release time on released payments`
+                  : m.released
+                    ? "No live calls yet. Replayed conversations don't count toward friction."
+                    : "No payment has been released after a call yet"
+              }
             />
             <StatTile
               icon={<MessagesSquare />}
@@ -77,7 +87,7 @@ export function Overview() {
 
       {/* Live table */}
       <Reveal delay={0.05}>
-        <ChecksPanel res={checks} />
+        <ChecksPanel res={checks} tenant={tenant} />
       </Reveal>
 
       {/* Signals + budget */}
@@ -137,6 +147,28 @@ export function Overview() {
             </Panel>
           </Reveal>
         </div>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ tenant */
+
+function TenantSwitch({ tenant }: { tenant: TenantView }) {
+  return (
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <p className="max-w-[70ch] text-[13.5px] leading-relaxed text-muted">
+        {tenant === "sandbox"
+          ? "The public sandbox at /demo: anyone's test payments, kept apart from the bank's view."
+          : "The demo bank's view: eval conversations replayed through the real engine, plus anything sent with the bank's API key."}
+      </p>
+      <div className="shrink-0">
+        <Segmented
+          id="tenant"
+          value={tenant}
+          onChange={(v) => navigate(v === "sandbox" ? "/console?tenant=sandbox" : "/console")}
+          options={(["bank", "sandbox"] as TenantView[]).map((t) => ({ value: t, label: <span className="whitespace-nowrap text-[13px]">{TENANT_LABEL[t]}</span> }))}
+        />
       </div>
     </div>
   );
@@ -202,7 +234,7 @@ const FILTERS: { value: Filter; label: string }[] = [
   { value: "block", label: "Blocked" },
 ];
 
-function ChecksPanel({ res }: { res: ReturnType<typeof useResource<{ data: Check[] }>> }) {
+function ChecksPanel({ res, tenant }: { res: ReturnType<typeof useResource<{ data: Check[] }>>; tenant: TenantView }) {
   const now = useNow(1000);
   const all = res.data?.data;
   const fresh = useFreshRows(all);
@@ -211,11 +243,18 @@ function ChecksPanel({ res }: { res: ReturnType<typeof useResource<{ data: Check
   const filtered = all?.filter((c) => matches(c, filter)) ?? [];
   const rows = filtered.slice(0, limit);
   const count = (f: Filter) => all?.filter((c) => matches(c, f)).length ?? 0;
+  const replays = all?.some((c) => originOf(c) === "eval-replay") ?? false;
 
   return (
     <Panel
       title="Live checks"
-      description="Newest first. Every payment the bank sent to Ruko, refreshed every 3 seconds."
+      description={
+        tenant === "sandbox"
+          ? "Newest first. Payments made in the public sandbox, refreshed every 3 seconds."
+          : replays
+            ? "Newest first, refreshed every 3 seconds. Rows tagged Eval replay are eval conversations replayed through the real engine; the customer is an LLM."
+            : "Newest first. Every payment the bank sent to Ruko, refreshed every 3 seconds."
+      }
       action={
         res.updatedAt ? (
           <span className="inline-flex shrink-0 items-center gap-2 rounded-full border border-hair px-3 py-1.5 text-[12px] text-muted" aria-live="off">
@@ -233,7 +272,7 @@ function ChecksPanel({ res }: { res: ReturnType<typeof useResource<{ data: Check
         </div>
       )}
       {all && all.length > 0 && (
-        <div className="rk-scroll-x -mt-1 mb-4 overflow-x-auto px-5 pb-1 md:px-6">
+        <div className="rk-scroll-x relative -mt-1 mb-4 overflow-x-auto px-5 pb-1 md:px-6">
           <Segmented
             id="checks-filter"
             value={filter}
@@ -266,7 +305,7 @@ function ChecksPanel({ res }: { res: ReturnType<typeof useResource<{ data: Check
       ) : all.length === 0 ? (
         <EmptyState
           icon={<Inbox />}
-          title="No checks yet"
+          title={tenant === "sandbox" ? "No sandbox payments yet" : "No checks yet"}
           action={
             <Button href="/demo" size="sm" icon={<ArrowUpRight className="size-4" />}>
               Make a sandbox payment
@@ -287,7 +326,7 @@ function ChecksPanel({ res }: { res: ReturnType<typeof useResource<{ data: Check
               <caption className="sr-only">Checks for the demo tenant, newest first</caption>
               <colgroup>
                 <col className="w-[96px]" />
-                <col className="w-[112px]" />
+                <col className="w-[150px]" />
                 <col />
                 <col className="w-[112px]" />
                 <col className="w-[160px]" />
@@ -332,7 +371,10 @@ function ChecksPanel({ res }: { res: ReturnType<typeof useResource<{ data: Check
                     </td>
                     <td>
                       <span className="block truncate text-ink">{c.customer.name}</span>
-                      <span className="block text-[12px] text-muted">{LANG_NAME[c.customer.language] ?? c.customer.language}</span>
+                      <span className="flex items-center gap-1.5 text-[12px] text-muted">
+                        {LANG_NAME[c.customer.language] ?? c.customer.language}
+                        <OriginTag origin={originOf(c)} compact />
+                      </span>
                     </td>
                     <td>
                       <span className="block truncate text-ink">{c.payment.payee.name}</span>
@@ -388,6 +430,7 @@ function ChecksPanel({ res }: { res: ReturnType<typeof useResource<{ data: Check
                     <RiskCell score={c.risk.score} band={c.risk.band} />
                     <StatusPill status={c.status} />
                     {c.decision?.pattern && <span className="text-[12.5px] text-muted">{c.decision.pattern.name}</span>}
+                    <OriginTag origin={originOf(c)} />
                   </div>
                 </a>
               </li>
@@ -398,6 +441,7 @@ function ChecksPanel({ res }: { res: ReturnType<typeof useResource<{ data: Check
             <span>
               Showing <span className="t-num text-ink-2">{rows.length}</span> of <span className="t-num text-ink-2">{filtered.length}</span>
               {filter !== "all" ? " in this view" : ""}
+              {all.length >= CHECKS_LIMIT ? `, from the latest ${CHECKS_LIMIT}` : ""}
             </span>
             <div className="flex items-center gap-2">
               {limit > PAGE && (

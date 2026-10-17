@@ -11,6 +11,7 @@ import { Evaluation } from "./Eval";
 import { Integration } from "./Integration";
 import { Reports } from "./Reports";
 import { EmptyState } from "./ui";
+import { useSearchParam } from "./hooks";
 import "./console.css";
 
 type Screen = "overview" | "check" | "library" | "eval" | "integration" | "reports" | "missing";
@@ -49,7 +50,8 @@ export default function ConsolePage() {
   const path = usePath();
   const { screen, id } = parse(path);
   const active = screen === "check" ? "overview" : screen;
-  const head = HEAD[screen];
+  const tenant = useSearchParam("tenant") === "sandbox" ? "sandbox" : "bank";
+  const head = screen === "overview" && tenant === "sandbox" ? { ...HEAD.overview, subtitle: "Sandbox tenant · read-only" } : HEAD[screen];
 
   // App.tsx sets the generic title first (parent effects run after ours), so set ours a tick later.
   useEffect(() => {
@@ -97,8 +99,8 @@ export default function ConsolePage() {
         }
         footer={<SidebarFooter />}
       >
-        <div id="main" className="mx-auto max-w-[1280px] pb-24 md:pb-0">
-          {screen === "overview" && <Overview />}
+        <div id="main" className="mx-auto max-w-[1280px] pb-24 md:pb-16">
+          {screen === "overview" && <Overview key={tenant} tenant={tenant} />}
           {screen === "check" && id && <CheckDetail key={id} id={id} />}
           {screen === "library" && <Library />}
           {screen === "eval" && <Evaluation />}

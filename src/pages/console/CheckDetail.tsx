@@ -39,6 +39,7 @@ import {
   EmptyState,
   ErrorState,
   Field,
+  OriginTag,
   OUTCOME,
   OutcomeBadge,
   SeverityTag,
@@ -49,6 +50,7 @@ import {
 } from "./ui";
 import { Transcript, turnDomId, useHighlights, type TxSignal, type TxTurn } from "./Transcript";
 import { findRecordedRun, type RecordedRun } from "./recorded";
+import { originOf } from "./data";
 
 const POLL_MS = 3000;
 
@@ -214,15 +216,25 @@ function useRecorded(c: Check): { run: RecordedRun | null; loading: boolean } {
 
 /* ------------------------------------------------------------------ header */
 
-const MODE_LABEL = (c: Check) =>
-  c.mode === "live" ? "Live" : c.mode === "eval" ? "Eval run" : c.call?.channel === "text-eval" ? "Sandbox · recorded run" : c.call?.channel === "web" ? "Sandbox · live web call" : "Sandbox";
+const MODE_LABEL = (c: Check) => {
+  const o = originOf(c);
+  if (o === "eval-replay") return "Demo bank · replayed eval conversation";
+  if (o === "api") return c.mode === "live" ? "Bank API · live" : "Bank API";
+  if (c.mode === "live") return "Live";
+  if (c.mode === "eval") return "Eval run";
+  return c.call?.channel === "text-eval" ? "Sandbox · recorded run" : c.call?.channel === "web" ? "Sandbox · live web call" : "Sandbox";
+};
+
+/** Replayed checks run all their tool calls in a burst, so their clock times say nothing about a real call. */
+const isReplay = (c: Check) => originOf(c) === "eval-replay";
 
 function Header({ c }: { c: Check }) {
   const now = useNow(1000);
   const d = c.decision;
   const tone = d ? (d.outcome === "release" ? "var(--go)" : "var(--stop)") : "var(--hair-strong)";
   const critical = c.signals.filter((s) => s.severity === "critical").length;
-  const toDecision = d ? (Date.parse(d.decided_at) - Date.parse(c.created_at)) / 1000 : null;
+  const replay = isReplay(c);
+  const toDecision = d && !replay ? (Date.parse(d.decided_at) - Date.parse(c.created_at)) / 1000 : null;
 
   return (
     <Reveal>
@@ -232,6 +244,7 @@ function Header({ c }: { c: Check }) {
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[12.5px] text-muted">
               <Chip>{MODE_LABEL(c)}</Chip>
+              <OriginTag origin={originOf(c)} />
               <span>
                 <time dateTime={c.created_at}>{dateTime(c.created_at)}</time> IST · {ago(c.created_at, now)}
               </span>
@@ -260,9 +273,13 @@ function Header({ c }: { c: Check }) {
             )}
             <p className="max-w-[34ch] text-[13px] text-muted">
               {d
-                ? d.outcome === "delay" && d.delay_minutes
-                  ? `Held for ${minutesLabel(d.delay_minutes)}, decided ${duration(toDecision)} after the hold.`
-                  : `Decided ${duration(toDecision)} after the hold.`
+                ? replay
+                  ? d.outcome === "delay" && d.delay_minutes
+                    ? `Held for ${minutesLabel(d.delay_minutes)}. Decided by the policy from the replayed tool calls.`
+                    : "Decided by the policy from the replayed tool calls."
+                  : d.outcome === "delay" && d.delay_minutes
+                    ? `Held for ${minutesLabel(d.delay_minutes)}, decided ${duration(toDecision)} after the hold.`
+                    : `Decided ${duration(toDecision)} after the hold.`
                 : c.status === "allowed"
                   ? "Allowed straight through. No call was needed."
                   : c.status === "expired"
@@ -288,7 +305,13 @@ function Header({ c }: { c: Check }) {
             <span className="t-num text-[18px]">{c.signals.length}</span>
             {critical > 0 && <span className="text-muted"> · {critical} critical</span>}
           </Field>
-          <Field label="Hold to decision">{toDecision !== null ? <span className="t-num text-[18px]">{duration(toDecision)}</span> : <span className="text-muted">Pending</span>}</Field>
+          <Field label="Hold to decision">
+            {toDecision !== null ? (
+              <span className="t-num text-[18px]">{duration(toDecision)}</span>
+            ) : (
+              <span className="text-muted">{replay && d ? "Replay, not timed" : c.status === "allowed" ? "No hold" : "Pending"}</span>
+            )}
+          </Field>
         </dl>
       </section>
     </Reveal>
@@ -497,7 +520,8 @@ function CallPanel({
   const call = c.call;
   const fromBolna = Boolean(call?.transcript?.length);
   const located = signals.filter((s) => hl.found.has(s.id)).length;
-  const callDuration = call?.duration_s ?? (call?.started_at && call?.ended_at ? (Date.parse(call.ended_at) - Date.parse(call.started_at)) / 1000 : null);
+  const spanned = call?.started_at && call?.ended_at ? (Date.parse(call.ended_at) - Date.parse(call.started_at)) / 1000 : null;
+  const callDuration = call?.duration_s ?? (call?.channel !== "text-eval" && spanned && spanned > 0 ? spanned : null);
 
   return (
     <Panel title="Call" description={call ? CHANNEL[call.channel]?.label : "The voice check with the customer."} className="h-full">
@@ -553,7 +577,9 @@ function CallPanel({
             <div>
               <h4 className="font-display text-[14.5px] font-semibold text-ink">Transcript</h4>
               <p className="mt-0.5 text-[12.5px] text-muted">
-                {fromBolna
+                {fromBolna && call.channel === "text-eval"
+                  ? "From the recorded eval conversation. Signals were recorded by the agent's own tool calls in it."
+                  : fromBolna
                   ? "From Bolna's execution record."
                   : recorded.run
                     ? "From the recorded run this check replayed. Every signal below matches a tool call in it."
@@ -826,6 +852,7 @@ const EVENT: Record<string, { label: string; icon: ReactNode }> = {
   "decision.made": { label: "Policy decision", icon: <Gavel /> },
   "decision.updated": { label: "Decision updated", icon: <Gavel /> },
   "live.authorized": { label: "Live call authorised", icon: <KeyRound /> },
+  "call.retry": { label: "Call retried", icon: <PhoneOff /> },
 };
 
 function AuditPanel({ c }: { c: Check }) {
@@ -833,7 +860,11 @@ function AuditPanel({ c }: { c: Check }) {
   return (
     <Panel
       title="Audit trail"
-      description="Every engine event for this check, timed from the moment the payment was held."
+      description={
+        isReplay(c)
+          ? "Every engine event for this check. A replay sends its tool calls in a burst, so these offsets are engine time, not call time."
+          : "Every engine event for this check, timed from the moment the payment was held."
+      }
       action={<span className="hidden shrink-0 font-mono text-[11px] text-muted sm:block">t₀ {clockTime(c.created_at, true)} IST</span>}
       className="h-full"
     >

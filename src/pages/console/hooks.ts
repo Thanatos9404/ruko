@@ -95,3 +95,15 @@ export async function copyText(text: string): Promise<boolean> {
     return ok;
   }
 }
+
+/** One query-string value that follows pushState/popstate (usePath only tracks the pathname). */
+export function useSearchParam(name: string): string | null {
+  const read = useCallback(() => new URLSearchParams(window.location.search).get(name), [name]);
+  const [value, setValue] = useState(read);
+  useEffect(() => {
+    const on = () => setValue(read());
+    window.addEventListener("popstate", on);
+    return () => window.removeEventListener("popstate", on);
+  }, [read]);
+  return value;
+}

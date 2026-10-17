@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowUpRight, Check as CheckIcon, CircleCheck, Clock3, Copy, OctagonX, RefreshCw, TriangleAlert } from "lucide-react";
+import { ArrowUpRight, Check as CheckIcon, CircleCheck, Clock3, Copy, FlaskConical, MonitorSmartphone, OctagonX, RefreshCw, TriangleAlert } from "lucide-react";
 import { cn, EASE } from "../../kit";
 import type { CheckStatus, Confidence, Outcome, RiskBand, Severity } from "../../../shared/types";
 import { copyText } from "./hooks";
@@ -110,6 +110,30 @@ export function ConfidenceMeter({ confidence }: { confidence: Confidence }) {
   );
 }
 
+/* ------------------------------------------------------------------- origin */
+
+const ORIGIN_NOTE = "An eval conversation replayed through the real engine. The customer is an LLM playing a scripted person, not a real customer.";
+
+/** Provenance tag. Eval replays say so plainly everywhere they appear. */
+export function OriginTag({ origin, compact, className }: { origin: "api" | "sandbox" | "eval-replay" | null; compact?: boolean; className?: string }) {
+  if (origin !== "eval-replay" && origin !== "sandbox") return null;
+  const replay = origin === "eval-replay";
+  return (
+    <span
+      title={replay ? ORIGIN_NOTE : "Made in the public sandbox at /demo."}
+      className={cn(
+        "inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full border border-dashed border-[var(--hair-strong)] font-medium text-muted [&>svg]:size-3 [&>svg]:stroke-[1.8]",
+        compact ? "px-1.5 py-px text-[10.5px]" : "px-2 py-0.5 text-[11.5px]",
+        className,
+      )}
+    >
+      {replay ? <FlaskConical aria-hidden /> : <MonitorSmartphone aria-hidden />}
+      {replay ? (compact ? "Eval replay" : "Eval replay · synthetic customer") : "Sandbox"}
+      {replay && compact && <span className="sr-only"> · synthetic customer</span>}
+    </span>
+  );
+}
+
 /* ------------------------------------------------------------------- states */
 
 export function Skeleton({ className }: { className?: string }) {
@@ -167,6 +191,9 @@ export function ErrorState({ error, onRetry, title = "Couldn't load this" }: { e
 export function friendlyError(e: Error | null): string {
   if (!e) return "Something went wrong.";
   if (/Failed to fetch|NetworkError|Load failed/i.test(e.message)) return "The Ruko API didn't answer. Check that the server is running, then try again.";
+  const status = (e as Error & { status?: number }).status;
+  // Server errors can carry internals (paths, stack lines); keep those out of the UI.
+  if (typeof status === "number" && status >= 500) return `The Ruko API hit an error (${status}). Try again in a moment.`;
   return e.message;
 }
 

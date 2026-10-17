@@ -16,6 +16,30 @@
     --sev-process: color-mix(in oklab, var(--muted) 70%, var(--paper));
   }
 
+  /*
+   * AppShell's sidebar is sticky at viewport height. Paint the same column behind
+   * it for the full page, so long pages (and full-page captures) never show the
+   * sidebar ending halfway down. Both use one opaque colour so there is no seam.
+   */
+  @media (min-width: 768px) {
+    .rk-console {
+      --rk-side: color-mix(in oklab, var(--surface) 70%, var(--paper));
+      position: relative;
+    }
+    .rk-console::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 248px;
+      background: var(--rk-side);
+      border-right: 1px solid var(--hair);
+      pointer-events: none;
+    }
+    .rk-console > div > aside {
+      background: var(--rk-side);
+    }
+  }
+
   /* Skeleton shimmer on --paper-2, per the design system. */
   .rk-skel {
     position: relative;
