@@ -70,6 +70,28 @@
   --sky-mid: #f6f7f5;
   --sky-bottom: #fdfdfb;
   color-scheme: light;
+
+  /* Tailwind's colour tokens resolve var() where they are declared (:root), so a
+     nested theme has to re-declare them for its own subtree. */
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-paper-3: var(--paper-3);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-hair: var(--hair);
+  --color-glass: var(--glass);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-pos: var(--pos);
+  --color-neg: var(--neg);
+  --color-go: var(--go);
+  --color-go-soft: var(--go-soft);
+  --color-stop: var(--stop);
+  --color-stop-soft: var(--stop-soft);
+  --pos: var(--go);
+  --neg: var(--stop);
 }
 
 @theme {
