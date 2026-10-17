@@ -2,6 +2,30 @@
 
 Newest first. Wallet figures come from Bolna's `GET /user/me` (free); 500 = $5.00.
 
+## 17 Oct 2026, ~22:45 IST: brand system, retheme, working 60-second demo, eval v3
+
+**What works**
+- **Brand.** The logo concept (by Yashvardhan Thanvi) is redrawn as clean vectors from one geometry source: mark, wordmark, horizontal and stacked lockups in light, dark and mono, app icons 16–512, a maskable icon, an OG card and a web manifest (`scripts/brand.ts`). The site uses an ink-navy canvas, coral as the single signal colour, and sage for "released".
+- **Demo** (`/demo`). The flow is pay → hold screen (code word; the mark freezes the voice wave at the coral line) → call → outcome. The engine panel beside the phone animates each tool call as it lands, with real timings. A trusted-contact lane rings in the browser during live calls.
+  - The recorded digital-arrest run blocks the payment about 43 s after the hold, naming the pattern and saying the official line.
+  - Live Bolna web calls are wired behind the access code. None have been made yet.
+- **Eval v3** (text mode, Nebius stand-in for Bolna's gpt-4.1-mini):
+
+  | Set | Scams caught | False holds on genuine | Notes |
+  |---|---|---|---|
+  | Dev (96) | 58/60 | 0/24 | ambiguous cases acceptable 10/12 |
+  | Fresh held-out (28, never used for tuning) | 16/16 | 0/12 | |
+
+  - Across all 372 eval conversations (1,752 agent turns), the agent never asked for an OTP or PIN.
+  - Known gap: heavily coached customers who stick to a cover story. The v2 held-out set caught 4/8 of them; v3 improved this by having the agent use the bank's own "on a call while paying" signal.
+  - The pre-call policy alone lets some small, no-call scams through without a call (12/60 on the dev set). That is honest, and it is the bank's existing risk signals' job.
+- **Tool endpoint latency** on the local dev server (100 calls): p50 74 ms, p95 303 ms. Vercel numbers will follow after deployment.
+
+**Next**
+- Console (re-spawning the helper), public text checker with Nebius chat mode, landing page, then integrating the research library.
+
+**Wallet:** 500 (still no paid calls).
+
 ## 16 Oct 2026, ~01:45 IST: engine, Bolna agents and eval harness
 
 **What works**

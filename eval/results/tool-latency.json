@@ -1,0 +1,24 @@
+{
+  "where": "local dev server (Vite middleware, file store)",
+  "measured_at": "2026-10-17T16:56:29.002Z",
+  "n": 100,
+  "p50": 74,
+  "p95": 303,
+  "by_tool": {
+    "get_check_context": {
+      "n": 25,
+      "p50": 152,
+      "p95": 415
+    },
+    "record_signal": {
+      "n": 50,
+      "p50": 36,
+      "p95": 145
+    },
+    "set_decision": {
+      "n": 25,
+      "p50": 103,
+      "p95": 252
+    }
+  }
+}
