@@ -1,0 +1,112 @@
+{
+ "aeps_biometric_misuse": {
+  "unknown withdrawal": "koi unknown withdrawal hui hai",
+  "fingerprint data leak": "fingerprint data mein leak hua hai",
+  "bank mitra device": "bank mitra ka device"
+ },
+ "apk_malware_invite": {
+  "install the update to complete the process": "process complete karne ke liye update install karo",
+  "kyc update app": "kyc update ke liye app",
+  "challan payment app": "challan payment ka app",
+  "bank update link": "bank update ka link"
+ },
+ "bitcoin_atm_cash_to_crypto": {
+  "emergency action": "emergency action le rahe hain",
+  "safety locker": "safety locker mein rakh diya"
+ },
+ "call_merging_otp": {
+  "merge the incoming call with this one so we can all talk": "aane wali call ko iske saath merge kar do, sab ek saath baat karenge",
+  "interview verification call": "interview ki verification ke liye call"
+ },
+ "ceo_fraud": {
+  "continue the conversation on your personal whatsapp": "apni personal whatsapp par baat jari rakhna",
+  "buy the gift cards in person, scratch them and send me the redemption codes": "gift card khud jaake kharido, scratch karo aur redemption code mujhe bhejo"
+ },
+ "courier_fraud_cash_collection": {
+  "lie to the bank about why you are withdrawing the money": "bank ko batana mat ki paise kyun nikal rahe ho",
+  "ignore bank security checks": "bank ke security check ko ignore karo",
+  "dont call your bank it can mess up the investigation": "apne bank ko mat call karna, investigation bigad jayegi",
+  "buy gold for police investigation": "police investigation ke liye gold kharido",
+  "keep card and pin in separate envelope": "card aur pin alag envelope mein rakhna",
+  "keep this call secret": "is call ka raaz rakho",
+  "courier will come to your home": "courier ghar aayega",
+  "give cash again tomorrow": "kal phir se cash dena",
+  "join bank investigation": "bank investigation mein shamil ho jao",
+  "your account has problem": "aapke account mein problem hai"
+ },
+ "credit_card_limit_or_fee": {
+  "lifetime free card offer": "lifetime free card ka offer"
+ },
+ "e_challan_apk": {
+  "challan payment link": "challan payment ka link",
+  "parivahan apk": "parivahan ka apk",
+  "challan details": "challan ke details",
+  "parivahan portal": "parivahan ka portal",
+  "challan warning": "challan ka warning"
+ },
+ "epfo_pf_withdrawal": {
+  "pf account update": "pf account update karna hai",
+  "epfo office number": "epfo office ka number",
+  "pf balance check": "pf balance check karein",
+  "account verification": "account verification chalu hai"
+ },
+ "fake_support_refund": {
+  "unknown app download": "koi anjaan app download karo"
+ },
+ "foreign_gift_customs": {
+  "pay customs charges and GST now or parcel will be confiscated": "customs charges aur gst abhi pay karo nahi to parcel seize ho jayega"
+ },
+ "govt_scheme_subsidy": {
+  "pm kusum solar pump": "pm kusum solar pump ke liye registration fee"
+ },
+ "investment_trading": {
+  "share market tips group": "share market ke tips ka group"
+ },
+ "kyc_block": {
+  "alert: kyc expire": "alert: kyc expire ho gaya"
+ },
+ "loan_processing_fee": {
+  "only advance fee do": "sirf advance fee de do",
+  "account verification fee": "account verification ka fee"
+ },
+ "mobile_tower_installation": {
+  "government permission fee": "sarkari ijajat ki fee"
+ },
+ "purchase_scam_marketplace": {
+  "pay by bank transfer instead of platform ka secure payment": "platform ke secure payment ke bajaye bank transfer se pay karo"
+ },
+ "qr_code_receive": {
+  "scan qr code and enter upi pin to receive payment": "qr code scan karo aur payment receive karne ke liye upi pin daalo",
+  "scan new qr code to get money refunded": "paisa wapas pane ke liye naya qr code scan karo"
+ },
+ "relative_emergency": {
+  "do not hang up the call": "call mat kato",
+  "do not contact your son; his phone is with the police": "apne bete ko mat call karo; uska phone police ke paas hai",
+  "do not tell anyone or report it, just pay to settle the matter": "kisi ko mat batana aur na report karo, bas payment karo case settle karne ke liye"
+ },
+ "remote_access": {
+  "install this support app and read out the code shown on your screen": "ye support app install karo aur screen par dikhne wala code padh lo",
+  "install this remote access app so we can fix your payment problem": "ye remote access app install karo taaki hum tumhara payment problem theek kar saken"
+ },
+ "romance_scam_global": {
+  "don't tell anyone about us": "hum dono ke baare mein kisi ko mat batana",
+  "keep this between us, your family won't understand": "ye sab hum dono tak rakho, tumhare parivaar ko samajh nahi ayega"
+ },
+ "scholarship_fee": {
+  "scholarship release fees": "scholarship release ka fee"
+ },
+ "sim_disconnection": {
+  "sim cancel process start": "sim cancel process shuru ho gaya"
+ },
+ "sim_swap_esim": {
+  "sim reissue": "sim reissue karo"
+ },
+ "travel_pilgrimage_booking": {
+  "char dham yatra package": "char dham yatra ka package",
+  "yatra booking confirm": "yatra ki booking confirm",
+  "guest house booking": "guest house ki booking"
+ },
+ "upi_collect_request": {
+  "approve request and enter upi pin to receive money": "request approve karo aur paise paane ke liye upi pin daalo"
+ }
+}

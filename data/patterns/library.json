@@ -419,11 +419,11 @@
      "bank mitra se paise nikle",
      "koi sms nahi aaya",
      "paise gayab hain",
-     "unknown withdrawal",
+     "koi unknown withdrawal hui hai",
      "aadhaar update ke baad problem",
-     "fingerprint data leak",
+     "fingerprint data mein leak hua hai",
      "silicon fingerprint",
-     "bank mitra device",
+     "bank mitra ka device",
      "bina otp transaction",
      "khate se paise gaye",
      "authorised centre nahi",
@@ -897,7 +897,7 @@
      "प्रक्रिया पूरी करने के लिए अपडेट इंस्टॉल करें"
     ],
     "hinglish": [
-     "install the update to complete the process"
+     "process complete karne ke liye update install karo"
     ]
    },
    "cues": {
@@ -927,7 +927,7 @@
      "app install kiya aur paise kat gaye",
      "phone hack ho gaya",
      "contacts ko message chale gaye",
-     "kyc update app",
+     "kyc update ke liye app",
      "gas bill update karo",
      "card kholo",
      "update download karo",
@@ -937,8 +937,8 @@
      "message auto bhej raha hai",
      "unknown app chal raha hai",
      "kisan labh app",
-     "challan payment app",
-     "bank update link"
+     "challan payment ka app",
+     "bank update ka link"
     ],
     "hi": [
      "शादी का कार्ड भेजा है",
@@ -1069,7 +1069,7 @@
     "app install kiya aur paise kat gaye",
     "phone hack ho gaya",
     "contacts ko message chale gaye",
-    "kyc update app",
+    "kyc update ke liye app",
     "gas bill update karo",
     "शादी का कार्ड भेजा है",
     "कार्ड डाउनलोड करो",
@@ -2217,9 +2217,9 @@
      "specific machine pe jao",
      "text me code bhejenge",
      "paise japt ho jayenge",
-     "emergency action",
+     "emergency action le rahe hain",
      "crime se joda paise",
-     "safety locker",
+     "safety locker mein rakh diya",
      "apna kyc theek karo"
     ],
     "hi": [
@@ -2348,7 +2348,7 @@
     "specific machine pe jao",
     "text me code bhejenge",
     "paise japt ho jayenge",
-    "emergency action",
+    "emergency action le rahe hain",
     "crime se joda paise",
     "पैसे सुरक्षित रखने के लिए",
     "QR कोड स्कैन करें",
@@ -2681,7 +2681,7 @@
      "इस कॉल के साथ आने वाली कॉल मर्ज कर दो ताकि हम सब एक साथ बात कर सकें"
     ],
     "hinglish": [
-     "merge the incoming call with this one so we can all talk"
+     "aane wali call ko iske saath merge kar do, sab ek saath baat karenge"
     ]
    },
    "cues": {
@@ -2712,7 +2712,7 @@
      "dost ka call aa raha hai",
      "call pe otp bolo",
      "abhi merge karo",
-     "interview verification call",
+     "interview ki verification ke liye call",
      "call jod do bas",
      "mutual friend ka number",
      "otp aaya hai kya",
@@ -2924,8 +2924,8 @@
      "गिफ्ट कार्ड खुद दुकान पर जाकर खरीदें, उन्हें स्क्रैच करें और मुझे रिडीम्पशन कोड भेज दें"
     ],
     "hinglish": [
-     "continue the conversation on your personal whatsapp",
-     "buy the gift cards in person, scratch them and send me the redemption codes"
+     "apni personal whatsapp par baat jari rakhna",
+     "gift card khud jaake kharido, scratch karo aur redemption code mujhe bhejo"
     ]
    },
    "cues": {
@@ -3177,10 +3177,10 @@
     ],
     "hinglish": [
      "dont discuss this with anyone including your bank",
-     "lie to the bank about why you are withdrawing the money",
-     "ignore bank security checks",
+     "bank ko batana mat ki paise kyun nikal rahe ho",
+     "bank ke security check ko ignore karo",
      "skip the bank's verification process",
-     "dont call your bank it can mess up the investigation"
+     "apne bank ko mat call karna, investigation bigad jayegi"
     ]
    },
    "cues": {
@@ -3207,16 +3207,16 @@
      "arrested someone with your card"
     ],
     "hinglish": [
-     "buy gold for police investigation",
-     "keep card and pin in separate envelope",
+     "police investigation ke liye gold kharido",
+     "card aur pin alag envelope mein rakhna",
      "bank wale bad hai",
-     "keep this call secret",
-     "courier will come to your home",
-     "give cash again tomorrow",
+     "is call ka raaz rakho",
+     "courier ghar aayega",
+     "kal phir se cash dena",
      "police officer bol raha hai",
      "kisi ko mat batao",
-     "join bank investigation",
-     "your account has problem"
+     "bank investigation mein shamil ho jao",
+     "aapke account mein problem hai"
     ],
     "hi": [
      "पुलिस जांच के लिए सोना खरीदो",
@@ -3335,16 +3335,16 @@
     "they said it will be returned",
     "keep this from your bank",
     "arrested someone with your card",
-    "buy gold for police investigation",
-    "keep card and pin in separate envelope",
+    "police investigation ke liye gold kharido",
+    "card aur pin alag envelope mein rakhna",
     "bank wale bad hai",
-    "keep this call secret",
-    "courier will come to your home",
-    "give cash again tomorrow",
+    "is call ka raaz rakho",
+    "courier ghar aayega",
+    "kal phir se cash dena",
     "police officer bol raha hai",
     "kisi ko mat batao",
-    "join bank investigation",
-    "your account has problem",
+    "bank investigation mein shamil ho jao",
+    "aapke account mein problem hai",
     "पुलिस जांच के लिए सोना खरीदो",
     "कार्ड और पिन अलग लिफाफे में रखो",
     "बैंक वाले खराब हैं",
@@ -3758,7 +3758,7 @@
      "card activate karne ke liye otp chahiye",
      "ek rupaye ka payment approve karo",
      "whatsapp pe form bheja",
-     "lifetime free card offer",
+     "lifetime free card ka offer",
      "card limit badhane ke liye app download karo",
      "caller ke saath form bharo",
      "card activation ke liye link kholo",
@@ -5056,18 +5056,18 @@
      "gaadi ka challan",
      "whatsapp pe challan aaya",
      "app download karke challan dekho",
-     "challan payment link",
+     "challan payment ka link",
      "rto notice mila",
-     "parivahan apk",
+     "parivahan ka apk",
      "e challan bharo",
      "gadi ka challan",
      "otp mang raha app",
-     "challan details",
+     "challan ke details",
      "jurmaana link",
      "challan cancel karo",
      "official app nahi",
-     "parivahan portal",
-     "challan warning"
+     "parivahan ka portal",
+     "challan ka warning"
     ],
     "hi": [
      "आपका चालान कटा है",
@@ -5196,7 +5196,7 @@
     "gaadi ka challan",
     "whatsapp pe challan aaya",
     "app download karke challan dekho",
-    "challan payment link",
+    "challan payment ka link",
     "rto notice mila",
     "आपका चालान कटा है",
     "ई-चालान लंबित",
@@ -5572,14 +5572,14 @@
      "pf jaldi nikal dunga",
      "kyc update karna padega pf ka",
      "claim reject ho gaya hai",
-     "pf account update",
+     "pf account update karna hai",
      "umang app download karo",
-     "epfo office number",
+     "epfo office ka number",
      "aadhaar link nahi ho raha",
      "claim registered hai",
      "otp bhej do",
-     "pf balance check",
-     "account verification",
+     "pf balance check karein",
+     "account verification chalu hai",
      "sarkari adhikari bol raha hoon",
      "kyc puri karo",
      "paisa transfer ruk gaya",
@@ -5707,7 +5707,7 @@
     "pf jaldi nikal dunga",
     "kyc update karna padega pf ka",
     "claim reject ho gaya hai",
-    "pf account update",
+    "pf account update karna hai",
     "umang app download karo",
     "पीएफ निकासी",
     "पीएफ क्लेम अटका",
@@ -7210,7 +7210,7 @@
      "official app nahi dekha",
      "otp batao",
      "call aaya bina puche",
-     "unknown app download",
+     "koi anjaan app download karo",
      "card details chahiye",
      "official website nahi check ki",
      "support call aaya",
@@ -7470,7 +7470,7 @@
      "अभी कस्टम चार्ज और GST भर लें वरना पार्सल जब्त कर लिया जाएगा"
     ],
     "hinglish": [
-     "pay customs charges and GST now or parcel will be confiscated"
+     "customs charges aur gst abhi pay karo nahi to parcel seize ho jayega"
     ]
    },
    "cues": {
@@ -8778,7 +8778,7 @@
      "registration fees bharo",
      "subsidy milegi",
      "sarkari yojana ka labh",
-     "pm kusum solar pump",
+     "pm kusum solar pump ke liye registration fee",
      "free laptop yojana",
      "fees wapas mil jayegi",
      "loan approve ho gaya hai",
@@ -8920,7 +8920,7 @@
     "registration fees bharo",
     "subsidy milegi",
     "sarkari yojana ka labh",
-    "pm kusum solar pump",
+    "pm kusum solar pump ke liye registration fee",
     "free laptop yojana",
     "fees wapas mil jayegi",
     "loan approve ho gaya hai",
@@ -10064,7 +10064,7 @@
      "share market"
     ],
     "hinglish": [
-     "share market tips group",
+     "share market ke tips ka group",
      "guaranteed return milega",
      "institutional account khulwao",
      "ipo allotment pakka",
@@ -10224,7 +10224,7 @@
     "crypto",
     "tips",
     "telegram",
-    "share market tips group",
+    "share market ke tips ka group",
     "guaranteed return milega",
     "institutional account khulwao",
     "ipo allotment pakka",
@@ -10830,7 +10830,7 @@
      "update nahi kiya to sim band",
      "yono app download karo",
      "official app nahi",
-     "alert: kyc expire",
+     "alert: kyc expire ho gaya",
      "abhi call karo 1930"
     ],
     "hi": [
@@ -11348,9 +11348,9 @@
      "aaj hi loan aa jayega",
      "loan ke liye ab turant paise bhejo",
      "credit score nahi dekhenge",
-     "only advance fee do",
+     "sirf advance fee de do",
      "loan aane wala hai, jaldi karo",
-     "account verification fee",
+     "account verification ka fee",
      "paise dalo nahi to loan cancel",
      "loan disbursal ke liye fee",
      "company ka naam badal gaya",
@@ -12104,7 +12104,7 @@
      "5g tower lagane ka offer",
      "trai se approval chahiye",
      "tower ke liye deposit",
-     "government permission fee",
+     "sarkari ijajat ki fee",
      "telecom act ke under tax",
      "advance me paise chahiye",
      "niti aayog se letter aaya",
@@ -13637,7 +13637,7 @@
      "नकद या मनी ट्रांसफर सर्विस से भुगतान करें"
     ],
     "hinglish": [
-     "pay by bank transfer instead of platform ka secure payment",
+     "platform ke secure payment ke bajaye bank transfer se pay karo",
      "pay in cash ya money transfer service se"
     ]
    },
@@ -13885,8 +13885,8 @@
      "पैसा वापस पाने के लिए नया क्यूआर कोड स्कैन करें"
     ],
     "hinglish": [
-     "scan qr code and enter upi pin to receive payment",
-     "scan new qr code to get money refunded"
+     "qr code scan karo aur payment receive karne ke liye upi pin daalo",
+     "paisa wapas pane ke liye naya qr code scan karo"
     ]
    },
    "cues": {
@@ -14914,9 +14914,9 @@
      "किसी को मत बताओ या रिपोर्ट मत करो, बस मामला तय करने के लिए पैसे भेज दो"
     ],
     "hinglish": [
-     "do not hang up the call",
-     "do not contact your son; his phone is with the police",
-     "do not tell anyone or report it, just pay to settle the matter"
+     "call mat kato",
+     "apne bete ko mat call karo; uska phone police ke paas hai",
+     "kisi ko mat batana aur na report karo, bas payment karo case settle karne ke liye"
     ]
    },
    "cues": {
@@ -15222,8 +15222,8 @@
      "इस रिमोट एक्सेस ऐप को इंस्टॉल करें ताकि हम आपकी पेमेंट की समस्या ठीक कर सकें"
     ],
     "hinglish": [
-     "install this support app and read out the code shown on your screen",
-     "install this remote access app so we can fix your payment problem"
+     "ye support app install karo aur screen par dikhne wala code padh lo",
+     "ye remote access app install karo taaki hum tumhara payment problem theek kar saken"
     ]
    },
    "cues": {
@@ -15778,8 +15778,8 @@
      "ये बात हम दोनों के बीच रहे, परिवार समझ नहीं पाएगा"
     ],
     "hinglish": [
-     "don't tell anyone about us",
-     "keep this between us, your family won't understand"
+     "hum dono ke baare mein kisi ko mat batana",
+     "ye sab hum dono tak rakho, tumhare parivaar ko samajh nahi ayega"
     ]
    },
    "cues": {
@@ -16302,7 +16302,7 @@
      "otp batao scholarship ke liye",
      "student yojana ka registration",
      "bachche ki scholarship aayi hai",
-     "scholarship release fees",
+     "scholarship release ka fee",
      "nsp se call aaya",
      "sarkari scholarship",
      "otp chahiye",
@@ -16428,7 +16428,7 @@
     "otp batao scholarship ke liye",
     "student yojana ka registration",
     "bachche ki scholarship aayi hai",
-    "scholarship release fees",
+    "scholarship release ka fee",
     "nsp se call aaya",
     "sarkari scholarship",
     "otp chahiye",
@@ -16561,7 +16561,7 @@
      "unauthorized use ke wajah se block",
      "officer ki taraf se call",
      "aapke number pe crime",
-     "sim cancel process start",
+     "sim cancel process shuru ho gaya",
      "officer ke saath video call"
     ],
     "hi": [
@@ -16831,7 +16831,7 @@
      "link bheja gaya",
      "achanak sim band",
      "5g ke liye upgrade",
-     "sim reissue",
+     "sim reissue karo",
      "jalsaaji ka shak",
      "call aaya tha",
      "sms aaya tha"
@@ -17621,10 +17621,10 @@
     "hinglish": [
      "kedarnath ka helicopter ticket",
      "heli ticket book karwa do",
-     "char dham yatra package",
+     "char dham yatra ka package",
      "hotel ka advance bhejo",
      "darshan pass mil jayega",
-     "yatra booking confirm",
+     "yatra ki booking confirm",
      "ticket whatsapp pe bhej denge",
      "agent ne booking ki thi",
      "heli ticket jaldi chahiye",
@@ -17634,7 +17634,7 @@
      "agent ne discount diya",
      "whatsapp pe booking confirm",
      "hotel ke liye upfront payment",
-     "guest house booking",
+     "guest house ki booking",
      "yatra ke liye cashback offer",
      "sponsored link se book kiya",
      "official app ke bajaye website",
@@ -17762,10 +17762,10 @@
     "ticket on whatsapp",
     "kedarnath ka helicopter ticket",
     "heli ticket book karwa do",
-    "char dham yatra package",
+    "char dham yatra ka package",
     "hotel ka advance bhejo",
     "darshan pass mil jayega",
-    "yatra booking confirm",
+    "yatra ki booking confirm",
     "ticket whatsapp pe bhej denge",
     "agent ne booking ki thi",
     "heli ticket jaldi chahiye",
@@ -17844,7 +17844,7 @@
      "रिक्वेस्ट एप्रूव करें और पैसे पाने के लिए अपना यूपीआई पिन डालें"
     ],
     "hinglish": [
-     "approve request and enter upi pin to receive money"
+     "request approve karo aur paise paane ke liye upi pin daalo"
     ]
    },
    "cues": {

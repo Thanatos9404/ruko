@@ -240,6 +240,7 @@ def stage_merge() -> None:
 def stage_final() -> None:
     merged = json.loads(MERGED.read_text(encoding="utf-8"))["patterns"]
     tr_all = json.loads((BUILD / "translations.json").read_text(encoding="utf-8")) if (BUILD / "translations.json").exists() else {}
+    hinglish_fixes = json.loads((BUILD / "hinglish_fixes.json").read_text(encoding="utf-8")) if (BUILD / "hinglish_fixes.json").exists() else {}
     sources, _ = load_sources()
     out = []
     for p in merged:
@@ -266,6 +267,12 @@ def stage_final() -> None:
             ts["hinglish"] = "machine_draft"
         p["cues"]["hi"] = dedupe(p["cues"].get("hi", []) + tr.get("extra_cues_hi", []))
         p["cues"]["hinglish"] = dedupe(p["cues"].get("hinglish", []) + [c.lower() for c in tr.get("extra_cues_hinglish", [])])
+        # English-only "Hinglish" entries redrafted as romanised Hindi (fix_hinglish.py)
+        fx = hinglish_fixes.get(p["id"], {})
+        if fx:
+            p["cues"]["hinglish"] = dedupe([fx.get(c, c).lower() for c in p["cues"]["hinglish"]])
+            if p["coaching_phrases"].get("hinglish"):
+                p["coaching_phrases"]["hinglish"] = dedupe([fx.get(c, c) for c in p["coaching_phrases"]["hinglish"]])
         for lang in ("ta", "bn", "mr"):
             if lg and lang in lg["truth"]:
                 ts[lang] = "draft"
