@@ -17,7 +17,6 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import sys
 from collections import Counter
 from pathlib import Path
 
@@ -92,6 +91,9 @@ def load_jsonl(paths):
     return out
 
 
+SOURCE_OVERRIDES = json.loads((BUILD / "overrides.json").read_text(encoding="utf-8")).get("source_overrides", {})
+
+
 def load_sources() -> tuple[dict, dict]:
     """All sources by id, plus a remap {research id -> canonical id} that merges duplicates by URL."""
     legacy = json.loads((RAW / "legacy_v0.json").read_text(encoding="utf-8"))["sources"]
@@ -120,6 +122,7 @@ def load_sources() -> tuple[dict, dict]:
         rec = {k: s.get(k, "") for k in ("title", "publisher", "date", "url", "accessed", "kind", "jurisdiction", "verified", "notes")}
         rec["id"] = sid
         rec["origin"] = "research_2026_10"
+        rec.update(SOURCE_OVERRIDES.get(sid, {}))
         by_id[sid] = rec
         by_url[u] = sid
     return by_id, remap
@@ -127,7 +130,8 @@ def load_sources() -> tuple[dict, dict]:
 
 def stage_merge() -> None:
     legacy = {p["id"]: p for p in json.loads((RAW / "legacy_v0.json").read_text(encoding="utf-8"))["patterns"]}
-    research = load_jsonl(RAW.glob("*_patterns.jsonl"))
+    # India research first, so a merged near-duplicate keeps the Indian entry's region, summary and truth
+    research = sorted(load_jsonl(RAW.glob("*_patterns.jsonl")), key=lambda r: 0 if r.get("region", "india") == "india" else 1)
     ov = json.loads((BUILD / "overrides.json").read_text(encoding="utf-8"))
     sources, remap = load_sources()
     rename = ov.get("rename", {})
@@ -214,7 +218,8 @@ def stage_merge() -> None:
                 "trend": r["trend"]["sources"],
             },
             "provenance": {"origin": "legacy_v0" if lg else "research_2026_10",
-                           "notes": ("Base text from shared/patterns.ts v0; research fields added Oct 2026." if lg else "Researched Oct 2026 from the cited sources.")},
+                           "notes": (("Base text from shared/patterns.ts v0; research fields added Oct 2026." if lg else "Researched Oct 2026 from the cited sources.")
+                                     + (" " + o["provenance_note"] if o.get("provenance_note") else ""))},
             "_legacy": lg,
         }
         if lg:
@@ -250,12 +255,14 @@ def stage_final() -> None:
                 p["advice"]["hi"] = tr["advice_hi"]
                 p["ask_next"]["hi"] = tr["ask_next_hi"]
                 ts["hi"] = "machine_draft"
-        if tr.get("red_flag_questions_hi"):
-            p["red_flag_questions"]["hi"] = dedupe(tr["red_flag_questions_hi"])
-        if tr.get("coaching_phrases_hi"):
-            p["coaching_phrases"]["hi"] = dedupe(tr["coaching_phrases_hi"])
-        if tr.get("coaching_phrases_hinglish"):
-            p["coaching_phrases"]["hinglish"] = dedupe(tr["coaching_phrases_hinglish"])
+        # translations never add items: they are cut to the English list (and dropped when it is empty)
+        n_rf, n_co = len(p["red_flag_questions"]["en"]), len(p["coaching_phrases"]["en"])
+        if tr.get("red_flag_questions_hi") and n_rf:
+            p["red_flag_questions"]["hi"] = dedupe(tr["red_flag_questions_hi"])[:n_rf]
+        if tr.get("coaching_phrases_hi") and n_co:
+            p["coaching_phrases"]["hi"] = dedupe(tr["coaching_phrases_hi"])[:n_co]
+        if tr.get("coaching_phrases_hinglish") and n_co:
+            p["coaching_phrases"]["hinglish"] = dedupe(tr["coaching_phrases_hinglish"])[:n_co]
             ts["hinglish"] = "machine_draft"
         p["cues"]["hi"] = dedupe(p["cues"].get("hi", []) + tr.get("extra_cues_hi", []))
         p["cues"]["hinglish"] = dedupe(p["cues"].get("hinglish", []) + [c.lower() for c in tr.get("extra_cues_hinglish", [])])
@@ -269,8 +276,8 @@ def stage_final() -> None:
         p["translation_status"] = ts
         p["keywords"] = dedupe(p["cues"]["en"][:25] + p["cues"]["hinglish"][:10] + p["cues"]["hi"][:10])
         p["cues"] = {k: v for k, v in p["cues"].items() if v}
-        p["coaching_phrases"] = {k: v for k, v in p["coaching_phrases"].items() if v}
-        p["red_flag_questions"] = {k: v for k, v in p["red_flag_questions"].items() if v}
+        p["coaching_phrases"] = {k: v for k, v in p["coaching_phrases"].items() if v or k == "en"}
+        p["red_flag_questions"] = {k: v for k, v in p["red_flag_questions"].items() if v or k == "en"}
         out.append(p)
 
     # every cited source, plus all v0 sources (shared/sources.ts ids stay resolvable)
@@ -314,10 +321,10 @@ def validate() -> None:
             if s not in src:
                 problems.append(f"{p['id']}: unknown source {s}")
         if p["region"] == "india" and not any(src.get(s, {}).get("kind") in OFFICIAL_KINDS for s in p["sources"]):
-            problems.append(f"{p['id']}: no official/regulator/police source (warning)")
+            problems.append(f"{p['id']}: no official/regulator/police source (warning; noted in provenance)")
         if p["coaching_phrases"].get("en") and not p["citations"].get("coaching_phrases"):
             problems.append(f"{p['id']}: coaching phrases without a cited source (warning)")
-    hard = [x for x in problems if "(warning)" not in x]
+    hard = [x for x in problems if "warning" not in x]
     for x in problems:
         print("  ", x)
     by_region = Counter(p["region"] for p in lib["patterns"])

@@ -53,13 +53,15 @@
       ]
     },
     "aeps_biometric_misuse": {
-      "truth_en": "You can lock your Aadhaar biometrics on the UIDAI website or mAadhaar app so nobody can use your fingerprint to withdraw money."
+      "truth_en": "You can lock your Aadhaar biometrics on the UIDAI website or mAadhaar app so nobody can use your fingerprint to withdraw money.",
+      "provenance_note": "No official advisory for this pattern could be opened during research (Oct 2026); it rests on credible news reports. Treat as lower-confidence until an official source is added."
     },
     "ai_voice_clone_emergency": {
       "truth_en": "Voices can be cloned with AI, so please hang up and call your family member yourself on their usual number before paying."
     },
     "apk_malware_invite": {
-      "truth_en": "Banks, government schemes and traffic police never send apps as APK files on WhatsApp; please don't install it, and uninstall it if you did."
+      "truth_en": "Banks, government schemes and traffic police never send apps as APK files on WhatsApp; please don't install it, and uninstall it if you did.",
+      "provenance_note": "No official advisory for this pattern could be opened during research (Oct 2026); it rests on credible news reports. Treat as lower-confidence until an official source is added."
     },
     "bank_fraud_dept_impersonation": {
       "truth_en": "Your bank will never ask you to move money to a 'safe account' or to share an OTP or PIN to protect it."
@@ -80,7 +82,8 @@
       "truth_en": "No genuine investment platform makes you pay a fee or tax to withdraw your own money."
     },
     "e_challan_apk": {
-      "truth_en": "Traffic challans never come as an app file; check and pay challans only on the official Parivahan website."
+      "truth_en": "Traffic challans never come as an app file; check and pay challans only on the official Parivahan website.",
+      "provenance_note": "No official advisory for this pattern could be opened during research (Oct 2026); it rests on credible news reports. Treat as lower-confidence until an official source is added."
     },
     "epfo_pf_withdrawal": {
       "truth_en": "All EPFO services are free on the EPFO portal and the UMANG app; never pay an agent to get your PF."
@@ -116,7 +119,8 @@
       "truth_en": "IRDAI warns never to pay or share policy, bank or OTP details on calls or messages that use its name."
     },
     "lpg_gas_connection": {
-      "truth_en": "Gas companies never ask for OTPs, bank details or app installs on calls or WhatsApp; book and do KYC only in the official app."
+      "truth_en": "Gas companies never ask for OTPs, bank details or app installs on calls or WhatsApp; book and do KYC only in the official app.",
+      "provenance_note": "No official advisory for this pattern could be opened during research (Oct 2026); it rests on credible news reports. Treat as lower-confidence until an official source is added."
     },
     "loan_app_harassment": {
       "truth_en": "Borrow only from banks or RBI-regulated lenders, and report threats or morphed photos to the police on 1930 instead of paying."
@@ -131,7 +135,8 @@
       "truth_en": "The Central Pension Accounting Office never calls pensioners about life certificates or asks for OTPs; submit it at your bank or through Jeevan Pramaan."
     },
     "ponzi_deposit_scheme": {
-      "truth_en": "Deposit schemes promising high fixed returns without a financial regulator's registration are illegal under the BUDS Act, and your money is not protected."
+      "truth_en": "Deposit schemes promising high fixed returns without a financial regulator's registration are illegal under the BUDS Act, and your money is not protected.",
+      "provenance_note": "No official advisory for this pattern could be opened during research (Oct 2026); it rests on credible news reports. Treat as lower-confidence until an official source is added."
     },
     "romance_social_media": {
       "truth_en": "Never send money to someone you have only met online, however urgent their story."
@@ -149,10 +154,12 @@
       "truth_en": "You never need to enter your UPI PIN or approve a request to receive money; a real tenant or landlord won't ask for that."
     },
     "wrong_transfer_return": {
-      "truth_en": "An SMS is not proof of money received; check your balance in your bank app and never 'return' money to a stranger."
+      "truth_en": "An SMS is not proof of money received; check your balance in your bank app and never 'return' money to a stranger.",
+      "provenance_note": "No official advisory for this pattern could be opened during research (Oct 2026); it rests on credible news reports. Treat as lower-confidence until an official source is added."
     },
     "fake_cybercrime_legal_notice": {
-      "truth_en": "No police or government agency sends crime notices by e-mail asking you to reply or pay; PIB Fact Check has confirmed these notices are fake."
+      "truth_en": "No police or government agency sends crime notices by e-mail asking you to reply or pay; PIB Fact Check has confirmed these notices are fake.",
+      "provenance_note": "No official advisory for this pattern could be opened during research (Oct 2026); it rests on credible news reports. Treat as lower-confidence until an official source is added."
     },
     "rbi_fictitious_funds": {
       "truth_en": "RBI never holds money or prizes for individuals, and never calls or e-mails asking for fees or personal details."
@@ -218,5 +225,10 @@
       "e_challan_apk",
       "courier_parcel"
     ]
+  },
+  "source_overrides": {
+    "inb_wiki_saradha": {
+      "kind": "reference"
+    }
   }
 }

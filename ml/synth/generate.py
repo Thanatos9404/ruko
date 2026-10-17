@@ -173,15 +173,34 @@ def chat(model: str, user: str, *, temperature: float, max_tokens: int, seed: in
 
 
 def parse_json(content: str) -> dict:
+    """Strict JSON first; otherwise salvage every complete object in the "samples" array.
+
+    Long Devanagari / Tamil / Bengali outputs can hit max_tokens and get cut mid-sample;
+    the complete samples before the cut are still valid and are kept."""
     content = content.strip()
     content = re.sub(r"^```(?:json)?|```$", "", content, flags=re.M).strip()
     try:
         return json.loads(content)
     except json.JSONDecodeError:
-        m = re.search(r"\{.*\}", content, re.S)
-        if m:
-            return json.loads(m.group(0))
-        raise
+        pass
+    m = re.search(r'"samples"\s*:\s*\[', content)
+    if not m:
+        raise json.JSONDecodeError("no samples array", content, 0)
+    dec = json.JSONDecoder()
+    i, out = m.end(), []
+    while True:
+        while i < len(content) and content[i] in " \t\r\n,":
+            i += 1
+        if i >= len(content) or content[i] != "{":
+            break
+        try:
+            obj, i = dec.raw_decode(content, i)
+        except json.JSONDecodeError:
+            break
+        out.append(obj)
+    if not out:
+        raise json.JSONDecodeError("no complete sample", content, m.end())
+    return {"samples": out, "_salvaged": True}
 
 
 # --- job planning -----------------------------------------------------------
@@ -443,14 +462,20 @@ def main():
         max_tokens = 900 * job["n"] if job["format"] == "call_check" else 260 * job["n"] + 200
         # Malformed JSON (mostly unescaped quotes in long Indic outputs) is retried with a new seed;
         # earlier successful responses stay cached under their original seed.
+        # The first three attempts keep the original budget (so earlier responses stay cached);
+        # the fourth gives non-Latin scripts, which tokenise long, a bigger budget.
         last = None
-        for attempt in range(3):
-            content = chat(model, prompt, temperature=0.9, max_tokens=max_tokens, seed=seed + attempt, key=key)
+        attempts = [(seed, max_tokens), (seed + 1, max_tokens), (seed + 2, max_tokens), (seed + 3, int(max_tokens * 2.5))]
+        for sd, mt in attempts:
+            content = chat(model, prompt, temperature=0.9, max_tokens=mt, seed=sd, key=key)
             try:
-                return samples_from(job, parse_json(content))
+                recs = samples_from(job, parse_json(content))
+                if recs:
+                    return recs
+                last = ValueError("no usable samples")
             except (json.JSONDecodeError, AttributeError, TypeError) as e:
                 last = e
-        raise RuntimeError(f"unparseable after 3 attempts: {last}")
+        raise RuntimeError(f"unparseable after {len(attempts)} attempts: {last}")
 
     t0 = time.time()
     with cf.ThreadPoolExecutor(max_workers=args.workers) as ex:

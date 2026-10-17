@@ -53,7 +53,7 @@ def job(p: dict, key: str) -> tuple[str, dict]:
         "existing_cues_hinglish": p["cues"].get("hinglish", []),
     }
     user = INSTR + "\n\nENGLISH FIELDS:\n" + json.dumps(src, ensure_ascii=False, indent=1)
-    content = chat(MODEL_A, user, temperature=0.2, max_tokens=3000, seed=7, key=key)
+    content = chat(MODEL_A, user, temperature=0.2, max_tokens=5000, seed=7, key=key)
     return p["id"], parse_json(content)
 
 

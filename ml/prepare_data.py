@@ -53,7 +53,8 @@ def split_of(group: str, val=0.1, test=0.2) -> str:
 
 
 def alias_map() -> dict[str, str]:
-    lib = json.loads(LIB.read_text(encoding="utf-8"))
+    src = LIB if LIB.exists() else ROOT / "research" / "raw" / "patterns_merged.json"
+    lib = json.loads(src.read_text(encoding="utf-8"))
     m = {}
     for p in lib["patterns"]:
         m[p["id"]] = p["id"]
@@ -211,8 +212,7 @@ def load_icfd() -> list[dict]:
             if not line.strip():
                 continue
             r = json.loads(line)
-            text = "
-".join(t["text"] for t in r["transcript"] if t.get("speaker") in ("Agent", "Customer"))
+            text = "\n".join(t["text"] for t in r["transcript"] if t.get("speaker") in ("Agent", "Customer"))
             uid = r["release_metadata"]["conversation_uid"]
             out.append(rec(
                 text=text, label="scam" if r["final_verdict"] == "YES" else "genuine", source="icfd31k", synthetic=True,

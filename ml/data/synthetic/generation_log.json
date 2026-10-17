@@ -1,0 +1,23 @@
+{
+  "synth_version": 1,
+  "generators": {
+    "A": "Qwen/Qwen3-235B-A22B-Instruct-2507",
+    "B": "google/gemma-3-27b-it"
+  },
+  "jobs": 1206,
+  "samples": 5302,
+  "failures": [],
+  "n_failures": 0,
+  "usage_this_run": {
+    "requests": 0,
+    "cached": 1207,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "errors": 0
+  },
+  "usage_cumulative": {
+    "requests": 2175,
+    "prompt_tokens": 1419039,
+    "completion_tokens": 2350509
+  }
+}

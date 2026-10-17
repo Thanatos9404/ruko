@@ -26,6 +26,7 @@ import argparse
 import hashlib
 import json
 import math
+import pickle
 import sys
 import time
 from collections import Counter, defaultdict
@@ -33,9 +34,10 @@ from pathlib import Path
 
 import numpy as np
 from scipy import sparse
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_selection import chi2
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import average_precision_score, roc_auc_score
+from sklearn.preprocessing import normalize
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "ml"))
@@ -54,32 +56,72 @@ SEED = 20261017
 MIN_CLASS = 5
 
 HP = {"Cb": 8.0, "Cp": 16.0, "Nb": 24000, "Np": 700, "M": 900}
-GRID = {"Cb": [2.0, 8.0, 32.0], "Cp": [4.0, 16.0, 64.0]}
+GRID = {"Cb": [2.0, 8.0, 32.0], "Cp": [4.0, 16.0, 64.0]}  # tuned on validation for the shipped model only
 
-_FEATS: dict[str, list[str]] = {}
-
-
-def feats(text: str) -> list[str]:
-    f = _FEATS.get(text)
-    if f is None:
-        f = analyze(text)
-        _FEATS[text] = f
-    return f
+COUNTS = ROOT / "ml" / "work" / "counts.pkl"
 
 
-def identity(x):
-    return x
+class Corpus:
+    """Raw feature counts for every row of the dataset over one global feature index.
+
+    Built once per dataset (keyed by its SHA-256) and cached in ml/work/counts.pkl, so
+    experiments only slice sparse matrices instead of re-tokenising text."""
+
+    def __init__(self, rows: list[dict], data_sha: str):
+        if COUNTS.exists():
+            with COUNTS.open("rb") as f:
+                obj = pickle.load(f)
+            if obj.get("sha") == data_sha and obj.get("featurizer") == FEATURIZER_VERSION:
+                self.names, self.C, self.row = obj["names"], obj["C"], obj["row"]
+                self.fid = {n: i for i, n in enumerate(self.names)}
+                print(f"  loaded cached counts: {self.C.shape[0]} rows x {self.C.shape[1]} features")
+                return
+        t0 = time.time()
+        fid: dict[str, int] = {}
+        indptr, indices, data = [0], [], []
+        for r in rows:
+            c = Counter(analyze(r["text"]))
+            for f, n in c.items():
+                j = fid.get(f)
+                if j is None:
+                    j = fid[f] = len(fid)
+                indices.append(j)
+                data.append(n)
+            indptr.append(len(indices))
+        self.fid = fid
+        self.names = [None] * len(fid)
+        for f, j in fid.items():
+            self.names[j] = f
+        self.C = sparse.csr_matrix(
+            (np.array(data, dtype=np.float64), np.array(indices, dtype=np.int64), np.array(indptr, dtype=np.int64)),
+            shape=(len(rows), len(fid)),
+        )
+        self.row = {r["id"]: i for i, r in enumerate(rows)}
+        COUNTS.parent.mkdir(parents=True, exist_ok=True)
+        with COUNTS.open("wb") as f:
+            pickle.dump({"sha": data_sha, "featurizer": FEATURIZER_VERSION, "names": self.names, "C": self.C, "row": self.row}, f, protocol=5)
+        print(f"  featurised {len(rows)} rows -> {len(fid)} features in {time.time()-t0:.0f}s")
+
+    def sub(self, recs: list[dict]) -> sparse.csr_matrix:
+        return self.C[[self.row[r["id"]] for r in recs]]
+
+
+def tfidf(Csub: sparse.csr_matrix, cols: np.ndarray, idf: np.ndarray) -> sparse.csr_matrix:
+    """Sublinear tf * idf, L2-normalised over the given columns (scikit-learn TfidfVectorizer maths)."""
+    X = Csub[:, cols].tocsr().astype(np.float64)
+    X.data = 1.0 + np.log(X.data)
+    X = (X @ sparse.diags(idf)).tocsr()
+    return normalize(X, norm="l2", copy=False)
 
 
 # --- model fitting ----------------------------------------------------------------
 
 def _lr(C: float) -> LogisticRegression:
-    return LogisticRegression(C=C, class_weight="balanced", max_iter=4000, tol=1e-6, solver="lbfgs", random_state=SEED)
+    return LogisticRegression(C=C, class_weight="balanced", max_iter=3000, tol=1e-5, solver="lbfgs", random_state=SEED)
 
 
-def fit(train: list[dict], val: list[dict], hp: dict, name: str) -> dict:
+def fit(corpus: Corpus, train: list[dict], val: list[dict], hp: dict, name: str, tune: bool = False) -> dict:
     t0 = time.time()
-    docs = [feats(r["text"]) for r in train]
     y = np.array([r["label"] == "scam" for r in train], dtype=int)
     w = np.array([r.get("weight", 1.0) for r in train], dtype=float)
     pc = Counter(r["pattern"] for r in train if r["label"] == "scam" and r.get("pattern"))
@@ -88,36 +130,63 @@ def fit(train: list[dict], val: list[dict], hp: dict, name: str) -> dict:
     pidx = [i for i, r in enumerate(train) if r["label"] == "scam" and r.get("pattern") in cidx]
     yp = np.array([cidx[train[i]["pattern"]] for i in pidx], dtype=int)
 
-    v1 = TfidfVectorizer(analyzer=identity, sublinear_tf=True, min_df=2, dtype=np.float64)
-    X1 = v1.fit_transform(docs)
+    # stage 1: full vocabulary (min_df 2) -> feature selection
+    Ct = corpus.sub(train)
+    n = Ct.shape[0]
+    df = np.asarray((Ct > 0).sum(axis=0)).ravel()
+    cols1 = np.where(df >= 2)[0]
+    X1 = tfidf(Ct, cols1, np.log((1 + n) / (1 + df[cols1])) + 1)
     lb = _lr(hp["Cb"]).fit(X1, y, sample_weight=w)
-    sel = set(np.argsort(-np.abs(lb.coef_[0]))[: hp["Nb"]].tolist())
-    lp = None
+    sel = set(cols1[np.argsort(-np.abs(lb.coef_[0]))[: hp["Nb"]]].tolist())
     if len(classes) >= 2:
-        lp = _lr(hp["Cp"]).fit(X1[pidx], yp, sample_weight=w[pidx])
+        Xp = X1[pidx]
         for k in range(len(classes)):
-            sel |= set(np.argsort(-np.abs(lp.coef_[k]))[: hp["Np"]].tolist())
-    names = v1.get_feature_names_out()
-    vocab = sorted(names[i] for i in sel)
+            sc, _ = chi2(Xp, (yp == k).astype(int))
+            sc = np.nan_to_num(sc)
+            sel |= set(cols1[np.argsort(-sc)[: hp["Np"]]].tolist())
 
-    v2 = TfidfVectorizer(analyzer=identity, sublinear_tf=True, vocabulary=vocab, dtype=np.float64)
-    X2 = v2.fit_transform(docs)
-    lb2 = _lr(hp["Cb"]).fit(X2, y, sample_weight=w)
+    # stage 2: refit on the selected vocabulary (this is what ships)
+    cols2 = np.array(sorted(sel, key=lambda j: corpus.names[j]), dtype=np.int64)
+    idf2 = np.round(np.log((1 + n) / (1 + df[cols2])) + 1, 6)
+    X2 = tfidf(Ct, cols2, idf2)
+    Xv = tfidf(corpus.sub(val), cols2, idf2) if val else None
+    yv = np.array([r["label"] == "scam" for r in val], dtype=int) if val else None
+    pv = [i for i, r in enumerate(val) if r["label"] == "scam" and r.get("pattern") in cidx] if val else []
+    ypv = np.array([cidx[val[i]["pattern"]] for i in pv], dtype=int)
+
+    grid_log = []
+    best_b = None
+    for Cb in (GRID["Cb"] if tune else [hp["Cb"]]):
+        m = _lr(Cb).fit(X2, y, sample_weight=w)
+        auc = roc_auc_score(yv, m.decision_function(Xv)) if (val and len(set(yv.tolist())) == 2) else 0.0
+        grid_log.append({"head": "binary", "C": Cb, "val_auroc": r4(auc)})
+        if best_b is None or auc > best_b[0] + 1e-9:
+            best_b = (auc, Cb, m)
+    _, Cb, lb2 = best_b
     bw = np.round(lb2.coef_[0] * SCALE).astype(np.int64)
-    triples: list[int] = []
+
+    triples: list[tuple[int, int, int]] = []
     pb: list[float] = []
+    Cp = hp["Cp"]
     if len(classes) >= 2:
-        lp2 = _lr(hp["Cp"]).fit(X2[pidx], yp, sample_weight=w[pidx])
-        W = lp2.coef_  # K x V
+        best_p = None
+        for Cp_ in (GRID["Cp"] if tune else [hp["Cp"]]):
+            m = _lr(Cp_).fit(X2[pidx], yp, sample_weight=w[pidx])
+            acc = float((m.decision_function(Xv[pv]).argmax(axis=1) == ypv).mean()) if pv else 0.0
+            grid_log.append({"head": "patterns", "C": Cp_, "val_top1": r4(acc)})
+            if best_p is None or acc > best_p[0] + 1e-9:
+                best_p = (acc, Cp_, m)
+        _, Cp, lp2 = best_p
+        W = lp2.coef_
         for k in range(len(classes)):
-            order = np.argsort(-np.abs(W[k]))[: hp["M"]]
-            for j in sorted(order.tolist()):
+            for j in np.argsort(-np.abs(W[k]))[: hp["M"]].tolist():
                 q = int(round(W[k, j] * SCALE))
                 if q != 0:
                     triples.append((j, k, q))
         triples.sort()
         pb = [round(float(b), 6) for b in lp2.intercept_]
     flat = [v for t in triples for v in t]
+    hp = {**hp, "Cb": Cb, "Cp": Cp}
 
     art = {
         "format": "ruko-text-model",
@@ -128,13 +197,14 @@ def fit(train: list[dict], val: list[dict], hp: dict, name: str) -> dict:
         "training_data_sha256": "",
         "weight_scale": SCALE,
         "hyperparameters": hp,
-        "vocab": vocab,
-        "idf": [round(float(v), 6) for v in v2.idf_],
+        "vocab": [corpus.names[j] for j in cols2],
+        "idf": idf2.tolist(),
         "binary": {"w": bw.tolist(), "b": round(float(lb2.intercept_[0]), 6), "calibration": {"a": 1.0, "b": 0.0},
                    "thresholds": {"likely_scam": 0.85, "possible_scam": 0.5}},
         "patterns": {"classes": classes, "b": pb if pb else [0.0] * len(classes), "w": flat, "temperature": 1.0},
     }
-    calibrate(art, val)
+    art["_grid"] = grid_log
+    calibrate(art, corpus, val)
     art["_fit_seconds"] = round(time.time() - t0, 1)
     return art
 
@@ -142,9 +212,9 @@ def fit(train: list[dict], val: list[dict], hp: dict, name: str) -> dict:
 class Scorer:
     """Vectorised scoring of an exported artefact (same maths as ExportedModel / server/ml/model.ts)."""
 
-    def __init__(self, art: dict):
-        self.art = art
-        self.index = {f: i for i, f in enumerate(art["vocab"])}
+    def __init__(self, art: dict, corpus: Corpus):
+        self.art, self.corpus = art, corpus
+        self.cols = np.array([corpus.fid[f] for f in art["vocab"]], dtype=np.int64)
         self.idf = np.array(art["idf"])
         V = len(art["vocab"])
         self.bw = np.array(art["binary"]["w"], dtype=float) / art["weight_scale"]
@@ -157,28 +227,14 @@ class Scorer:
             self.PW = sparse.csr_matrix((V, max(K, 1)))
         self.pb = np.array(art["patterns"]["b"] or [0.0])
 
-    def X(self, texts: list[str]) -> sparse.csr_matrix:
-        indptr, idx, vals = [0], [], []
-        for t in texts:
-            c = Counter(j for f in feats(t) if (j := self.index.get(f)) is not None)
-            js = sorted(c)
-            v = np.array([(1 + math.log(c[j])) * self.idf[j] for j in js])
-            n = np.linalg.norm(v)
-            if n > 0:
-                v = v / n
-            idx.extend(js)
-            vals.extend(v.tolist())
-            indptr.append(len(idx))
-        return sparse.csr_matrix((vals, idx, indptr), shape=(len(texts), len(self.idf)))
-
-    def raw(self, texts: list[str]):
-        X = self.X(texts)
+    def raw(self, recs: list[dict]):
+        X = tfidf(self.corpus.sub(recs), self.cols, self.idf)
         z = X @ self.bw + self.art["binary"]["b"]
         L = np.asarray((X @ self.PW).todense()) + self.pb
         return z, L
 
-    def predict(self, texts: list[str]):
-        z, L = self.raw(texts)
+    def predict(self, recs: list[dict]):
+        z, L = self.raw(recs)
         cal = self.art["binary"]["calibration"]
         p = 1 / (1 + np.exp(-(cal["a"] * z + cal["b"])))
         T = self.art["patterns"]["temperature"]
@@ -188,14 +244,12 @@ class Scorer:
         return p, P
 
 
-def calibrate(art: dict, val: list[dict]) -> None:
+def calibrate(art: dict, corpus: Corpus, val: list[dict]) -> None:
     if not val:
         return
-    sc = Scorer(art)
-    texts = [r["text"] for r in val]
-    z, L = sc.raw(texts)
+    z, L = Scorer(art, corpus).raw(val)
     y = np.array([r["label"] == "scam" for r in val], dtype=int)
-    if len(set(y)) == 2:
+    if len(set(y.tolist())) == 2:
         pl = LogisticRegression(C=1e6, max_iter=2000, solver="lbfgs").fit(z.reshape(-1, 1), y)
         art["binary"]["calibration"] = {"a": round(float(pl.coef_[0, 0]), 6), "b": round(float(pl.intercept_[0]), 6)}
     classes = art["patterns"]["classes"]
@@ -211,7 +265,9 @@ def calibrate(art: dict, val: list[dict]) -> None:
             if nll < best[0]:
                 best = (nll, float(T))
         art["patterns"]["temperature"] = round(best[1], 4)
-    # operating thresholds, chosen on validation
+    # operating thresholds, chosen on validation:
+    #   likely_scam   = 98th percentile of genuine scores (about 2% false alarms on val), at least 0.5
+    #   possible_scam = 5th percentile of scam scores (about 95% recall on val), at least 0.2
     a, b = art["binary"]["calibration"]["a"], art["binary"]["calibration"]["b"]
     p = 1 / (1 + np.exp(-(a * z + b)))
     gen = np.sort(p[y == 0])
@@ -340,14 +396,14 @@ def slice_metrics(rows, p, th, key):
     return out
 
 
-def evaluate(art: dict, sets: dict[str, list[dict]], slices: bool) -> dict:
-    sc = Scorer(art)
+def evaluate(art: dict, corpus: Corpus, sets: dict[str, list[dict]], slices: bool) -> dict:
+    sc = Scorer(art, corpus)
     th = art["binary"]["thresholds"]
     res = {}
     for nm, rows in sets.items():
         if not rows:
             continue
-        p, P = sc.predict([r["text"] for r in rows])
+        p, P = sc.predict(rows)
         d = {"binary": binary_metrics(rows, p, th)}
         if len(art["patterns"]["classes"]) >= 2:
             d["patterns"] = pattern_metrics(rows, P, art["patterns"]["classes"])
@@ -402,21 +458,6 @@ def experiments(rows):
         "bothbosu_only": (pick(rows, "train", BOTH), pick(rows, "val", BOTH)),
         "lang_holdout_ta_bn_mr": (pick(rows, "train", main_src, ("ta", "bn", "mr")), pick(rows, "val", main_src, ("ta", "bn", "mr"))),
     }
-
-
-def tune(train, val):
-    """Small grid on validation: binary AUROC + pattern top-1 (stage-1 sized vocab for speed)."""
-    results = []
-    for Cb in GRID["Cb"]:
-        for Cp in GRID["Cp"]:
-            hp = {**HP, "Cb": Cb, "Cp": Cp, "Nb": 12000, "Np": 400, "M": 600}
-            art = fit(train, val, hp, "tune")
-            m = evaluate(art, {"val": val}, False)["val"]
-            score = (m["binary"].get("auroc") or 0) + (m.get("patterns", {}).get("top1") or 0)
-            results.append({"Cb": Cb, "Cp": Cp, "val_auroc": m["binary"].get("auroc"), "val_top1": m.get("patterns", {}).get("top1"), "score": round(score, 4)})
-            print(f"    tune Cb={Cb} Cp={Cp} auroc={m['binary'].get('auroc')} top1={m.get('patterns', {}).get('top1')}")
-    best = max(results, key=lambda r: r["score"])
-    return {**HP, "Cb": best["Cb"], "Cp": best["Cp"]}, results
 
 
 def model_size(art) -> int:
@@ -478,15 +519,16 @@ def main():
     sets = eval_sets(rows)
     RESULTS.mkdir(parents=True, exist_ok=True)
     summary = {"dataset_sha256": data_sha, "experiments": {}}
+    corpus = Corpus(rows, data_sha)
     exps = experiments(rows)
     if args.only:
         exps = {k: v for k, v in exps.items() if k in args.only.split(",")}
     for name, (train, val) in exps.items():
         print(f"== {name}: train={len(train)} val={len(val)}")
-        hp, grid = (HP, []) if (args.no_tune or name != "main") else tune(train, val)
-        art = fit(train, val, hp, name)
-        res = evaluate(art, sets, slices=(name == "main"))
-        res["val"] = evaluate(art, {"val": val}, False)["val"]
+        art = fit(corpus, train, val, HP, name, tune=(name == "main" and not args.no_tune))
+        hp, grid = art["hyperparameters"], art.pop("_grid", [])
+        res = evaluate(art, corpus, sets, slices=(name == "main"))
+        res["val"] = evaluate(art, corpus, {"val": val}, False)["val"]
         info = {
             "experiment": name, "hyperparameters": hp, "tuning_grid": grid,
             "train": {"n": len(train), "by_source": dict(Counter(r["source"] for r in train)), "by_label": dict(Counter(r["label"] for r in train))},
