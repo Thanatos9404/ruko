@@ -1,9 +1,11 @@
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowDown, ArrowRight } from "lucide-react";
-import { Button, CTASection, EASE, Magnetic, Marquee, Reveal, SmoothScroll, WordReveal } from "../kit";
+import { useState } from "react";
+import { Button, EASE, Magnetic, Marquee, Reveal, SmoothScroll, WordReveal } from "../kit";
 import { SiteFooter, SiteNav } from "../components/SiteNav";
 import { RukoIntro } from "../components/brand/RukoLogo";
 import { Arcs } from "../components/Arcs";
+import { StopLine } from "../components/brand/StopLine";
 import { DemoExperience } from "../components/demo/DemoExperience";
 import { useEvalResults } from "../lib/useEvalResults";
 import { BuiltOnBolna, Business, FreeChecker, HowItWorks, Problem, Results } from "./landing/sections";
@@ -12,26 +14,30 @@ function Hero() {
   const reduce = useReducedMotion();
   const ev = useEvalResults();
   const fresh = ev?.current.find((r) => r.clean_holdout);
+  // On phones the logo beat plays alongside the copy instead of before it, so the
+  // headline and the buttons are on screen at once.
+  const [phone] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches);
+  const at = phone ? { word: 0.1, lead: 0.3, cta: 0.4, stats: 0.55, note: 0.6 } : { word: 1.9, lead: 2.4, cta: 2.6, stats: 2.8, note: 2.9 };
   const after = (d: number) => ({
     initial: reduce ? { opacity: 0 } : { opacity: 0, y: 12, filter: "blur(6px)" },
     animate: { opacity: 1, y: 0, filter: "blur(0px)" },
-    transition: { duration: 0.6, ease: EASE, delay: reduce ? 0 : d },
+    transition: { duration: phone ? 0.45 : 0.6, ease: EASE, delay: reduce ? 0 : d },
   });
   return (
-    <section id="top" className="relative isolate overflow-hidden pb-16 pt-28 md:pt-32">
+    <section id="top" className="relative isolate overflow-hidden pb-16 pt-24 md:pt-32">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(50%_45%_at_50%_30%,color-mix(in_oklab,var(--coral)_12%,transparent),transparent_70%)]" />
       <Arcs className="-z-10 opacity-60 [mask-image:linear-gradient(to_bottom,transparent,black_40%,black)]" />
       <div className="container-x flex flex-col items-center text-center">
-        <motion.div {...after(0)} className="glass mb-6 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 font-display text-[13px] font-medium text-ink-2">
+        <motion.div {...after(0)} className="glass mb-5 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 font-display text-[13px] font-medium text-ink-2 md:mb-6">
           <span className="size-1.5 rounded-full bg-[var(--coral)]" aria-hidden />
-          Bolna × YC Symphony Buildathon · voice AI for payment safety
+          Bolna × YC Symphony Buildathon<span className="hidden sm:inline"> · voice AI for payment safety</span>
         </motion.div>
-        <RukoIntro className="w-[min(230px,52vw)] text-ink" />
-        <WordReveal text="Stop the scam before the money *leaves.*" className="t-hero mt-8 max-w-[18ch]" delay={1.9} gap={0.06} />
-        <motion.p {...after(2.4)} className="t-lead mt-6 max-w-[58ch]">
+        <RukoIntro className="w-[clamp(118px,34vw,150px)] text-ink md:w-[230px]" />
+        <WordReveal text="Stop the scam before the money *leaves.*" className="t-hero mt-5 max-w-[18ch] md:mt-8" delay={reduce ? 0 : at.word} gap={phone ? 0.035 : 0.06} />
+        <motion.p {...after(at.lead)} className="t-lead mt-5 max-w-[58ch] md:mt-6">
           When a payment looks coached, Ruko holds it and a Bolna voice agent calls the customer in their language, names the scam out loud, and stops the money.
         </motion.p>
-        <motion.div {...after(2.6)} className="mt-9 flex flex-wrap items-center justify-center gap-3">
+        <motion.div {...after(at.cta)} className="mt-7 flex flex-wrap items-center justify-center gap-3 md:mt-9">
           <Magnetic>
             <Button href="#demo" size="lg" icon={<ArrowDown size={17} strokeWidth={1.8} />}>
               Watch it stop a scam
@@ -41,7 +47,7 @@ function Hero() {
             Is this a scam? Free check
           </Button>
         </motion.div>
-        <motion.a {...after(2.8)} href="#results" className="mt-10 grid w-full max-w-[640px] grid-cols-3 divide-x divide-[var(--hair)] rounded-2xl border border-hair bg-paper-2/60 py-4 backdrop-blur transition hover:border-[var(--hair-strong)]">
+        <motion.a {...after(at.stats)} href="#results" className="mt-10 grid w-full max-w-[640px] grid-cols-3 divide-x divide-[var(--hair)] rounded-2xl border border-hair bg-paper-2/60 py-4 backdrop-blur transition hover:border-[var(--hair-strong)]">
           {[
             [fresh ? `${fresh.scam_catch.k}/${fresh.scam_catch.n}` : "–", "scams caught (held-out)"],
             [fresh ? `${fresh.false_hold.k}/${fresh.false_hold.n}` : "–", "genuine payments held"],
@@ -53,7 +59,7 @@ function Hero() {
             </span>
           ))}
         </motion.a>
-        <motion.p {...after(2.9)} className="mt-2 text-[11.5px] text-muted">
+        <motion.p {...after(at.note)} className="mt-2 text-[11.5px] text-muted">
           Text-mode evaluation; see Results for how it was measured.
         </motion.p>
       </div>
@@ -109,20 +115,25 @@ export default function Landing() {
         <BuiltOnBolna />
         <Business />
         <FreeChecker />
-        <CTASection
-          title={<>Wait, before the money <span className="t-serif">leaves.</span></>}
-          lead="Ruko is open source under MIT. Banks and payment apps: the API is ready for a pilot."
-          action={
-            <div className="flex flex-wrap justify-center gap-3">
-              <Button href="/demo" size="lg" icon={<ArrowRight size={17} />}>
-                Open the sandbox
-              </Button>
-              <Button href="/console" size="lg" variant="glass">
-                Fraud-ops console
-              </Button>
-            </div>
-          }
-        />
+        <section aria-labelledby="cta-title" className="relative isolate overflow-hidden border-t border-hair pb-24 pt-16 md:pb-28 md:pt-20">
+          <StopLine className="mx-auto h-[120px] w-full max-w-[1200px] md:h-[170px]" />
+          <div className="container-x">
+            <Reveal className="mx-auto mt-6 max-w-[680px] text-center">
+              <h2 id="cta-title" className="t-h2">
+                Wait, before the money <span className="t-serif">leaves.</span>
+              </h2>
+              <p className="t-lead mt-4">Ruko is open source under MIT. Banks and payment apps: the API is ready for a pilot.</p>
+              <div className="mt-8 flex flex-wrap justify-center gap-3">
+                <Button href="/demo" size="lg" icon={<ArrowRight size={17} />}>
+                  Open the sandbox
+                </Button>
+                <Button href="/console" size="lg" variant="glass">
+                  Fraud-ops console
+                </Button>
+              </div>
+            </Reveal>
+          </div>
+        </section>
       </main>
       <SiteFooter />
     </SmoothScroll>

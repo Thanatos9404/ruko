@@ -116,19 +116,19 @@ export const CHECK_HANGUP = {
 
 export function checkGreeting(lang: "en" | "hi", v: { customer_name: string; bank_name: string; code_word: string }): string {
   return lang === "hi"
-    ? `नमस्ते ${v.customer_name} जी, मैं रुको, ${v.bank_name} की भुगतान सुरक्षा सहायक। आपका कोड शब्द है ${v.code_word}। क्या यह आपके ऐप से मिलता है?`
-    : `Hello ${v.customer_name}, this is Ruko, ${v.bank_name}'s payment safety assistant. Your code word is ${v.code_word}. Does it match your app?`;
+    ? `नमस्ते ${v.customer_name} जी, मैं रुको, ${v.bank_name} की ऑटोमेटेड भुगतान सुरक्षा सहायक। आपकी सुरक्षा के लिए यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है ${v.code_word}। क्या यह आपके ऐप से मिलता है?`
+    : `Hello ${v.customer_name}, this is Ruko, ${v.bank_name}'s automated payment safety assistant. This call is recorded for your safety. Your code word is ${v.code_word}. Does it match your app?`;
 }
 
 export function contactGreeting(lang: "en" | "hi", v: { contact_name: string; bank_name: string; customer_name: string }): string {
   return lang === "hi"
-    ? `नमस्ते ${v.contact_name} जी, मैं ${v.bank_name} की भुगतान सुरक्षा सहायक, रुको, बोल रही हूँ। ${v.customer_name} जी ने आपको अपना भरोसेमंद संपर्क चुना है, इसलिए कॉल किया है।`
-    : `Hello ${v.contact_name}, this is Ruko, the payment safety assistant from ${v.bank_name}. ${v.customer_name} chose you as their trusted contact, so we're calling you.`;
+    ? `नमस्ते ${v.contact_name} जी, मैं ${v.bank_name} की ऑटोमेटेड भुगतान सुरक्षा सहायक, रुको, बोल रही हूँ। यह कॉल रिकॉर्ड हो रही है। ${v.customer_name} जी ने आपको अपना भरोसेमंद संपर्क चुना है, इसलिए कॉल किया है।`
+    : `Hello ${v.contact_name}, this is Ruko, the automated payment safety assistant from ${v.bank_name}. This call is recorded. ${v.customer_name} chose you as their trusted contact, so we're calling you.`;
 }
 
 export const LINE_GREETING = {
-  en: "Hi, this is Ruko, the free 'Is this a scam?' line. Tell me what happened, and we'll check it together. Please don't share any names, numbers or codes.",
-  hi: "नमस्ते, मैं रुको हूँ, मुफ़्त 'कहीं यह धोखा तो नहीं?' लाइन। बताइए क्या हुआ, हम साथ में जाँचेंगे। कृपया कोई नाम, नंबर या कोड न बताएँ।",
+  en: "Hi, this is Ruko, the free and automated 'Is this a scam?' line. This call is recorded to improve fraud advice. Tell me what happened, and we'll check it together. Please don't share any names, numbers or codes.",
+  hi: "नमस्ते, मैं रुको हूँ, मुफ़्त और ऑटोमेटेड 'कहीं यह धोखा तो नहीं?' लाइन। धोखाधड़ी से जुड़ी सलाह बेहतर करने के लिए यह कॉल रिकॉर्ड हो रही है। बताइए क्या हुआ, हम साथ में जाँचेंगे। कृपया कोई नाम, नंबर या कोड न बताएँ।",
 };
 
 /** Fills {var} placeholders the way Bolna does for flat variables (unknown ones become empty). */

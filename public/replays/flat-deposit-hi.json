@@ -1,60 +1,60 @@
 {
  "scenario": "flat-deposit",
  "lang": "hi",
- "recorded_code_word": "केला 27",
+ "recorded_code_word": "गुलाब 15",
  "recorded_decision": "release",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "नमस्ते Priya जी, मैं रुको, Demo Bank की भुगतान सुरक्षा सहायक। आपका कोड शब्द है केला 27। क्या यह आपके ऐप से मिलता है?"
+   "text": "नमस्ते Priya जी, मैं रुको, Demo Bank की ऑटोमेटेड भुगतान सुरक्षा सहायक। आपकी सुरक्षा के लिए यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है गुलाब 15। क्या यह आपके ऐप से मिलता है?"
   },
   {
    "role": "customer",
-   "text": "हाँ, केला 27 सही है। जल्दी करें, मुझे भुगतान करना है।"
+   "text": "हाँ, गुलाब 15 मेरे ऐप से मेल खाता है।"
   },
   {
    "role": "tool",
    "tool": "get_check_context",
    "args": {
-    "check_id": "chk_3CLJNMGDYU",
+    "check_id": "chk_4QQFTHE4N5",
     "execution_id": "eval-demo-flat-deposit-hi"
    }
   },
   {
    "role": "agent",
-   "text": "आपके ऐप के अनुसार भुगतान करते समय आप एक फ़ोन कॉल पर थीं। क्या आप उस कॉल पर किसी अनजान व्यक्ति से बात कर रही थीं?"
+   "text": "क्या इस समय कोई और फ़ोन या वीडियो कॉल पर आपको बता रहा है कि क्या करना है?"
   },
   {
    "role": "customer",
-   "text": "नहीं, मैं अपने पति से बात कर रही थी, वो लेटर से खाता नंबर पढ़ रहे हैं। भुगतान जल्दी कर दीजिए।"
+   "text": "नहीं, मेरे पति अनिल फ़ोन पर हैं, वे बस खाता नंबर पढ़ रहे हैं। कोई दबाव नहीं है।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_3CLJNMGDYU",
+    "check_id": "chk_4QQFTHE4N5",
     "signal": "family_helping",
-    "evidence": "पति ने खाता नंबर पढ़ा",
+    "evidence": "पति अनिल फ़ोन पर हैं और खाता नंबर पढ़ रहे हैं",
     "confidence": "high",
     "pattern_hint": "none"
    }
   },
   {
    "role": "agent",
-   "text": "क्या आप इस भुगतान के लिए Shree Ganesh Builders को कैसे जानती हैं?"
+   "text": "क्या आप इस भुगतान के लिए Shree Ganesh Builders को जानती हैं? और यह पैसा किस लिए है?"
   },
   {
    "role": "customer",
-   "text": "मैं उनके साइट ऑफिस दो बार गई हूँ, अलॉटमेंट लेटर भी मिला है। कृपया भुगतान प्रोसेस करें, मैं जल्दी में हूँ।"
+   "text": "हाँ, मैं उन्हें जानती हूँ। यह फ्लैट बुकिंग के लिए है, मैंने उनके साइट ऑफिस दो बार जाकर अलॉटमेंट लेटर देखा है।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_3CLJNMGDYU",
+    "check_id": "chk_4QQFTHE4N5",
     "signal": "knows_payee",
-    "evidence": "साइट ऑफिस गई है, अलॉटमेंट लेटर मिला है",
+    "evidence": "जानती हैं, साइट ऑफिस गई हैं, अलॉटमेंट लेटर देखा है",
     "confidence": "high",
     "pattern_hint": "none"
    }
@@ -63,14 +63,14 @@
    "role": "tool",
    "tool": "set_decision",
    "args": {
-    "check_id": "chk_3CLJNMGDYU",
+    "check_id": "chk_4QQFTHE4N5",
     "recommendation": "release",
-    "reason": "ग्राहक भुगतान लेनदेन के लिए भुगतान देने वाले को जानती है और इसके लिए अलॉटमेंट लेटर भी है।"
+    "reason": "ग्राहक भुगतान के लिए भुगतान देने वाले को जानती हैं और उनके साइट ऑफिस गई हैं।"
    }
   },
   {
    "role": "agent",
-   "text": "धन्यवाद। आपका 1 लाख 50 हज़ार रुपये का भुगतान अब जा रहा है।"
+   "text": "धन्यवाद। आपका 1 लाख 50 हज़ार रुपये का भुगतान अब जा रहा है। आपका पैसा सुरक्षित है। आपके लिए बहुत खुशी हुई। अलविदा।"
   }
  ]
 }

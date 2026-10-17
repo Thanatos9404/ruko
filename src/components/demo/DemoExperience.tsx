@@ -3,7 +3,8 @@ import { Languages, PhoneIncoming, RotateCcw } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Lang } from "../../../shared/types";
 import { formatINR } from "../../../shared/format";
-import { api, type DemoScenarioView, type LiveStatus } from "../../lib/api";
+import { DEMO_SCENARIO_VIEWS, type DemoScenarioView } from "../../../shared/scenarios";
+import { api, type LiveStatus } from "../../lib/api";
 import { cn, EASE } from "../../kit";
 import { Phone } from "./Phone";
 import { AllowedScreen, CallScreen, HoldScreen, OutcomeScreen, PayScreen } from "./Screens";
@@ -19,13 +20,12 @@ const LANG_LABEL: Record<Lang, string> = { en: "English", hi: "हिंदी" 
  */
 export function DemoExperience({ compact = false, scenarios: only }: { compact?: boolean; scenarios?: string[] }) {
   const d = useDemo();
-  const [scenarios, setScenarios] = useState<DemoScenarioView[]>([]);
+  const scenarios = DEMO_SCENARIO_VIEWS;
   const [live, setLive] = useState<LiveStatus | null>(null);
   const [askCode, setAskCode] = useState(false);
   const [now, setNow] = useState(Date.now());
 
   useEffect(() => {
-    api.scenarios().then((r) => setScenarios(r.data)).catch(() => setScenarios([]));
     api.liveStatus().then(setLive).catch(() => setLive(null));
   }, []);
   useEffect(() => {
@@ -33,7 +33,8 @@ export function DemoExperience({ compact = false, scenarios: only }: { compact?:
     return () => clearInterval(t);
   }, []);
 
-  const list = useMemo(() => (only ? scenarios.filter((s) => only.includes(s.id)) : scenarios), [scenarios, only]);
+  const onlyKey = only?.join(",") ?? "";
+  const list = useMemo(() => (onlyKey ? scenarios.filter((s) => onlyKey.split(",").includes(s.id)) : scenarios), [scenarios, onlyKey]);
   const sc = scenarios.find((s) => s.id === d.scenario);
   const liveAvailable = Boolean(live && (live.live || live.reason === "daily_cap") && live.reason !== "not_configured");
 

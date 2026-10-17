@@ -3,7 +3,7 @@
   "id": "digital-arrest",
   "lang": "en",
   "decision": "block",
-  "turns": 4
+  "turns": 3
  },
  {
   "id": "digital-arrest",
@@ -14,14 +14,14 @@
  {
   "id": "investment-group",
   "lang": "en",
-  "decision": "block",
-  "turns": 2
+  "decision": "delay",
+  "turns": 5
  },
  {
   "id": "investment-group",
   "lang": "hi",
-  "decision": "delay",
-  "turns": 4
+  "decision": "block",
+  "turns": 3
  },
  {
   "id": "flat-deposit",
@@ -39,13 +39,13 @@
   "id": "task-job",
   "lang": "en",
   "decision": "block",
-  "turns": 3
+  "turns": 2
  },
  {
   "id": "task-job",
   "lang": "hi",
   "decision": "block",
-  "turns": 4
+  "turns": 3
  },
  {
   "id": "hospital-bill",

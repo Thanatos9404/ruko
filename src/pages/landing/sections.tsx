@@ -36,7 +36,7 @@ export function Problem() {
         </Reveal>
         <p className="t-eyebrow mb-6 text-center">Hindi for “wait”</p>
         <ScrollWords text="In 2024, Indians reported ₹22,845 crore lost to cyber fraud. In the scams that hurt most, the victim pressed *Pay* themselves." />
-        <Stagger className="mt-16 grid gap-4 md:grid-cols-3">
+        <Stagger className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-3">
           {[
             {
               n: "₹1,935 cr",
@@ -88,7 +88,7 @@ export function HowItWorks() {
     <section id="how" className="section-y border-t border-hair">
       <div className="container-x">
         <SectionHeader eyebrow="How it works" title={<>Hold. Call. <span className="t-serif">Decide.</span></>} lead="Three beats, about a minute, and every step is explained in the audit trail the bank keeps." />
-        <Stagger className="mt-14 grid gap-8 md:grid-cols-3">
+        <Stagger className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3">
           <Beat
             n="01 · Hold"
             title="The payment pauses"
@@ -171,9 +171,9 @@ export function Results() {
           title={<>It catches the scam and lets <span className="t-serif">rent</span> through.</>}
           lead="We ran Ruko's agent and policy against LLM-played customers: coached victims of ten scam types, genuine payers and ambiguous cases, in English, Hindi and Hinglish."
         />
-        <Reveal className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Reveal className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           <RateTile label="Scams caught, fresh held-out set" rate={fresh?.scam_catch} hint="Stories written after tuning and never used to tune anything." />
-          <RateTile label="False holds on genuine payments, held-out" rate={fresh?.false_hold} good="low" hint="Rent, fees, a hospital bill, a tractor down-payment: delayed or blocked in error." />
+          <RateTile label="False holds on genuine payments, held-out" rate={fresh?.false_hold} good="low" hint="Society maintenance, a garage bill, a clinic fee, a wedding photographer: genuine payments delayed or blocked in error." />
           <RateTile label="Scams caught, development set" rate={dev?.scam_catch} hint="60 coached-victim calls across ten patterns, two coaching levels." />
           <div className="card p-5">
             <p className="text-[13px] font-medium text-ink-2">Times the agent asked for an OTP or PIN</p>
@@ -182,7 +182,7 @@ export function Results() {
             <p className="mt-3 text-[12.5px] leading-snug text-muted">Every mention was checked by a separate judge model.</p>
           </div>
         </Reveal>
-        <Reveal className="mt-4 grid gap-4 md:grid-cols-3">
+        <Reveal className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
           <div className="card p-5">
             <p className="text-[13px] font-medium text-ink-2">Median customer turns to a decision</p>
             <p className="t-num mt-2 text-[30px]">{dev?.median_turns ?? "–"}</p>
@@ -256,9 +256,10 @@ export function BuiltOnBolna() {
 function Architecture() {
   const box = "rounded-2xl border border-hair bg-paper-2 px-4 py-3";
   return (
-    <div className="card overflow-x-auto p-6">
+    <div className="card p-5 sm:p-6">
       <p className="t-eyebrow mb-5">Architecture</p>
-      <div className="grid min-w-[760px] grid-cols-[1fr_auto_1.2fr_auto_1fr] items-center gap-4 text-[13px]">
+      {/* Stacks top to bottom on phones; flows left to right on wide screens. */}
+      <div className="grid grid-cols-1 items-center gap-3 text-[13px] lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1.2fr)_auto_minmax(0,1fr)] lg:gap-4">
         <div className="space-y-3">
           <div className={box}>
             <p className="font-semibold text-ink">Bank / UPI app</p>
@@ -269,7 +270,7 @@ function Architecture() {
             <p className="text-muted">Code word, app status, Web Call SDK</p>
           </div>
         </div>
-        <ArrowRight className="text-muted" size={18} />
+        <ArrowRight aria-hidden className="justify-self-center rotate-90 text-muted lg:rotate-0" size={18} />
         <div className="rounded-2xl border border-[color-mix(in_oklab,var(--coral)_45%,transparent)] bg-stop-soft p-4">
           <p className="font-display text-[15px] font-semibold text-ink">Ruko API (Vercel)</p>
           <ul className="mt-2 space-y-1 text-ink-2">
@@ -280,9 +281,9 @@ function Architecture() {
             <li>Live-call gate · wallet floor</li>
           </ul>
         </div>
-        <div className="flex flex-col items-center gap-1 text-muted">
-          <ArrowRight size={18} />
-          <ArrowRight size={18} className="rotate-180" />
+        <div aria-hidden className="flex items-center justify-center gap-1 text-muted lg:flex-col">
+          <ArrowRight size={18} className="rotate-90 lg:rotate-0" />
+          <ArrowRight size={18} className="-rotate-90 lg:rotate-180" />
         </div>
         <div className="space-y-3">
           <div className={box}>
@@ -302,7 +303,7 @@ function Architecture() {
 export function Business() {
   return (
     <section id="business" className="section-y border-t border-hair">
-      <div className="container-x grid gap-12 lg:grid-cols-[1fr_1fr]">
+      <div className="container-x grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         <Reveal>
           <p className="t-eyebrow mb-4">Business</p>
           <h2 className="t-h2">Banks pay per check. Customers keep their savings.</h2>
@@ -314,7 +315,7 @@ export function Business() {
               The rules are moving our way. RBI's 2026 directions make banks share losses from coerced payments and count “specific, directed and clear warnings” from the bank. A spoken warning that names the scam is exactly that. In the UK, banks already reimburse push-payment scams and may delay a payment to contact the payer.
             </p>
           </div>
-          <div className="mt-8 grid grid-cols-2 gap-3 text-[13.5px]">
+          <div className="mt-8 grid grid-cols-1 gap-3 text-[13.5px] sm:grid-cols-2">
             {[
               [<Users key="u" />, "Buyer: bank fraud-risk teams"],
               [<ShieldCheck key="s" />, "User: their customers, often parents"],
@@ -368,7 +369,7 @@ export function FreeChecker() {
     <section id="free" className="section-y border-t border-hair">
       <div className="container-x">
         <Reveal className="card relative overflow-hidden p-8 md:p-12">
-          <div className="relative z-10 grid items-center gap-8 md:grid-cols-[1.2fr_1fr]">
+          <div className="relative z-10 grid grid-cols-1 items-center gap-8 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
             <div>
               <p className="t-eyebrow mb-4">Free for everyone</p>
               <h2 className="t-h2">Got a strange call? Ask Ruko.</h2>

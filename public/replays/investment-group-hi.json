@@ -1,41 +1,41 @@
 {
  "scenario": "investment-group",
  "lang": "hi",
- "recorded_code_word": "चंपा 98",
- "recorded_decision": "delay",
+ "recorded_code_word": "सूरज 15",
+ "recorded_decision": "block",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "नमस्ते Rohan जी, मैं रुको, Demo Bank की भुगतान सुरक्षा सहायक। आपका कोड शब्द है चंपा 98। क्या यह आपके ऐप से मिलता है?"
+   "text": "नमस्ते Rohan जी, मैं रुको, Demo Bank की ऑटोमेटेड भुगतान सुरक्षा सहायक। आपकी सुरक्षा के लिए यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है सूरज 15। क्या यह आपके ऐप से मिलता है?"
   },
   {
    "role": "customer",
-   "text": "हाँ, चंपा 98 सही है। मैं रोहन बोल रहा हूँ।"
+   "text": "हाँ, कोड शब्द सूरज 15 मेरे ऐप से मेल खाता है। मुझे अपने ट्रेडिंग खाते से पैसे निकालने में दिक्कत हो रही है।"
   },
   {
    "role": "tool",
    "tool": "get_check_context",
    "args": {
-    "check_id": "chk_T42JU4YZAE",
+    "check_id": "chk_F9VQE9SD32",
     "execution_id": "eval-demo-investment-group-hi"
    }
   },
   {
    "role": "agent",
-   "text": "Rohan जी, आपका भुगतान 75 हज़ार रुपये का है, जो इस पेमेंट के लिए बहुत बड़ा है। आपने अब तक इस पेमेंट के लिए यही बैंक नहीं किया है। आप इसे किस लिए कर रहे हैं? और आप Alpha Trade Desk को कैसे जानते हैं?"
+   "text": "तो आपका भुगतान 75 हज़ार रुपये का है, जो आपके लिए बहुत बड़ा है। आप इसे Alpha Trade Desk को क्यों भेज रहे हैं? और आप इन्हें कैसे जानते हैं?"
   },
   {
    "role": "customer",
-   "text": "मैंने पैसे नहीं भेजे हैं। यह 75 हज़ार तो मैंने कभी देखे ही नहीं। और Alpha Trade Desk मुझे व्हाट्सऐप ग्रुप से मिला था, पर अब मुझे लगता है यह सब धोखा है। मैं अपनी बहन मीरा को कॉल करूँगा।"
+   "text": "मैं उन्हें नहीं जानता, सिर्फ़ व्हाट्सऐप ग्रुप से जुड़ा था। उन्होंने कहा मेरे ₹50,000 पर ₹3.4 लाख मुनाफा हुआ है, और पैसे निकालने के लिए 15% प्रॉफ़िट टैक्स भरना होगा। मैं सोच रहा था यह सही है, पर अब मुझे डर लग रहा है।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_T42JU4YZAE",
-    "signal": "payee_unknown",
-    "evidence": "Alpha Trade Desk मुझे व्हाट्सऐप ग्रुप से मिला",
+    "check_id": "chk_F9VQE9SD32",
+    "signal": "promised_returns",
+    "evidence": "₹50,000 पर ₹3.4 लाख मुनाफा का वादा",
     "confidence": "high",
     "pattern_hint": "investment_trading"
    }
@@ -46,47 +46,22 @@
   },
   {
    "role": "customer",
-   "text": "हाँ, यह उसी व्हाट्सऐप ग्रुप के ट्रेडिंग ऐप के लिए था। पर अब मैं समझ गया हूँ, यह धोखा है। मैं कोई पैसा नहीं भेजूँगा।"
+   "text": "हाँ, यह उसी टिप्स ग्रुप के लिए है। पर अब मुझे समझ आ गया है, यह धोखा है। मैं भुगतान रोक दूँगा। कृपया मेरी मदद करें, मैं अपनी बहन मीरा को कॉल करता हूँ।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_T42JU4YZAE",
-    "signal": "promised_returns",
-    "evidence": "पक्के मुनाफ़े की गारंटी",
+    "check_id": "chk_F9VQE9SD32",
+    "signal": "wants_to_cancel",
+    "evidence": "मैं भुगतान रोक दूँगा",
     "confidence": "high",
-    "pattern_hint": "investment_trading"
+    "pattern_hint": "none"
    }
   },
   {
    "role": "agent",
-   "text": "Rohan जी, आपके भुगतान को रोका गया है। पैसा खाते में सुरक्षित है। क्या मैं Meera, आपकी बहन को कॉल करवाऊँ, ताकि आप उनसे बात कर लें?"
-  },
-  {
-   "role": "customer",
-   "text": "हाँ, कृपया मीरा को कॉल करवा दीजिए। धन्यवाद।"
-  },
-  {
-   "role": "tool",
-   "tool": "call_trusted_contact",
-   "args": {
-    "check_id": "chk_T42JU4YZAE",
-    "customer_consent": "yes"
-   }
-  },
-  {
-   "role": "tool",
-   "tool": "set_decision",
-   "args": {
-    "check_id": "chk_T42JU4YZAE",
-    "recommendation": "delay",
-    "reason": "भुगतान को रोका गया है क्योंकि यह निवेश धोखाधड़ी का संकेत है और ग्राहक ने अब इसे समझ लिया है।"
-   }
-  },
-  {
-   "role": "agent",
-   "text": "आपका भुगतान 4 घंटे के लिए रुका है। पैसा सुरक्षित है। किसी भरोसेमंद व्यक्ति से बात कर लें; बैंक अपने आधिकारिक नंबर से फिर कॉल करेगा। धन्यवाद।"
+   "text": "क्या मैं आपकी बहन मीरा को कॉल करवाऊँ, ताकि पैसा जाने से पहले आप उनसे बात कर लें?"
   }
  ]
 }

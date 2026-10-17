@@ -466,22 +466,27 @@ export class CheckService {
    * in-app prompt and, for high-risk holds, the bank's fraud desk.
    */
   async noAnswer(id: string, why: string): Promise<StoredCheck> {
-    const c = await this.require(id);
+    // Read the stored record directly: going through get() would run expireIfDue,
+    // which itself calls the no-answer path.
+    const c = await this.kv.get<StoredCheck>(this.key(id));
+    if (!c) throw new NotFoundError(`check ${id} not found`);
+    return this.applyNoAnswer(c, why);
+  }
+
+  private async applyNoAnswer(c: StoredCheck, why: string): Promise<StoredCheck> {
     if (c.decision) return c;
     if (this.retryCount(c) < 1) {
-      return this.mutate(id, (cc) => {
-        const mins = cc.origin === "sandbox" ? SANDBOX_RETRY_MINUTES : RETRY_MINUTES;
-        cc.hold_expires_at = new Date(this.now().getTime() + mins * 60_000).toISOString();
-        cc.status = "holding";
-        this.event(cc, "call.retry", `${why}. Retrying once; the app shows the customer that their bank is calling.`);
-      });
+      const mins = c.origin === "sandbox" ? SANDBOX_RETRY_MINUTES : RETRY_MINUTES;
+      c.hold_expires_at = new Date(this.now().getTime() + mins * 60_000).toISOString();
+      c.status = "holding";
+      this.event(c, "call.retry", `${why}. Retrying once; the app shows the customer that their bank is calling.`);
+      return this.save(c);
     }
-    return this.mutate(id, (cc) => {
-      const d = decide({ check: cc, noConversation: true, retried: true, now: this.iso() });
-      cc.decision = d;
-      cc.status = "decided";
-      this.event(cc, "decision.made", `${why} after one retry; ${d.outcome}: ${d.reasons.map((r) => r.code).join(", ")}`);
-    });
+    const d = decide({ check: c, noConversation: true, retried: true, now: this.iso() });
+    c.decision = d;
+    c.status = "decided";
+    this.event(c, "decision.made", `${why} after one retry; ${d.outcome}: ${d.reasons.map((r) => r.code).join(", ")}`);
+    return this.save(c);
   }
 
   /** A hold that nobody resolved in time: decide from what was heard, or follow the no-answer path. */
@@ -489,7 +494,7 @@ export class CheckService {
     if (c.decision || c.risk.action !== "hold" || !c.hold_expires_at) return c;
     if (Date.parse(c.hold_expires_at) > this.now().getTime()) return c;
     const talked = (c.call?.transcript?.some((t) => t.role === "customer") ?? false) || c.signals.length > 0;
-    if (!talked) return this.noAnswer(c.id, "Hold expired with no answer");
+    if (!talked) return this.applyNoAnswer(c, "Hold expired with no answer");
     const d = decide({ check: c, agentRecommendation: c.agent_recommendation?.outcome ?? null, now: this.iso() });
     c.decision = d;
     c.status = "decided";

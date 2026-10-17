@@ -1,6 +1,6 @@
 import type { Lang } from "../shared/types.js";
 import { PATTERNS, patternById, patternSources, matchText, truthFor } from "../shared/patterns.js";
-import { DEMO_SCENARIOS, scenarioById } from "../shared/scenarios.js";
+import { DEMO_SCENARIO_VIEWS, scenarioById } from "../shared/scenarios.js";
 import { SIGNALS } from "../shared/signals.js";
 import { loadConfig, BOLNA_IPS, type Config } from "./config.js";
 import { Router, json, readJson, HttpError, clientIp, bearer } from "./http.js";
@@ -211,19 +211,7 @@ export function createApp(deps: AppDeps) {
 
   // Demo bank backend (sandbox) ---------------------------------------------------
 
-  r.on("GET", "/api/demo/scenarios", () =>
-    json({
-      data: DEMO_SCENARIOS.map(({ id, title, blurb, truth, payment, customer, device }) => ({
-        id,
-        title,
-        blurb,
-        truth,
-        payment,
-        customer: { name: customer.name, language: customer.language, trusted_contact: customer.trusted_contact ? { name: customer.trusted_contact.name, relation: customer.trusted_contact.relation } : null },
-        device,
-      })),
-    }),
-  );
+  r.on("GET", "/api/demo/scenarios", () => json({ data: DEMO_SCENARIO_VIEWS }));
 
   r.on("POST", "/api/demo/pay", async (req) => {
     const body = (await readJson(req)) as { scenario?: string; language?: Lang; amount_inr?: number };

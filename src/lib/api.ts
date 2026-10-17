@@ -30,15 +30,8 @@ async function request<T>(method: string, path: string, body?: unknown, headers:
   return data as T;
 }
 
-export interface DemoScenarioView {
-  id: string;
-  title: string;
-  blurb: string;
-  truth: "scam" | "genuine";
-  payment: Check["payment"];
-  customer: { name: string; language: Lang; trusted_contact: { name: string; relation: string } | null };
-  device: Check["device"];
-}
+export type { DemoScenarioView } from "../../shared/scenarios";
+import type { DemoScenarioView } from "../../shared/scenarios";
 
 export type DemoCheck = CheckCreated & { scenario: string; bank_name: string };
 

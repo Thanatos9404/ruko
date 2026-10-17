@@ -169,3 +169,31 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
 ];
 
 export const scenarioById = (id: string) => DEMO_SCENARIOS.find((s) => s.id === id);
+
+/** What the sandbox app may show about a scenario: no phone numbers or history. */
+export interface DemoScenarioView {
+  id: string;
+  title: string;
+  blurb: string;
+  truth: "scam" | "genuine";
+  payment: DemoScenario["payment"];
+  customer: { name: string; language: CustomerProfile["language"]; trusted_contact: { name: string; relation: string } | null };
+  device: DeviceSignals;
+}
+
+export const scenarioView = ({ id, title, blurb, truth, payment, customer, device }: DemoScenario): DemoScenarioView => ({
+  id,
+  title,
+  blurb,
+  truth,
+  payment,
+  customer: {
+    name: customer.name,
+    language: customer.language,
+    trusted_contact: customer.trusted_contact ? { name: customer.trusted_contact.name, relation: customer.trusted_contact.relation } : null,
+  },
+  device,
+});
+
+/** Bundled with the app so the picker renders instantly, with no network round trip. */
+export const DEMO_SCENARIO_VIEWS: DemoScenarioView[] = DEMO_SCENARIOS.map(scenarioView);

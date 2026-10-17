@@ -149,7 +149,7 @@ export default function CheckPage() {
         </div>
       </header>
 
-      <main id="main" className="container-x grid gap-10 pb-20 pt-6 lg:grid-cols-[minmax(0,1fr)_340px]">
+      <main id="main" className="container-x grid grid-cols-1 gap-10 pb-20 pt-6 lg:grid-cols-[minmax(0,1fr)_340px]">
         <section aria-labelledby="check-title">
           <Reveal>
             <p className="t-eyebrow">{t.eyebrow}</p>

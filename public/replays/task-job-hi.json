@@ -1,71 +1,41 @@
 {
  "scenario": "task-job",
  "lang": "hi",
- "recorded_code_word": "हवा 34",
+ "recorded_code_word": "कमल 35",
  "recorded_decision": "block",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "नमस्ते Neha जी, मैं रुको, Demo Bank की भुगतान सुरक्षा सहायक। आपका कोड शब्द है हवा 34। क्या यह आपके ऐप से मिलता है?"
+   "text": "नमस्ते Neha जी, मैं रुको, Demo Bank की ऑटोमेटेड भुगतान सुरक्षा सहायक। आपकी सुरक्षा के लिए यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है कमल 35। क्या यह आपके ऐप से मिलता है?"
   },
   {
    "role": "customer",
-   "text": "नमस्ते, मुझे कोई कोड शब्द नहीं मिला। आप किस बैंक से बोल रहे हैं? मैंने तो कोई ऐप पर ऐसा कुछ नहीं देखा।"
-  },
-  {
-   "role": "tool",
-   "tool": "codeword_mismatch",
-   "args": {
-    "check_id": "chk_VZ5NTVBC26",
-    "signal": "codeword_mismatch",
-    "evidence": "कोड शब्द नहीं मिला",
-    "confidence": "high",
-    "pattern_hint": "none"
-   }
+   "text": "नमस्ते, हाँ, कोड शब्द मेरे ऐप में दिख रहा है। लेकिन मैं अभी किसी टास्क के लिए पैसे भेजने वाली नहीं हूँ।"
   },
   {
    "role": "tool",
    "tool": "get_check_context",
    "args": {
-    "check_id": "chk_VZ5NTVBC26",
+    "check_id": "chk_YCMQ3LBX4C",
     "execution_id": "eval-demo-task-job-hi"
    }
   },
   {
    "role": "agent",
-   "text": "क्या इस समय कोई और फ़ोन या वीडियो कॉल पर आपको बता रहा है कि क्या करना है?"
+   "text": "तो आपके ऐप में कोड शब्द कमल 35 दिख रहा है, ठीक है। अब बताइए, यह भुगतान किस लिए है? आप TaskPay Rewards को कैसे जानती हैं?"
   },
   {
    "role": "customer",
-   "text": "नहीं, कोई कॉल या वीडियो कॉल पर नहीं है। बस टेलीग्राम पर एक व्यक्ति ने काम दिया था, और अब वही कह रहा है कि पैसे भर दूँ। मुझे समझ नहीं आ रहा, यह सही तो है ना?"
+   "text": "मुझे TaskPay Rewards टेलीग्राम पर मिला था, लेकिन अब मुझे यह ठीक नहीं लग रहा। मैं कोई पैसा नहीं भेजूँगी।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_VZ5NTVBC26",
-    "signal": "coached_on_call",
-    "evidence": "टेलीग्राम पर एक व्यक्ति ने काम दिया और पैसे भरने को कहा",
-    "confidence": "high",
-    "pattern_hint": "task_job"
-   }
-  },
-  {
-   "role": "agent",
-   "text": "क्या उस व्यक्ति ने कहा कि आपको पैसे भेजने से पहले कोई ऐप डालना है या स्क्रीन शेयर करनी है?"
-  },
-  {
-   "role": "customer",
-   "text": "नहीं, उसने ऐसा कुछ नहीं कहा। बस पैसे भरने को कह रहा है, और मुझे लग रहा है कहीं यह धोखा तो नहीं? आप बताइए, मैं क्या करूँ?"
-  },
-  {
-   "role": "tool",
-   "tool": "record_signal",
-   "args": {
-    "check_id": "chk_VZ5NTVBC26",
+    "check_id": "chk_YCMQ3LBX4C",
     "signal": "pay_to_earn",
-    "evidence": "पैसे भरने को कहा गया क्योंकि काम दिया गया था",
+    "evidence": "मुझे TaskPay Rewards टेलीग्राम पर मिला था",
     "confidence": "high",
     "pattern_hint": "task_job"
    }
@@ -76,20 +46,31 @@
   },
   {
    "role": "customer",
-   "text": "हाँ, उसने कहा था कि प्रीपेड टास्क के लिए ₹12,000 भरने होंगे, तभी ₹38,000 कमीशन मिलेगा। अब मुझे समझ आ रहा है—यह धोखा है। मैं पैसे नहीं भरूँगी, और न ही आगे कुछ करूँगी। धन्यवाद, आपने बचा लिया।"
+   "text": "हाँ, वे कह रहे हैं कि कमीशन खुलवाने के लिए पहले ₹12,000 भरने होंगे। लेकिन मैं यह नहीं करूँगी, मुझे अब समझ आ गया है कि यह धोखा है।"
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_YCMQ3LBX4C",
+    "signal": "wants_to_cancel",
+    "evidence": "मैं यह नहीं करूँगी, मुझे अब समझ आ गया है कि यह धोखा है",
+    "confidence": "high",
+    "pattern_hint": "none"
+   }
   },
   {
    "role": "tool",
    "tool": "set_decision",
    "args": {
-    "check_id": "chk_VZ5NTVBC26",
+    "check_id": "chk_YCMQ3LBX4C",
     "recommendation": "block",
-    "reason": "पैसे भेजने के लिए टास्क के लिए भुगतान माँगा गया है, जो धोखाधड़ी का संकेत है।"
+    "reason": "ग्राहक ने भुगतान रद्द करने की इच्छा जताई है और धोखाधड़ी का शक है।"
    }
   },
   {
    "role": "agent",
-   "text": "आपकी सुरक्षा के लिए यह भुगतान रोक दिया गया है। पैसा आपके खाते में सुरक्षित है। अगर किसी ने दबाव डाला है, तो 1930 पर कॉल करें। धन्यवाद, आपका समय बहुत महत्वपूर्ण है। अच्छा दिन रहे।"
+   "text": "आपकी सुरक्षा के लिए यह भुगतान रोक दिया गया है। पैसा आपके खाते में सुरक्षित है। अगर किसी ने दबाव डाला है, तो 1930 पर कॉल करें। धन्यवाद, आपका दिन अच्छा रहे।"
   }
  ]
 }

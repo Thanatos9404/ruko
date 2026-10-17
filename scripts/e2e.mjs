@@ -78,6 +78,93 @@ for (const sc of scenarios.data) {
   await ctx.close();
 }
 
+// The landing page's embedded demo: chips and a ready Pay screen, with no waiting on the API.
+{
+  const ctx = await browser.createBrowserContext();
+  const page = await ctx.newPage();
+  await page.setViewport({ width: 1440, height: 900 });
+  await page.goto(`${base}/`, { waitUntil: "networkidle0" });
+  await page.evaluate(() => document.getElementById("demo")?.scrollIntoView());
+  await sleep(1200);
+  const embed = await page.evaluate(() => {
+    const root = document.getElementById("demo");
+    const chips = root?.querySelectorAll('[role=radiogroup][aria-label=Scenario] [role=radio]').length ?? 0;
+    const phone = root?.querySelector('[aria-label="Sandbox bank app"]')?.textContent ?? "";
+    return { chips, ready: /Pay ₹1,90,000/.test(phone) };
+  });
+  const ok = embed.chips >= 3 && embed.ready;
+  console.log(`${ok ? "PASS" : "FAIL"} landing embed      → ${embed.chips} chips, ${embed.ready ? "CBI scenario ready to pay" : "phone not ready"}`);
+  if (!ok) failures++;
+  if (ok) {
+    await clickText(page, "Pay ₹1,90,000");
+    await sleep(2500);
+    const held = /Payment paused/.test(await phoneText(page));
+    console.log(`${held ? "PASS" : "FAIL"} landing embed pay  → ${held ? "held" : "no hold screen"}`);
+    if (!held) failures++;
+  }
+  await ctx.close();
+}
+
+// Phone width: no horizontal scroll on any route, and the hero's headline and CTAs show at once.
+for (const route of ["/", "/demo", "/check", "/console", "/console/reports", "/console/eval", "/console/library", "/console/integration", "/contact/demo"]) {
+  const ctx = await browser.createBrowserContext();
+  const page = await ctx.newPage();
+  await page.setViewport({ width: 375, height: 812, isMobile: true, hasTouch: true });
+  await page.goto(`${base}${route}`, { waitUntil: "load" });
+  await sleep(1500);
+  if (route === "/") {
+    await sleep(700);
+    const hero = await page.evaluate(() => {
+      const vis = (el) => {
+        if (!el) return false;
+        const r = el.getBoundingClientRect();
+        let o = 1;
+        for (let n = el; n; n = n.parentElement) o *= Number(getComputedStyle(n).opacity);
+        return r.width > 0 && r.top < innerHeight && r.bottom > 0 && o > 0.6;
+      };
+      const h1 = document.querySelector("h1");
+      const cta = document.querySelector('#top a[href="#demo"]');
+      return { h1: vis(h1), cta: vis(cta) };
+    });
+    const ok = hero.h1 && hero.cta;
+    console.log(`${ok ? "PASS" : "FAIL"} hero at 375        → headline ${hero.h1 ? "visible" : "hidden"}, CTA ${hero.cta ? "visible" : "hidden"} after 0.7 s`);
+    if (!ok) failures++;
+  }
+  // Scroll through so in-view content mounts, then measure.
+  const h = await page.evaluate(() => document.documentElement.scrollHeight);
+  for (let y = 0; y < h; y += 700) {
+    await page.evaluate((yy) => window.scrollTo(0, yy), y);
+    await sleep(120);
+  }
+  await sleep(500);
+  const m = await page.evaluate(() => {
+    const vw = document.documentElement.clientWidth;
+    const sw = document.documentElement.scrollWidth;
+    // Report the innermost overflowing elements, ignoring fixed layers and anything inside a scroller.
+    const over = (e) => {
+      const r = e.getBoundingClientRect();
+      return r.right > vw + 1 && r.width > 0;
+    };
+    const wide = [...document.querySelectorAll("body *")]
+      .filter((e) => over(e) && ![...e.children].some(over))
+      .filter((e) => {
+        for (let n = e; n; n = n.parentElement) {
+          const cs = getComputedStyle(n);
+          if (cs.position === "fixed") return false;
+          if (n !== e && ["auto", "scroll", "hidden", "clip"].includes(cs.overflowX)) return false;
+        }
+        return true;
+      })
+      .slice(0, 3)
+      .map((e) => `${e.tagName.toLowerCase()}.${String(e.className).split(" ").slice(0, 3).join(".")}`);
+    return { vw, sw, wide };
+  });
+  const ok = m.sw <= m.vw;
+  console.log(`${ok ? "PASS" : "FAIL"} 375 ${route.padEnd(16)} → scrollWidth ${m.sw} / ${m.vw}${ok ? "" : ` (${m.wide.join(", ")})`}`);
+  if (!ok) failures++;
+  await ctx.close();
+}
+
 await browser.close();
 if (failures) {
   console.error(`${failures} e2e failure(s)`);

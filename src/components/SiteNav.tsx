@@ -19,7 +19,7 @@ export function SiteNav() {
 export function SiteFooter() {
   return (
     <footer className="border-t border-hair bg-paper">
-      <div className="container-x grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="container-x grid grid-cols-1 gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
           <RukoLogo />
           <p className="mt-4 max-w-[38ch] text-[14px] leading-relaxed text-ink-2">

@@ -1,25 +1,41 @@
 {
  "scenario": "digital-arrest",
  "lang": "hi",
- "recorded_code_word": "हवा 16",
+ "recorded_code_word": "मोर 21",
  "recorded_decision": "block",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "नमस्ते Kamla जी, मैं रुको, Demo Bank की भुगतान सुरक्षा सहायक। आपका कोड शब्द है हवा 16। क्या यह आपके ऐप से मिलता है?"
+   "text": "नमस्ते Kamla जी, मैं रुको, Demo Bank की ऑटोमेटेड भुगतान सुरक्षा सहायक। आपकी सुरक्षा के लिए यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है मोर 21। क्या यह आपके ऐप से मिलता है?"
   },
   {
    "role": "customer",
-   "text": "हाँ, कोड शब्द हवा 16 ही है। लेकिन सुनो... मैं डरी हुई हूँ, सीबीआई अफसर अभी भी वीडियो कॉल पर है।"
+   "text": "हाँ-हाँ, मोर 21 ही मेरा कोड है। मैं कमला बोल रही हूँ।"
+  },
+  {
+   "role": "tool",
+   "tool": "get_check_context",
+   "args": {
+    "check_id": "chk_7FUCRERUUE",
+    "execution_id": "eval-demo-digital-arrest-hi"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "क्या इस समय कोई और फ़ोन या वीडियो कॉल पर आपको बता रहा है कि क्या करना है?"
+  },
+  {
+   "role": "customer",
+   "text": "हाँ... हाँ, वो सीबीआई अफ़सर अभी भी वीडियो कॉल पर है। वो बोल रहा है कि मैं डिजिटल अरेस्ट में हूँ।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_KUYUZC7FSH",
+    "check_id": "chk_7FUCRERUUE",
     "signal": "authority_threat",
-    "evidence": "सीबीआई अफसर वीडियो कॉल पर है",
+    "evidence": "वो सीबीआई अफ़सर बोल रहा है, डिजिटल अरेस्ट में हूँ",
     "confidence": "high",
     "pattern_hint": "digital_arrest"
    }
@@ -30,47 +46,22 @@
   },
   {
    "role": "customer",
-   "text": "हाँ, वह कहता है कि वह सीबीआई अफसर है और मुझसे वीडियो कॉल पर बने रहने को कहा है। अब मुझे समझ आया, यह धोखा है। कृपया मेरा भुगतान रोक दीजिए, और मैं अपने बेटे रवि को कॉल करूँगी।"
+   "text": "हाँ, वो बोल रहा है कि वो सीबीआई अफ़सर है और मुझे कॉल पर ही रहना है। अरे, तो ये सब झूठ था? मैंने तो अपनी बचत उसके बताए खाते में भेज दी! अब मैं क्या करूँ? मेरा भुगतान रोक दो, प्लीज़! मैं अपने बेटे रवि को कॉल करती हूँ।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_KUYUZC7FSH",
+    "check_id": "chk_7FUCRERUUE",
     "signal": "coached_on_call",
-    "evidence": "सीबीआई अफसर वीडियो कॉल पर निर्देश दे रहा था",
+    "evidence": "वो सीबीआई अफ़सर बोल रहा है, कॉल पर रहने को कहा",
     "confidence": "high",
     "pattern_hint": "digital_arrest"
    }
   },
   {
    "role": "agent",
-   "text": "कानून में 'डिजिटल अरेस्ट' जैसी कोई व्यवस्था नहीं है, यह सिर्फ़ धोखा है। पुलिस, सीबीआई या अदालत वीडियो कॉल पर न गिरफ़्तार करती है, न पूछताछ। क्या आपको रवि, बेटे से बात करने की इजाजत दें?"
-  },
-  {
-   "role": "customer",
-   "text": "हाँ, हाँ, ज़रूर। मैं रवि से बात करना चाहती हूँ। कृपया मेरी मदद कीजिए।"
-  },
-  {
-   "role": "tool",
-   "tool": "call_trusted_contact",
-   "args": {
-    "check_id": "chk_KUYUZC7FSH",
-    "customer_consent": "yes"
-   }
-  },
-  {
-   "role": "tool",
-   "tool": "set_decision",
-   "args": {
-    "check_id": "chk_KUYUZC7FSH",
-    "recommendation": "delay",
-    "reason": "क्योंकि ग्राहक को अज्ञात व्यक्ति ने वीडियो कॉल पर धमकी दी और निर्देश दिए, इसलिए भुगतान को अस्थायी रूप से रोका जाना चाहिए।"
-   }
-  },
-  {
-   "role": "agent",
-   "text": "मैंने Ravi को कॉल करने के लिए कह दिया है। जब तक आप उनसे बात नहीं कर लेते, पैसा आपके खाते में ही रहेगा।"
+   "text": "कानून में 'डिजिटल अरेस्ट' जैसी कोई व्यवस्था नहीं है, यह सिर्फ़ धोखा है। पुलिस, सीबीआई या अदालत वीडियो कॉल पर न गिरफ़्तार करती है, न पूछताछ। क्या आप Ravi, son को कॉल करवाऊँ, ताकि पैसा जाने से पहले आप उनसे बात कर लें?"
   }
  ]
 }

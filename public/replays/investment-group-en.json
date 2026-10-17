@@ -1,68 +1,111 @@
 {
  "scenario": "investment-group",
  "lang": "en",
- "recorded_code_word": "HAVA 25",
- "recorded_decision": "block",
+ "recorded_code_word": "SAGAR 29",
+ "recorded_decision": "delay",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "Hello Rohan, this is Ruko, Demo Bank's payment safety assistant. Your code word is HAVA 25. Does it match your app?"
+   "text": "Hello Rohan, this is Ruko, Demo Bank's automated payment safety assistant. This call is recorded for your safety. Your code word is SAGAR 29. Does it match your app?"
   },
   {
    "role": "customer",
-   "text": "Yes, HAVA 25 matches. I have this profit showing in the app, but they're asking me to pay 15% tax before I can withdraw."
+   "text": "Yes, that's right, SAGAR 29 matches my app. What's this about?"
   },
   {
    "role": "tool",
    "tool": "get_check_context",
    "args": {
-    "check_id": "chk_3L4EEVDAMF",
+    "check_id": "chk_GLTLZNYL6V",
     "execution_id": "eval-demo-investment-group-en"
    }
   },
   {
+   "role": "agent",
+   "text": "Thank you, Rohan. I see your payment is paused because it's a large amount, first to this payee, and unusual for you. Now, is anyone on another call or video call with you right now, telling you what to do?"
+  },
+  {
+   "role": "customer",
+   "text": "No, nobody is on a call with me. Just the app and this group chat."
+  },
+  {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_3L4EEVDAMF",
-    "signal": "pay_to_receive",
-    "evidence": "They must pay 15% tax to withdraw profit",
+    "check_id": "chk_GLTLZNYL6V",
+    "signal": "family_helping",
+    "evidence": "No one on another call with him",
     "confidence": "high",
-    "pattern_hint": "fake_support_refund"
+    "pattern_hint": "none"
    }
   },
   {
    "role": "agent",
-   "text": "You never need a UPI PIN or a QR scan to receive money. The PIN is only for sending money. Are you making this payment to receive a refund or cashback?"
+   "text": "Good to know, Rohan. You're on your own. Now, what is this payment for, and how did you come to know Alpha Trade Desk?"
   },
   {
    "role": "customer",
-   "text": "Oh no, I think I'm being cheated. Yes, I was about to pay that tax to get my profit out—I'll hold the payment right now."
+   "text": "It's for the 15% profit tax they asked for to release my profit from the Alpha Trade Desk app. I joined their WhatsApp stock tips group about three weeks back."
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_3L4EEVDAMF",
-    "signal": "wants_to_cancel",
-    "evidence": "I think I'm being cheated. I'll hold the payment.",
+    "check_id": "chk_GLTLZNYL6V",
+    "signal": "promised_returns",
+    "evidence": "Asked for 15% profit tax to release profit from app",
+    "confidence": "high",
+    "pattern_hint": "investment_trading"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "Guaranteed returns in the share market are a scam. A real platform never charges a fee to release your own money. Is this payment for an investment or trading app, or a tips group you joined?"
+  },
+  {
+   "role": "customer",
+   "text": "Oh god, really? I thought it was just a legit tax thing... So this is all fake?"
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_GLTLZNYL6V",
+    "signal": "wants_more_time",
+    "evidence": "Looks shocked, asking if it's fake",
     "confidence": "high",
     "pattern_hint": "none"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "Yes, Rohan, this is a common scam. Real platforms don’t charge fees to release your money. Would you like me to call Meera, your sister, so you can talk it over before any money moves?"
+  },
+  {
+   "role": "customer",
+   "text": "Oh no, I was just about to send that money. Yes, please call Meera — I need to talk to her before I do anything else."
+  },
+  {
+   "role": "tool",
+   "tool": "call_trusted_contact",
+   "args": {
+    "check_id": "chk_GLTLZNYL6V",
+    "customer_consent": "yes"
    }
   },
   {
    "role": "tool",
    "tool": "set_decision",
    "args": {
-    "check_id": "chk_3L4EEVDAMF",
-    "recommendation": "block",
-    "reason": "Customer suspects fraud and wants to stop the payment."
+    "check_id": "chk_GLTLZNYL6V",
+    "recommendation": "delay",
+    "reason": "Customer is unsure and wants to verify with trusted contact."
    }
   },
   {
    "role": "agent",
-   "text": "For your safety, this payment is stopped. Your money is safe in your account. If someone has been pressuring you, call 1930. Thank you for being careful, Rohan. Goodbye."
+   "text": "I've asked Meera to be called now. The money stays in your account until you've talked."
   }
  ]
 }
