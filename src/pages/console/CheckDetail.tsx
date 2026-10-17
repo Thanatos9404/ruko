@@ -51,6 +51,7 @@ import {
 import { Transcript, turnDomId, useHighlights, type TxSignal, type TxTurn } from "./Transcript";
 import { findRecordedRun, type RecordedRun } from "./recorded";
 import { originOf } from "./data";
+import { ModelOpinionPanel } from "./ModelOpinion";
 
 const POLL_MS = 3000;
 
@@ -174,6 +175,7 @@ function Loaded({ c, res }: { c: Check; res: ReturnType<typeof useResource<Check
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
         <Reveal className="space-y-4 lg:col-span-5 lg:order-2">
           <ContactPanel c={c} />
+          <ModelOpinionPanel c={c} />
           <ContextPanel c={c} />
         </Reveal>
         <Reveal delay={0.05} className="lg:col-span-7 lg:order-1">

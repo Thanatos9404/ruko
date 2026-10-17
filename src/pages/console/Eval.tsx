@@ -88,7 +88,14 @@ const p1 = (r: number) => {
 };
 const ci = (r: Rate) => `${Math.round(r.ci95[0] * 100)}–${Math.round(r.ci95[1] * 100)}%`;
 const version = (id: string) => id.match(/^v\d+/)?.[0] ?? "";
-const patternName = (id: string) => patternById(id)?.name.en ?? humanize(id);
+const ACRONYMS = new Set(["ed", "rbi", "gst", "olx", "apk", "kyc", "sim", "upi", "cbi", "otp", "pin", "ncb", "trai", "ipo", "emi", "cvv"]);
+/** Library name when the ID is a library pattern; otherwise the eval story ID made readable. */
+const patternName = (id: string) =>
+  patternById(id)?.name.en ??
+  humanize(id)
+    .split(" ")
+    .map((w) => (ACRONYMS.has(w.toLowerCase()) ? w.toUpperCase() : w))
+    .join(" ");
 const STYLE: Record<string, string> = { ...LANG_NAME, hinglish: "Hinglish (code-mixed)" };
 
 const HONESTY =
@@ -612,12 +619,7 @@ function Breakdowns({ dev, fresh }: { dev: ReturnType<typeof useResource<Summary
             </Panel>
           </div>
           <Panel title="By scam story" description={which === "dev" ? "Library patterns, each played in three language styles at two coaching levels." : "New stories written for this set, not in the tuning data."}>
-            <RateTable
-              head={["Story", "Scam catch", "Pattern named"]}
-              rows={Object.entries(d?.by_pattern ?? {})
-                .map(([k, v]) => ({ key: k, label: patternName(k), a: v.catch, b: patternById(k) ? v.named_correctly : NOT_APPLICABLE }))
-                .sort((x, y) => x.a.rate - y.a.rate || x.label.localeCompare(y.label))}
-            />
+            <StoryTable byPattern={d?.by_pattern ?? {}} />
           </Panel>
           <Panel title={`Misses${s.failures ? ` (${s.failures.length})` : ""}`} description="Every conversation that ended with the wrong decision, with the evidence the policy saw.">
             {s.failures?.length ? (
@@ -683,6 +685,21 @@ function RateTable({ head, rows }: { head: string[]; rows: { key: string; label:
 
 const NOT_APPLICABLE: Rate = { n: -1, k: 0, rate: 0, ci95: [0, 0] };
 
+/** Stories outside the library have no name to match, so that column only appears when it means something. */
+function StoryTable({ byPattern }: { byPattern: Record<string, { catch: Rate; named_correctly: Rate }> }) {
+  const entries = Object.entries(byPattern);
+  const anyLibrary = entries.some(([k]) => patternById(k));
+  const rows = entries
+    .map(([k, v]) => ({ key: k, label: patternName(k), a: v.catch, b: anyLibrary ? (patternById(k) ? v.named_correctly : NOT_APPLICABLE) : undefined }))
+    .sort((x, y) => x.a.rate - y.a.rate || x.label.localeCompare(y.label));
+  return (
+    <>
+      <RateTable head={anyLibrary ? ["Story", "Scam catch", "Pattern named"] : ["Story", "Scam catch"]} rows={rows} />
+      {!anyLibrary && rows.length > 0 && <p className="mt-3 text-[12.5px] text-muted">These stories aren't library patterns, so there's no pattern name to score.</p>}
+    </>
+  );
+}
+
 function RateCell({ rate, tone }: { rate: Rate; tone: "go" | "stop" | "ink" }) {
   if (rate.n < 0)
     return (
@@ -690,7 +707,7 @@ function RateCell({ rate, tone }: { rate: Rate; tone: "go" | "stop" | "ink" }) {
         New story, no library name
       </span>
     );
-  if (!rate.n) return <span className="text-muted">–</span>;
+  if (!rate.n) return <span className="text-[12.5px] text-muted">None in this set</span>;
   return (
     <span className="flex items-center gap-2.5">
       <span className="t-num w-12 shrink-0 text-ink">{p0(rate.rate)}</span>

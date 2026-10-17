@@ -23,6 +23,7 @@ import { consoleData, originOf, TENANT_LABEL, type TenantView } from "./data";
 import { ago, agoShort, clockTime, duration, int, LANG_NAME, pct, usd } from "./fmt";
 import { EmptyState, ErrorState, OriginTag, OutcomeBadge, RiskCell, Skeleton, StaleBanner, StatusPill, TileFrame, TileHead } from "./ui";
 import { SignalsChart } from "./SignalsChart";
+import { opinionOf } from "./ModelOpinion";
 
 const POLL_MS = 3000;
 /** The API caps a page at 200; filters and counts work over this window. */
@@ -463,7 +464,19 @@ function ChecksPanel({ res, tenant }: { res: ReturnType<typeof useResource<{ dat
 }
 
 function DecisionCell({ c }: { c: Check }) {
-  if (c.decision) return <OutcomeBadge outcome={c.decision.outcome} />;
+  if (c.decision) {
+    const review = opinionOf(c)?.disagrees_with_decision;
+    return (
+      <span className="inline-flex flex-col items-start gap-1">
+        <OutcomeBadge outcome={c.decision.outcome} />
+        {review && (
+          <span title="The advisory text model leans scam on a released payment: a person should look." className="rounded-full border border-[color-mix(in_oklab,var(--stop)_45%,transparent)] px-1.5 py-px text-[10.5px] font-semibold text-stop">
+            Review
+          </span>
+        )}
+      </span>
+    );
+  }
   if (c.status === "allowed") return <span className="text-[12.5px] text-muted">No call</span>;
   if (c.status === "expired") return <span className="text-[12.5px] text-muted">Expired</span>;
   return <span className="text-[12.5px] text-muted">Awaiting</span>;
