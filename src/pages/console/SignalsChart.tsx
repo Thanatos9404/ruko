@@ -36,7 +36,7 @@ export function SignalsChart({ data }: { data: { type: string; count: number }[]
     return { key: d.type, label: def?.label ?? humanize(d.type), type: d.type, severity: (def?.severity ?? "process") as Severity, listen: def?.listen_for, count: d.count };
   });
   if (rest.length)
-    rows.push({ key: "__other", label: `${rest.length} other signal types`, type: "other", severity: "process", listen: undefined, count: rest.reduce((s, d) => s + d.count, 0) });
+    rows.push({ key: "__other", label: `${rest.length} other signal ${rest.length === 1 ? "type" : "types"}`, type: "other", severity: "process", listen: undefined, count: rest.reduce((s, d) => s + d.count, 0) });
 
   const max = Math.max(1, ...rows.map((r) => r.count));
   const valueGutter = 40;

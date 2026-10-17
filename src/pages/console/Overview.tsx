@@ -13,13 +13,13 @@ import {
   Scale,
   Timer,
 } from "lucide-react";
-import { Button, Panel, Reveal, StatTile, cn } from "../../kit";
+import { Button, Panel, Reveal, Segmented, StatTile, cn } from "../../kit";
 import { api, type ConsoleOverview } from "../../lib/api";
 import { navigate } from "../../lib/router";
 import { formatINR } from "../../../shared/format";
 import type { Check } from "../../../shared/types";
 import { useNow, useResource } from "./hooks";
-import { ago, clockTime, duration, int, pct, usd } from "./fmt";
+import { ago, agoShort, clockTime, duration, int, LANG_NAME, pct, usd } from "./fmt";
 import { EmptyState, ErrorState, OutcomeBadge, RiskCell, Skeleton, StaleBanner, StatusPill, TileFrame, TileHead } from "./ui";
 import { SignalsChart } from "./SignalsChart";
 
@@ -36,7 +36,7 @@ export function Overview() {
 
       {/* Figures */}
       {overview.loading && !overview.data ? (
-        <div className="grid grid-cols-1 gap-4 min-[420px]:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
           {Array.from({ length: 6 }, (_, i) => (
             <Skeleton key={i} className="h-[132px] !rounded-[18px]" />
           ))}
@@ -45,7 +45,7 @@ export function Overview() {
         <ErrorState error={overview.error} onRetry={overview.reload} title="Couldn't load the overview" />
       ) : (
         <Reveal>
-          <div className="grid grid-cols-1 gap-4 min-[420px]:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
             <StatTile icon={<Activity />} label="Checks" value={int(m.checks)} hint={`${int(m.allowed)} allowed with no call · ${int(m.held)} held`} />
             <StatTile
               icon={<Gauge />}
@@ -53,8 +53,12 @@ export function Overview() {
               value={m.checks ? pct(m.hold_rate) : "–"}
               hint={m.checks ? `${int(m.held)} of ${int(m.checks)} held for a voice check` : "No payments checked yet"}
             />
-            <OutcomeTile m={m} />
-            <StatTile icon={<IndianRupee />} label="Held back" value={formatINR(m.inr_held_back)} hint="In payments that were delayed or blocked" />
+            <div className="col-span-2 lg:col-span-1">
+              <OutcomeTile m={m} />
+            </div>
+            <div className="col-span-2 lg:col-span-1">
+              <StatTile icon={<IndianRupee />} label="Held back" value={formatINR(m.inr_held_back)} hint="In payments that were delayed or blocked" />
+            </div>
             <StatTile
               icon={<Timer />}
               label="Friction for genuine payers"
@@ -148,7 +152,7 @@ function OutcomeTile({ m }: { m: ConsoleOverview["metrics"] }) {
   ];
   const total = parts.reduce((s, p) => s + p.n, 0);
   return (
-    <TileFrame>
+    <TileFrame className="h-full">
       <TileHead icon={<Scale />} label="Released · delayed · blocked" />
       <div className="mt-5 flex items-end gap-4">
         {parts.map((p, i) => (
@@ -181,10 +185,32 @@ function OutcomeTile({ m }: { m: ConsoleOverview["metrics"] }) {
 
 /* ------------------------------------------------------------------ checks */
 
+type Filter = "all" | "open" | "release" | "delay" | "block";
+const PAGE = 12;
+
+function matches(c: Check, f: Filter): boolean {
+  if (f === "all") return true;
+  if (f === "open") return !c.decision && (c.status === "holding" || c.status === "in_call");
+  return c.decision?.outcome === f;
+}
+
+const FILTERS: { value: Filter; label: string }[] = [
+  { value: "all", label: "All" },
+  { value: "open", label: "On hold" },
+  { value: "release", label: "Released" },
+  { value: "delay", label: "Delayed" },
+  { value: "block", label: "Blocked" },
+];
+
 function ChecksPanel({ res }: { res: ReturnType<typeof useResource<{ data: Check[] }>> }) {
   const now = useNow(1000);
-  const rows = res.data?.data;
-  const fresh = useFreshRows(rows);
+  const all = res.data?.data;
+  const fresh = useFreshRows(all);
+  const [filter, setFilter] = useState<Filter>("all");
+  const [limit, setLimit] = useState(PAGE);
+  const filtered = all?.filter((c) => matches(c, filter)) ?? [];
+  const rows = filtered.slice(0, limit);
+  const count = (f: Filter) => all?.filter((c) => matches(c, f)).length ?? 0;
 
   return (
     <Panel
@@ -201,22 +227,43 @@ function ChecksPanel({ res }: { res: ReturnType<typeof useResource<{ data: Check
       }
       className="!p-0 [&>div:first-child]:px-5 [&>div:first-child]:pt-5 md:[&>div:first-child]:px-6 md:[&>div:first-child]:pt-6"
     >
-      {res.error && rows && (
+      {res.error && all && (
         <div className="px-5 md:px-6">
           <StaleBanner error={res.error} onRetry={res.reload} />
         </div>
       )}
-      {res.loading && !rows ? (
+      {all && all.length > 0 && (
+        <div className="rk-scroll-x -mt-1 mb-4 overflow-x-auto px-5 pb-1 md:px-6">
+          <Segmented
+            id="checks-filter"
+            value={filter}
+            onChange={(v) => {
+              setFilter(v);
+              setLimit(PAGE);
+            }}
+            options={FILTERS.map((o) => ({
+              value: o.value,
+              label: (
+                <span className="inline-flex items-center gap-1.5 whitespace-nowrap text-[13px]">
+                  {o.label}
+                  <span className="t-num text-[12px] opacity-60">{count(o.value)}</span>
+                </span>
+              ),
+            }))}
+          />
+        </div>
+      )}
+      {res.loading && !all ? (
         <div className="space-y-2 px-5 pb-6 md:px-6">
           {Array.from({ length: 5 }, (_, i) => (
             <Skeleton key={i} className="h-14" />
           ))}
         </div>
-      ) : !rows ? (
+      ) : !all ? (
         <div className="px-5 pb-6 md:px-6">
           <ErrorState error={res.error} onRetry={res.reload} title="Couldn't load checks" />
         </div>
-      ) : rows.length === 0 ? (
+      ) : all.length === 0 ? (
         <EmptyState
           icon={<Inbox />}
           title="No checks yet"
@@ -228,6 +275,10 @@ function ChecksPanel({ res }: { res: ReturnType<typeof useResource<{ data: Check
         >
           Make a sandbox payment and it appears here within three seconds, with its risk score, the call and the decision.
         </EmptyState>
+      ) : rows.length === 0 ? (
+        <EmptyState icon={<Inbox />} title="Nothing in this view" className="border-t border-hair">
+          No check matches this filter right now. The list is live, so new checks land here on their own.
+        </EmptyState>
       ) : (
         <>
           {/* Wide screens: a table */}
@@ -235,26 +286,30 @@ function ChecksPanel({ res }: { res: ReturnType<typeof useResource<{ data: Check
             <table className="w-full table-fixed border-collapse text-left">
               <caption className="sr-only">Checks for the demo tenant, newest first</caption>
               <colgroup>
-                <col className="w-[92px]" />
-                <col className="w-[13%]" />
+                <col className="w-[96px]" />
+                <col className="w-[112px]" />
                 <col />
-                <col className="w-[118px]" />
-                <col className="w-[148px]" />
+                <col className="w-[112px]" />
+                <col className="w-[160px]" />
                 <col className="w-[104px]" />
-                <col className="w-[116px]" />
-                <col className="w-[15%]" />
-                <col className="w-[40px]" />
+                <col className="w-[112px]" />
+                <col className="w-[148px]" />
+                <col className="w-[36px]" />
               </colgroup>
               <thead>
                 <tr className="border-y border-hair text-[11px] uppercase tracking-[0.08em] text-muted [&>th]:px-3 [&>th]:py-2.5 [&>th]:font-mono [&>th]:font-normal">
-                  <th className="!pl-6">Time</th>
-                  <th>Customer</th>
-                  <th>Payee</th>
-                  <th className="text-right">Amount</th>
-                  <th>Risk</th>
-                  <th>Status</th>
-                  <th>Decision</th>
-                  <th>Pattern</th>
+                  <th scope="col" className="!pl-6">
+                    Time
+                  </th>
+                  <th scope="col">Customer</th>
+                  <th scope="col">Payee</th>
+                  <th scope="col" className="text-right">
+                    Amount
+                  </th>
+                  <th scope="col">Risk</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Decision</th>
+                  <th scope="col">Pattern</th>
                   <th aria-hidden />
                 </tr>
               </thead>
@@ -264,20 +319,20 @@ function ChecksPanel({ res }: { res: ReturnType<typeof useResource<{ data: Check
                     key={c.id}
                     onClick={() => navigate(`/console/checks/${c.id}`)}
                     className={cn(
-                      "group cursor-pointer border-b border-hair text-[13.5px] transition-colors last:border-b-0 hover:bg-paper-2 [&>td]:px-3 [&>td]:py-3.5 [&>td]:align-middle",
+                      "group cursor-pointer border-b border-hair text-[13.5px] transition-colors last:border-b-0 focus-within:bg-paper-2 hover:bg-paper-2 [&>td]:px-3 [&>td]:py-3 [&>td]:align-middle",
                       fresh.has(c.id) && "rk-new",
                     )}
                   >
                     <td className="!pl-6">
                       <a href={`/console/checks/${c.id}`} className="block rounded-md" onClick={(e) => e.stopPropagation()}>
                         <span className="t-num block text-ink">{clockTime(c.created_at)}</span>
-                        <span className="block text-[12px] text-muted">{ago(c.created_at, now)}</span>
+                        <span className="block whitespace-nowrap text-[12px] text-muted">{agoShort(c.created_at, now)}</span>
                         <span className="sr-only">Open check {c.id}</span>
                       </a>
                     </td>
                     <td>
                       <span className="block truncate text-ink">{c.customer.name}</span>
-                      <span className="block text-[12px] uppercase text-muted">{c.customer.language}</span>
+                      <span className="block text-[12px] text-muted">{LANG_NAME[c.customer.language] ?? c.customer.language}</span>
                     </td>
                     <td>
                       <span className="block truncate text-ink">{c.payment.payee.name}</span>
@@ -296,8 +351,10 @@ function ChecksPanel({ res }: { res: ReturnType<typeof useResource<{ data: Check
                     <td>
                       <DecisionCell c={c} />
                     </td>
-                    <td className="truncate text-ink-2">{c.decision?.pattern?.name ?? <span className="text-muted">–</span>}</td>
-                    <td className="!pr-5 text-muted">
+                    <td className="truncate text-ink-2" title={c.decision?.pattern?.name}>
+                      {c.decision?.pattern?.name ?? <span className="text-muted">–</span>}
+                    </td>
+                    <td className="!pl-0 !pr-4 text-muted">
                       <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:text-ink" strokeWidth={1.7} aria-hidden />
                     </td>
                   </tr>
@@ -317,7 +374,7 @@ function ChecksPanel({ res }: { res: ReturnType<typeof useResource<{ data: Check
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <p className="text-[12px] text-muted">
-                        <span className="t-num text-ink-2">{clockTime(c.created_at)}</span> · {ago(c.created_at, now)}
+                        <span className="t-num text-ink-2">{clockTime(c.created_at)}</span> · {agoShort(c.created_at, now)}
                       </p>
                       <p className="t-num mt-1 text-[20px] leading-tight text-ink">{formatINR(c.payment.amount_inr)}</p>
                       <p className="mt-0.5 truncate text-[13.5px] text-ink-2">to {c.payment.payee.name}</p>
@@ -326,7 +383,7 @@ function ChecksPanel({ res }: { res: ReturnType<typeof useResource<{ data: Check
                   </div>
                   <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-hair pt-3 text-[13px]">
                     <span className="text-ink-2">
-                      {c.customer.name} <span className="text-[11.5px] uppercase text-muted">{c.customer.language}</span>
+                      {c.customer.name} <span className="text-[12px] text-muted">{LANG_NAME[c.customer.language] ?? c.customer.language}</span>
                     </span>
                     <RiskCell score={c.risk.score} band={c.risk.band} />
                     <StatusPill status={c.status} />
@@ -336,6 +393,25 @@ function ChecksPanel({ res }: { res: ReturnType<typeof useResource<{ data: Check
               </li>
             ))}
           </ul>
+
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-hair px-5 py-3.5 text-[12.5px] text-muted md:px-6">
+            <span>
+              Showing <span className="t-num text-ink-2">{rows.length}</span> of <span className="t-num text-ink-2">{filtered.length}</span>
+              {filter !== "all" ? " in this view" : ""}
+            </span>
+            <div className="flex items-center gap-2">
+              {limit > PAGE && (
+                <button type="button" className="rk-btn !h-8 !text-[12.5px]" onClick={() => setLimit(PAGE)}>
+                  Show fewer
+                </button>
+              )}
+              {filtered.length > rows.length && (
+                <button type="button" className="rk-btn !h-8 !text-[12.5px]" onClick={() => setLimit((l) => l + PAGE * 2)}>
+                  Show {Math.min(PAGE * 2, filtered.length - rows.length)} more
+                </button>
+              )}
+            </div>
+          </div>
         </>
       )}
     </Panel>
@@ -404,11 +480,11 @@ function BudgetPanel({ data }: { data: ConsoleOverview | null }) {
           </dl>
           <div className="mt-5 border-t border-hair pt-4">
             <p className="t-eyebrow !text-[10.5px]">Gate, in order</p>
-            <ol className="mt-2.5 flex flex-wrap items-center gap-1.5 text-[12px] text-ink-2">
+            <ol className="mt-2.5 grid grid-cols-2 gap-1.5 text-[12px] text-ink-2">
               {["Access code", "Daily cap", "Per-visitor cap", "Wallet floor"].map((g, i) => (
-                <li key={g} className="inline-flex items-center gap-1.5">
-                  {i > 0 && <ChevronRight className="size-3 text-muted" aria-hidden />}
-                  <span className="rounded-full border border-hair px-2.5 py-1">{g}</span>
+                <li key={g} className="flex items-center gap-2 rounded-xl border border-hair px-2.5 py-1.5">
+                  <span className="t-num grid size-[18px] shrink-0 place-items-center rounded-full bg-paper-3 text-[10.5px] text-ink-2">{i + 1}</span>
+                  {g}
                 </li>
               ))}
             </ol>

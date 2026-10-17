@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Check as CheckIcon, CircleCheck, Clock3, Copy, OctagonX, RefreshCw, TriangleAlert } from "lucide-react";
+import { ArrowUpRight, Check as CheckIcon, CircleCheck, Clock3, Copy, OctagonX, RefreshCw, TriangleAlert } from "lucide-react";
 import { cn, EASE } from "../../kit";
 import type { CheckStatus, Confidence, Outcome, RiskBand, Severity } from "../../../shared/types";
 import { copyText } from "./hooks";
@@ -66,9 +66,9 @@ export const BAND: Record<RiskBand, { label: string; fill: string; text: string 
 export function RiskCell({ score, band }: { score: number; band: RiskBand }) {
   const b = BAND[band] ?? BAND.low;
   return (
-    <span className="inline-flex items-center gap-2.5" aria-label={`Risk ${score} of 100, ${b.label}`}>
+    <span className="inline-flex items-center gap-2" aria-label={`Risk ${score} of 100, ${b.label}`}>
       <span className="t-num w-7 text-right text-[14px] text-ink">{score}</span>
-      <span className="relative h-1.5 w-14 overflow-hidden rounded-full bg-paper-3" aria-hidden>
+      <span className="relative h-1.5 w-10 shrink-0 overflow-hidden rounded-full bg-paper-3" aria-hidden>
         <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${Math.max(4, score)}%`, background: b.fill }} />
       </span>
       <span className="text-[12.5px] text-muted">{b.label}</span>
@@ -200,8 +200,10 @@ export function CopyButton({ text, label = "Copy", className }: { text: string; 
         "inline-flex h-8 items-center gap-1.5 rounded-full border border-hair bg-paper-2 px-3 text-[12.5px] font-semibold text-ink-2 transition hover:border-[var(--hair-strong)] hover:text-ink active:scale-[0.97]",
         className,
       )}
-      aria-live="polite"
     >
+      <span className="sr-only" role="status">
+        {done ? "Copied to clipboard" : ""}
+      </span>
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={done ? "y" : "n"}
@@ -216,6 +218,72 @@ export function CopyButton({ text, label = "Copy", className }: { text: string; 
         </motion.span>
       </AnimatePresence>
     </button>
+  );
+}
+
+/** In-page section heading: mono eyebrow, a display title and an optional line of context. */
+export function SectionTitle({
+  eyebrow,
+  title,
+  children,
+  action,
+  id,
+  className,
+}: {
+  eyebrow?: string;
+  title: ReactNode;
+  children?: ReactNode;
+  action?: ReactNode;
+  id?: string;
+  className?: string;
+}) {
+  return (
+    <div className={cn("flex flex-wrap items-end justify-between gap-x-6 gap-y-3", className)}>
+      <div className="min-w-0 max-w-[72ch]">
+        {eyebrow && <p className="t-eyebrow !text-[11px]">{eyebrow}</p>}
+        <h2 id={id} className="mt-1.5 font-display text-[20px] font-semibold tracking-[-0.02em] text-ink md:text-[22px]">
+          {title}
+        </h2>
+        {children && <div className="mt-1.5 text-[14px] leading-relaxed text-muted">{children}</div>}
+      </div>
+      {action}
+    </div>
+  );
+}
+
+/** Small neutral pill for metadata. */
+export function Chip({ children, className, title }: { children: ReactNode; className?: string; title?: string }) {
+  return (
+    <span title={title} className={cn("inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-hair px-2.5 py-1 text-[12px] font-medium text-ink-2 [&>svg]:size-3.5 [&>svg]:stroke-[1.8]", className)}>
+      {children}
+    </span>
+  );
+}
+
+/**
+ * A rate with its 95% interval on a 0–100% track: the band is the interval, the
+ * tick is the point estimate. `tone` colours the tick only.
+ */
+export function CIBar({ rate, ci, tone = "ink", className, label }: { rate: number; ci: [number, number]; tone?: "ink" | "go" | "stop"; className?: string; label?: string }) {
+  const col = tone === "go" ? "var(--go)" : tone === "stop" ? "var(--stop)" : "var(--ink)";
+  return (
+    <div className={cn("relative h-2 w-full rounded-full bg-paper-3", className)} role="img" aria-label={label ?? `${Math.round(rate * 100)}%, 95% interval ${Math.round(ci[0] * 100)} to ${Math.round(ci[1] * 100)}%`}>
+      <span
+        className="absolute inset-y-0 rounded-full"
+        style={{ left: `${ci[0] * 100}%`, width: `${Math.max(1.5, (ci[1] - ci[0]) * 100)}%`, background: `color-mix(in oklab, ${col} 30%, transparent)` }}
+      />
+      <span className="absolute -inset-y-1 w-[3px] -translate-x-1/2 rounded-full" style={{ left: `${rate * 100}%`, background: col }} />
+    </div>
+  );
+}
+
+export function ExternalLink({ href, children, className }: { href: string; children: ReactNode; className?: string }) {
+  return (
+    <a href={href} target="_blank" rel="noreferrer noopener" className={cn("inline-flex items-center gap-1 text-ink underline decoration-[var(--hair-strong)] underline-offset-4 transition-colors hover:decoration-current", className)}>
+      {children}
+      <ArrowUpRight className="size-3.5 shrink-0 text-muted" strokeWidth={1.8} aria-hidden />
+      <span className="sr-only">(opens in a new tab)</span>
+    </a>
   );
 }
 

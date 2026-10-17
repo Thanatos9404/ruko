@@ -52,6 +52,21 @@ export function ago(iso: string | number | undefined, now = Date.now()): string 
   return `${Math.round(h / 24)} d ago`;
 }
 
+/** Compact relative time for dense tables: "now", "42s ago", "9m ago", "3h ago", "2d ago". */
+export function agoShort(iso: string | number | undefined, now = Date.now()): string {
+  if (iso === undefined) return "";
+  const t = typeof iso === "number" ? iso : Date.parse(iso);
+  if (Number.isNaN(t)) return "";
+  const s = Math.max(0, Math.round((now - t) / 1000));
+  if (s < 5) return "now";
+  if (s < 60) return `${s}s ago`;
+  const m = Math.floor(s / 60);
+  if (m < 60) return `${m}m ago`;
+  const h = Math.floor(m / 60);
+  if (h < 48) return `${h}h ago`;
+  return `${Math.floor(h / 24)}d ago`;
+}
+
 /** Human duration from seconds: "0.4 s", "42 s", "1 m 05 s", "2 h 10 m". */
 export function duration(sec: number | null | undefined): string {
   if (sec === null || sec === undefined || Number.isNaN(sec)) return "–";

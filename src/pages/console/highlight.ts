@@ -83,17 +83,18 @@ function similar(a: string, b: string): boolean {
   return p >= Math.max(4, min - 2);
 }
 
-/** Best location of one evidence string in the transcript, or null when nothing fits well enough. */
-export function locate(evidence: string, turns: TurnLike[]): Located | null {
+/** The best-fitting window in each turn for one evidence string, strongest first. */
+export function candidates(evidence: string, turns: TurnLike[]): Located[] {
   const ev = [...new Set(tokenize(evidence).filter((t) => t.content).map((t) => t.norm))];
-  if (!ev.length) return null;
-  let best: Located | null = null;
+  if (!ev.length) return [];
+  const out: Located[] = [];
   turns.forEach((turn, ti) => {
     if (!turn.text || (turn.role !== "customer" && turn.role !== "agent")) return;
     const toks = tokenize(turn.text);
     // Which evidence words each transcript token matches.
     const hits = toks.map((t) => (t.content ? ev.map((e, ei) => (similar(t.norm, e) ? ei : -1)).filter((x) => x >= 0) : []));
     const roleWeight = turn.role === "customer" ? 1 : 0.82;
+    let best: Located | null = null;
     for (let i = 0; i < toks.length; i++) {
       if (!hits[i].length) continue;
       const covered = new Set<number>();
@@ -114,16 +115,30 @@ export function locate(evidence: string, turns: TurnLike[]): Located | null {
         }
       }
     }
+    if (best) out.push(best);
   });
-  return best;
+  return out.sort((a, b) => b.score - a.score);
 }
+
+/** Best location of one evidence string in the transcript, or null when nothing fits well enough. */
+export function locate(evidence: string, turns: TurnLike[]): Located | null {
+  return candidates(evidence, turns)[0] ?? null;
+}
+
+const overlaps = (a: Located, b: Located) => a.turn === b.turn && a.start < b.end && b.start < a.end;
 
 /** Locates every signal, then flattens overlapping hits into non-overlapping ranges per turn. */
 export function highlightTranscript(signals: EvidenceSignal[], turns: TurnLike[]) {
+  // Signals arrive in the order they were heard. Two signals often quote the same
+  // moment; when a nearly-as-good stretch is free elsewhere, each gets its own.
   const found = new Map<string, Located>();
+  const taken: Located[] = [];
   for (const s of signals) {
-    const hit = locate(s.evidence, turns);
-    if (hit) found.set(s.id, hit);
+    const cands = candidates(s.evidence, turns);
+    if (!cands.length) continue;
+    const pick = cands.find((c) => c.score >= cands[0].score * 0.6 && !taken.some((t) => overlaps(t, c))) ?? cands[0];
+    found.set(s.id, pick);
+    taken.push(pick);
   }
   const byTurn = new Map<number, Range[]>();
   const perTurn = new Map<number, { start: number; end: number; id: string }[]>();
