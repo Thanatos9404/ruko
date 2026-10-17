@@ -273,7 +273,9 @@ def stage_final() -> None:
         p["red_flag_questions"] = {k: v for k, v in p["red_flag_questions"].items() if v}
         out.append(p)
 
-    used = sorted({s for p in out for k in ("sources",) for s in p[k]} | {s for p in out for v in p["citations"].values() for s in v})
+    # every cited source, plus all v0 sources (shared/sources.ts ids stay resolvable)
+    used = sorted({s for p in out for s in p["sources"]} | {s for p in out for v in p["citations"].values() for s in v}
+                  | {sid for sid, s in sources.items() if s.get("origin") == "legacy_v0"})
     lib = {
         "$schema": "./library.schema.json",
         "library": "ruko-scam-patterns",

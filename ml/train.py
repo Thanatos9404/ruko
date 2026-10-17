@@ -381,6 +381,9 @@ def eval_sets(rows):
         "ood_flowxai_en": pick(rows, "ood_flowxai"),
         "ood_realworld_curated": pick(rows, "ood_realworld"),
         "ood_icfd31k_calls": pick(rows, "ood_icfd31k"),
+        "ood_imc25_real_smishing_india": pick(rows, "ood_imc25_india"),
+        "ood_imc25_real_smishing_global": pick(rows, "ood_imc25_global"),
+        "ood_skyaara_genuine_payment_sms": pick(rows, "ood_skyaara"),
         "ood_marketing_spam_flag_rate": pick(rows, "ood_spam"),
     }
     return sets

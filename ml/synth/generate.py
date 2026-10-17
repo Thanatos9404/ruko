@@ -431,8 +431,16 @@ def main():
         seed = int(hashlib.sha1(job["key"].encode()).hexdigest()[:8], 16)
         prompt = make_prompt(job, briefs[job["ref"]])
         max_tokens = 900 * job["n"] if job["format"] == "call_check" else 260 * job["n"] + 200
-        content = chat(model, prompt, temperature=0.9, max_tokens=max_tokens, seed=seed, key=key)
-        return samples_from(job, parse_json(content))
+        # Malformed JSON (mostly unescaped quotes in long Indic outputs) is retried with a new seed;
+        # earlier successful responses stay cached under their original seed.
+        last = None
+        for attempt in range(3):
+            content = chat(model, prompt, temperature=0.9, max_tokens=max_tokens, seed=seed + attempt, key=key)
+            try:
+                return samples_from(job, parse_json(content))
+            except (json.JSONDecodeError, AttributeError, TypeError) as e:
+                last = e
+        raise RuntimeError(f"unparseable after 3 attempts: {last}")
 
     t0 = time.time()
     with cf.ThreadPoolExecutor(max_workers=args.workers) as ex:

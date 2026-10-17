@@ -222,6 +222,60 @@ def load_icfd() -> list[dict]:
     return out
 
 
+IMC_PLACEHOLDERS = {
+    "<URL>": " http://example.invalid/x ", "<PHONE_NUMBER>": " +91 90000 00000 ", "<EMAIL_ADDRESS>": " payee@upi ",
+    "<US_BANK_NUMBER>": " 000000000000 ", "<CREDIT_CARD>": " 000000000000 ", "<IBAN_CODE>": " 000000000000 ",
+    "<US_SSN>": " 000000000000 ", "<US_DRIVER_LICENSE>": " 0000 ",
+}
+IMC_OTHER = re.compile(r"<[A-Z_]+>")
+
+
+def load_imc25() -> list[dict]:
+    """Real smishing texts from public user reports (Agarwal et al., IMC 2025). Scam-only: used to measure recall."""
+    p = RAW / "imc25_smishing_reports" / "final_dataset_output.csv"
+    if not p.exists():
+        return []
+    out = []
+    with p.open(encoding="utf-8", errors="replace", newline="") as f:
+        for i, row in enumerate(csv.DictReader(f)):
+            if row["scam_type"] in ("spam", ""):
+                continue
+            text = row["text"]
+            for k, v in IMC_PLACEHOLDERS.items():
+                text = text.replace(k, v)
+            text = IMC_OTHER.sub(" ", text)
+            india = row["original_network_country"] == "IND" or row["language"] in ("Hindi", "Urdu")
+            if not india and (row["language"] != "English" or h(f"imc:{i}") % 100 >= 12):
+                continue  # deterministic ~12% sample of the non-Indian English reports
+            lang = {"Hindi": "hi", "Urdu": "ur"}.get(row["language"], "en")
+            out.append(rec(
+                text=text, label="scam", source="imc25_smishing", synthetic=False, lang=lang, format="sms", group=f"imc{i}",
+                split="ood_imc25_india" if india else "ood_imc25_global", subtype=row["scam_type"],
+            ))
+    return out
+
+
+def load_skyaara() -> list[dict]:
+    """Redacted rewrites of genuine Indian bank/UPI/card SMS (CC BY 4.0). Genuine-only: measures false positives."""
+    p = RAW / "skyaara_indian_payment_sms" / "indian-payment-sms-dataset.json"
+    if not p.exists():
+        return []
+    d = json.loads(p.read_text(encoding="utf-8"))
+    out, seen = [], set()
+    for r in d["rows"]:
+        if r.get("provenance") != "synthetic_rewrite":
+            continue  # 'synthetic_adversarial' rows imitate phishing alerts; their label is ambiguous for us
+        key = normalize(r["raw_sms"])
+        if key in seen:
+            continue  # numeric variants collapse after digit normalisation
+        seen.add(key)
+        out.append(rec(
+            text=r["raw_sms"], label="genuine", kind="hard_negative", source="skyaara_payment_sms", synthetic=True, lang="en",
+            format="sms", group=r["id"], split="ood_skyaara", subtype=r.get("kind"),
+        ))
+    return out
+
+
 def load_realworld(aliases: dict[str, str]) -> list[dict]:
     if not REAL.exists():
         print("  (no real-world eval file yet)")
@@ -251,6 +305,8 @@ def main() -> None:
         "flowxai": load_flowxai(),
         "realworld": load_realworld(aliases),
         "icfd31k": load_icfd(),
+        "imc25": load_imc25(),
+        "skyaara": load_skyaara(),
     }
     rows = [r for p in parts.values() for r in p if len(r["text"]) >= 8]
 

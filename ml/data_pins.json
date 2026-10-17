@@ -8,6 +8,8 @@
   "icfd31k_eval_only/cross_domain-00000-of-00001.jsonl.zst": "ddd4e54292a9de79e11a82836fd0052e7dcf9fa6c789efc4409b694b96a51349",
   "icfd31k_eval_only/test-00000-of-00002.jsonl.zst": "77945316aa3d50089e929535d4fc8ab1410d2d6e27e4b1fe06917154a8482086",
   "icfd31k_eval_only/test-00001-of-00002.jsonl.zst": "6322e467193e1c0f90d22d316de47f2283dc2ec21988b674ed811c7d37f7c157",
+  "imc25_smishing_reports/final_dataset_output.csv": "1bbd1e9e82c3ea023112207b80da268a5c4a07d2353c2b0898360ab037fa9a64",
   "mendeley_smishing_f45bkkt8pr/Dataset_5971.zip": "9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3",
-  "ridham115_indian_scam_sms_audited/synthetic_audited.csv": "45bde5f156a1a42698bab209e32bcd41b3639013d772f644cc3208ed39fb61e2"
+  "ridham115_indian_scam_sms_audited/synthetic_audited.csv": "45bde5f156a1a42698bab209e32bcd41b3639013d772f644cc3208ed39fb61e2",
+  "skyaara_indian_payment_sms/indian-payment-sms-dataset.json": "15ad367803331d0666ad6aac1846ec8355cf71689193d066447e33c26043e8dc"
 }

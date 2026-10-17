@@ -60,6 +60,16 @@ DATASETS: dict[str, dict] = {
             (f"{HF}/rishia2220/icfd-31k/resolve/main/source_conversations/cross_domain-00000-of-00001.jsonl.zst", "cross_domain-00000-of-00001.jsonl.zst", None),
         ],
     },
+    # Agarwal et al., "Fishing for Smishing", ACM IMC 2025: real smishing texts mined from public user reports.
+    "imc25_smishing_reports": {
+        "licence": "CC BY 4.0",
+        "files": [("https://raw.githubusercontent.com/reportsmishing/Smishing-Dataset-IMC25/main/dataset/final_dataset_output.csv", "final_dataset_output.csv", None)],
+    },
+    # SplitEasy contributors: redacted synthetic rewrites of genuine Indian bank/UPI/card SMS (parser corpus).
+    "skyaara_indian_payment_sms": {
+        "licence": "CC BY 4.0",
+        "files": [("https://raw.githubusercontent.com/skyaara/indian-payment-sms-dataset/main/data/indian-payment-sms-dataset.json", "indian-payment-sms-dataset.json", None)],
+    },
     "flowxai_scamguardbench_v0_2": {
         "licence": "Apache-2.0",
         "files": [
