@@ -33,13 +33,17 @@ export const MARK = {
 /** Tight crop of the mark for small sizes (R + line only), viewBox 240 70 340 470. */
 export const MARK_COMPACT_VIEWBOX = "236 60 344 480";
 
-/** Wordmark, viewBox "15 20 965 290": strokes (width 36) and filled polygons. */
+/**
+ * Wordmark, viewBox "15 20 965 290": strokes (width 36) and filled polygons.
+ * The k is one junction: the arm starts inside the stem and the leg branches off
+ * the arm's centreline, both 36 wide, with horizontal terminals like R/u.
+ */
 export const WORDMARK = {
   viewBox: "15 20 965 290",
   width: 965,
   height: 290,
   strokes: ["M25 52 H175 A59 59 0 0 1 175 170 H70", "M316 100 V204 A78 78 0 0 0 472 204 V100 M472 204 V300"],
   circle: { cx: 879, cy: 200, r: 82 },
-  polygons: ["70,170 121,170 254,300 203,300", "538,48 574,30 574,300 538,300", "574,184 690,100 748,100 574,232", "612,204 640,180 760,300 708,300"],
+  polygons: ["70,170 121,170 254,300 203,300", "538,48 574,30 574,300 538,300", "544.9,213.9 690,100 748.1,100 567.1,242.1", "633.1,165.5 759.9,300 710.5,300 606.9,190.1"],
   stroke: 36,
 };
