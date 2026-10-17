@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ruko.app/schemas/library.schema.json",
+  "title": "Ruko scam pattern library",
+  "type": "object",
+  "required": ["library", "version", "generated", "categories", "translation_policy", "patterns"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "library": { "const": "ruko-scam-patterns" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "generated": { "type": "string", "format": "date" },
+    "sources_file": { "type": "string" },
+    "translation_policy": { "type": "object" },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/category" },
+          "name": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "patterns": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/pattern" } }
+  },
+  "$defs": {
+    "category": {
+      "enum": [
+        "authority_impersonation", "bank_or_service_impersonation", "government_benefit_impersonation",
+        "payment_mechanics_trick", "account_takeover", "investment", "employment_income", "advance_fee",
+        "relationship_extortion", "family_emergency", "purchase_marketplace", "charity_donation",
+        "business_payment_fraud", "tech_support", "loan_debt"
+      ]
+    },
+    "lang": { "enum": ["en", "hi", "hinglish", "ta", "bn", "mr"] },
+    "strList": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "langText": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/lang" },
+      "additionalProperties": { "type": "string", "minLength": 1 }
+    },
+    "langList": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/lang" },
+      "additionalProperties": { "$ref": "#/$defs/strList" }
+    },
+    "sourceIds": { "type": "array", "items": { "type": "string", "pattern": "^[a-z0-9_]+$" } },
+    "pattern": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "name", "category", "region", "markets", "summary", "channel", "payment_rails", "victim_profile",
+        "indicators", "typical_claims", "red_flag_questions", "coaching_phrases", "cues", "keywords", "signals",
+        "truth", "advice", "ask_next", "first_seen", "trend", "ruko_applicability", "sources", "citations",
+        "translation_status", "provenance"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+        "aliases": { "type": "array", "items": { "type": "string", "pattern": "^[a-z0-9_]+$" } },
+        "name": { "allOf": [{ "$ref": "#/$defs/langText" }, { "required": ["en", "hi"] }] },
+        "category": { "$ref": "#/$defs/category" },
+        "region": { "enum": ["india", "global"] },
+        "markets": { "type": "array", "items": { "type": "string", "pattern": "^[A-Z]{2}$" }, "minItems": 1 },
+        "summary": { "type": "string", "minLength": 20 },
+        "channel": {
+          "type": "array", "minItems": 1,
+          "items": { "enum": ["call", "video", "sms", "whatsapp", "telegram", "email", "social", "app", "web", "in_person", "marketplace"] }
+        },
+        "payment_rails": {
+          "type": "array", "minItems": 1,
+          "items": { "enum": ["upi", "imps", "neft_rtgs", "card", "crypto", "cash", "gift_card", "wire", "bank_transfer", "wallet", "aeps", "none"] }
+        },
+        "victim_profile": { "type": "string", "minLength": 3 },
+        "indicators": { "$ref": "#/$defs/strList" },
+        "typical_claims": { "$ref": "#/$defs/strList" },
+        "red_flag_questions": { "allOf": [{ "$ref": "#/$defs/langList" }, { "required": ["en"] }] },
+        "coaching_phrases": { "allOf": [{ "$ref": "#/$defs/langList" }, { "required": ["en"] }] },
+        "cues": { "allOf": [{ "$ref": "#/$defs/langList" }, { "required": ["en"] }] },
+        "keywords": { "$ref": "#/$defs/strList" },
+        "signals": { "type": "object", "additionalProperties": { "type": "number", "minimum": 0, "maximum": 5 } },
+        "truth": { "allOf": [{ "$ref": "#/$defs/langText" }, { "required": ["en", "hi"] }] },
+        "advice": { "allOf": [{ "$ref": "#/$defs/langList" }, { "required": ["en", "hi"] }] },
+        "ask_next": { "allOf": [{ "$ref": "#/$defs/langText" }, { "required": ["en", "hi"] }] },
+        "first_seen": {
+          "type": "object", "required": ["value", "sources"], "additionalProperties": false,
+          "properties": { "value": { "type": "string" }, "sources": { "$ref": "#/$defs/sourceIds" } }
+        },
+        "trend": {
+          "type": "object", "required": ["status", "note", "sources"], "additionalProperties": false,
+          "properties": {
+            "status": { "enum": ["rising", "stable", "declining", "emerging", "unknown"] },
+            "note": { "type": "string" },
+            "sources": { "$ref": "#/$defs/sourceIds" }
+          }
+        },
+        "ruko_applicability": { "enum": ["direct", "partial", "indirect"] },
+        "applicability_note": { "type": "string" },
+        "sources": { "allOf": [{ "$ref": "#/$defs/sourceIds" }, { "minItems": 1 }] },
+        "citations": {
+          "type": "object",
+          "description": "Which sources back which field. Every factual field points at sources.json ids.",
+          "additionalProperties": { "$ref": "#/$defs/sourceIds" }
+        },
+        "translation_status": {
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/lang" },
+          "additionalProperties": { "enum": ["source", "reviewed", "draft", "machine_draft"] }
+        },
+        "provenance": {
+          "type": "object", "required": ["origin"], "additionalProperties": false,
+          "properties": {
+            "origin": { "enum": ["legacy_v0", "research_2026_10"] },
+            "notes": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

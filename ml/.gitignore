@@ -1,0 +1,10 @@
+# Python env and caches
+.venv/
+__pycache__/
+*.pyc
+# Raw third-party downloads are fetched by ml/fetch_data.py, never committed
+data/raw/
+# LLM response cache for synthetic generation (re-generation is free from here)
+.cache/
+# Intermediate training artefacts
+work/

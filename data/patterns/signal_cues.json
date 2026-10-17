@@ -1,0 +1,566 @@
+{
+  "version": "1.0.0",
+  "note": "Cross-pattern cue phrases for Ruko's call signals (shared/signals.ts). Matched on normalised tokens by server/ml/lexicon.ts with negation handling. English is reviewed; Hindi and Hinglish phrases were written by the Ruko team and await native-speaker review (status: draft). These cues explain and suggest; they never decide a payment on their own.",
+  "translation_status": {
+    "en": "reviewed",
+    "hi": "draft",
+    "hinglish": "draft"
+  },
+  "signals": {
+    "coached_on_call": {
+      "en": [
+        "on the other line",
+        "on another call",
+        "still on the call",
+        "he is on the line",
+        "they are on video",
+        "told me what to say",
+        "telling me what to say",
+        "he said to say",
+        "asked me to tell you",
+        "they are guiding me",
+        "reading from",
+        "he is listening",
+        "they can hear",
+        "stay on the call",
+        "don't cut the call",
+        "must not disconnect"
+      ],
+      "hi": [
+        "दूसरी लाइन पर",
+        "दूसरे फ़ोन पर",
+        "कॉल पर हैं",
+        "लाइन पर हैं",
+        "वीडियो कॉल पर",
+        "क्या बोलना है",
+        "बोलने को कहा",
+        "बताने को कहा",
+        "सुन रहे हैं",
+        "कॉल मत काटना",
+        "कॉल नहीं काट सकते"
+      ],
+      "hinglish": [
+        "dusri line pe",
+        "dusre phone pe",
+        "call pe hai",
+        "line pe hai",
+        "video call pe",
+        "kya bolna hai",
+        "bolne ko kaha",
+        "batane ko kaha",
+        "sun rahe hain",
+        "call mat katna",
+        "call nahi kaat sakte",
+        "unhone bola aisa bolo"
+      ]
+    },
+    "authority_threat": {
+      "en": [
+        "digital arrest",
+        "arrest warrant",
+        "under arrest",
+        "you will be arrested",
+        "case against you",
+        "cbi",
+        "enforcement directorate",
+        "narcotics",
+        "customs officer",
+        "cyber crime branch",
+        "money laundering",
+        "supreme court",
+        "court order",
+        "police officer",
+        "investigation",
+        "your aadhaar is used",
+        "illegal activity",
+        "trai",
+        "frozen",
+        "fir registered",
+        "fir lodged"
+      ],
+      "hi": [
+        "डिजिटल अरेस्ट",
+        "गिरफ्तार",
+        "गिरफ़्तार",
+        "वारंट",
+        "केस दर्ज",
+        "एफआईआर",
+        "सीबीआई",
+        "पुलिस",
+        "मनी लॉन्ड्रिंग",
+        "जांच",
+        "जाँच",
+        "कोर्ट",
+        "अदालत",
+        "आधार का गलत इस्तेमाल",
+        "नशीले पदार्थ"
+      ],
+      "hinglish": [
+        "digital arrest",
+        "giraftar",
+        "arrest kar",
+        "warrant",
+        "case darj",
+        "cbi",
+        "police",
+        "money laundering",
+        "jaanch",
+        "court",
+        "aadhaar ka galat use",
+        "drugs mile",
+        "fir darj",
+        "fir ho gayi"
+      ]
+    },
+    "secrecy_demand": {
+      "en": [
+        "don't tell anyone",
+        "do not tell anyone",
+        "don't tell your family",
+        "keep it confidential",
+        "keep this secret",
+        "not tell the bank",
+        "don't tell the bank",
+        "it is confidential",
+        "secret investigation",
+        "national secret",
+        "nobody should know",
+        "tell no one"
+      ],
+      "hi": [
+        "किसी को मत बताना",
+        "किसी को न बताएं",
+        "किसी को नहीं बताना",
+        "घरवालों को मत बताना",
+        "बैंक को मत बताना",
+        "गुप्त रखना",
+        "राज़ रखना",
+        "किसी को पता नहीं चलना चाहिए"
+      ],
+      "hinglish": [
+        "kisi ko mat batana",
+        "kisi ko na batana",
+        "kisi ko nahi batana",
+        "ghar walon ko mat batana",
+        "family ko mat batana",
+        "bank ko mat batana",
+        "secret rakhna",
+        "confidential hai",
+        "kisi ko pata nahi chalna chahiye"
+      ]
+    },
+    "remote_access": {
+      "en": [
+        "anydesk",
+        "teamviewer",
+        "quicksupport",
+        "quick support",
+        "rustdesk",
+        "airdroid",
+        "screen share",
+        "share screen",
+        "sharing my screen",
+        "install this app",
+        "download this app",
+        "apk",
+        "xapk",
+        "remote app",
+        "support app"
+      ],
+      "hi": [
+        "स्क्रीन शेयर",
+        "ऐप डाउनलोड",
+        "ऐप इंस्टॉल",
+        "एनीडेस्क",
+        "एपीके"
+      ],
+      "hinglish": [
+        "screen share",
+        "app download karo",
+        "app install karo",
+        "anydesk",
+        "apk bheja",
+        "link se app"
+      ]
+    },
+    "urgency_pressure": {
+      "en": [
+        "right now",
+        "immediately",
+        "urgent",
+        "within one hour",
+        "within 24 hours",
+        "today itself",
+        "before tonight",
+        "last chance",
+        "no time",
+        "hurry",
+        "or else"
+      ],
+      "hi": [
+        "अभी के अभी",
+        "तुरंत",
+        "जल्दी करो",
+        "आज ही",
+        "एक घंटे में",
+        "वरना",
+        "नहीं तो",
+        "आखिरी मौका",
+        "अभी भेजो"
+      ],
+      "hinglish": [
+        "abhi ke abhi",
+        "abhi bhejo",
+        "turant",
+        "jaldi karo",
+        "aaj hi",
+        "ek ghante mein",
+        "warna",
+        "nahi to",
+        "last chance",
+        "urgent hai"
+      ]
+    },
+    "payee_unknown": {
+      "en": [
+        "don't know him",
+        "never met",
+        "don't know the name",
+        "they gave me the account",
+        "they sent the upi",
+        "account they gave",
+        "some company account",
+        "his friend's account",
+        "not sure who"
+      ],
+      "hi": [
+        "नहीं जानता",
+        "नहीं जानती",
+        "कभी मिले नहीं",
+        "उन्होंने अकाउंट दिया",
+        "नाम नहीं पता",
+        "पता नहीं किसका"
+      ],
+      "hinglish": [
+        "nahi jaanta",
+        "nahi jaanti",
+        "kabhi mile nahi",
+        "unhone account diya",
+        "naam nahi pata",
+        "pata nahi kiska",
+        "unka diya hua upi"
+      ]
+    },
+    "promised_returns": {
+      "en": [
+        "guaranteed returns",
+        "double your money",
+        "assured profit",
+        "300 percent",
+        "daily profit",
+        "stock tips",
+        "ipo allotment",
+        "institutional account",
+        "trading app",
+        "crypto",
+        "vip group"
+      ],
+      "hi": [
+        "पक्का मुनाफ़ा",
+        "पक्का मुनाफा",
+        "पैसा डबल",
+        "गारंटी",
+        "शेयर टिप्स",
+        "रोज़ का मुनाफ़ा"
+      ],
+      "hinglish": [
+        "pakka munafa",
+        "paisa double",
+        "guaranteed return",
+        "share tips",
+        "daily profit",
+        "trading app",
+        "ipo allotment",
+        "vip group"
+      ]
+    },
+    "pay_to_earn": {
+      "en": [
+        "prepaid task",
+        "task fee",
+        "registration fee",
+        "security deposit",
+        "unlock commission",
+        "to withdraw",
+        "withdrawal fee",
+        "recharge to continue",
+        "merchant task",
+        "rating task",
+        "like videos"
+      ],
+      "hi": [
+        "टास्क",
+        "रजिस्ट्रेशन फीस",
+        "सिक्योरिटी डिपॉजिट",
+        "कमीशन निकालने",
+        "निकालने के लिए पैसे"
+      ],
+      "hinglish": [
+        "task complete",
+        "prepaid task",
+        "registration fee",
+        "security deposit",
+        "commission nikalne",
+        "withdraw karne ke liye",
+        "paise dalne padenge"
+      ]
+    },
+    "pay_to_receive": {
+      "en": [
+        "processing fee",
+        "to receive the refund",
+        "to release the prize",
+        "customs duty",
+        "gst on prize",
+        "tax to release",
+        "pay to receive",
+        "insurance fee for loan",
+        "clearance charge",
+        "delivery charge for gift"
+      ],
+      "hi": [
+        "प्रोसेसिंग फीस",
+        "रिफंड के लिए",
+        "इनाम के लिए",
+        "कस्टम ड्यूटी",
+        "टैक्स भरना",
+        "लोन के लिए फीस"
+      ],
+      "hinglish": [
+        "processing fee",
+        "refund ke liye",
+        "inaam ke liye",
+        "lottery lagi",
+        "custom duty",
+        "tax bharna padega",
+        "loan ke liye fee"
+      ]
+    },
+    "account_block_threat": {
+      "en": [
+        "account will be blocked",
+        "account blocked",
+        "kyc expired",
+        "kyc update",
+        "pan update",
+        "card will be blocked",
+        "sim will be blocked",
+        "number will be disconnected",
+        "electricity will be cut",
+        "connection will be cut",
+        "account suspended"
+      ],
+      "hi": [
+        "खाता बंद",
+        "अकाउंट ब्लॉक",
+        "केवाईसी",
+        "सिम बंद",
+        "नंबर बंद",
+        "बिजली कट",
+        "कनेक्शन कट"
+      ],
+      "hinglish": [
+        "account block",
+        "khata band",
+        "kyc update",
+        "kyc expire",
+        "sim band",
+        "number band",
+        "bijli kat",
+        "connection kat jayega"
+      ]
+    },
+    "relative_emergency": {
+      "en": [
+        "your son",
+        "your daughter",
+        "accident",
+        "in hospital",
+        "has been arrested",
+        "police station",
+        "caught with",
+        "needs money urgently",
+        "crying on the phone",
+        "voice of my son"
+      ],
+      "hi": [
+        "आपका बेटा",
+        "आपकी बेटी",
+        "एक्सीडेंट",
+        "अस्पताल",
+        "पकड़ा गया",
+        "थाने में",
+        "रो रहा था"
+      ],
+      "hinglish": [
+        "aapka beta",
+        "aapki beti",
+        "accident ho gaya",
+        "hospital mein",
+        "pakda gaya",
+        "thane mein",
+        "ro raha tha",
+        "beta bol raha tha"
+      ]
+    },
+    "distress": {
+      "en": [
+        "i am scared",
+        "very scared",
+        "afraid",
+        "frightened",
+        "please help",
+        "i am crying",
+        "they will arrest me",
+        "my life is ruined"
+      ],
+      "hi": [
+        "डर लग रहा",
+        "बहुत डर",
+        "घबरा",
+        "मदद कीजिए",
+        "रो रही",
+        "रो रहा"
+      ],
+      "hinglish": [
+        "dar lag raha",
+        "bahut dar",
+        "ghabra",
+        "madad karo",
+        "ro rahi hoon",
+        "ro raha hoon"
+      ]
+    },
+    "knows_payee": {
+      "en": [
+        "my landlord",
+        "my brother",
+        "my sister",
+        "my mother",
+        "my father",
+        "my son's college",
+        "our supplier",
+        "known him for years",
+        "my own account",
+        "my regular"
+      ],
+      "hi": [
+        "मकान मालिक",
+        "मेरा भाई",
+        "मेरी बहन",
+        "मेरी माँ",
+        "मेरे पापा",
+        "सालों से जानते",
+        "अपने ही खाते"
+      ],
+      "hinglish": [
+        "makaan malik",
+        "mera bhai",
+        "meri behen",
+        "mummy ko",
+        "papa ko",
+        "saalon se jaante",
+        "apne hi account"
+      ]
+    },
+    "verified_independently": {
+      "en": [
+        "called him back",
+        "called her back",
+        "checked on the official website",
+        "official app",
+        "went to the branch",
+        "spoke to him directly",
+        "called on his usual number",
+        "checked myself"
+      ],
+      "hi": [
+        "वापस कॉल किया",
+        "खुद बात की",
+        "ऑफिशियल वेबसाइट",
+        "ब्रांच गया",
+        "शाखा गया"
+      ],
+      "hinglish": [
+        "wapas call kiya",
+        "khud baat ki",
+        "official website pe check",
+        "branch gaya",
+        "unke number pe baat"
+      ]
+    },
+    "own_initiative": {
+      "en": [
+        "my own decision",
+        "nobody asked me",
+        "i planned this",
+        "every month",
+        "as usual"
+      ],
+      "hi": [
+        "अपनी मर्ज़ी",
+        "किसी ने नहीं कहा",
+        "हर महीने"
+      ],
+      "hinglish": [
+        "apni marzi",
+        "kisi ne nahi kaha",
+        "har mahine",
+        "hamesha ki tarah"
+      ]
+    }
+  },
+  "negators": {
+    "en": [
+      "not",
+      "no",
+      "never",
+      "didn",
+      "didnt",
+      "don",
+      "dont",
+      "doesn",
+      "doesnt",
+      "isn",
+      "isnt",
+      "wasn",
+      "wasnt",
+      "won",
+      "wont",
+      "haven",
+      "havent",
+      "hasn",
+      "hasnt",
+      "nobody",
+      "nothing",
+      "without",
+      "neither",
+      "nor"
+    ],
+    "hi": [
+      "नहीं",
+      "नही",
+      "मत",
+      "न",
+      "ना",
+      "कभी नहीं"
+    ],
+    "hinglish": [
+      "nahi",
+      "nahin",
+      "nhi",
+      "nai",
+      "mat"
+    ]
+  }
+}
