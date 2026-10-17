@@ -46,6 +46,9 @@ function rows(status: AppStatus): Row[] {
         if (/queued/.test(e.detail) && /web/.test(e.detail)) out.push({ key, t, icon: <PhoneCall />, title: "Bolna web call started", tone: "neutral" });
         else if (/text-eval in-progress/.test(e.detail)) out.push({ key, t, icon: <PhoneCall />, title: "Recorded conversation started", tone: "neutral" });
         break;
+      case "call.retry":
+        out.push({ key, t, icon: <PhoneCall />, title: "No answer · retrying once", detail: "The app tells the customer their bank is calling.", tone: "accent" });
+        break;
       case "context.read":
         out.push({ key, t, tool: "get_check_context", icon: <BookOpenCheck />, title: "Agent read the check", tone: "neutral" });
         break;

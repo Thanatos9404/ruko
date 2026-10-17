@@ -23,6 +23,10 @@ import { decide } from "./decision.js";
 import { newCheckId, newCodeWord, newSecret, newSignalId, sha256, safeEqual } from "./ids.js";
 
 export const HOLD_MINUTES = 15;
+/** Sandbox holds resolve quickly so an abandoned demo never sits "holding" for long. */
+export const SANDBOX_HOLD_MINUTES = 3;
+export const RETRY_MINUTES = 5;
+export const SANDBOX_RETRY_MINUTES = 1.5;
 const CHECK_TTL = 14 * 24 * 3600;
 const INDEX_MAX = 300;
 
@@ -36,6 +40,7 @@ export interface CreateCheckInput {
   customer: CustomerProfile;
   device?: DeviceSignals;
   mode?: Check["mode"];
+  origin?: Check["origin"];
 }
 
 export class ValidationError extends Error {
@@ -118,6 +123,7 @@ export function validateCreate(body: unknown): CreateCheckInput {
     },
     device: (b.device ?? {}) as DeviceSignals,
     mode: (["live", "demo", "eval"].includes(String(b.mode)) ? b.mode : "live") as Check["mode"],
+    origin: (["api", "sandbox", "eval-replay"].includes(String(b.origin)) ? b.origin : undefined) as Check["origin"],
   };
 }
 
@@ -197,6 +203,7 @@ export class CheckService {
       id,
       tenant,
       mode: input.mode ?? "live",
+      origin: input.origin ?? "api",
       created_at: now,
       updated_at: now,
       status: hold ? "holding" : "allowed",
@@ -205,7 +212,9 @@ export class CheckService {
       device: input.device ?? {},
       risk,
       code_word: hold ? newCodeWord() : undefined,
-      hold_expires_at: hold ? new Date(this.now().getTime() + HOLD_MINUTES * 60_000).toISOString() : undefined,
+      hold_expires_at: hold
+        ? new Date(this.now().getTime() + (input.origin === "sandbox" ? SANDBOX_HOLD_MINUTES : HOLD_MINUTES) * 60_000).toISOString()
+        : undefined,
       signals: [],
       contact: { status: "not_requested" },
       agent_recommendation: null,
@@ -447,12 +456,41 @@ export class CheckService {
     });
   }
 
-  /** A hold that nobody resolved in time falls back to the policy (no conversation = delay). */
+  retryCount(c: Check): number {
+    return c.events.filter((e) => e.type === "call.retry").length;
+  }
+
+  /**
+   * The no-answer path. First miss: retry once (the app tells the customer the bank
+   * is calling) and extend the hold. Second miss: delay, never block, with an
+   * in-app prompt and, for high-risk holds, the bank's fraud desk.
+   */
+  async noAnswer(id: string, why: string): Promise<StoredCheck> {
+    const c = await this.require(id);
+    if (c.decision) return c;
+    if (this.retryCount(c) < 1) {
+      return this.mutate(id, (cc) => {
+        const mins = cc.origin === "sandbox" ? SANDBOX_RETRY_MINUTES : RETRY_MINUTES;
+        cc.hold_expires_at = new Date(this.now().getTime() + mins * 60_000).toISOString();
+        cc.status = "holding";
+        this.event(cc, "call.retry", `${why}. Retrying once; the app shows the customer that their bank is calling.`);
+      });
+    }
+    return this.mutate(id, (cc) => {
+      const d = decide({ check: cc, noConversation: true, retried: true, now: this.iso() });
+      cc.decision = d;
+      cc.status = "decided";
+      this.event(cc, "decision.made", `${why} after one retry; ${d.outcome}: ${d.reasons.map((r) => r.code).join(", ")}`);
+    });
+  }
+
+  /** A hold that nobody resolved in time: decide from what was heard, or follow the no-answer path. */
   private async expireIfDue(c: StoredCheck): Promise<StoredCheck> {
     if (c.decision || c.risk.action !== "hold" || !c.hold_expires_at) return c;
     if (Date.parse(c.hold_expires_at) > this.now().getTime()) return c;
     const talked = (c.call?.transcript?.some((t) => t.role === "customer") ?? false) || c.signals.length > 0;
-    const d = decide({ check: c, noConversation: !talked, agentRecommendation: c.agent_recommendation?.outcome ?? null, now: this.iso() });
+    if (!talked) return this.noAnswer(c.id, "Hold expired with no answer");
+    const d = decide({ check: c, agentRecommendation: c.agent_recommendation?.outcome ?? null, now: this.iso() });
     c.decision = d;
     c.status = "decided";
     this.event(c, "decision.made", `Hold expired; policy applied: ${d.outcome}.`);

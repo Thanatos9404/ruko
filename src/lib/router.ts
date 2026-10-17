@@ -6,7 +6,9 @@ export function navigate(to: string, replace = false) {
   if (replace) window.history.replaceState(null, "", to);
   else window.history.pushState(null, "", to);
   window.dispatchEvent(new PopStateEvent("popstate"));
-  if (!to.includes("#")) window.scrollTo({ top: 0 });
+  const hash = to.split("#")[1];
+  if (hash) setTimeout(() => document.getElementById(hash)?.scrollIntoView({ block: "start" }), 120);
+  else window.scrollTo({ top: 0 });
 }
 
 export function usePath(): string {
@@ -27,6 +29,9 @@ export function installLinkInterceptor() {
     if (!a || a.target === "_blank" || a.hasAttribute("download")) return;
     const href = a.getAttribute("href");
     if (!href || !href.startsWith("/") || href.startsWith("//") || href.startsWith("/v1/") || href.startsWith("/api/") || href.startsWith("/eval/")) return;
+    // Same-page anchors ("/#how" on "/"): let the browser jump to the section.
+    const [p, hash] = href.split("#");
+    if (hash !== undefined && (p || "/") === window.location.pathname) return;
     e.preventDefault();
     navigate(href);
   });

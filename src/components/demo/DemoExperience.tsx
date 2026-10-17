@@ -58,13 +58,10 @@ export function DemoExperience({ compact = false, scenarios: only }: { compact?:
   const locked = d.phase !== "pay";
 
   return (
-    <div>
+    <div ref={stageRef} className="scroll-mt-24">
       <Controls d={d} list={list} locked={locked} />
-      <div
-        ref={stageRef}
-        className={cn("mt-5 grid scroll-mt-24 gap-6 lg:gap-10", compact ? "lg:grid-cols-[340px_minmax(0,1fr)]" : "lg:grid-cols-[360px_minmax(0,1fr)]")}
-      >
-      <div>
+      <div className={cn("mt-4 grid grid-cols-1 gap-6 lg:gap-10", compact ? "lg:grid-cols-[340px_minmax(0,1fr)]" : "lg:grid-cols-[360px_minmax(0,1fr)]")}>
+      <div className="min-w-0">
         <div>
           <Phone label="Sandbox bank app">
             <AnimatePresence mode="wait">
@@ -118,6 +115,19 @@ export function DemoExperience({ compact = false, scenarios: only }: { compact?:
 }
 
 function Controls({ d, list, locked }: { d: DemoState; list: DemoScenarioView[]; locked: boolean }) {
+  if (locked) {
+    // After Pay the picker collapses to one line, so the phone and the engine panel fit below the nav.
+    const title = list.find((s) => s.id === d.scenario)?.title ?? "";
+    return (
+      <div className="flex min-h-[40px] items-center gap-2 overflow-hidden">
+        <span className="truncate rounded-full bg-ink px-3 py-1.5 text-[12.5px] font-semibold text-paper">{title}</span>
+        <span className="shrink-0 rounded-full border border-hair px-3 py-1.5 text-[12.5px] font-semibold text-ink-2">{LANG_LABEL[d.lang]}</span>
+        <button onClick={d.reset} className="ring-focus ml-auto inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-[12.5px] font-semibold text-muted hover:text-ink">
+          <RotateCcw size={14} /> Reset
+        </button>
+      </div>
+    );
+  }
   return (
     <div className="space-y-3">
       <div role="radiogroup" aria-label="Scenario" className="flex flex-wrap gap-1.5">
@@ -130,8 +140,8 @@ function Controls({ d, list, locked }: { d: DemoState; list: DemoScenarioView[];
             onClick={() => d.setScenario(s.id)}
             title={s.blurb}
             className={cn(
-              "ring-focus rounded-full border px-3 py-1.5 text-[12.5px] font-semibold transition disabled:cursor-not-allowed",
-              d.scenario === s.id ? "border-transparent bg-ink text-paper" : "border-hair text-ink-2 hover:border-[var(--hair-strong)] hover:text-ink disabled:opacity-50",
+              "ring-focus rounded-full border px-3 py-1.5 text-[12.5px] font-semibold transition",
+              d.scenario === s.id ? "border-transparent bg-ink text-paper" : "border-hair text-ink-2 hover:border-[var(--hair-strong)] hover:text-ink",
             )}
           >
             {s.title}
@@ -146,7 +156,6 @@ function Controls({ d, list, locked }: { d: DemoState; list: DemoScenarioView[];
               key={l}
               role="radio"
               aria-checked={d.lang === l}
-              disabled={locked}
               onClick={() => d.setLang(l)}
               className={cn("ring-focus rounded-full px-3 py-1 text-[12.5px] font-semibold transition", d.lang === l ? "bg-paper-3 text-ink" : "text-muted hover:text-ink")}
             >
@@ -154,11 +163,7 @@ function Controls({ d, list, locked }: { d: DemoState; list: DemoScenarioView[];
             </button>
           ))}
         </div>
-        {locked && (
-          <button onClick={d.reset} className="ring-focus inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12.5px] font-semibold text-muted hover:text-ink">
-            <RotateCcw size={14} /> Reset
-          </button>
-        )}
+
       </div>
     </div>
   );
@@ -216,7 +221,7 @@ function EnginePanel({ d, elapsed, compact, liveAvailable }: { d: DemoState; ela
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, ease: EASE, delay: 0.2 }}
-      className={cn("card flex min-h-[360px] flex-col p-5 md:p-6 lg:min-h-[560px]", compact && "lg:min-h-[640px]")}
+      className={cn("card flex min-h-[360px] min-w-0 flex-col p-5 md:p-6 lg:min-h-[560px]", compact && "lg:min-h-[640px]")}
       aria-label="Ruko engine"
     >
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">

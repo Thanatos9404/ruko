@@ -38,8 +38,14 @@ describe("Bolna execution webhook", () => {
     const stored = await app.checks.require(c.id);
     expect(stored.call?.transcript?.some((t) => t.role === "customer")).toBe(false);
     expect(stored.call?.verified_with_bolna).toBe(true);
-    expect(stored.decision?.outcome).toBe("delay");
-    expect(stored.decision?.reasons[0].code).toBe("NO_CONVERSATION");
+    // First miss: retry once, keep holding, never block.
+    expect(stored.decision).toBeNull();
+    expect(stored.events.some((e) => e.type === "call.retry")).toBe(true);
+    // Second miss: delay with an in-app prompt, and the fraud desk for a high-risk hold.
+    const after = await app.checks.noAnswer(c.id, "Retry not answered");
+    expect(after.decision?.outcome).toBe("delay");
+    expect(after.decision?.reasons.map((r) => r.code)).toEqual(expect.arrayContaining(["NO_ANSWER_AFTER_RETRY", "ESCALATED_TO_FRAUD_DESK"]));
+    expect(after.decision?.customer_message).toMatch(/couldn't reach you/);
   });
 
   it("is idempotent across repeated deliveries of the same status", async () => {

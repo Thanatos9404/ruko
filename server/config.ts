@@ -9,6 +9,8 @@ export interface Config {
   webhookToken?: string;
   apiKeys: Map<string, string>; // key -> tenant
   demoTenant: string;
+  /** Public sandbox traffic (/demo) lives in its own tenant, out of the console's headline view. */
+  sandboxTenant: string;
   accessCodes: string[];
   dailyCallCap: number;
   perVisitorDailyCap: number;
@@ -59,6 +61,7 @@ export function loadConfig(env: Record<string, string | undefined> = process.env
     webhookToken: env.RUKO_WEBHOOK_TOKEN || undefined,
     apiKeys,
     demoTenant: env.RUKO_DEMO_TENANT ?? "demo-bank",
+    sandboxTenant: env.RUKO_SANDBOX_TENANT ?? "sandbox",
     accessCodes: (env.RUKO_ACCESS_CODES ?? "").split(",").map((s) => s.trim()).filter(Boolean),
     dailyCallCap: Number(env.RUKO_DAILY_CALL_CAP ?? 12),
     perVisitorDailyCap: Number(env.RUKO_PER_VISITOR_DAILY_CAP ?? 3),

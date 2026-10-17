@@ -51,8 +51,9 @@ export function computeMetrics(checks: Check[]): Metrics {
     delayed: by("delay").length,
     blocked: by("block").length,
     inr_held_back: stopped.reduce((s, c) => s + c.payment.amount_inr, 0),
+    // Timings only from real calls: replayed text-mode conversations have no real duration.
     median_release_seconds: median(
-      released.map((c) => Math.max(0, (Date.parse(c.decision!.decided_at) - Date.parse(c.created_at)) / 1000)),
+      released.filter((c) => c.call?.channel !== "text-eval").map((c) => Math.max(0, (Date.parse(c.decision!.decided_at) - Date.parse(c.created_at)) / 1000)),
     ),
     median_call_seconds: median(held.map((c) => c.call?.duration_s ?? 0).filter((x) => x > 0)),
     calls_with_conversation: held.filter((c) => (c.call?.transcript ?? []).some((t) => t.role === "customer") || c.signals.length > 0).length,

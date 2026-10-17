@@ -203,10 +203,14 @@ export interface AuditEvent {
   detail: string;
 }
 
+export type CheckOrigin = "api" | "sandbox" | "eval-replay";
+
 export interface Check {
   id: string;
   tenant: string;
   mode: "live" | "demo" | "eval";
+  /** Where the check came from: a bank's API call, the public sandbox, or an eval conversation replayed through the engine (synthetic customer). */
+  origin?: CheckOrigin;
   created_at: string;
   updated_at: string;
   status: CheckStatus;

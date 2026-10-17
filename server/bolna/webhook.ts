@@ -132,7 +132,8 @@ async function process(
     if (!fresh.decision) {
       const customerSpoke = (call.transcript ?? []).some((t) => t.role === "customer");
       const noConversation = !customerSpoke && fresh.signals.length === 0;
-      await deps.checks.finalize(checkId, { noConversation, reason: `call ${status}` });
+      if (noConversation) await deps.checks.noAnswer(checkId, `Call ${status}, no conversation`);
+      else await deps.checks.finalize(checkId, { reason: `call ${status}` });
     }
   }
   return { handled: true, check_id: checkId, status, verified };

@@ -15,6 +15,7 @@ import { BolnaClient, BolnaError } from "./bolna/client.js";
 import { checkUserData, contactUserData, lineUserData } from "./bolna/agents.js";
 import { handleExecutionWebhook, logSpend, type SpendEntry } from "./bolna/webhook.js";
 import { publicChat, publicStatsView, readStats } from "./public.js";
+import { ensureSeeded } from "./seed.js";
 
 export interface AppDeps {
   kv: KV;
@@ -232,8 +233,8 @@ export function createApp(deps: AppDeps) {
     await rateLimit(kv, `rl:sandbox:${visitorKey(req)}`, cfg.env === "production" ? 240 : 5000, "sandbox");
     const customer = { ...sc.customer, language: body.language === "hi" || body.language === "en" ? body.language : sc.customer.language };
     const payment = { ...sc.payment, amount_inr: body.amount_inr && body.amount_inr > 0 ? Math.min(body.amount_inr, 10_00_000) : sc.payment.amount_inr, initiated_at: new Date().toISOString() };
-    const input = validateCreate({ payment, customer, device: sc.device, mode: "demo" });
-    const { created } = await checks.create(cfg.demoTenant, input);
+    const input = validateCreate({ payment, customer, device: sc.device, mode: "demo", origin: "sandbox" });
+    const { created } = await checks.create(cfg.sandboxTenant, input);
     return json({ ...created, scenario: sc.id, bank_name: cfg.bankName }, 201);
   });
 
@@ -342,11 +343,14 @@ export function createApp(deps: AppDeps) {
 
   // Console (demo tenant, read-only) -----------------------------------------------
 
-  r.on("GET", "/api/console/overview", async () => {
-    const list = await checks.list(cfg.demoTenant, 300);
+  const consoleTenant = (url: URL) => (url.searchParams.get("tenant") === "sandbox" ? cfg.sandboxTenant : cfg.demoTenant);
+
+  r.on("GET", "/api/console/overview", async (_req, _p, url) => {
+    if (consoleTenant(url) === cfg.demoTenant) await ensureSeeded(checks, kv, cfg.demoTenant);
+    const list = await checks.list(consoleTenant(url), 300);
     const spend = (await kv.get<SpendEntry[]>("spend:log")) ?? [];
     return json({
-      tenant: cfg.demoTenant,
+      tenant: consoleTenant(url),
       metrics: computeMetrics(list),
       spend_cents_logged: spend.reduce((s, e) => s + (e.cost_cents ?? 0), 0),
       live: await gateStatus(kv, cfg),
@@ -355,13 +359,14 @@ export function createApp(deps: AppDeps) {
 
   r.on("GET", "/api/console/checks", async (_req, _p, url) => {
     const limit = Math.min(200, Number(url.searchParams.get("limit") ?? 60));
-    const list = await checks.list(cfg.demoTenant, limit);
+    if (consoleTenant(url) === cfg.demoTenant) await ensureSeeded(checks, kv, cfg.demoTenant);
+    const list = await checks.list(consoleTenant(url), limit);
     return json({ data: list.map(publicCheck) });
   });
 
   r.on("GET", "/api/console/checks/:id", async (_req, p) => {
     const c = await checks.get(p.id);
-    if (!c || c.tenant !== cfg.demoTenant) throw new HttpError(404, "Check not found.", "not_found");
+    if (!c || (c.tenant !== cfg.demoTenant && c.tenant !== cfg.sandboxTenant)) throw new HttpError(404, "Check not found.", "not_found");
     return json(publicCheck(c));
   });
 

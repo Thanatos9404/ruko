@@ -33,6 +33,8 @@ export interface DecisionInput {
   agentRecommendation?: Outcome | null;
   /** True when the customer was never reached (no answer, failed, hung up before speaking). */
   noConversation?: boolean;
+  /** The engine already retried the call once without reaching the customer. */
+  retried?: boolean;
   now?: string;
 }
 
@@ -55,12 +57,22 @@ export function decide(input: DecisionInput): Decision {
   let delay: number | undefined;
 
   if (input.noConversation) {
+    // Never block someone we could not talk to: delay, tell them in the app, offer a call-back,
+    // and hand high-risk cases to the bank's fraud desk.
     outcome = "delay";
-    delay = DELAY_NO_ANSWER_MIN;
+    delay = input.retried ? DELAY_HIGH_MIN : DELAY_NO_ANSWER_MIN;
     reasons.push({
-      code: "NO_CONVERSATION",
-      text: "The customer could not be reached, so the held payment waits for a retry or an in-app confirmation.",
+      code: input.retried ? "NO_ANSWER_AFTER_RETRY" : "NO_CONVERSATION",
+      text: input.retried
+        ? "The customer didn't answer the call or the retry. The payment waits; the app asks them to confirm or request a call-back from the bank's official number."
+        : "The customer could not be reached, so the held payment waits for a retry or an in-app confirmation.",
     });
+    if (check.risk.band === "high" || check.risk.reasons.some((r) => r.hard)) {
+      reasons.push({
+        code: "ESCALATED_TO_FRAUD_DESK",
+        text: "Pre-payment risk was high, so the case goes to the bank's fraud desk for a human call-back.",
+      });
+    }
   } else if (wantsCancel) {
     outcome = "block";
     reasons.push({
@@ -172,7 +184,7 @@ export function decide(input: DecisionInput): Decision {
     pattern,
     agent_recommendation: agentRec,
     escalated_over_agent: escalated,
-    customer_message: customerMessage(outcome, lang, check.payment.amount_inr, delay),
+    customer_message: input.noConversation ? noAnswerMessage(lang) : customerMessage(outcome, lang, check.payment.amount_inr, delay),
     decided_at: now,
     policy_version: POLICY_VERSION,
   };
@@ -181,6 +193,12 @@ export function decide(input: DecisionInput): Decision {
 function describe(xs: Signal[]): string {
   const labels = [...new Set(xs.map((s) => s.type.replace(/_/g, " ")))];
   return labels.join(", ");
+}
+
+export function noAnswerMessage(lang: Lang): string {
+  return lang === "hi"
+    ? "हम आपसे बात नहीं कर पाए। आपका भुगतान रुका है और पैसा सुरक्षित है। ऐप में पुष्टि करें या बैंक से कॉल-बैक माँगें।"
+    : "We couldn't reach you. Your payment is on hold and your money is safe. Confirm in the app, or ask the bank to call you back.";
 }
 
 export function customerMessage(outcome: Outcome, lang: Lang, amount: number, delay?: number): string {

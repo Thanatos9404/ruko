@@ -27,7 +27,7 @@ import { TextModel, type Band, type Evidence, type ModelArtifact } from "./model
 
 export type { CueHit } from "./lexicon.js";
 export type { Evidence, Band } from "./model.js";
-export { configureLibrary, getLibrary, getSignalCues, getSources, libraryPattern, pick } from "./library.js";
+export { configureLibrary, getLibrary, getSignalCues, getSources, libraryPattern, pick, resetLibrary } from "./library.js";
 
 export const MODEL_FILE = "ruko-text-v1.json";
 /** Inputs longer than this are cut (first N UTF-16 units) to bound latency. */

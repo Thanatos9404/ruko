@@ -102,6 +102,15 @@ export function configureLibrary(opts: { library?: PatternLibrary | null; signal
   if (opts.sources !== undefined) sources = opts.sources ? new Map(opts.sources.map((s) => [s.id, s])) : null;
 }
 
+/** Forget loaded or injected files; the next access reads from disk again. */
+export function resetLibrary(): void {
+  library = undefined;
+  signalCues = undefined;
+  sources = undefined;
+  byId = null;
+  byIdFor = null;
+}
+
 export function getLibrary(): PatternLibrary | null {
   if (library === undefined) library = readJson<PatternLibrary>("data/patterns/library.json");
   return library;

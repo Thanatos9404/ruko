@@ -126,3 +126,20 @@ describe("public text check", () => {
     expect(j.matches[0].truth).toMatch(/no 'digital arrest' in Indian law/);
   });
 });
+
+describe("demo tenant provenance", () => {
+  it("seeds the console with eval replays and keeps sandbox traffic in its own tenant", async () => {
+    const app = makeApp();
+    await app.handle(req("POST", "/api/demo/pay", { scenario: "digital-arrest" }));
+    const demo = await (await app.handle(req("GET", "/api/console/checks?limit=200"))).json();
+    expect(demo.data.length).toBeGreaterThan(40);
+    expect(demo.data.every((c: { origin?: string }) => c.origin === "eval-replay")).toBe(true);
+    const outcomes = new Set(demo.data.map((c: { decision?: { outcome: string } | null; risk: { action: string } }) => (c.risk.action === "allow" ? "allowed" : c.decision?.outcome)));
+    expect([...outcomes]).toEqual(expect.arrayContaining(["allowed", "release", "block"]));
+    const sandbox = await (await app.handle(req("GET", "/api/console/checks?tenant=sandbox"))).json();
+    expect(sandbox.data).toHaveLength(1);
+    expect(sandbox.data[0].origin).toBe("sandbox");
+    const detail = await app.handle(req("GET", `/api/console/checks/${sandbox.data[0].id}`));
+    expect(detail.status).toBe(200);
+  });
+});
