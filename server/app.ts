@@ -10,10 +10,11 @@ import { CheckService, publicCheck, validateCreate, type StoredCheck } from "./e
 import { runTool, type ContactDialer, type ToolDeps } from "./engine/toolHandlers.js";
 import { computeMetrics } from "./engine/metrics.js";
 import { checkGate, gateStatus, accessCodeValid } from "./engine/gate.js";
-import { safeEqual } from "./engine/ids.js";
+import { safeEqual, sha256 } from "./engine/ids.js";
 import { BolnaClient, BolnaError } from "./bolna/client.js";
 import { checkUserData, contactUserData, lineUserData } from "./bolna/agents.js";
 import { handleExecutionWebhook, logSpend, type SpendEntry } from "./bolna/webhook.js";
+import { publicChat, readStats } from "./public.js";
 
 export interface AppDeps {
   kv: KV;
@@ -161,7 +162,7 @@ export function createApp(deps: AppDeps) {
     if (c.risk.action !== "hold") throw new HttpError(409, "This payment was not held; no call needed.", "not_held");
     if (c.decision) throw new HttpError(409, "This check is already decided.", "already_decided");
     const body = (await readJson(req)) as { access_code?: string };
-    const session = await mintCheckSession(c, { code: body.access_code ?? req.headers.get("x-access-code"), visitor: clientIp(req) });
+    const session = await mintCheckSession(c, { code: body.access_code ?? req.headers.get("x-access-code"), visitor: visitorKey(req) });
     return json(session);
   });
 
@@ -227,7 +228,8 @@ export function createApp(deps: AppDeps) {
     const body = (await readJson(req)) as { scenario?: string; language?: Lang; amount_inr?: number };
     const sc = scenarioById(String(body.scenario ?? ""));
     if (!sc) throw new HttpError(400, "Unknown scenario.", "invalid_request");
-    await rateLimit(kv, `rl:pay:${clientIp(req)}`, 30);
+    // The free sandbox has its own generous bucket, separate from the paid live-call gate.
+    await rateLimit(kv, `rl:sandbox:${visitorKey(req)}`, cfg.env === "production" ? 240 : 5000, "sandbox");
     const customer = { ...sc.customer, language: body.language === "hi" || body.language === "en" ? body.language : sc.customer.language };
     const payment = { ...sc.payment, amount_inr: body.amount_inr && body.amount_inr > 0 ? Math.min(body.amount_inr, 10_00_000) : sc.payment.amount_inr, initiated_at: new Date().toISOString() };
     const input = validateCreate({ payment, customer, device: sc.device, mode: "demo" });
@@ -244,7 +246,7 @@ export function createApp(deps: AppDeps) {
     const c = await checkForApp(req, url, p.id);
     if (c.risk.action !== "hold" || c.decision) throw new HttpError(409, "No call needed for this check.", "not_needed");
     const body = (await readJson(req)) as { access_code?: string };
-    return json(await mintCheckSession(c, { code: body.access_code, visitor: clientIp(req) }));
+    return json(await mintCheckSession(c, { code: body.access_code, visitor: visitorKey(req) }));
   });
 
   /** The trusted contact's "phone" in the demo: a second browser tab answers the contact agent's web call. */
@@ -252,7 +254,7 @@ export function createApp(deps: AppDeps) {
     const c = await checkForApp(req, url, p.id);
     if (c.contact?.status !== "ringing_web" || !cfg.agents.contact || !bolna) throw new HttpError(409, "No contact call is ringing.", "not_ringing");
     const authorised = c.events.some((e) => e.type === "live.authorized");
-    const gate = await checkGate(kv, cfg, bolna, { visitor: clientIp(req), preauthorized: authorised });
+    const gate = await checkGate(kv, cfg, bolna, { visitor: visitorKey(req), preauthorized: authorised });
     if (!gate.ok) throw new HttpError(429, gate.message ?? "Unavailable.", gate.reason ?? "unavailable");
     const session = await bolna.mintWebSession({ agent_id: cfg.agents.contact, user_data: contactUserData(c, cfg.bankName) });
     await checks.setContact(c.id, { status: "ringing_web", execution_id: session.run_id });
@@ -286,7 +288,7 @@ export function createApp(deps: AppDeps) {
 
   r.on("POST", "/api/live/verify", async (req) => {
     const body = (await readJson(req)) as { access_code?: string };
-    await rateLimit(kv, `rl:verify:${clientIp(req)}`, 20);
+    await rateLimit(kv, `rl:verify:${visitorKey(req)}`, 20);
     return json({ valid: accessCodeValid(cfg, body.access_code) });
   });
 
@@ -294,7 +296,7 @@ export function createApp(deps: AppDeps) {
 
   r.on("POST", "/api/public/text-check", async (req) => {
     const body = (await readJson(req, 8_000)) as { text?: string; language?: Lang };
-    await rateLimit(kv, `rl:text:${clientIp(req)}`, 60);
+    await rateLimit(kv, `rl:text:${visitorKey(req)}`, 120);
     const lang: Lang = body.language === "hi" ? "hi" : "en";
     const text = String(body.text ?? "").slice(0, 2000);
     if (text.trim().length < 12) throw new HttpError(400, "Describe what happened in a sentence or two.", "invalid_request");
@@ -310,10 +312,21 @@ export function createApp(deps: AppDeps) {
     return json({ method: "rule-based keyword match against the pattern library (no AI, nothing stored)", matches });
   });
 
+  r.on("POST", "/api/public/chat", async (req) => {
+    const body = await readJson(req, 16_000);
+    const reply = await publicChat(kv, body, { visitorKey: visitorKey(req), dailyCap: cfg.chatDailyCap, perHour: cfg.env === "production" ? 40 : 1000 });
+    return json(reply);
+  });
+
+  r.on("GET", "/api/public/stats", async () => {
+    const s = await readStats(kv);
+    return json({ ...s, note: "Anonymous counts of checks run on Ruko's public checker. No text, names or numbers are stored with them." });
+  });
+
   r.on("POST", "/api/public/session", async (req) => {
     const body = (await readJson(req)) as { access_code?: string; language?: Lang };
     if (!cfg.agents.line) throw new HttpError(503, "The public line is not configured.", "not_configured");
-    const gate = await checkGate(kv, { ...cfg, agents: { ...cfg.agents, check: cfg.agents.line } }, bolna, { code: body.access_code, visitor: clientIp(req) });
+    const gate = await checkGate(kv, { ...cfg, agents: { ...cfg.agents, check: cfg.agents.line } }, bolna, { code: body.access_code, visitor: visitorKey(req) });
     if (!gate.ok) throw new HttpError(gate.reason === "access_code_invalid" ? 403 : 429, gate.message ?? "Unavailable.", gate.reason ?? "unavailable");
     const lang: Lang = body.language === "hi" ? "hi" : "en";
     const session = await bolna!.mintWebSession({ agent_id: cfg.agents.line, user_data: lineUserData(lang) });
@@ -366,11 +379,29 @@ export function createApp(deps: AppDeps) {
   };
 }
 
-async function rateLimit(kv: KV, key: string, perHour: number): Promise<void> {
+async function rateLimit(kv: KV, key: string, perHour: number, kind: "sandbox" | "default" = "default"): Promise<void> {
   const k = `${key}:${new Date().toISOString().slice(0, 13)}`;
   const n = (await kv.get<number>(k)) ?? 0;
-  if (n >= perHour) throw new HttpError(429, "Too many requests. Please slow down.", "rate_limited");
+  if (n >= perHour)
+    throw new HttpError(
+      429,
+      kind === "sandbox"
+        ? "Lots of sandbox payments from your network in the last hour. Give it a minute and try again."
+        : "Too many requests from your network. Please try again in a minute.",
+      "rate_limited",
+    );
   await kv.set(k, n + 1, 3600);
+}
+
+/**
+ * Per-visitor key for rate limits. On Vercel the client address is the first
+ * entry of x-forwarded-for (or x-real-ip); the user agent is mixed in so a
+ * shared office or campus IP doesn't collapse everyone into one bucket.
+ */
+function visitorKey(req: Request): string {
+  const ip = clientIp(req);
+  const ua = req.headers.get("user-agent") ?? "";
+  return sha256(`${ip}|${ua}`).slice(0, 20);
 }
 
 export type RukoApp = ReturnType<typeof createApp>;

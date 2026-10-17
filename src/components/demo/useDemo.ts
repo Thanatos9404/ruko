@@ -149,7 +149,14 @@ export function useDemo() {
       await sleep(700);
       setPhase(c.action === "hold" ? "hold" : "allowed");
     } catch (e) {
-      setError((e as Error).message);
+      const err = e as ApiError;
+      setError(
+        err.status === 429
+          ? err.message
+          : err.status >= 500 || !err.status
+            ? "The sandbox bank didn't answer. Check your connection and try again."
+            : err.message,
+      );
       setPhase("pay");
     }
   }, [scenario, lang]);

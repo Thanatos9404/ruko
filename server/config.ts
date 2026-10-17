@@ -17,6 +17,7 @@ export interface Config {
   contactWebRing: boolean;
   enforceBolnaIps: boolean;
   blobToken?: string;
+  chatDailyCap: number;
 }
 
 export const BOLNA_IPS = ["13.203.39.153", "13.126.9.249", "13.202.133.53"];
@@ -53,5 +54,6 @@ export function loadConfig(env: Record<string, string | undefined> = process.env
     contactWebRing: env.RUKO_CONTACT_WEB_RING !== "false",
     enforceBolnaIps: env.RUKO_ENFORCE_BOLNA_IPS ? env.RUKO_ENFORCE_BOLNA_IPS === "true" : mode === "production",
     blobToken: env.BLOB_READ_WRITE_TOKEN || undefined,
+    chatDailyCap: Number(env.RUKO_CHAT_DAILY_CAP ?? 800),
   };
 }

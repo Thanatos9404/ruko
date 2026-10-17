@@ -76,7 +76,14 @@ export function DemoExperience({ compact = false, scenarios: only }: { compact?:
             </AnimatePresence>
           </Phone>
         </div>
-        {d.error && d.phase === "pay" && <p className="mt-3 text-center text-[13px] text-stop">{d.error}</p>}
+        {d.error && d.phase === "pay" && (
+          <div role="status" className="mx-auto mt-3 flex max-w-[340px] items-start justify-between gap-3 rounded-2xl border border-hair bg-paper-2 px-4 py-3">
+            <p className="text-[13px] leading-snug text-ink-2">{d.error}</p>
+            <button onClick={() => void d.pay()} className="ring-focus shrink-0 rounded-full border border-hair px-3 py-1 text-[12.5px] font-semibold text-ink hover:border-[var(--hair-strong)]">
+              Try again
+            </button>
+          </div>
+        )}
       </div>
 
       <EnginePanel d={d} elapsed={elapsed} compact={compact} liveAvailable={liveAvailable} />

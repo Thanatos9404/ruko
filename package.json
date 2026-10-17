@@ -22,7 +22,11 @@
     "bolna:check": "tsx scripts/bolna-check.ts",
     "scan:secrets": "node scripts/secret-scan.mjs",
     "screenshots": "node scripts/screenshots.mjs",
-    "check": "npm run typecheck && npm run lint && npm run test && npm run scan:secrets"
+    "check": "npm run typecheck && npm run lint && npm run test && npm run scan:secrets",
+    "e2e": "node scripts/e2e.mjs http://localhost:5410",
+    "brand": "tsx scripts/brand.ts",
+    "eval:publish": "tsx eval/publish.ts",
+    "latency": "tsx scripts/latency.ts"
   },
   "dependencies": {
     "@bolna/web-call": "3.0.1",
