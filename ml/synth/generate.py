@@ -50,6 +50,9 @@ LIBRARY = ROOT / "data" / "patterns" / "library.json"
 GENUINE = ROOT / "ml" / "synth" / "genuine_scenarios.json"
 OUT = ROOT / "ml" / "data" / "synthetic" / "ruko_synth_v1.jsonl"
 LOG = ROOT / "ml" / "data" / "synthetic" / "generation_log.json"
+# Pattern briefs are frozen the first time a pattern is generated, so later library edits
+# (translations, merges, extra sources) never silently change or invalidate the synthetic set.
+BRIEFS = ROOT / "ml" / "synth" / "briefs_v1.json"
 
 MODEL_A = "Qwen/Qwen3-235B-A22B-Instruct-2507"
 MODEL_B = "google/gemma-3-27b-it"
@@ -408,7 +411,14 @@ def main():
         jobs = [j for j in jobs if j["ref"] in keep]
     if args.limit:
         jobs = jobs[: args.limit]
-    briefs = {p["id"]: pattern_brief(p) for p in library["patterns"]}
+    frozen = json.loads(BRIEFS.read_text(encoding="utf-8")) if BRIEFS.exists() else {}
+    needed = {j["ref"] for j in jobs if j["label"] == "scam"}
+    for p in library["patterns"]:
+        if p["id"] in needed and p["id"] not in frozen:
+            frozen[p["id"]] = pattern_brief(p)
+    if args.run and not args.offline:
+        BRIEFS.write_text(json.dumps(dict(sorted(frozen.items())), ensure_ascii=False, indent=1) + chr(10), encoding="utf-8")
+    briefs = dict(frozen)
     briefs.update({s["id"]: scenario_brief(s) for s in genuine["scenarios"]})
 
     n_samples = sum(j["n"] for j in jobs)

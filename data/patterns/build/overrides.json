@@ -1,16 +1,222 @@
 {
-  "note": "Curation applied on top of the research files. 'rename' maps research ids onto the stable ids used by shared/patterns.ts v0 (kept so existing eval scenarios and tool enums keep working).",
+  "note": "Curation applied on top of the research files. 'rename' maps research ids onto stable ids: the shared/patterns.ts v0 ids (kept so eval scenarios and tool enums keep working) and four near-duplicates that two research agents both wrote (their lists are merged, India entry first). 'twins' pairs global patterns with the Indian pattern describing the same mechanism; evaluation reports pattern accuracy both strictly and with twins counted as a match.",
   "rename": {
     "stock_ipo_trading_group": "investment_trading",
     "fake_customer_care": "fake_support_refund",
     "remote_access_screen_share": "remote_access",
-    "sextortion_video_call": "video_call_blackmail"
+    "sextortion_video_call": "video_call_blackmail",
+    "sextortion_payment_demand": "video_call_blackmail",
+    "loan_upfront_fee_scam": "loan_processing_fee",
+    "money_mule_recruitment": "mule_account_recruitment",
+    "recovery_agent_fake_cyber_cell": "recovery_room_scam",
+    "customs_duty_impersonation": "foreign_gift_customs"
   },
   "drop": [],
   "patterns": {
-    "investment_trading": {"aliases": ["stock_ipo_trading_group"]},
-    "fake_support_refund": {"aliases": ["fake_customer_care"], "name_en": "Fake customer care number"},
-    "remote_access": {"aliases": ["remote_access_screen_share"]},
-    "video_call_blackmail": {"aliases": ["sextortion_video_call"]}
+    "investment_trading": {
+      "aliases": [
+        "stock_ipo_trading_group"
+      ]
+    },
+    "fake_support_refund": {
+      "aliases": [
+        "fake_customer_care"
+      ],
+      "name_en": "Fake customer care number"
+    },
+    "remote_access": {
+      "aliases": [
+        "remote_access_screen_share"
+      ]
+    },
+    "video_call_blackmail": {
+      "aliases": [
+        "sextortion_video_call",
+        "sextortion_payment_demand"
+      ]
+    },
+    "mule_account_recruitment": {
+      "aliases": [
+        "money_mule_recruitment"
+      ],
+      "truth_en": "Letting anyone use your bank account or SIM for money makes you part of the crime, and police arrest account sellers."
+    },
+    "loan_processing_fee": {
+      "aliases": [
+        "loan_upfront_fee_scam"
+      ],
+      "truth_en": "A genuine lender never asks for a fee into a personal account before giving you a loan."
+    },
+    "recovery_room_scam": {
+      "aliases": [
+        "recovery_agent_fake_cyber_cell"
+      ]
+    },
+    "aeps_biometric_misuse": {
+      "truth_en": "You can lock your Aadhaar biometrics on the UIDAI website or mAadhaar app so nobody can use your fingerprint to withdraw money."
+    },
+    "ai_voice_clone_emergency": {
+      "truth_en": "Voices can be cloned with AI, so please hang up and call your family member yourself on their usual number before paying."
+    },
+    "apk_malware_invite": {
+      "truth_en": "Banks, government schemes and traffic police never send apps as APK files on WhatsApp; please don't install it, and uninstall it if you did."
+    },
+    "bank_fraud_dept_impersonation": {
+      "truth_en": "Your bank will never ask you to move money to a 'safe account' or to share an OTP or PIN to protect it."
+    },
+    "betting_gaming_app": {
+      "truth_en": "Online money games and betting apps are banned in India under the 2025 online gaming law, so any app taking money for bets is illegal."
+    },
+    "boss_impersonation_whatsapp": {
+      "truth_en": "Before paying on a WhatsApp or e-mail instruction from a senior person, call them yourself on their known number to confirm."
+    },
+    "credit_card_limit_or_fee": {
+      "truth_en": "Your bank never asks for an OTP, CVV or PIN, or for an app install, to change a card limit or fee; do it only in the bank's official app or helpline."
+    },
+    "credit_card_reward_points": {
+      "truth_en": "Reward points are redeemed only in your card issuer's official app or website; issuers never send APK files or ask for OTP, CVV or PIN."
+    },
+    "crypto_investment": {
+      "truth_en": "No genuine investment platform makes you pay a fee or tax to withdraw your own money."
+    },
+    "e_challan_apk": {
+      "truth_en": "Traffic challans never come as an app file; check and pay challans only on the official Parivahan website."
+    },
+    "epfo_pf_withdrawal": {
+      "truth_en": "All EPFO services are free on the EPFO portal and the UMANG app; never pay an agent to get your PF."
+    },
+    "fake_charity_disaster": {
+      "truth_en": "Donate only through the official website or verified account of the relief fund or temple, not a QR code or UPI ID sent in a message."
+    },
+    "fake_ecommerce_site": {
+      "truth_en": "If an online offer looks too good to be true it usually is; you can check a website or number on cybercrime.gov.in before paying."
+    },
+    "fake_job_offer_fee": {
+      "truth_en": "A genuine employer never asks you to pay for a job, an offer letter or training."
+    },
+    "foreign_gift_customs": {
+      "truth_en": "Indian Customs never asks you to pay duty into a personal bank account over a call, text or e-mail.",
+      "aliases": [
+        "customs_duty_impersonation"
+      ]
+    },
+    "franchise_dealership": {
+      "truth_en": "Never pay a franchise or dealership fee unless you have verified the offer directly on the company's official website."
+    },
+    "govt_scheme_subsidy": {
+      "truth_en": "Government schemes never ask you to pay a fee into a private account or to share an OTP; check schemes only on official .gov.in portals."
+    },
+    "hacked_account_friend_request": {
+      "truth_en": "Accounts get hacked, so call your friend on their known number before sending money asked for in a chat."
+    },
+    "income_tax_refund": {
+      "truth_en": "The Income Tax Department never sends refund links; refunds go only to the bank account you validate yourself on incometax.gov.in."
+    },
+    "insurance_policy_bonus": {
+      "truth_en": "IRDAI warns never to pay or share policy, bank or OTP details on calls or messages that use its name."
+    },
+    "lpg_gas_connection": {
+      "truth_en": "Gas companies never ask for OTPs, bank details or app installs on calls or WhatsApp; book and do KYC only in the official app."
+    },
+    "loan_app_harassment": {
+      "truth_en": "Borrow only from banks or RBI-regulated lenders, and report threats or morphed photos to the police on 1930 instead of paying."
+    },
+    "matrimonial_fraud": {
+      "truth_en": "Never send money to someone you met only on a matrimonial site, whatever the reason, before meeting and verifying them in person."
+    },
+    "mobile_tower_installation": {
+      "truth_en": "TRAI does not charge any fee or issue NOCs for mobile tower installation, so don't pay anyone who says it does."
+    },
+    "pension_life_certificate": {
+      "truth_en": "The Central Pension Accounting Office never calls pensioners about life certificates or asks for OTPs; submit it at your bank or through Jeevan Pramaan."
+    },
+    "ponzi_deposit_scheme": {
+      "truth_en": "Deposit schemes promising high fixed returns without a financial regulator's registration are illegal under the BUDS Act, and your money is not protected."
+    },
+    "romance_social_media": {
+      "truth_en": "Never send money to someone you have only met online, however urgent their story."
+    },
+    "scholarship_fee": {
+      "truth_en": "Scholarships are applied for on the National Scholarship Portal; no genuine scheme asks for a fee or an OTP over the phone."
+    },
+    "sim_swap_esim": {
+      "truth_en": "Telecom companies never need your OTP or a link click to upgrade your SIM or activate an eSIM; do it only at the operator's store or app."
+    },
+    "travel_pilgrimage_booking": {
+      "truth_en": "Kedarnath helicopter tickets are sold only on the official IRCTC website; fake sites and ads target pilgrims."
+    },
+    "rent_advance_landlord": {
+      "truth_en": "You never need to enter your UPI PIN or approve a request to receive money; a real tenant or landlord won't ask for that."
+    },
+    "wrong_transfer_return": {
+      "truth_en": "An SMS is not proof of money received; check your balance in your bank app and never 'return' money to a stranger."
+    },
+    "fake_cybercrime_legal_notice": {
+      "truth_en": "No police or government agency sends crime notices by e-mail asking you to reply or pay; PIB Fact Check has confirmed these notices are fake."
+    },
+    "rbi_fictitious_funds": {
+      "truth_en": "RBI never holds money or prizes for individuals, and never calls or e-mails asking for fees or personal details."
+    }
+  },
+  "twins": {
+    "romance_scam_global": [
+      "romance_social_media",
+      "matrimonial_fraud"
+    ],
+    "pig_butchering_crypto": [
+      "crypto_investment",
+      "investment_trading"
+    ],
+    "job_task_scam_global": [
+      "task_job",
+      "fake_job_offer_fee"
+    ],
+    "purchase_scam_marketplace": [
+      "fake_ecommerce_site",
+      "army_buyer_seller_olx",
+      "rent_advance_landlord"
+    ],
+    "tech_support_refund": [
+      "remote_access",
+      "refund_cashback",
+      "fake_support_refund"
+    ],
+    "bank_safe_account_impersonation": [
+      "bank_fraud_dept_impersonation"
+    ],
+    "government_imposter_tax": [
+      "income_tax_refund",
+      "digital_arrest"
+    ],
+    "hi_mum_family_text": [
+      "hacked_account_friend_request",
+      "relative_emergency"
+    ],
+    "fake_friend_call_sg": [
+      "hacked_account_friend_request",
+      "relative_emergency"
+    ],
+    "advance_fee_inheritance": [
+      "prize_lottery",
+      "foreign_gift_customs"
+    ],
+    "foreign_official_impersonation_sg": [
+      "digital_arrest",
+      "courier_parcel"
+    ],
+    "courier_fraud_cash_collection": [
+      "digital_arrest",
+      "bank_fraud_dept_impersonation"
+    ],
+    "ceo_fraud": [
+      "boss_impersonation_whatsapp"
+    ],
+    "gift_card_payment_demand": [
+      "boss_impersonation_whatsapp"
+    ],
+    "delivery_toll_smishing": [
+      "e_challan_apk",
+      "courier_parcel"
+    ]
   }
 }
