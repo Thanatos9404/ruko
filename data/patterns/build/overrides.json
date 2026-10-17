@@ -1,0 +1,16 @@
+{
+  "note": "Curation applied on top of the research files. 'rename' maps research ids onto the stable ids used by shared/patterns.ts v0 (kept so existing eval scenarios and tool enums keep working).",
+  "rename": {
+    "stock_ipo_trading_group": "investment_trading",
+    "fake_customer_care": "fake_support_refund",
+    "remote_access_screen_share": "remote_access",
+    "sextortion_video_call": "video_call_blackmail"
+  },
+  "drop": [],
+  "patterns": {
+    "investment_trading": {"aliases": ["stock_ipo_trading_group"]},
+    "fake_support_refund": {"aliases": ["fake_customer_care"], "name_en": "Fake customer care number"},
+    "remote_access": {"aliases": ["remote_access_screen_share"]},
+    "video_call_blackmail": {"aliases": ["sextortion_video_call"]}
+  }
+}

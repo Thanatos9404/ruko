@@ -1,0 +1,10 @@
+{
+  "bothbosu_multi_agent/agent_conversation_all.csv": "e6db0f4a31efc56ffd20951039578e578c92d732d0ca1a50ad925fcc681bd7cf",
+  "bothbosu_scam_dialogue/scam-dialogue_all.csv": "fe8a8fa0aa2b8afb0b0a672fb7f9739b323cb6dd12064f786a68c2a1f49a4e0b",
+  "bothbosu_single_agent/single-agent-scam-dialogue_all.csv": "c070ab3674e49e3a80a6c62c5df00f751bb98c47995ffe96e53a3c42d7d45bda",
+  "flowxai_scamguardbench_v0_2/hard.jsonl": "b86883ddb7abeceb3fff99d83a97c50d286b9ac6528f10e078e2e7b059fd0e15",
+  "flowxai_scamguardbench_v0_2/legit_confusable.jsonl": "e6cb49f8d0aee6cfaeecdcee41b877fca59b0cc4102129c6032acef0c42eae58",
+  "flowxai_scamguardbench_v0_2/standard.jsonl": "79efda3753a439f0870a771d9cb8ccefe659015bf91d984c3e51d20809947807",
+  "mendeley_smishing_f45bkkt8pr/Dataset_5971.zip": "9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3",
+  "ridham115_indian_scam_sms_audited/synthetic_audited.csv": "45bde5f156a1a42698bab209e32bcd41b3639013d772f644cc3208ed39fb61e2"
+}

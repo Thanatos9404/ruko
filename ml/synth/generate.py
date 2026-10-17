@@ -389,11 +389,14 @@ def main():
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--only", default="", help="comma-separated pattern/scenario ids")
     ap.add_argument("--workers", type=int, default=8)
+    ap.add_argument("--scope", choices=["all", "scam", "genuine"], default="all")
     args = ap.parse_args()
 
-    library = json.loads(LIBRARY.read_text(encoding="utf-8"))
+    library = json.loads(LIBRARY.read_text(encoding="utf-8")) if LIBRARY.exists() else {"patterns": []}
     genuine = json.loads(GENUINE.read_text(encoding="utf-8"))
     jobs = plan_jobs(library, genuine)
+    if args.scope != "all":
+        jobs = [j for j in jobs if (j["label"] == "scam") == (args.scope == "scam")]
     kinds = {s["id"]: s["kind"] for s in genuine["scenarios"]}
     for j in jobs:
         if j["label"] != "scam":
@@ -444,6 +447,10 @@ def main():
                 print(f"  {k}/{len(jobs)} jobs, {len(results)} samples, {len(failures)} failures, "
                       f"{USAGE['completion_tokens']:,} new completion tokens, {time.time()-t0:.0f}s", flush=True)
 
+    if OUT.exists():
+        fresh = {r["id"] for r in results}
+        kept = [json.loads(l) for l in OUT.read_text(encoding="utf-8").splitlines() if l.strip()]
+        results.extend(r for r in kept if r["id"] not in fresh)
     results.sort(key=lambda r: r["id"])
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w", encoding="utf-8", newline="\n") as f:
