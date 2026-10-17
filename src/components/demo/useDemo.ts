@@ -192,7 +192,7 @@ export function useDemo() {
         const text = swap(t.text);
         setCaptions((cs) => [...cs, { role: t.role, text }]);
         const words = text.split(/\s+/).length;
-        await sleep(Math.min(6500, Math.max(1300, (words / 2.8) * 1000)));
+        await sleep(Math.min(5000, Math.max(1200, (words / 3.6) * 1000)));
       }
     }
   }, [scenario, lang]);

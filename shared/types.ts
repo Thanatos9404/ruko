@@ -174,7 +174,9 @@ export type ContactStatus =
   | "ringing_web"
   | "reached"
   | "no_answer"
-  | "not_configured";
+  | "not_configured"
+  /** Recorded (text-mode) replays: the contact call is shown but not placed. */
+  | "simulated";
 
 export interface ContactOutcome {
   reached: boolean;

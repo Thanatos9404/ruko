@@ -47,6 +47,11 @@ function rukoApi(): Plugin {
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), rukoApi()],
+  resolve: { dedupe: ["react", "react-dom"] },
+  optimizeDeps: {
+    // Pre-bundle everything the lazy routes use, so a late discovery can't split React into two copies.
+    include: ["react", "react-dom", "react-dom/client", "react/jsx-runtime", "motion/react", "lucide-react", "lenis", "ogl", "@bolna/web-call"],
+  },
   build: {
     target: "es2022",
     chunkSizeWarningLimit: 900,

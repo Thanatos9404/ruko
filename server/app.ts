@@ -272,7 +272,7 @@ export function createApp(deps: AppDeps) {
     if (!body.tool || !REPLAY_TOOLS.has(body.tool)) throw new HttpError(400, "Tool not allowed in replay.", "invalid_request");
     const replayDeps: ToolDeps = {
       ...toolDeps,
-      contact: { dial: async () => ({ status: "not_configured", channel: "text-eval" }) },
+      contact: { dial: async () => ({ status: "simulated", channel: "text-eval" }) },
     };
     if (c.call?.channel !== "text-eval") await checks.attachCall(c.id, { channel: "text-eval", status: "in-progress" });
     const { body: out } = await runTool(replayDeps, body.tool, { ...(body.args ?? {}), check_id: c.id });

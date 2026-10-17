@@ -183,14 +183,15 @@ function EnginePanel({ d, elapsed, compact, liveAvailable }: { d: DemoState; ela
     ringing_web: "ringing",
     reached: "reached",
     no_answer: "no answer",
-    not_configured: d.mode === "replay" ? "simulated in replay" : "not configured",
+    not_configured: "not configured",
+    simulated: "simulated in replay",
   };
   return (
     <motion.section
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, ease: EASE, delay: 0.2 }}
-      className={cn("card flex min-h-[560px] flex-col p-5 md:p-6", compact && "lg:min-h-[640px]")}
+      className={cn("card flex min-h-[360px] flex-col p-5 md:p-6 lg:min-h-[560px]", compact && "lg:min-h-[640px]")}
       aria-label="Ruko engine"
     >
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">

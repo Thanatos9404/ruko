@@ -1,14 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="15 20 965 290" role="img" aria-labelledby="t">
-  <title id="t">Ruko</title>
-  <g fill="none" stroke="#161f2e" stroke-width="36" stroke-linejoin="miter">
-    <path d="M25 52 H175 A59 59 0 0 1 175 170 H76"/>
-    <path d="M316 100 V204 A78 78 0 0 0 472 204 V100 M472 204 V300"/>
-    <circle cx="879" cy="200" r="82"/>
-  </g>
-  <g fill="#161f2e">
-    <polygon points="70,170 121,170 254,300 203,300"/>
-    <polygon points="538,48 574,30 574,300 538,300"/>
-    <polygon points="574,184 690,100 748,100 574,232"/>
-    <polygon points="612,204 640,180 760,300 708,300"/>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="15 20 965 290" role="img" aria-label="Ruko"><g fill="none" stroke="#161f2e" stroke-width="36"><path d="M25 52 H175 A59 59 0 0 1 175 170 H70"/><path d="M316 100 V204 A78 78 0 0 0 472 204 V100 M472 204 V300"/><circle cx="879" cy="200" r="82"/></g><g fill="#161f2e"><polygon points="70,170 121,170 254,300 203,300"/><polygon points="538,48 574,30 574,300 538,300"/><polygon points="574,184 690,100 748,100 574,232"/><polygon points="612,204 640,180 760,300 708,300"/></g></svg>

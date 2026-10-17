@@ -63,7 +63,11 @@ function rows(status: AppStatus): Row[] {
           t,
           tool: "call_trusted_contact",
           icon: <PhoneForwarded />,
-          title: /ringing_web|dialing/.test(e.detail) ? "Calling the trusted contact" : e.detail.replace("Trusted contact: ", "Trusted contact: ").replace(/_/g, " "),
+          title: /ringing_web|dialing/.test(e.detail)
+            ? "Calling the trusted contact"
+            : /simulated/.test(e.detail)
+              ? "Trusted contact call (simulated in the recorded run)"
+              : e.detail.replace(/_/g, " "),
           tone: "neutral",
         });
         break;
