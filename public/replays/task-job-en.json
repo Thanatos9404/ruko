@@ -1,0 +1,79 @@
+{
+ "scenario": "task-job",
+ "lang": "en",
+ "recorded_code_word": "GULAB 73",
+ "recorded_decision": "block",
+ "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
+ "turns": [
+  {
+   "role": "agent",
+   "text": "Hello Neha, this is Ruko, Demo Bank's payment safety assistant. Your code word is GULAB 73. Does it match your app?"
+  },
+  {
+   "role": "customer",
+   "text": "Sorry, I never got any code word from Demo Bank. This prepaid task thing is sounding more and more like a scam to me."
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_W9MBVNFG8A",
+    "signal": "codeword_mismatch",
+    "evidence": "Never got a code word from Demo Bank",
+    "confidence": "high",
+    "pattern_hint": "none"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "I hear you're unsure about the code word. That’s a good sign you’re being careful. Is anyone on another call or video call with you right now, telling you what to do?"
+  },
+  {
+   "role": "customer",
+   "text": "No, nobody is on call with me. But honestly, this ₹12,000 prepaid thing to get ₹38,000 feels really fishy, I think I should stop."
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_W9MBVNFG8A",
+    "signal": "pay_to_earn",
+    "evidence": "Must pay ₹12,000 to get ₹38,000",
+    "confidence": "high",
+    "pattern_hint": "task_job"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "A genuine company offering a job will never ask you for money. Do you need to make this payment to get paid for work or tasks?"
+  },
+  {
+   "role": "customer",
+   "text": "Yes, they said I need to pay ₹12,000 to unlock the commission, but I get it now, it's a total fraud. I'm not paying anything."
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_W9MBVNFG8A",
+    "signal": "wants_to_cancel",
+    "evidence": "I'm not paying anything",
+    "confidence": "high",
+    "pattern_hint": "none"
+   }
+  },
+  {
+   "role": "tool",
+   "tool": "set_decision",
+   "args": {
+    "check_id": "chk_W9MBVNFG8A",
+    "recommendation": "block",
+    "reason": "The payment is part of a task/job scam where money is demanded to unlock earnings."
+   }
+  },
+  {
+   "role": "agent",
+   "text": "For your safety, this payment is stopped. Your money is safe in your account. If someone has been pressuring you, call 1930. Thank you for being careful, Neha. Goodbye."
+  }
+ ]
+}

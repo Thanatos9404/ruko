@@ -11,12 +11,12 @@ const STYLE_RULE: Record<Style, string> = {
   hi: "Speak only in simple, natural Hindi written in Devanagari script.",
   hinglish: "Speak Hinglish: everyday Hindi mixed with English words, written in Roman script.",
 };
-const rules = (s: Style) =>
+export const rules = (s: Style) =>
   `${STYLE_RULE[s]} You are on a phone call with your bank's safety assistant. Say only what you would say out loud, in one or two short sentences. Never mention that you are role-playing or an AI. If the assistant says goodbye or the call clearly ends, reply exactly [END].`;
 
-const phone = (i: number) => `+447700900${String(700 + i).padStart(3, "0")}`;
+export const phone = (i: number) => `+447700900${String(700 + i).padStart(3, "0")}`;
 
-interface Story {
+export interface Story {
   key: string;
   kind: "scam" | "genuine";
   payee: string;

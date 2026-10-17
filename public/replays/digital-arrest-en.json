@@ -1,0 +1,92 @@
+{
+ "scenario": "digital-arrest",
+ "lang": "en",
+ "recorded_code_word": "SURAJ 65",
+ "recorded_decision": "block",
+ "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
+ "turns": [
+  {
+   "role": "agent",
+   "text": "Hello Kamla, this is Ruko, Demo Bank's payment safety assistant. Your code word is SURAJ 65. Does it match your app?"
+  },
+  {
+   "role": "customer",
+   "text": "Yes, yes, that's my code word. But please hurry, I'm in the middle of something important."
+  },
+  {
+   "role": "tool",
+   "tool": "get_check_context",
+   "args": {
+    "check_id": "chk_VVDDMECTLE",
+    "execution_id": "eval-demo-digital-arrest-en"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "Your app shows you were on a phone call while making this payment. Was someone on the call with you, telling you what to do?"
+  },
+  {
+   "role": "customer",
+   "text": "Yes... the CBI officer is on video call right now. He said my money must be moved for verification. Please don't stop it, I'm scared."
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_VVDDMECTLE",
+    "signal": "authority_threat",
+    "evidence": "CBI officer on video call said money must be moved for verification",
+    "confidence": "high",
+    "pattern_hint": "digital_arrest"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "There's no 'digital arrest' in Indian law; it's a fraud. Police, CBI or courts never arrest or question anyone on a video call. Did the person say they were from the police, CBI, customs or a court, or ask you to stay on a video call?"
+  },
+  {
+   "role": "customer",
+   "text": "Oh god, yes, he said he was CBI and told me to stay on the call. Please stop the payment—I'll do anything you say. Can you call my son Ravi?"
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_VVDDMECTLE",
+    "signal": "coached_on_call",
+    "evidence": "Someone claiming to be CBI was on video call, directing her",
+    "confidence": "high",
+    "pattern_hint": "digital_arrest"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "Would you like me to call Ravi, your son, so you can talk it over before any money moves?"
+  },
+  {
+   "role": "customer",
+   "text": "Yes, please call Ravi. I'll wait for him before doing anything. Thank you."
+  },
+  {
+   "role": "tool",
+   "tool": "call_trusted_contact",
+   "args": {
+    "check_id": "chk_VVDDMECTLE",
+    "customer_consent": "yes"
+   }
+  },
+  {
+   "role": "tool",
+   "tool": "set_decision",
+   "args": {
+    "check_id": "chk_VVDDMECTLE",
+    "recommendation": "delay",
+    "reason": "Multiple warning signs: fake CBI officer on video call, pressure to act immediately, and no independent verification."
+   }
+  },
+  {
+   "role": "agent",
+   "text": "I've asked Ravi to be called now. The money stays in your account until you've talked."
+  }
+ ]
+}

@@ -1,0 +1,76 @@
+{
+ "scenario": "flat-deposit",
+ "lang": "hi",
+ "recorded_code_word": "केला 27",
+ "recorded_decision": "release",
+ "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
+ "turns": [
+  {
+   "role": "agent",
+   "text": "नमस्ते Priya जी, मैं रुको, Demo Bank की भुगतान सुरक्षा सहायक। आपका कोड शब्द है केला 27। क्या यह आपके ऐप से मिलता है?"
+  },
+  {
+   "role": "customer",
+   "text": "हाँ, केला 27 सही है। जल्दी करें, मुझे भुगतान करना है।"
+  },
+  {
+   "role": "tool",
+   "tool": "get_check_context",
+   "args": {
+    "check_id": "chk_3CLJNMGDYU",
+    "execution_id": "eval-demo-flat-deposit-hi"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "आपके ऐप के अनुसार भुगतान करते समय आप एक फ़ोन कॉल पर थीं। क्या आप उस कॉल पर किसी अनजान व्यक्ति से बात कर रही थीं?"
+  },
+  {
+   "role": "customer",
+   "text": "नहीं, मैं अपने पति से बात कर रही थी, वो लेटर से खाता नंबर पढ़ रहे हैं। भुगतान जल्दी कर दीजिए।"
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_3CLJNMGDYU",
+    "signal": "family_helping",
+    "evidence": "पति ने खाता नंबर पढ़ा",
+    "confidence": "high",
+    "pattern_hint": "none"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "क्या आप इस भुगतान के लिए Shree Ganesh Builders को कैसे जानती हैं?"
+  },
+  {
+   "role": "customer",
+   "text": "मैं उनके साइट ऑफिस दो बार गई हूँ, अलॉटमेंट लेटर भी मिला है। कृपया भुगतान प्रोसेस करें, मैं जल्दी में हूँ।"
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_3CLJNMGDYU",
+    "signal": "knows_payee",
+    "evidence": "साइट ऑफिस गई है, अलॉटमेंट लेटर मिला है",
+    "confidence": "high",
+    "pattern_hint": "none"
+   }
+  },
+  {
+   "role": "tool",
+   "tool": "set_decision",
+   "args": {
+    "check_id": "chk_3CLJNMGDYU",
+    "recommendation": "release",
+    "reason": "ग्राहक भुगतान लेनदेन के लिए भुगतान देने वाले को जानती है और इसके लिए अलॉटमेंट लेटर भी है।"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "धन्यवाद। आपका 1 लाख 50 हज़ार रुपये का भुगतान अब जा रहा है।"
+  }
+ ]
+}

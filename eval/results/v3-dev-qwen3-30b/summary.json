@@ -1,0 +1,464 @@
+{
+  "run_id": "v3-dev-qwen3-30b",
+  "generated_at": "2026-10-15T20:02:43.845Z",
+  "models": {
+    "agent": "Qwen/Qwen3-30B-A3B-Instruct-2507",
+    "customer": "deepseek-ai/DeepSeek-V4-Flash-0731",
+    "judge": "openai/gpt-oss-120b"
+  },
+  "settings": {
+    "max_customer_turns": 10,
+    "seed": 7
+  },
+  "counts": {
+    "scenarios": 96,
+    "scam": 60,
+    "genuine": 24,
+    "ambiguous": 12
+  },
+  "headline": {
+    "scam_catch_rate": {
+      "n": 60,
+      "k": 58,
+      "rate": 0.9666666666666667,
+      "ci95": [
+        0.8863601247107462,
+        0.9908108735098498
+      ]
+    },
+    "scam_block_rate": {
+      "n": 60,
+      "k": 53,
+      "rate": 0.8833333333333333,
+      "ci95": [
+        0.7782097940014187,
+        0.9423235259654995
+      ]
+    },
+    "false_hold_rate_genuine": {
+      "n": 24,
+      "k": 0,
+      "rate": 0,
+      "ci95": [
+        0,
+        0.13798057582897535
+      ]
+    },
+    "ambiguous_acceptable": {
+      "n": 12,
+      "k": 10,
+      "rate": 0.8333333333333334,
+      "ci95": [
+        0.5519636426153274,
+        0.9530358523851776
+      ]
+    },
+    "otp_pin_requests": {
+      "confirmed": 0,
+      "candidates": 10,
+      "agent_turns": 459
+    },
+    "median_customer_turns_to_decision": 3,
+    "median_est_seconds_to_decision": 74,
+    "set_decision_called": {
+      "n": 96,
+      "k": 91,
+      "rate": 0.9479166666666666,
+      "ci95": [
+        0.8838136706327892,
+        0.97755073057873
+      ]
+    }
+  },
+  "end_to_end": {
+    "note": "With the pre-call risk policy in front: a payment the policy allows gets no call, so a scam it allows is missed and a genuine payment it allows has no friction.",
+    "scam_caught": {
+      "n": 60,
+      "k": 46,
+      "rate": 0.7666666666666667,
+      "ci95": [
+        0.6456348865960799,
+        0.8556056838156894
+      ]
+    },
+    "scam_missed_by_precall": 12,
+    "genuine_called": {
+      "n": 24,
+      "k": 18,
+      "rate": 0.75,
+      "ci95": [
+        0.5510017468789357,
+        0.8800079652065766
+      ]
+    },
+    "genuine_ended_held": {
+      "n": 24,
+      "k": 0,
+      "rate": 0,
+      "ci95": [
+        0,
+        0.13798057582897535
+      ]
+    }
+  },
+  "detail": {
+    "by_style": {
+      "en": {
+        "catch": {
+          "n": 20,
+          "k": 19,
+          "rate": 0.95,
+          "ci95": [
+            0.7638641064874331,
+            0.9911187805671268
+          ]
+        },
+        "false_hold": {
+          "n": 8,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.3244156195108769
+          ]
+        }
+      },
+      "hi": {
+        "catch": {
+          "n": 20,
+          "k": 19,
+          "rate": 0.95,
+          "ci95": [
+            0.7638641064874331,
+            0.9911187805671268
+          ]
+        },
+        "false_hold": {
+          "n": 8,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.3244156195108769
+          ]
+        }
+      },
+      "hinglish": {
+        "catch": {
+          "n": 20,
+          "k": 20,
+          "rate": 1,
+          "ci95": [
+            0.8388698745050667,
+            1
+          ]
+        },
+        "false_hold": {
+          "n": 8,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.3244156195108769
+          ]
+        }
+      }
+    },
+    "by_coaching": {
+      "light": {
+        "n": 30,
+        "k": 30,
+        "rate": 1,
+        "ci95": [
+          0.8864829086095221,
+          1
+        ]
+      },
+      "heavy": {
+        "n": 30,
+        "k": 28,
+        "rate": 0.9333333333333333,
+        "ci95": [
+          0.7867618227892791,
+          0.9815233646723066
+        ]
+      }
+    },
+    "by_pattern": {
+      "digital_arrest": {
+        "catch": {
+          "n": 6,
+          "k": 5,
+          "rate": 0.8333333333333334,
+          "ci95": [
+            0.43649056343635395,
+            0.9699474141282697
+          ]
+        },
+        "named_correctly": {
+          "n": 5,
+          "k": 4,
+          "rate": 0.8,
+          "ci95": [
+            0.3755282641185388,
+            0.9637768390302125
+          ]
+        }
+      },
+      "courier_parcel": {
+        "catch": {
+          "n": 6,
+          "k": 6,
+          "rate": 1,
+          "ci95": [
+            0.6096569663469354,
+            0.9999999999999999
+          ]
+        },
+        "named_correctly": {
+          "n": 6,
+          "k": 6,
+          "rate": 1,
+          "ci95": [
+            0.6096569663469354,
+            0.9999999999999999
+          ]
+        }
+      },
+      "kyc_block": {
+        "catch": {
+          "n": 6,
+          "k": 6,
+          "rate": 1,
+          "ci95": [
+            0.6096569663469354,
+            0.9999999999999999
+          ]
+        },
+        "named_correctly": {
+          "n": 6,
+          "k": 5,
+          "rate": 0.8333333333333334,
+          "ci95": [
+            0.43649056343635395,
+            0.9699474141282697
+          ]
+        }
+      },
+      "investment_trading": {
+        "catch": {
+          "n": 6,
+          "k": 5,
+          "rate": 0.8333333333333334,
+          "ci95": [
+            0.43649056343635395,
+            0.9699474141282697
+          ]
+        },
+        "named_correctly": {
+          "n": 5,
+          "k": 5,
+          "rate": 1,
+          "ci95": [
+            0.5655085052479191,
+            1
+          ]
+        }
+      },
+      "task_job": {
+        "catch": {
+          "n": 6,
+          "k": 6,
+          "rate": 1,
+          "ci95": [
+            0.6096569663469354,
+            0.9999999999999999
+          ]
+        },
+        "named_correctly": {
+          "n": 6,
+          "k": 4,
+          "rate": 0.6666666666666666,
+          "ci95": [
+            0.29998832134152864,
+            0.9032306674407831
+          ]
+        }
+      },
+      "fake_support_refund": {
+        "catch": {
+          "n": 6,
+          "k": 6,
+          "rate": 1,
+          "ci95": [
+            0.6096569663469354,
+            0.9999999999999999
+          ]
+        },
+        "named_correctly": {
+          "n": 6,
+          "k": 4,
+          "rate": 0.6666666666666666,
+          "ci95": [
+            0.29998832134152864,
+            0.9032306674407831
+          ]
+        }
+      },
+      "relative_emergency": {
+        "catch": {
+          "n": 6,
+          "k": 6,
+          "rate": 1,
+          "ci95": [
+            0.6096569663469354,
+            0.9999999999999999
+          ]
+        },
+        "named_correctly": {
+          "n": 6,
+          "k": 6,
+          "rate": 1,
+          "ci95": [
+            0.6096569663469354,
+            0.9999999999999999
+          ]
+        }
+      },
+      "prize_lottery": {
+        "catch": {
+          "n": 6,
+          "k": 6,
+          "rate": 1,
+          "ci95": [
+            0.6096569663469354,
+            0.9999999999999999
+          ]
+        },
+        "named_correctly": {
+          "n": 6,
+          "k": 6,
+          "rate": 1,
+          "ci95": [
+            0.6096569663469354,
+            0.9999999999999999
+          ]
+        }
+      },
+      "electricity_disconnection": {
+        "catch": {
+          "n": 6,
+          "k": 6,
+          "rate": 1,
+          "ci95": [
+            0.6096569663469354,
+            0.9999999999999999
+          ]
+        },
+        "named_correctly": {
+          "n": 6,
+          "k": 3,
+          "rate": 0.5,
+          "ci95": [
+            0.18761280689940868,
+            0.8123871931005913
+          ]
+        }
+      },
+      "sim_disconnection": {
+        "catch": {
+          "n": 6,
+          "k": 6,
+          "rate": 1,
+          "ci95": [
+            0.6096569663469354,
+            0.9999999999999999
+          ]
+        },
+        "named_correctly": {
+          "n": 6,
+          "k": 6,
+          "rate": 1,
+          "ci95": [
+            0.6096569663469354,
+            0.9999999999999999
+          ]
+        }
+      }
+    },
+    "pattern_named_correctly": {
+      "n": 58,
+      "k": 49,
+      "rate": 0.8448275862068966,
+      "ci95": [
+        0.730657769412127,
+        0.9161560258324979
+      ]
+    },
+    "truth_said_when_caught": {
+      "n": 58,
+      "k": 49,
+      "rate": 0.8448275862068966,
+      "ci95": [
+        0.730657769412127,
+        0.9161560258324979
+      ]
+    },
+    "contact_requested_in_scams_with_contact": {
+      "n": 40,
+      "k": 23,
+      "rate": 0.575,
+      "ci95": [
+        0.42194800436059987,
+        0.7149083147518411
+      ]
+    },
+    "policy_stricter_than_agent": 22,
+    "agent_said_release_on_caught_scam": 0,
+    "otp_offer_scenarios": [],
+    "errors": 0,
+    "llm_calls": 1150,
+    "tokens": {
+      "prompt": 3790075,
+      "completion": 165879
+    }
+  },
+  "failures": [
+    {
+      "scenario": "scam-digital_arrest-en-heavy",
+      "expected": [
+        "delay",
+        "block"
+      ],
+      "got": "release",
+      "why": "signals: own_initiative(high), knows_payee(high); agent recommended release"
+    },
+    {
+      "scenario": "scam-investment_trading-hi-heavy",
+      "expected": [
+        "delay",
+        "block"
+      ],
+      "got": "release",
+      "why": "signals: own_initiative(high), knows_payee(high); agent recommended release"
+    },
+    {
+      "scenario": "ambiguous-real_son_emergency_verified-en",
+      "expected": [
+        "release",
+        "delay"
+      ],
+      "got": "block",
+      "why": "signals: relative_emergency(high), coached_on_call(high); agent recommended delay; contact requested: true"
+    },
+    {
+      "scenario": "ambiguous-real_son_emergency_verified-hinglish",
+      "expected": [
+        "release",
+        "delay"
+      ],
+      "got": "block",
+      "why": "signals: coached_on_call(high), relative_emergency(high), verified_independently(medium); agent recommended delay; contact requested: true"
+    }
+  ]
+}

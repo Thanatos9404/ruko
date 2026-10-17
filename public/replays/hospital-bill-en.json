@@ -1,0 +1,76 @@
+{
+ "scenario": "hospital-bill",
+ "lang": "en",
+ "recorded_code_word": "PEEPAL 15",
+ "recorded_decision": "release",
+ "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
+ "turns": [
+  {
+   "role": "agent",
+   "text": "Hello Mohan, this is Ruko, Demo Bank's payment safety assistant. Your code word is PEEPAL 15. Does it match your app?"
+  },
+  {
+   "role": "customer",
+   "text": "Yes, yes, it says PEEPAL 15. I've got it right here, just confirm the payment quickly."
+  },
+  {
+   "role": "tool",
+   "tool": "get_check_context",
+   "args": {
+    "check_id": "chk_8SNYLZ57HS",
+    "execution_id": "eval-demo-hospital-bill-en"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "Your app shows you were on a phone call while making this payment. Who were you speaking with?"
+  },
+  {
+   "role": "customer",
+   "text": "My brother called from the ward to tell me which counter to go to. Just process the payment, please."
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_8SNYLZ57HS",
+    "signal": "family_helping",
+    "evidence": "Brother called from the ward to help with payment",
+    "confidence": "high",
+    "pattern_hint": "none"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "I see your brother is helping you from the hospital. Is this payment for a bill or admission? How do you know City Care Hospital?"
+  },
+  {
+   "role": "customer",
+   "text": "It's for the admission deposit, my father is here for surgery. Please, just take the money and confirm, I'm already late."
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_8SNYLZ57HS",
+    "signal": "knows_payee",
+    "evidence": "Father is admitted at City Care Hospital for surgery",
+    "confidence": "high",
+    "pattern_hint": "none"
+   }
+  },
+  {
+   "role": "tool",
+   "tool": "set_decision",
+   "args": {
+    "check_id": "chk_8SNYLZ57HS",
+    "recommendation": "release",
+    "reason": "Customer knows the payee and the purpose matches the hospital admission."
+   }
+  },
+  {
+   "role": "agent",
+   "text": "Thank you. Your payment of 85 thousand rupees is going through now. Take care, and I hope your father recovers soon. Goodbye."
+  }
+ ]
+}

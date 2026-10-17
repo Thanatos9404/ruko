@@ -105,7 +105,8 @@ if (process.argv[1]?.endsWith("report.ts")) {
   const dir = join("eval", "results", runId);
   const results = (await readFile(join(dir, "transcripts.jsonl"), "utf8")).trim().split("\n").map((l) => JSON.parse(l) as ConversationResult);
   const { buildHoldout } = await import("./holdout.js");
-  const all = [...buildScenarios(), ...buildHoldout()];
+  const { buildHoldout2 } = await import("./holdout2.js");
+  const all = [...buildScenarios(), ...buildHoldout(), ...buildHoldout2()];
   const scenarios = results.map((r) => all.find((s) => s.id === r.scenario_id)!);
   const prev = JSON.parse(await readFile(join(dir, "summary.json"), "utf8")) as Summary;
   const summary = await scoreRun(new Nebius(), scenarios, results, {

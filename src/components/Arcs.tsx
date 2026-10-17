@@ -3,11 +3,11 @@ import { useEffect, useId } from "react";
 import { cn } from "../kit";
 
 /**
- * Concentric green arcs, like Bolna's Symphony artwork, used here as the visible
+ * Concentric arcs, after Bolna's Symphony artwork and recoloured to Ruko's palette, used as the visible
  * shape of a voice: they breathe when idle and swell with the agent's audio level
  * (the Web Call SDK's `volume-level` event) during a live call.
  */
-export function Arcs({ level = 0, className, tone = "go" }: { level?: number; className?: string; tone?: "go" | "accent" | "stop" }) {
+export function Arcs({ level = 0, className, tone = "slate" }: { level?: number; className?: string; tone?: "slate" | "coral" | "sage" }) {
   const reduce = useReducedMotion();
   const id = useId().replace(/:/g, "");
   const s = useSpring(0, { stiffness: 180, damping: 22 });
@@ -17,9 +17,9 @@ export function Arcs({ level = 0, className, tone = "go" }: { level?: number; cl
     s.set(level);
   }, [level, s]);
   const colors = {
-    go: ["#9ce66f", "#2f7434"],
-    accent: ["#ffb27a", "#a8401a"],
-    stop: ["#ff8f86", "#8f241e"],
+    slate: ["#7f8ca3", "#1b2638"],
+    coral: ["#f29a90", "#7a2d27"],
+    sage: ["#b6e0c6", "#2d5a45"],
   }[tone];
   const rings = [0, 1, 2, 3, 4, 5, 6];
   return (
@@ -61,7 +61,7 @@ export function Arcs({ level = 0, className, tone = "go" }: { level?: number; cl
             cy="640"
             r={150}
             fill="none"
-            stroke={colors[0]}
+            stroke="#e46157"
             strokeWidth={2}
             style={{ transformOrigin: "500px 640px", scale: swell, opacity: glow }}
           />

@@ -58,6 +58,9 @@ export async function getCheckContext(deps: ToolDeps, args: Args): Promise<ToolR
     code_word: l === "hi" && c.code_word ? codeWordHi(c.code_word) : c.code_word,
     why_paused: c.risk.reasons.filter((r) => r.weight > 0).slice(0, 3).map((r) => r.title),
     trusted_contact_on_file: tc ? `${tc.name} (${tc.relation})` : "none",
+    on_a_call_while_paying: c.device.active_call
+      ? `yes${c.device.active_call_minutes ? `, for ${c.device.active_call_minutes} minutes` : ""}${c.device.caller_in_contacts === false ? ", with a number not in their contacts" : c.device.caller_in_contacts ? ", with a saved contact" : ""}`
+      : "no",
     first_question: g.ask_next,
     reminder: "Never ask for OTP, PIN, card or account numbers. One question at a time.",
   };

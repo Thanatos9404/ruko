@@ -15,6 +15,7 @@ import { join } from "node:path";
 import { Nebius } from "./nebius.js";
 import { buildScenarios, type EvalScenario } from "./scenarios.js";
 import { buildHoldout } from "./holdout.js";
+import { buildHoldout2 } from "./holdout2.js";
 import { runConversation, type ConversationResult } from "./conversation.js";
 import { scoreRun } from "./score.js";
 import { writeReports } from "./report.js";
@@ -41,7 +42,14 @@ const runId = arg("run-id", `${new Date().toISOString().slice(0, 10)}-${opts.age
 const outDir = join("eval", "results", runId);
 
 const set = arg("set", "dev");
-let scenarios: EvalScenario[] = set === "holdout" ? buildHoldout() : set === "all" ? [...buildScenarios(), ...buildHoldout()] : buildScenarios();
+let scenarios: EvalScenario[] =
+  set === "holdout"
+    ? buildHoldout()
+    : set === "holdout2"
+      ? buildHoldout2()
+      : set === "all"
+        ? [...buildScenarios(), ...buildHoldout(), ...buildHoldout2()]
+        : buildScenarios();
 if (only) scenarios = scenarios.filter((s) => s.kind === only || s.id.includes(only));
 if (limit > 0) {
   // Spread a small run across kinds and languages instead of taking the first N.

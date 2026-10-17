@@ -1,0 +1,76 @@
+{
+ "scenario": "flat-deposit",
+ "lang": "en",
+ "recorded_code_word": "NADI 57",
+ "recorded_decision": "release",
+ "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
+ "turns": [
+  {
+   "role": "agent",
+   "text": "Hello Priya, this is Ruko, Demo Bank's payment safety assistant. Your code word is NADI 57. Does it match your app?"
+  },
+  {
+   "role": "customer",
+   "text": "Yes, NADI 57 matches. Please go ahead, I need to complete this payment quickly."
+  },
+  {
+   "role": "tool",
+   "tool": "get_check_context",
+   "args": {
+    "check_id": "chk_GDVMMZZ84B",
+    "execution_id": "eval-demo-flat-deposit-en"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "Your app shows you were on a phone call while making this payment. Was someone on another call with you, guiding you through the payment?"
+  },
+  {
+   "role": "customer",
+   "text": "Yes, my husband Anil is on the line—he’s just reading me the account number from the allotment letter. No one is pressuring me, I just need to get this done fast."
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_GDVMMZZ84B",
+    "signal": "family_helping",
+    "evidence": "Husband Anil is helping with the account number from the allotment letter.",
+    "confidence": "high",
+    "pattern_hint": "none"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "Thank you, Priya. I see your husband Anil is helping you with the account number. Is this payment for a flat booking with Shree Ganesh Builders?"
+  },
+  {
+   "role": "customer",
+   "text": "Yes, that’s right—flat B-1204 with Shree Ganesh Builders. Please proceed with the transfer."
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_GDVMMZZ84B",
+    "signal": "knows_payee",
+    "evidence": "Priya knows Shree Ganesh Builders is a builder for flat B-1204.",
+    "confidence": "high",
+    "pattern_hint": "none"
+   }
+  },
+  {
+   "role": "tool",
+   "tool": "set_decision",
+   "args": {
+    "check_id": "chk_GDVMMZZ84B",
+    "recommendation": "release",
+    "reason": "Priya knows the payee, the purpose matches, and her husband is helping her."
+   }
+  },
+  {
+   "role": "agent",
+   "text": "Thank you. Your payment of 1 lakh 50 thousand rupees is going through now. Have a great day, Priya. Goodbye."
+  }
+ ]
+}

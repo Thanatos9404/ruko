@@ -8,9 +8,9 @@ export function Phone({ children, className, label }: { children: ReactNode; cla
       <div
         role="region"
         aria-label={label}
-        className="relative overflow-hidden rounded-[44px] border border-[var(--hair-strong)] bg-[#0b0d0b] p-[10px] shadow-[0_50px_120px_-40px_rgba(0,0,0,0.95),0_0_0_1px_rgba(255,255,255,0.03)_inset]"
+        className="relative overflow-hidden rounded-[44px] border border-[var(--hair-strong)] bg-[#0a0f18] p-[10px] shadow-[0_50px_120px_-40px_rgba(0,0,0,0.95),0_0_0_1px_rgba(255,255,255,0.03)_inset]"
       >
-        <div className="relative h-[620px] overflow-hidden rounded-[34px] bg-[#0f120f]">
+        <div className="relative h-[620px] overflow-hidden rounded-[34px] bg-[#0e1522]">
           <div aria-hidden className="absolute left-1/2 top-2.5 z-30 h-[22px] w-[92px] -translate-x-1/2 rounded-full bg-black" />
           <div className="relative z-10 flex h-full flex-col">{children}</div>
         </div>

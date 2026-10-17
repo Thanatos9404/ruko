@@ -1,43 +1,75 @@
 @import "../kit/styles/tokens.css";
 
 /*
- * Ruko theme: the kit's carbon (dark) variant, retinted to sit next to Bolna's
- * Symphony look: a near-black canvas with a green cast, green "sound" arcs for the
- * voice, and an orange (the YC orange) reserved for the hold moment.
- * Contrast on --paper: ink 16.7:1, ink-2 11.7:1, muted 6.9:1, accent 6.9:1, go 9.8:1.
+ * Ruko theme, from the logo: deep ink navy, paper white, and one coral signal
+ * for holds, warnings and "stopped". Sage is the calm colour for "released/safe".
+ *
+ * Dark (default) contrast on --paper #0b111c: ink 16.7, ink-2 11.4, muted 6.7,
+ * accent 6.7, go 10.1, stop 7.0. Light ("paper") on #fdfdfb: ink 16.2, ink-2 9.4,
+ * muted 5.3, accent 5.3, go 5.1. Navy text on the coral hold screen: 4.8.
  */
 :root,
 [data-theme="carbon"] {
-  --paper: #070807;
-  --paper-2: #0d0f0d;
-  --paper-3: #151815;
-  --surface: #101210;
-  --ink: #eeefea;
-  --ink-2: #c8cac3;
-  --muted: #9a9c94;
-  --hair: rgba(238, 239, 234, 0.08);
-  --hair-strong: rgba(238, 239, 234, 0.16);
-  --glass: rgba(238, 239, 234, 0.05);
-  --glass-border: rgba(238, 239, 234, 0.1);
-  --shadow-soft: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 12px 32px -12px rgba(0, 0, 0, 0.7);
-  --shadow-lift: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 40px 90px -30px rgba(0, 0, 0, 0.9);
+  --paper: #0b111c;
+  --paper-2: #0e1522;
+  --paper-3: #172133;
+  --surface: #111a28;
+  --ink: #eef1f6;
+  --ink-2: #c2c9d6;
+  --muted: #8f9aac;
+  --hair: rgba(238, 241, 246, 0.08);
+  --hair-strong: rgba(238, 241, 246, 0.16);
+  --glass: rgba(238, 241, 246, 0.05);
+  --glass-border: rgba(238, 241, 246, 0.1);
+  --shadow-soft: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 12px 32px -12px rgba(0, 0, 0, 0.6);
+  --shadow-lift: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 40px 90px -30px rgba(0, 0, 0, 0.85);
 
-  --accent: #f46622;
-  --accent-soft: color-mix(in oklab, var(--accent) 16%, #070807);
-  --accent-ink: #0b0c0b;
-  --go: #7acf7e;
-  --go-soft: color-mix(in oklab, var(--go) 14%, #070807);
-  --go-hi: #9ce66f;
-  --go-lo: #2f7434;
-  --stop: #ff5a4f;
-  --stop-soft: color-mix(in oklab, var(--stop) 14%, #070807);
+  --coral: #e46157;
+  --accent: #f07466;
+  --accent-soft: color-mix(in oklab, var(--coral) 16%, #0b111c);
+  --accent-ink: #161f2e;
+  --go: #8fcaa8;
+  --go-soft: color-mix(in oklab, var(--go) 14%, #0b111c);
+  --stop: #f27a6c;
+  --stop-soft: color-mix(in oklab, var(--coral) 18%, #0b111c);
   --pos: var(--go);
   --neg: var(--stop);
+  --logo-bar-a: #3a4558;
+  --logo-bar-b: #8f9aae;
 
-  --sky-top: #0c120c;
-  --sky-mid: #090b09;
-  --sky-bottom: #070807;
+  --sky-top: #101a2b;
+  --sky-mid: #0c1320;
+  --sky-bottom: #0b111c;
   color-scheme: dark;
+}
+
+[data-theme="paper"] {
+  --paper: #fdfdfb;
+  --paper-2: #f5f6f3;
+  --paper-3: #eceee9;
+  --surface: #ffffff;
+  --ink: #161f2e;
+  --ink-2: #3c4657;
+  --muted: #5f6b7d;
+  --hair: rgba(22, 31, 46, 0.09);
+  --hair-strong: rgba(22, 31, 46, 0.16);
+  --glass: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(22, 31, 46, 0.08);
+  --shadow-soft: 0 1px 1px rgba(22, 31, 46, 0.04), 0 8px 24px -8px rgba(22, 31, 46, 0.14);
+  --shadow-lift: 0 2px 4px rgba(22, 31, 46, 0.05), 0 24px 60px -18px rgba(22, 31, 46, 0.25);
+  --accent: #b9423a;
+  --accent-soft: color-mix(in oklab, var(--coral) 12%, white);
+  --accent-ink: #ffffff;
+  --go: #2d7a56;
+  --go-soft: color-mix(in oklab, #8fcaa8 22%, white);
+  --stop: #b9423a;
+  --stop-soft: color-mix(in oklab, var(--coral) 12%, white);
+  --logo-bar-a: #cfd4dc;
+  --logo-bar-b: #8a93a3;
+  --sky-top: #eef1f6;
+  --sky-mid: #f6f7f5;
+  --sky-bottom: #fdfdfb;
+  color-scheme: light;
 }
 
 @theme {
@@ -45,13 +77,10 @@
   --color-go-soft: var(--go-soft);
   --color-stop: var(--stop);
   --color-stop-soft: var(--stop-soft);
+  --color-coral: var(--coral);
 }
 
 @layer components {
-  .t-pixel {
-    font-family: var(--font-pixel);
-    letter-spacing: 0.02em;
-  }
   .ring-focus:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
@@ -91,11 +120,15 @@
     padding: 1px 6px;
     color: var(--ink-2);
   }
+  .glow-coral {
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--coral) 40%, transparent), 0 0 40px -6px color-mix(in oklab, var(--coral) 55%, transparent);
+  }
 }
 
 html,
 body {
   background: var(--paper);
+  color: var(--ink);
 }
 
 .skip-link {
@@ -116,22 +149,14 @@ body {
 
 @keyframes ruko-pulse {
   0% {
-    transform: scale(0.85);
-    opacity: 0.7;
+    transform: scale(0.92);
+    opacity: 0.8;
   }
   100% {
-    transform: scale(1.6);
+    transform: scale(1.35);
     opacity: 0;
-  }
-}
-@keyframes ruko-blink {
-  50% {
-    opacity: 0.35;
   }
 }
 .animate-ring {
   animation: ruko-pulse 1.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-.animate-blink {
-  animation: ruko-blink 1.2s ease-in-out infinite;
 }

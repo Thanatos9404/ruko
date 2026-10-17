@@ -1,0 +1,62 @@
+[
+ {
+  "id": "digital-arrest",
+  "lang": "en",
+  "decision": "block",
+  "turns": 4
+ },
+ {
+  "id": "digital-arrest",
+  "lang": "hi",
+  "decision": "block",
+  "turns": 3
+ },
+ {
+  "id": "investment-group",
+  "lang": "en",
+  "decision": "block",
+  "turns": 2
+ },
+ {
+  "id": "investment-group",
+  "lang": "hi",
+  "decision": "delay",
+  "turns": 4
+ },
+ {
+  "id": "flat-deposit",
+  "lang": "en",
+  "decision": "release",
+  "turns": 3
+ },
+ {
+  "id": "flat-deposit",
+  "lang": "hi",
+  "decision": "release",
+  "turns": 3
+ },
+ {
+  "id": "task-job",
+  "lang": "en",
+  "decision": "block",
+  "turns": 3
+ },
+ {
+  "id": "task-job",
+  "lang": "hi",
+  "decision": "block",
+  "turns": 4
+ },
+ {
+  "id": "hospital-bill",
+  "lang": "en",
+  "decision": "release",
+  "turns": 3
+ },
+ {
+  "id": "hospital-bill",
+  "lang": "hi",
+  "decision": "release",
+  "turns": 3
+ }
+]

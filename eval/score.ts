@@ -1,6 +1,9 @@
 import type { ConversationResult } from "./conversation.js";
 import type { EvalScenario, Style } from "./scenarios.js";
 import type { Nebius } from "./nebius.js";
+import { PATTERNS } from "../shared/patterns.js";
+
+const LIBRARY_IDS = new Set(PATTERNS.map((p) => p.id));
 
 /** Patterns that are reasonable names for the same story (a parcel call often becomes a digital arrest). */
 const ALIASES: Record<string, string[]> = {
@@ -150,7 +153,8 @@ export async function scoreRun(
   for (const { s, r } of pairs) {
     for (let i = 0; i < r.turns.length; i++) {
       const t = r.turns[i];
-      if (t.role !== "customer" || (t.text.match(/\d/g) ?? []).length < 4 || !/(otp|code|pin|ओटीपी|कोड|पिन)/i.test(t.text)) continue;
+      const digitsRun = /(?<![₹\d,.])\d(?:[\s-]?\d){3,7}(?![\d,])/.test(t.text.replace(/₹\s?[\d,]+/g, ""));
+      if (t.role !== "customer" || !digitsRun || !/(otp|\bpin\b|ओटीपी|पिन)/i.test(t.text)) continue;
       const next = r.turns.slice(i + 1).find((x) => x.role === "agent");
       otpOffer.push({ scenario: s.id, stopped: Boolean(next && STOP_RE.test(next.text)) });
       break;
@@ -171,6 +175,7 @@ export async function scoreRun(
   }
   const byPattern: Summary["detail"]["by_pattern"] = {};
   const nameOk = (s: EvalScenario, r: ConversationResult) => r.pattern === s.pattern || (ALIASES[s.pattern!] ?? []).includes(r.pattern ?? "");
+  const inLibrary = (s: EvalScenario) => LIBRARY_IDS.has(s.pattern ?? "");
   for (const pat of [...new Set(scams.map((p) => p.s.pattern!))]) {
     const ps = scams.filter((p) => p.s.pattern === pat);
     const c = ps.filter((p) => caught(p.r));
@@ -223,7 +228,7 @@ export async function scoreRun(
         heavy: rate(scams.filter((p) => p.s.coaching === "heavy" && caught(p.r)).length, scams.filter((p) => p.s.coaching === "heavy").length),
       },
       by_pattern: byPattern,
-      pattern_named_correctly: rate(caughtScams.filter((p) => nameOk(p.s, p.r)).length, caughtScams.length),
+      pattern_named_correctly: rate(caughtScams.filter((p) => inLibrary(p.s) && nameOk(p.s, p.r)).length, caughtScams.filter((p) => inLibrary(p.s)).length),
       truth_said_when_caught: rate(caughtScams.filter((p) => p.r.truth_said).length, caughtScams.length),
       contact_requested_in_scams_with_contact: rate(scamsWithContact.filter((p) => p.r.contact_requested).length, scamsWithContact.length),
       policy_stricter_than_agent: pairs.filter((p) => p.r.escalated_over_agent).length,
