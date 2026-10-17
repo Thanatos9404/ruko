@@ -273,7 +273,7 @@ def plan_jobs(library: dict, genuine: dict) -> list[dict]:
         kw["key"] = "|".join(str(kw[k]) for k in ("generator", "label", "ref", "format", "lang", "coaching", "rep"))
         jobs.append(kw)
 
-    for idx, p in enumerate(library["patterns"]):
+    for p in library["patterns"]:
         india = p["region"] == "india"
         langs = ["en", "hi", "hinglish"] if india else ["en"]
         for lang in langs:
@@ -282,7 +282,7 @@ def plan_jobs(library: dict, genuine: dict) -> list[dict]:
             add(generator="A", label="scam", ref=p["id"], format="message", lang=lang, coaching=None, n=5, rep=0)
             add(generator="A", label="scam", ref=p["id"], format="report", lang=lang, coaching=None, n=4, rep=0)
         if india:
-            xl = extra_langs[idx % 3]
+            xl = extra_langs[int(hashlib.sha1(p["id"].encode()).hexdigest(), 16) % 3]  # stable as the library grows
             add(generator="A", label="scam", ref=p["id"], format="call_check", lang=xl, coaching=1, n=2, rep=0)
             add(generator="A", label="scam", ref=p["id"], format="report", lang=xl, coaching=None, n=3, rep=0)
         # held-out generator B: cross-generator test only
@@ -390,9 +390,11 @@ def main():
     ap.add_argument("--only", default="", help="comma-separated pattern/scenario ids")
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--scope", choices=["all", "scam", "genuine"], default="all")
+    ap.add_argument("--library", default=str(LIBRARY), help="pattern source (library.json or research/raw/patterns_merged.json)")
     args = ap.parse_args()
 
-    library = json.loads(LIBRARY.read_text(encoding="utf-8")) if LIBRARY.exists() else {"patterns": []}
+    lib_path = Path(args.library)
+    library = json.loads(lib_path.read_text(encoding="utf-8")) if lib_path.exists() else {"patterns": []}
     genuine = json.loads(GENUINE.read_text(encoding="utf-8"))
     jobs = plan_jobs(library, genuine)
     if args.scope != "all":

@@ -380,6 +380,7 @@ def eval_sets(rows):
         "ood_ridham115_indian_sms": pick(rows, "ood_ridham"),
         "ood_flowxai_en": pick(rows, "ood_flowxai"),
         "ood_realworld_curated": pick(rows, "ood_realworld"),
+        "ood_icfd31k_calls": pick(rows, "ood_icfd31k"),
         "ood_marketing_spam_flag_rate": pick(rows, "ood_spam"),
     }
     return sets

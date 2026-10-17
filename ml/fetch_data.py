@@ -49,6 +49,17 @@ DATASETS: dict[str, dict] = {
         "licence": "CC BY 4.0",
         "files": [(f"{HF}/Ridham115/indian-scam-sms-synthetic-audited/resolve/main/data/synthetic_audited.csv", "synthetic_audited.csv", None)],
     },
+    # ICFD-31k (IJCAI-ECAI 2026): Indian English/Hinglish conversational fraud transcripts. Data terms allow
+    # defensive research, evaluation and benchmarking but not commercial deployment without permission, so Ruko
+    # uses it for EVALUATION ONLY and never trains the shipped model on it.
+    "icfd31k_eval_only": {
+        "licence": "ICFD-31k Data Use Terms (defensive research/benchmarking; no commercial deployment without permission)",
+        "files": [
+            (f"{HF}/rishia2220/icfd-31k/resolve/main/source_conversations/test-00000-of-00002.jsonl.zst", "test-00000-of-00002.jsonl.zst", None),
+            (f"{HF}/rishia2220/icfd-31k/resolve/main/source_conversations/test-00001-of-00002.jsonl.zst", "test-00001-of-00002.jsonl.zst", None),
+            (f"{HF}/rishia2220/icfd-31k/resolve/main/source_conversations/cross_domain-00000-of-00001.jsonl.zst", "cross_domain-00000-of-00001.jsonl.zst", None),
+        ],
+    },
     "flowxai_scamguardbench_v0_2": {
         "licence": "Apache-2.0",
         "files": [

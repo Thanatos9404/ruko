@@ -196,6 +196,32 @@ def load_flowxai() -> list[dict]:
     return out
 
 
+def load_icfd() -> list[dict]:
+    """ICFD-31k test + cross-domain splits: EVALUATION ONLY (data terms forbid commercial deployment)."""
+    d = RAW / "icfd31k_eval_only"
+    if not d.exists():
+        return []
+    import zstandard
+
+    out = []
+    for p in sorted(d.glob("*.jsonl.zst")):
+        with p.open("rb") as f:
+            txt = zstandard.ZstdDecompressor().stream_reader(f).read().decode("utf-8")
+        for line in txt.splitlines():
+            if not line.strip():
+                continue
+            r = json.loads(line)
+            text = "
+".join(t["text"] for t in r["transcript"] if t.get("speaker") in ("Agent", "Customer"))
+            uid = r["release_metadata"]["conversation_uid"]
+            out.append(rec(
+                text=text, label="scam" if r["final_verdict"] == "YES" else "genuine", source="icfd31k", synthetic=True,
+                lang="en_hinglish", format="scam_call_dialogue", group=uid, split="ood_icfd31k",
+                subtype=r["release_metadata"]["domain"],
+            ))
+    return out
+
+
 def load_realworld(aliases: dict[str, str]) -> list[dict]:
     if not REAL.exists():
         print("  (no real-world eval file yet)")
@@ -224,6 +250,7 @@ def main() -> None:
         "ridham": load_ridham(),
         "flowxai": load_flowxai(),
         "realworld": load_realworld(aliases),
+        "icfd31k": load_icfd(),
     }
     rows = [r for p in parts.values() for r in p if len(r["text"]) >= 8]
 

@@ -7,3 +7,4 @@ joblib==1.5.2
 threadpoolctl==3.6.0
 pyarrow==21.0.0
 jsonschema==4.25.1
+zstandard==0.25.0
