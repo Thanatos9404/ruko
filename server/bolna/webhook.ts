@@ -2,6 +2,7 @@ import type { CallInfo, CallStatus, Turn } from "../../shared/types.js";
 import type { KV } from "../store/store.js";
 import type { CheckService } from "../engine/checks.js";
 import { BolnaClient, TERMINAL_STATUSES, parseTranscript, type BolnaExecution } from "./client.js";
+import { modelOpinion } from "../engine/toolHandlers.js";
 
 /**
  * Handles Bolna's execution webhooks. Bolna POSTs the execution record several
@@ -135,6 +136,12 @@ async function process(
       if (noConversation) await deps.checks.noAnswer(checkId, `Call ${status}, no conversation`);
       else await deps.checks.finalize(checkId, { reason: `call ${status}` });
     }
+    // The text model reads the customer's own turns for the console. Advisory: it can flag a
+    // release for human review, never change a decision.
+    const said = (call.transcript ?? []).filter((t) => t.role === "customer").map((t) => t.text).join("
+");
+    const ml = modelOpinion(said, "transcript");
+    if (ml) await deps.checks.setModelOpinion(checkId, ml.opinion);
   }
   return { handled: true, check_id: checkId, status, verified };
 }

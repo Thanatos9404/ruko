@@ -5,7 +5,10 @@
   "outputDirectory": "dist",
   "regions": ["bom1"],
   "functions": {
-    "api/router.ts": { "maxDuration": 30 }
+    "api/router.ts": {
+      "maxDuration": 30,
+      "includeFiles": "{data/patterns/library.json,data/patterns/sources.json,data/patterns/signal_cues.json,server/ml/model/**}"
+    }
   },
   "rewrites": [
     { "source": "/v1/:path*", "destination": "/api/router?__p=/v1/:path*" },

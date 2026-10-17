@@ -386,7 +386,7 @@ export function FreeChecker() {
               <p className="ml-auto max-w-[90%] rounded-2xl bg-ink px-4 py-3 text-[14px] text-paper">A man from 'CBI' on video call says I'm under digital arrest…</p>
               <div className="max-w-[92%] rounded-2xl border border-hair bg-paper-2 p-4">
                 <span className="chip bg-stop-soft text-stop">Very likely a scam</span>
-                <p className="mt-2 border-l-2 border-[var(--coral)] pl-3 text-[14px] font-medium text-ink">There's no 'digital arrest' in Indian law; it's a fraud. Police, CBI or courts never arrest or question anyone on a video call.</p>
+                <p className="mt-2 border-l-2 border-[var(--coral)] pl-3 text-[14px] font-medium text-ink">There's no 'digital arrest' in Indian law. Police or CBI never question anyone on a video call.</p>
                 <p className="mt-2 text-[12px] text-muted">Source: I4C advisory TAU/ADV/003; PM, Mann Ki Baat 115</p>
               </div>
             </div>

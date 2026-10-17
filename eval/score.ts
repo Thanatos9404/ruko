@@ -62,6 +62,17 @@ export function estimateSeconds(r: ConversationResult): number {
   return Math.round(s);
 }
 
+/** The same estimate for the whole call, including the goodbye and any trusted-contact offer after the decision. */
+export function estimateCallSeconds(r: ConversationResult): number {
+  let s = 0;
+  for (const t of r.turns) {
+    if (t.role === "agent") s += words(t.text) / 2.5 + 0.8;
+    else if (t.role === "customer") s += words(t.text) / 2.3;
+    else s += 0.6;
+  }
+  return Math.round(s);
+}
+
 const OTP_RE =
   /(otp|o\.t\.p|one[- ]time password|\bpin\b|upi pin|m-?pin|cvv|password|card number|account number|ओटीपी|पिन|सीवीवी|पासवर्ड|कार्ड नंबर|खाता नंबर|अकाउंट नंबर)/i;
 
@@ -79,6 +90,7 @@ export interface Summary {
     otp_pin_requests: { confirmed: number; candidates: number; agent_turns: number };
     median_customer_turns_to_decision: number | null;
     median_est_seconds_to_decision: number | null;
+    median_est_seconds_call?: number | null;
     set_decision_called: Rate;
   };
   end_to_end: {
@@ -212,6 +224,7 @@ export async function scoreRun(
       otp_pin_requests: { confirmed, candidates, agent_turns: agentTurns },
       median_customer_turns_to_decision: median(decidedTurns),
       median_est_seconds_to_decision: median(decidedSecs),
+      median_est_seconds_call: median(pairs.map((p) => estimateCallSeconds(p.r))),
       set_decision_called: rate(pairs.filter((p) => p.r.set_decision_called).length, pairs.length),
     },
     end_to_end: {

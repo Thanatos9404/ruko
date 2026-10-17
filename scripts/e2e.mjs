@@ -105,8 +105,7 @@ for (const sc of scenarios.data) {
   await ctx.close();
 }
 
-// Phone width: no horizontal scroll on any route, and the hero's headline and CTAs show at once.
-for (const route of ["/", "/demo", "/check", "/console", "/console/reports", "/console/eval", "/console/library", "/console/integration", "/contact/demo"]) {
+async function phoneWidth(route) {
   const ctx = await browser.createBrowserContext();
   const page = await ctx.newPage();
   await page.setViewport({ width: 375, height: 812, isMobile: true, hasTouch: true });
@@ -163,6 +162,17 @@ for (const route of ["/", "/demo", "/check", "/console", "/console/reports", "/c
   console.log(`${ok ? "PASS" : "FAIL"} 375 ${route.padEnd(16)} → scrollWidth ${m.sw} / ${m.vw}${ok ? "" : ` (${m.wide.join(", ")})`}`);
   if (!ok) failures++;
   await ctx.close();
+}
+
+// Phone width: no horizontal scroll on any route, and the hero's headline and CTAs show at once.
+// One retry: on a dev server, a hot reload can destroy the page mid-check.
+for (const route of ["/", "/demo", "/check", "/console", "/console/reports", "/console/eval", "/console/library", "/console/integration", "/contact/demo"]) {
+  try {
+    await phoneWidth(route);
+  } catch (e) {
+    if (!/context was destroyed|detached|Target closed/i.test(String(e))) throw e;
+    await phoneWidth(route);
+  }
 }
 
 await browser.close();

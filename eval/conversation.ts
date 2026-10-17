@@ -109,6 +109,9 @@ export async function runConversation(llm: Nebius, sc: EvalScenario, opts: RunOp
   let endedBy: ConversationResult["ended_by"] = "max_turns";
   const sayThis = new Set<string>();
   let error: string | undefined;
+  // set_decision may ask the agent to offer the trusted contact; that offer gets one more exchange.
+  let offerContact = false;
+  let offerTurnUsed = false;
 
   try {
     for (let turn = 0; turn < opts.maxCustomerTurns; turn++) {
@@ -156,6 +159,7 @@ export async function runConversation(llm: Nebius, sc: EvalScenario, opts: RunOp
             if (tc.function.name === "set_decision") {
               decided = true;
               agentRec = (String(args.recommendation) as Outcome) ?? null;
+              offerContact = Boolean((body as { offer_contact?: string }).offer_contact);
             }
             if (tc.function.name === "call_trusted_contact" && /^yes$/i.test(String(args.customer_consent))) contactRequested = true;
             if (typeof (body as { say_this?: unknown }).say_this === "string" && (body as { say_this: string }).say_this)
@@ -177,6 +181,10 @@ export async function runConversation(llm: Nebius, sc: EvalScenario, opts: RunOp
         custMsgs.push({ role: "user", content: spoke });
       }
       if (decided && spoke) {
+        if (offerContact && !offerTurnUsed && /[?？।]\s*$|\?/.test(spoke)) {
+          offerTurnUsed = true;
+          continue;
+        }
         endedBy = "agent";
         break;
       }

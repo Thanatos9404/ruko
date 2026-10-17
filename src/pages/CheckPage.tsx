@@ -17,6 +17,8 @@ interface Reply {
   sources: { title: string; publisher: string; url: string }[];
   next_question: string | null;
   method: "llm+library" | "library-only";
+  model?: { band: string; scam_probability: number | null; version: string | null } | null;
+  draft_translation?: boolean;
 }
 type Msg = { role: "user"; content: string } | { role: "assistant"; content: string; data: Reply };
 
@@ -308,6 +310,12 @@ export default function CheckPage() {
   );
 }
 
+const MODEL_BAND: Record<string, Record<Lang, string>> = {
+  likely_scam: { en: "looks like a known scam", hi: "जाना-पहचाना धोखा लगता है" },
+  possible_scam: { en: "some warning signs", hi: "कुछ चेतावनी संकेत" },
+  unlikely_scam: { en: "no known pattern found", hi: "कोई जाना-पहचाना पैटर्न नहीं मिला" },
+};
+
 function Answer({ data, lang }: { data: Reply; lang: Lang }) {
   const r = RISK[data.risk];
   const Icon = r.icon;
@@ -343,7 +351,18 @@ function Answer({ data, lang }: { data: Reply; lang: Lang }) {
           ))}
         </p>
       )}
-      <p className="mt-2 text-[11px] text-muted">{data.method === "llm+library" ? "AI reading + official wording from Ruko's library" : "Rule-based match against Ruko's library"}</p>
+      {data.draft_translation && (
+        <p className="mt-2 text-[11px] text-muted">{lang === "hi" ? "यह अनुवाद मशीन से बना ड्राफ़्ट है; समीक्षा बाकी है।" : "Machine-drafted translation, awaiting review."}</p>
+      )}
+      <p className="mt-2 text-[11px] text-muted">
+        {data.method === "llm+library" ? "AI reading + official wording from Ruko's library" : "Rule-based match against Ruko's library"}
+        {data.model && data.model.scam_probability !== null && (
+          <>
+            {" · "}
+            {lang === "hi" ? "टेक्स्ट मॉडल (सलाह भर)" : "Text model (advisory)"}: {MODEL_BAND[data.model.band]?.[lang] ?? data.model.band}, {Math.round(data.model.scam_probability * 100)}%
+          </>
+        )}
+      </p>
     </div>
   );
 }

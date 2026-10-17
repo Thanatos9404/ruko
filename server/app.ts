@@ -1,6 +1,7 @@
 import type { Lang } from "../shared/types.js";
 import { PATTERNS, patternById, patternSources, matchText, truthFor } from "../shared/patterns.js";
 import { DEMO_SCENARIO_VIEWS, scenarioById } from "../shared/scenarios.js";
+import { analyzeText, mlStatus } from "./ml/index.js";
 import { SIGNALS } from "../shared/signals.js";
 import { loadConfig, BOLNA_IPS, type Config } from "./config.js";
 import { Router, json, readJson, HttpError, clientIp, bearer } from "./http.js";
@@ -15,6 +16,7 @@ import { BolnaClient, BolnaError } from "./bolna/client.js";
 import { checkUserData, contactUserData, lineUserData } from "./bolna/agents.js";
 import { handleExecutionWebhook, logSpend, type SpendEntry } from "./bolna/webhook.js";
 import { publicChat, publicStatsView, readStats } from "./public.js";
+import { redactPII } from "./llm/nebius.js";
 import { ensureSeeded } from "./seed.js";
 
 export interface AppDeps {
@@ -120,6 +122,7 @@ export function createApp(deps: AppDeps) {
       bolna: { configured: Boolean(bolna), agents: { check: Boolean(cfg.agents.check), contact: Boolean(cfg.agents.contact), line: Boolean(cfg.agents.line) } },
       tools_configured: Boolean(cfg.toolToken),
       phone_calls: cfg.allowPhoneCalls,
+      text_model: mlStatus(),
       env: cfg.env,
     }),
   );
@@ -298,7 +301,27 @@ export function createApp(deps: AppDeps) {
       advice: m.pattern.advice[lang],
       sources: patternSources(m.pattern),
     }));
-    return json({ method: "rule-based keyword match against the pattern library (no AI, nothing stored)", matches });
+    // The on-server text model (advisory): a calibrated probability, ranked patterns and cue spans.
+    let model: Record<string, unknown> | null = null;
+    try {
+      const a = analyzeText(redactPII(text), { topK: 3 });
+      if (a.engine.mode !== "none")
+        model = {
+          band: a.band,
+          scam_probability: a.scam_probability,
+          version: a.engine.model_version,
+          patterns: a.band === "unlikely_scam" ? [] : a.patterns.map((m) => ({ id: m.id, name: m.name, p_given_scam: m.p_given_scam })),
+        };
+    } catch {
+      model = null;
+    }
+    return json({
+      method: model
+        ? "keyword rules plus an on-server text classifier (no LLM, nothing stored)"
+        : "rule-based keyword match against the pattern library (no AI, nothing stored)",
+      matches,
+      model,
+    });
   });
 
   r.on("POST", "/api/public/chat", async (req) => {

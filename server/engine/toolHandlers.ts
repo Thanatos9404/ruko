@@ -5,6 +5,38 @@ import { amountForSpeech, formatINR } from "../../shared/format.js";
 import { CheckService, NotFoundError, ValidationError, scrubEvidence, type StoredCheck } from "./checks.js";
 import { codeWordHi, newReportId } from "./ids.js";
 import type { KV } from "../store/store.js";
+import { analyzeText, libraryPattern, pick } from "../ml/index.js";
+import type { ModelOpinion } from "../../shared/types.js";
+
+/**
+ * The text model's view of the customer's words (here: the agent's evidence quotes).
+ * Advisory: it can suggest a pattern and a question, never a decision. Never throws.
+ */
+export function modelOpinion(text: string, source: ModelOpinion["source"], now = new Date()): { opinion: ModelOpinion; corePattern: string | null } | null {
+  if (!text.trim()) return null;
+  try {
+    const a = analyzeText(text, { topK: 3 });
+    if (a.engine.mode === "none") return null;
+    const top = a.patterns[0];
+    const lp = top ? libraryPattern(top.id) : undefined;
+    const coreId = lp && patternById(lp.id) ? lp.id : top && patternById(top.id) ? top.id : null;
+    const confident = Boolean(top && (top.p_given_scam ?? 0) >= 0.5 && a.band !== "unlikely_scam");
+    return {
+      opinion: {
+        source,
+        band: a.band,
+        scam_probability: a.scam_probability,
+        patterns: a.patterns.map((m) => ({ id: m.id, name: m.name, p_given_scam: m.p_given_scam })),
+        cues: [...new Set(a.patterns.flatMap((m) => m.cues.filter((c) => !c.negated).map((c) => c.text)))].slice(0, 8),
+        model_version: a.engine.model_version,
+        at: now.toISOString(),
+      },
+      corePattern: confident ? coreId : null,
+    };
+  } catch {
+    return null;
+  }
+}
 
 /**
  * Handlers for the voice agents' custom functions. Shared by the Bolna tool
@@ -61,9 +93,32 @@ export async function getCheckContext(deps: ToolDeps, args: Args): Promise<ToolR
     on_a_call_while_paying: c.device.active_call
       ? `yes${c.device.active_call_minutes ? `, for ${c.device.active_call_minutes} minutes` : ""}${c.device.caller_in_contacts === false ? ", with a number not in their contacts" : c.device.caller_in_contacts ? ", with a saved contact" : ""}`
       : "no",
-    first_question: g.ask_next,
+    first_question: firstQuestion(c),
     reminder: "Never ask for OTP, PIN, card or account numbers. One question at a time.",
   };
+}
+
+/** One combined opening question: what the payment is for, and whether anyone is steering it. */
+export function firstQuestion(c: StoredCheck): string {
+  const l = lang(c);
+  if (c.device.active_call)
+    return l === "hi"
+      ? "आपके ऐप के अनुसार भुगतान करते समय आप एक कॉल पर थे। यह भुगतान किस लिए है, और आप किससे बात कर रहे थे?"
+      : "Your app shows you were on a call while paying. What's this payment for, and who were you speaking with?";
+  return l === "hi"
+    ? "यह भुगतान किस लिए है, और क्या कोई और कॉल पर आपको बता रहा है कि क्या करना है?"
+    : "What's this payment for, and is anyone on another call telling you what to do?";
+}
+
+/** After a decision: offer the trusted contact once, only if there was a warning sign and nobody has been asked yet. */
+function contactOffer(c: StoredCheck): string | null {
+  const tc = c.customer.trusted_contact;
+  if (!tc || (c.contact?.status && c.contact.status !== "not_requested")) return null;
+  const warned = c.signals.some((s) => s.confidence !== "low" && ["critical", "high", "medium"].includes(s.severity));
+  if (!warned) return null;
+  return lang(c) === "hi"
+    ? `क्या मैं ${tc.name} जी को कॉल करवाऊँ, ताकि आप उनसे बात कर लें?`
+    : `Shall I call ${tc.name}, your ${tc.relation}, so you can talk it over?`;
 }
 
 export async function recordSignal(deps: ToolDeps, args: Args, source: "agent" | "contact_agent" = "agent"): Promise<ToolResult> {
@@ -81,14 +136,36 @@ export async function recordSignal(deps: ToolDeps, args: Args, source: "agent" |
     pattern_hint: hint && hint !== "none" ? hint : undefined,
     source,
   });
-  const g = deps.checks.guidance(check);
+  // Customer evidence only: Ruko's own questions are the same in scam and genuine calls.
+  const ml = modelOpinion(
+    check.signals.filter((x) => x.source !== "contact_agent").map((x) => x.evidence).join("\n"),
+    "evidence",
+  );
+  let current = check;
+  if (ml) current = await deps.checks.setModelOpinion(id, ml.opinion);
+  const g = deps.checks.guidance(current, ml?.corePattern ?? null);
+  // A question from the research library for the model's pattern, when the core library has none yet.
+  const libP = ml?.opinion.patterns[0] && ml.opinion.band !== "unlikely_scam" ? libraryPattern(ml.opinion.patterns[0].id) : undefined;
+  const mlAsk = libP?.red_flag_questions ? (pick(libP.red_flag_questions as { en: string[] }, lang(current)) as string[] | undefined)?.[0] : undefined;
+  if (g.decide_now) {
+    // Put the instruction first, so the model calls set_decision before it speaks.
+    return {
+      recorded: true,
+      decide_now: "yes",
+      next: "Call set_decision now. Do not ask another question.",
+      likely_pattern: g.likely_pattern ?? "not clear yet",
+      say_this: g.say_this ?? "",
+      tip: g.tip,
+    };
+  }
   return {
     recorded: true,
     duplicate,
     likely_pattern: g.likely_pattern ?? "not clear yet",
     say_this: g.say_this ?? "",
-    ask_next: g.ask_next ?? "",
-    tip: g.say_this ? `Say the sentence in say_this calmly. ${g.tip}` : g.tip,
+    ask_next: g.ask_next ?? (g.strong_signs > 0 && mlAsk ? mlAsk : ""),
+    decide_now: g.decide_now ? "yes" : "no",
+    tip: g.tip,
   };
 }
 
@@ -146,7 +223,9 @@ export async function callTrustedContact(deps: ToolDeps, args: Args): Promise<To
       l === "hi"
         ? `मैंने ${tc.name} को कॉल करने के लिए कह दिया है। जब तक आप उनसे बात नहीं कर लेते, पैसा आपके खाते में ही रहेगा।`
         : `I've asked ${tc.name} to be called now. The money stays in your account until you've talked.`,
-    next: "Say this, then call set_decision now with recommendation delay. Do not wait for the contact on this call.",
+    next: c.decision
+      ? "Say this, thank them and say goodbye."
+      : "Say this, then call set_decision now with recommendation delay. Do not wait for the contact on this call.",
   };
 }
 
@@ -171,11 +250,16 @@ export async function setDecision(deps: ToolDeps, args: Args): Promise<ToolResul
   const c = await deps.checks.finalize(id, { agentRecommendation: rec, reason: "agent recommendation" });
   const d = c.decision!;
   const p = d.pattern ? patternById(d.pattern.id) : undefined;
+  const offer = contactOffer(c);
   return {
     final_decision: d.outcome,
     tell_customer: d.customer_message,
     pattern: p ? p.name[lang(c)] : "none",
-    then: lang(c) === "hi" ? "ग्राहक को यह संदेश बताएँ, फिर नम्रता से कॉल समाप्त करें।" : "Tell the customer this message, then say goodbye and end the call.",
+    offer_contact: offer ?? "",
+    then: offer
+      ? "Read tell_customer as it is, then ask offer_contact once. Call call_trusted_contact only if they say yes. Then say goodbye."
+      : "Read tell_customer as it is, then say goodbye and end the call.",
+    if_they_object: "Don't argue and don't promise a release. Say they can call the bank on the number on their card or in the app.",
   };
 }
 

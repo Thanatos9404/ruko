@@ -205,6 +205,23 @@ export interface AuditEvent {
 
 export type CheckOrigin = "api" | "sandbox" | "eval-replay";
 
+/**
+ * The on-server text model's opinion of what the customer said. Advisory only:
+ * it is kept apart from the agent's signals and never enters the decision policy.
+ */
+export interface ModelOpinion {
+  source: "evidence" | "transcript";
+  band: "likely_scam" | "possible_scam" | "unlikely_scam" | "unknown";
+  scam_probability: number | null;
+  patterns: { id: string; name: string; p_given_scam: number | null }[];
+  /** Cue phrases the model saw (customer turns only, redacted). */
+  cues: string[];
+  model_version: string | null;
+  /** True when the model leans scam but the decision released the payment: a human should look. */
+  disagrees_with_decision?: boolean;
+  at: string;
+}
+
 export interface Check {
   id: string;
   tenant: string;
@@ -225,6 +242,8 @@ export interface Check {
   contact?: ContactCall;
   agent_recommendation?: { outcome: Outcome; reason: string; at: string } | null;
   decision?: Decision | null;
+  /** Advisory text-model opinion (see ModelOpinion). Never used by the decision policy. */
+  ml?: ModelOpinion;
   events: AuditEvent[];
 }
 

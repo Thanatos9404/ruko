@@ -39,7 +39,7 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
   {
     name: "record_signal",
     description:
-      "Record something the customer said that matters for the safety check, as soon as you hear it: warning signs (someone on another call directing them, threats of arrest or investigation, secrecy, remote-access apps, pressure, promises of returns, fees to receive money) and reassuring facts (knows the payee, their own idea, purpose fits). One signal per call. Returns guidance: the likely fraud pattern, an official sentence to say, and the next question.",
+      "Record something the customer said that matters for the safety check, as soon as you hear it: warning signs (someone on another call directing them, threats of arrest or investigation, secrecy, remote-access apps, pressure, promises of returns, fees to receive money) and reassuring facts (knows the payee, their own idea, purpose fits). One signal per call. Returns guidance: the likely fraud pattern, an official sentence to say, the next question, and decide_now (yes = call set_decision now).",
     parameters: {
       type: "object",
       properties: {
@@ -63,7 +63,7 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
   {
     name: "call_trusted_contact",
     description:
-      "Phone the customer's trusted contact (a family member they chose in advance) so they can talk before any money moves. Only after you recorded a warning sign, offered the call, and the customer said yes to that offer.",
+      "Phone the customer's trusted contact (a family member they chose in advance) so they can talk before any money moves. Only after you recorded a warning sign, offered the call (set_decision's offer_contact), and the customer said yes to that offer.",
     pre_call_message: "One moment, I'm asking them to call you.",
     parameters: {
       type: "object",
@@ -82,7 +82,7 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
   {
     name: "set_decision",
     description:
-      "Call this once at the end with your recommendation. The bank's policy makes the final decision from the recorded signals and returns the exact message to tell the customer.",
+      "Call this once, as soon as you have enough to recommend. The bank's policy makes the final decision from the recorded signals and returns the exact message to tell the customer, plus offer_contact when the trusted contact should be offered.",
     parameters: {
       type: "object",
       properties: {

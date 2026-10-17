@@ -49,6 +49,22 @@ describe("public text checker", () => {
     expect(r.pattern).not.toBeNull();
   });
 
+  it("adds the on-server text model's advisory opinion, and lets it find patterns the keyword rules miss", async () => {
+    const kv = new MemoryStore();
+    const broken = async () => {
+      throw new Error("down");
+    };
+    const ask = (content: string, v: string) =>
+      publicChat(kv, { language: "en", messages: [{ role: "user", content }] }, { visitorKey: v, dailyCap: 10, perHour: 10, llm: broken as never });
+    const scam = await ask("A man on video call says he is from CBI, I am under digital arrest and must move my savings to a safe account and tell no one", "m1");
+    expect(scam.model?.band).toBe("likely_scam");
+    expect(scam.risk).toBe("likely_scam");
+    expect(scam.pattern?.id).toBe("digital_arrest");
+    const fine = await ask("I am paying my landlord the monthly rent like every month, I have known him for years", "m2");
+    expect(fine.model?.band).toBe("unlikely_scam");
+    expect(fine.risk).not.toBe("likely_scam");
+  });
+
   it("rate-limits per visitor with a friendly message", async () => {
     const kv = new MemoryStore();
     const llm = async () => JSON.stringify({ reply: "ok", risk: "unclear", pattern_id: "none" });

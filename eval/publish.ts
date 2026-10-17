@@ -45,6 +45,7 @@ function compact(spec: RunSpec, s: Summary) {
     agent_turns: h.otp_pin_requests.agent_turns,
     median_turns: h.median_customer_turns_to_decision,
     median_seconds: h.median_est_seconds_to_decision,
+    median_call_seconds: h.median_est_seconds_call ?? null,
     heavy_catch: s.detail.by_coaching.heavy,
     light_catch: s.detail.by_coaching.light,
     truth_said: s.detail.truth_said_when_caught,

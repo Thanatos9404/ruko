@@ -1,5 +1,6 @@
 import type { Lang } from "../shared/types.js";
 import { matchText, patternById, patternSources, truthFor, OFFICIAL_CHANNELS } from "../shared/patterns.js";
+import { analyzeText, getSources, libraryPattern, pick, type TextAnalysis } from "./ml/index.js";
 import type { KV } from "./store/store.js";
 import { HttpError } from "./http.js";
 import { nebiusChat, nebiusKey, redactPII, type LlmMessage } from "./llm/nebius.js";
@@ -30,6 +31,60 @@ export interface ChatReply {
   sources: { title: string; publisher: string; url: string }[];
   next_question: string | null;
   method: "llm+library" | "library-only";
+  /** The on-server text model's opinion. Advisory: it ranks patterns, it never decides. */
+  model: { band: string; scam_probability: number | null; version: string | null } | null;
+  /** True when the truth/advice text is a machine-drafted translation awaiting review. */
+  draft_translation?: boolean;
+}
+
+interface Candidate {
+  id: string;
+  name: string;
+  summary: string;
+  truth: string;
+  advice: string[];
+  sources: { title: string; publisher: string; url: string }[];
+  draft: boolean;
+}
+
+/** A pattern from the 12-pattern core (shared/patterns.ts) or, failing that, the research library. */
+function candidate(id: string, lang: Lang): Candidate | null {
+  const core = patternById(id);
+  if (core)
+    return {
+      id: core.id,
+      name: core.name[lang],
+      summary: core.summary,
+      truth: truthFor(core, lang),
+      advice: core.advice[lang],
+      sources: patternSources(core).map((x) => ({ title: x.title, publisher: x.publisher, url: x.url })),
+      draft: false,
+    };
+  const lp = libraryPattern(id);
+  if (!lp) return null;
+  const src = getSources();
+  const status = (lp.translation_status as Record<string, string> | undefined)?.[lang] ?? "source";
+  return {
+    id: lp.id,
+    name: pick(lp.name, lang),
+    summary: typeof lp.summary === "string" ? lp.summary : pick(lp.summary as { en: string }, "en"),
+    truth: pick(lp.truth, lang),
+    advice: pick(lp.advice, lang),
+    sources: lp.sources
+      .map((sid) => src.get(sid))
+      .filter((x): x is NonNullable<typeof x> => Boolean(x && x.url))
+      .slice(0, 4)
+      .map((x) => ({ title: x.title, publisher: x.publisher, url: x.url })),
+    draft: lang !== "en" && status !== "source",
+  };
+}
+
+function safeAnalyze(text: string): TextAnalysis | null {
+  try {
+    return analyzeText(text, { topK: 3 });
+  } catch {
+    return null;
+  }
 }
 
 const SYSTEM = (lang: Lang, candidates: string) => `You are Ruko's free public safety checker. A member of the public describes a call, message or payment request. Decide whether it matches a known fraud pattern and tell them what to do, briefly and kindly.
@@ -109,53 +164,72 @@ export async function publicChat(
     throw new HttpError(429, "You've sent a lot of checks this hour. Please try again a little later.", "rate_limited");
 
   const matches = matchText(userText);
+  // The text model runs on the server in about a millisecond and stores nothing. It adds
+  // candidate patterns the keyword rules miss; it never sets the answer on its own.
+  const ml = safeAnalyze(userText);
+  const modelIds = ml && ml.band !== "unlikely_scam" ? ml.patterns.filter((m) => (m.p_given_scam ?? 0) >= 0.2 || m.lexicon_score > 0).map((m) => m.id) : [];
+  const ids = [...new Set([...matches.map((m) => m.pattern.id), ...modelIds])].slice(0, 5);
+  const cands = ids.map((id) => candidate(id, lang)).filter((c): c is Candidate => Boolean(c));
   const candidates =
-    matches
-      .map((m) => {
-        const p = m.pattern;
-        return `- id: ${p.id}; name: ${p.name[lang]}; what it is: ${p.summary}; official truth: ${truthFor(p, lang)}; advice: ${p.advice[lang].join(" ")}`;
-      })
-      .join("\n") || "- (no keyword matches; judge from the description)";
+    cands.map((c) => `- id: ${c.id}; name: ${c.name}; what it is: ${c.summary}; official truth: ${c.truth}; advice: ${c.advice.join(" ")}`).join("\n") ||
+    "- (no keyword matches; judge from the description)";
+  const modelView = ml && ml.engine.mode !== "none" ? { band: ml.band, scam_probability: ml.scam_probability, version: ml.engine.model_version } : null;
+  const modelLine = modelView
+    ? `\n\nAn on-server text classifier (advisory, may be wrong) rates this: ${modelView.band}${modelView.scam_probability !== null ? ` (p=${modelView.scam_probability.toFixed(2)})` : ""}.`
+    : "";
 
   let reply: ChatReply | null = null;
   const llmAvailable = Boolean(nebiusKey() || opts.llm);
   const underCap = llmAvailable && (await limitCounter(kv, `cap:chat:${day}`, opts.dailyCap, 2 * 24 * 3600));
   if (underCap) {
     try {
-      const out = await (opts.llm ?? nebiusChat)([{ role: "system", content: SYSTEM(lang, candidates) } as LlmMessage, ...clean], { json: true, maxTokens: 450 });
+      const out = await (opts.llm ?? nebiusChat)([{ role: "system", content: SYSTEM(lang, candidates + modelLine) } as LlmMessage, ...clean], { json: true, maxTokens: 450 });
       const j = JSON.parse(out.replace(/^```(json)?|```$/g, "").trim()) as { reply?: string; risk?: string; pattern_id?: string; next_question?: string };
-      const p = j.pattern_id && j.pattern_id !== "none" ? patternById(j.pattern_id) : undefined;
+      const c = j.pattern_id && j.pattern_id !== "none" ? (cands.find((x) => x.id === j.pattern_id) ?? candidate(j.pattern_id, lang)) : null;
       reply = {
         reply: String(j.reply ?? "").slice(0, 900),
         risk: (["likely_scam", "possible_scam", "unclear", "unlikely"].includes(String(j.risk)) ? j.risk : "unclear") as ChatReply["risk"],
-        pattern: p ? { id: p.id, name: p.name[lang] } : null,
-        truth: p ? truthFor(p, lang) : null,
-        advice: p ? p.advice[lang] : [],
-        sources: p ? patternSources(p).map((s) => ({ title: s.title, publisher: s.publisher, url: s.url })) : [],
+        pattern: c ? { id: c.id, name: c.name } : null,
+        truth: c ? c.truth : null,
+        advice: c ? c.advice : [],
+        sources: c ? c.sources : [],
         next_question: j.next_question ? String(j.next_question).slice(0, 200) : null,
         method: "llm+library",
+        model: modelView,
+        draft_translation: c?.draft || undefined,
       };
     } catch {
       reply = null;
     }
   }
   if (!reply) {
-    const top = matches[0]?.pattern;
+    // No LLM: the keyword rules first, then the text model's top pattern.
+    const top = cands[0] ?? null;
+    const ruleScore = matches[0]?.score ?? 0;
+    const risk: ChatReply["risk"] = !top
+      ? ml?.band === "unlikely_scam"
+        ? "unlikely"
+        : "unclear"
+      : ruleScore >= 2 || ml?.band === "likely_scam"
+        ? "likely_scam"
+        : "possible_scam";
     reply = {
       reply: top
         ? lang === "hi"
-          ? `यह ${top.name.hi} जैसा लगता है। ${truthFor(top, "hi")}`
-          : `This looks like ${top.name.en.toLowerCase()}. ${truthFor(top, "en")}`
+          ? `यह ${top.name} जैसा लगता है। ${top.truth}`
+          : `This looks like ${top.name.charAt(0).toLowerCase()}${top.name.slice(1)}. ${top.truth}`
         : lang === "hi"
           ? "यह किसी जाने-पहचाने पैटर्न से साफ़ मेल नहीं खाता। अनजान व्यक्ति को पैसे न भेजें, ओटीपी या पिन किसी को न बताएँ, और शक हो तो 1930 पर कॉल करें।"
           : "This doesn't clearly match a known pattern. Don't send money to someone you don't know, never share an OTP or PIN, and call 1930 if in doubt.",
-      risk: top ? (matches[0].score >= 2 ? "likely_scam" : "possible_scam") : "unclear",
-      pattern: top ? { id: top.id, name: top.name[lang] } : null,
-      truth: top ? truthFor(top, lang) : null,
-      advice: top ? top.advice[lang] : [],
-      sources: top ? patternSources(top).map((s) => ({ title: s.title, publisher: s.publisher, url: s.url })) : [],
+      risk,
+      pattern: top ? { id: top.id, name: top.name } : null,
+      truth: top ? top.truth : null,
+      advice: top ? top.advice : [],
+      sources: top ? top.sources : [],
       next_question: null,
       method: "library-only",
+      model: modelView,
+      draft_translation: top?.draft || undefined,
     };
   }
 

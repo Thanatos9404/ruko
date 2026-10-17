@@ -1,3 +1,4 @@
+import type { ModelOpinion } from "../../shared/types.js";
 import type {
   AppStatus,
   AuditEvent,
@@ -332,17 +333,31 @@ export class CheckService {
     return { check, signal, duplicate };
   }
 
-  /** What the agent should say next, given everything heard so far. */
-  guidance(c: Check): {
+  /** Stores the text model's advisory opinion. It never touches signals or the decision. */
+  async setModelOpinion(id: string, ml: ModelOpinion): Promise<StoredCheck> {
+    return this.mutate(id, (c) => {
+      const flag = ml.band === "likely_scam" && c.decision?.outcome === "release";
+      c.ml = { ...ml, disagrees_with_decision: flag || undefined };
+      if (flag) this.event(c, "model.disagrees", "The text model leans scam but the payment was released: flag for review (no automatic change).");
+    });
+  }
+
+  /**
+   * What the agent should say next, given everything heard so far. `fallbackPattern`
+   * is the text model's best guess, used only when the recorded signals don't point
+   * to a pattern yet, so the official truth sentence can arrive a turn earlier.
+   */
+  guidance(c: Check, fallbackPattern?: string | null): {
     likely_pattern: string | null;
     say_this: string | null;
     ask_next: string | null;
     strong_signs: number;
+    decide_now: boolean;
     tip: string;
   } {
     const lang = c.customer.language;
     const inferred = inferPattern(c.signals);
-    const p = inferred ? patternById(inferred.id) : undefined;
+    const p = inferred ? patternById(inferred.id) : fallbackPattern ? patternById(fallbackPattern) : undefined;
     const strong = c.signals.filter((s) => s.confidence !== "low" && SEVERITY_RANK[s.severity] >= 3).length;
     let ask: string | null = null;
     if (p) ask = p.ask_next[lang];
@@ -355,13 +370,15 @@ export class CheckService {
             : "Is anyone on another call or video call with you right now, telling you what to do?";
     }
     const mitigating = c.signals.filter((s) => s.confidence !== "low" && s.severity === "mitigating").length;
-    const hasContact = Boolean(c.customer.trusted_contact);
     let tip: string;
-    if (strong >= 2)
-      tip = hasContact
-        ? "Several warning signs. Offer the trusted contact call, then call set_decision (block or delay)."
-        : "Several warning signs. Call set_decision now (block or delay).";
-    else if (strong === 1) tip = "One warning sign. Ask the next question to understand it, then decide.";
+    // Two strong warning signs are enough: decide now, then offer the trusted contact.
+    // The fast path needs two warning signs heard with high confidence; anything less gets another question.
+    const sure = c.signals.filter((s) => s.confidence === "high" && SEVERITY_RANK[s.severity] >= 3).length;
+    const decideNow = sure >= 2 || c.signals.some((s) => s.type === "codeword_mismatch");
+    if (decideNow) {
+      tip = "Enough warning signs. Don't speak yet: call set_decision now (block or delay), then say say_this and tell_customer together.";
+      ask = null;
+    } else if (strong === 1) tip = "One warning sign. Say say_this, ask ask_next, then decide.";
     else if (mitigating >= 2) {
       tip = "No warning signs so far. If you have asked whether anyone else is on the call, finish with set_decision (release).";
       ask = null;
@@ -371,6 +388,7 @@ export class CheckService {
       say_this: p && strong > 0 ? truthFor(p, lang) : null,
       ask_next: ask,
       strong_signs: strong,
+      decide_now: decideNow,
       tip,
     };
   }
