@@ -29,8 +29,8 @@ It also ships a free public **"Is this a scam?"** checker (text and voice) and a
 
 ## Why
 
-- Indians reported **₹22,845.73 crore** lost to cyber fraud in 2024 ([MHA, Lok Sabha USQ 344](https://www.mha.gov.in/MHA1/Par2017/pdfs/par2025-pdfs/LS22072025/344.pdf)); "digital arrest" scams alone took **₹1,935.51 crore** across 1,23,672 incidents ([MHA, Rajya Sabha USQ 1505](https://www.mha.gov.in/MHA1/Par2017/pdfs/par2025-pdfs/RS12032025/1505.pdf)).
-- In 2025, payments above ₹10,000 carried **98.5%** of fraud value ([RBI discussion paper, Apr 2026](https://rbi.org.in/Scripts/PublicationsView.aspx?id=23810)): the payments a bank can afford to pause for a minute.
+- Indians reported **₹22,845.73 crore** lost to cyber fraud in 2024 ([MHA, Lok Sabha USQ 344](https://www.mha.gov.in/MHA1/Par2017/pdfs/par2025-pdfs/LS22072025/344.pdf)); "digital arrest" and related scams took **₹1,935.51 crore** across 1,23,672 incidents ([MHA, Rajya Sabha USQ 1505](https://www.mha.gov.in/MHA1/Par2017/pdfs/par2025-pdfs/RS12032025/1505.pdf)).
+- Payments above ₹10,000 are about 45% of reported fraud cases but about **98.5%** of their value (NCRP data in the [RBI discussion paper, Apr 2026](https://rbi.org.in/Scripts/PublicationsView.aspx?id=23810)): the payments a bank can afford to pause for a minute.
 - In these scams the victim authenticates the payment themselves, often while the scammer coaches them on another call. OTPs, SMS warnings and pop-ups don't break that. A calm voice asking the right question, in their language, before the money moves, does.
 
 More in [docs/RESEARCH.md](docs/RESEARCH.md).
@@ -178,7 +178,7 @@ Returns `action: "hold"`, the code word, every risk reason with its weight, and 
 - **Bolna → Ruko** tool calls carry a bearer token (constant-time compared) and can be restricted to Bolna's published IPs; webhooks need a secret URL token and are verified by fetching the execution back from Bolna.
 - **Never asks for secrets.** The prompts forbid OTP/PIN/card/account requests; evidence quotes are scrubbed of digit runs before they enter the audit log; the eval audits every agent turn.
 - **Public checker:** phone numbers, UPI IDs, e-mails, links and long digit runs are redacted on the server before the LLM sees anything or anything is stored; only anonymous counters (production traffic only, small groups folded) and redacted summaries are kept.
-- **Disclosure:** every agent says it is an automated assistant and that the call is recorded (TRAI PR 119/2026, DPDP notice); the trusted contact is only called after a warning sign and the customer's consent (data minimisation).
+- **Disclosure:** every agent's greeting says it is automated and that the call is recorded (our policy, and the DPDP notice). Separately, TRAI PR 119/2026 requires banks to pre-declare automated calls and their caller IDs to the operator. The trusted contact is only called after a warning sign and the customer's consent (data minimisation).
 - **No real personal data:** demo people and payees are invented; phone numbers use the UK Ofcom drama range (+44 7700 900xxx), since India has no reserved fictional range.
 - `npm run scan:secrets` checks every file git would commit for key patterns and for the literal values in local env files.
 

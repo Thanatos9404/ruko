@@ -18,7 +18,7 @@ export const SOURCES = {
     publisher: "Ministry of Home Affairs",
     date: "12 Mar 2025",
     url: "https://www.mha.gov.in/MHA1/Par2017/pdfs/par2025-pdfs/RS12032025/1505.pdf",
-    used_for: "1,23,672 digital-arrest incidents and ₹1,935.51 crore defrauded in 2024 (NCRP)",
+    used_for: "1,23,672 digital-arrest and related incidents and ₹1,935.51 crore defrauded in 2024 (NCRP)",
   },
   mha_ls_344_2025: {
     title: "Lok Sabha Unstarred Question 344: financial cyber fraud",
@@ -49,7 +49,7 @@ export const SOURCES = {
     used_for: "'There is no concept of Digital Arrest under any Indian Laws.' Stages: spoofed call, intimidation, digital confinement, money demand",
   },
   mha_alert_2024: {
-    title: "Alert against 'digital arrest' by cyber criminals impersonating state and central agencies",
+    title: "Alert against incidents of 'Blackmail' and 'Digital Arrest' by cyber criminals impersonating State/UT Police, NCB, CBI, RBI and other agencies",
     publisher: "Ministry of Home Affairs (PIB)",
     date: "14 May 2024",
     url: "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2020570",
@@ -86,7 +86,7 @@ export const SOURCES = {
   dot_international_call: {
     title: "DoT advisory on spoofed international calls",
     publisher: "Department of Telecommunications (PIB)",
-    date: "Dec 2024",
+    date: "24 Dec 2024",
     url: "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2087644",
     used_for: "A call shown as 'International Call' cannot be from Indian authorities",
   },
@@ -105,7 +105,7 @@ export const SOURCES = {
     used_for: "'RBI or your bank will never ask for these' (OTP, PIN, CVV); unsolicited lottery messages are fake",
   },
   rbi_otp_2022: {
-    title: "RBI cautions against sharing PIN, UPI PIN and OTP",
+    title: "Consumer Awareness - Cyber Threats and Frauds",
     publisher: "Reserve Bank of India",
     date: "28 Jan 2022",
     url: "https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=53185",
@@ -123,7 +123,7 @@ export const SOURCES = {
     publisher: "Securities and Exchange Board of India",
     date: "26 Feb 2024",
     url: "https://www.sebi.gov.in/media-and-notifications/press-releases/feb-2024/sebi-issues-advisory-against-fraudulent-trading-schemes-claiming-to-be-offered-to-indian-residents-by-fpis_81733.html",
-    used_for: "'There is no provision for an Institutional Account in trading'; guaranteed returns in the securities market are a scam",
+    used_for: "'There is no provision for an Institutional Account in trading' (PR text in the attachment: https://www.sebi.gov.in/sebi_data/attachdocs/feb-2024/1708943578798.pdf); SEBI's investor material says guaranteed returns in the securities market are a scam",
   },
   mha_task_fraud: {
     title: "Action against task-based and investment fraud websites",
@@ -135,7 +135,7 @@ export const SOURCES = {
   i4c_fake_customer_care: {
     title: "Cybercriminals using fake customer care numbers",
     publisher: "I4C, MHA",
-    date: "accessed Oct 2026",
+    date: "21 Mar 2022",
     url: "https://i4c.mha.gov.in/theme/resources/advisories/CybercriminalsusingFakeCustomerCareNumberstodefraudcitizens.pdf",
     used_for: "Fake helpline numbers in search results and maps; requests to 'temporarily transfer' funds",
   },
@@ -165,19 +165,19 @@ export const SOURCES = {
     publisher: "National Cyber Crime Reporting Portal",
     date: "accessed Oct 2026",
     url: "https://cybercrime.gov.in/assets/learning-corner/cyber-awarness/Financial%20Fraud%20Brochures%20final.pdf",
-    used_for: "Impersonation of relatives and hospital staff in 'emergency' calls",
+    used_for: "Callers posing as hospital staff ask family members for urgent money after a fake accident; 'contact your family member to confirm their whereabouts'",
   },
   i4c_kbc_lottery: {
     title: "Cybercrime information 132: KBC lottery fraud",
     publisher: "I4C, MHA",
-    date: "accessed Oct 2026",
+    date: "20 Sep 2021",
     url: "https://i4c.mha.gov.in/theme/resources/advisories/CybercrimeInformation-132.pdf",
     used_for: "Fake KBC lottery wins on WhatsApp followed by fee demands",
   },
   rbi_lottery: {
-    title: "RBI cautions public against fictitious offers of money from abroad",
+    title: "RBI Cautions about Fictitious Emails",
     publisher: "Reserve Bank of India",
-    date: "accessed Oct 2026",
+    date: "4 Jul 2018",
     url: "https://rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=44392",
     used_for: "'Nobody from RBI calls up people about lottery winnings/funds received from abroad'",
   },
@@ -189,7 +189,7 @@ export const SOURCES = {
     used_for: "'The DoT does not make calls to citizens threatening disconnection'",
   },
   trai_no_payments: {
-    title: "TRAI cautions public against impersonation",
+    title: "TRAI Issues Advisory on Fraudulent Activities Misusing TRAI's Name",
     publisher: "Telecom Regulatory Authority of India (PIB)",
     date: "6 Aug 2025",
     url: "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2153153",
@@ -212,7 +212,7 @@ export const SOURCES = {
   chakshu: {
     title: "Sanchar Saathi: Chakshu",
     publisher: "Department of Telecommunications",
-    date: "launched 4 Mar 2024",
+    date: "accessed Oct 2026",
     url: "https://sancharsaathi.gov.in/sfc/",
     used_for: "Reporting suspected fraud calls, SMS and WhatsApp messages (not for money already lost; use 1930)",
   },

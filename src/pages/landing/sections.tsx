@@ -40,18 +40,18 @@ export function Problem() {
           {[
             {
               n: "₹1,935 cr",
-              l: "lost to 'digital arrest' scams in 2024, across 1,23,672 incidents",
+              l: "lost to 'digital arrest' and related scams in 2024, across 1,23,672 incidents",
               s: cite("https://www.mha.gov.in/MHA1/Par2017/pdfs/par2025-pdfs/RS12032025/1505.pdf", "MHA, Rajya Sabha, 12 Mar 2025"),
             },
             {
-              n: "98.5%",
-              l: "of fraud value sits in payments above ₹10,000, the ones a bank can afford to pause",
+              n: "~98.5%",
+              l: "of reported fraud value sits in payments above ₹10,000, the ones a bank can afford to pause",
               s: cite("https://rbi.org.in/Scripts/PublicationsView.aspx?id=23810", "RBI discussion paper, Apr 2026"),
             },
             {
               n: "Live",
               l: "Fraudsters increasingly stay on a live call to talk victims through the payment, so OTPs and pop-ups don't stop them.",
-              s: cite("https://www.businesstoday.in/industry/banks/story/what-a-new-report-says-about-indias-digital-banking-frauds-545803-2026-07-28", "BioCatch India report, 2026"),
+              s: cite("https://www.businesstoday.in/industry/banks/story/what-a-new-report-says-about-indias-digital-banking-frauds-545803-2026-07-28", "Business Today on BioCatch's India report, Jul 2026"),
             },
           ].map((x) => (
             <StaggerItem key={x.n} className="card p-6">
@@ -312,7 +312,7 @@ export function Business() {
               Ruko is an API for banks, UPI apps and NBFCs. They pay per completed voice check, and nothing for the payments that pass. A one-minute call costs a few rupees of voice AI on Bolna's flat rate. A coached victim loses lakhs.
             </p>
             <p>
-              The rules are moving our way. RBI's 2026 directions make banks share losses from coerced payments and count “specific, directed and clear warnings” from the bank. A spoken warning that names the scam is exactly that. In the UK, banks already reimburse push-payment scams and may delay a payment to contact the payer.
+              The rules are moving our way. RBI's 2026 directions cover payments made “under coercion or duress”, and treat “not paying attention to specific, directed and clear warnings from the bank” as customer negligence. A spoken warning that names the scam is designed to be one. In the UK, banks already reimburse push-payment scams and may delay a payment to contact the payer.
             </p>
           </div>
           <div className="mt-8 grid grid-cols-1 gap-3 text-[13.5px] sm:grid-cols-2">
