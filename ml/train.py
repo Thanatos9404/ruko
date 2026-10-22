@@ -214,7 +214,11 @@ class Scorer:
 
     def __init__(self, art: dict, corpus: Corpus):
         self.art, self.corpus = art, corpus
-        self.cols = np.array([corpus.fid[f] for f in art["vocab"]], dtype=np.int64)
+        # a feature the current corpus never produced can only be zero, so it maps to an all-zero column
+        zero_col = corpus.C.shape[1]
+        self.cols = np.array([corpus.fid.get(f, zero_col) for f in art["vocab"]], dtype=np.int64)
+        if (self.cols == zero_col).any():
+            corpus.C = sparse.hstack([corpus.C, sparse.csr_matrix((corpus.C.shape[0], 1))]).tocsr()
         self.idf = np.array(art["idf"])
         V = len(art["vocab"])
         self.bw = np.array(art["binary"]["w"], dtype=float) / art["weight_scale"]
@@ -336,6 +340,31 @@ def binary_metrics(rows, p, th):
     return out
 
 
+_TW: dict[str, set[str]] | None = None
+_CAT: dict[str, str] | None = None
+
+
+def twin_sets() -> dict[str, set[str]]:
+    """Symmetric global<->India twin map from data/patterns/build/overrides.json."""
+    global _TW
+    if _TW is None:
+        ov = json.loads((ROOT / "data" / "patterns" / "build" / "overrides.json").read_text(encoding="utf-8"))
+        _TW = defaultdict(set)
+        for g, ins in ov.get("twins", {}).items():
+            for i in ins:
+                _TW[g].add(i)
+                _TW[i].add(g)
+    return _TW
+
+
+def pattern_categories() -> dict[str, str]:
+    global _CAT
+    if _CAT is None:
+        lib = json.loads((ROOT / "data" / "patterns" / "library.json").read_text(encoding="utf-8"))
+        _CAT = {p["id"]: p["category"] for p in lib["patterns"]}
+    return _CAT
+
+
 def pattern_metrics(rows, P, classes):
     cidx = {c: i for i, c in enumerate(classes)}
     ix = [i for i, r in enumerate(rows) if r["label"] == "scam" and r.get("pattern")]
@@ -348,6 +377,13 @@ def pattern_metrics(rows, P, classes):
     order = np.argsort(-Pk, axis=1)
     out["top1"] = r4((order[:, 0] == yt).mean())
     out["top3"] = r4((order[:, :3] == yt[:, None]).any(axis=1).mean())
+    # lenient views: a global pattern and its Indian twin (same mechanism) count as a match,
+    # and so does any pattern in the same library category
+    tw, cat = twin_sets(), pattern_categories()
+    p1 = [classes[j] for j in order[:, 0]]
+    t1 = [classes[j] for j in yt]
+    out["top1_twins_merged"] = r4(np.mean([a == b or a in tw.get(b, set()) for a, b in zip(p1, t1)]))
+    out["top1_same_category"] = r4(np.mean([cat.get(a) == cat.get(b) for a, b in zip(p1, t1)]))
     pred = order[:, 0]
     per = {}
     f1s = []
@@ -504,6 +540,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", default="")
     ap.add_argument("--no-tune", action="store_true")
+    ap.add_argument("--eval-model", default="", help="re-evaluate an existing model JSON on the current eval sets")
+    ap.add_argument("--name", default="reeval")
     args = ap.parse_args()
     rows = load()
     data_sha = hashlib.sha256(DATA.read_bytes()).hexdigest()
@@ -511,6 +549,18 @@ def main():
     RESULTS.mkdir(parents=True, exist_ok=True)
     summary = {"dataset_sha256": data_sha, "experiments": {}}
     corpus = Corpus(rows, data_sha)
+    if args.eval_model:
+        art = json.loads(Path(args.eval_model).read_text(encoding="utf-8"))
+        res = evaluate(art, corpus, sets, slices=True)
+        (RESULTS / f"{args.name}.json").write_text(json.dumps({
+            "experiment": args.name, "model": args.eval_model, "model_version": art["model_version"],
+            "note": "An existing model re-evaluated on the current held-out sets (no training).",
+            "thresholds": art["binary"]["thresholds"], "results": res}, indent=1, ensure_ascii=False), encoding="utf-8")
+        for k, v in res.items():
+            b = v["binary"]
+            print(f"   {k:32s} n={b['n']:5d} auroc={b.get('auroc')} fpr@poss={b['at_possible']['fpr']} rec@poss={b['at_possible']['recall']} "
+                  f"fpr@lik={b['at_likely']['fpr']} rec@lik={b['at_likely']['recall']} top1={v.get('patterns', {}).get('top1')}")
+        return
     exps = experiments(rows)
     if args.only:
         exps = {k: v for k, v in exps.items() if k in args.only.split(",")}
@@ -540,7 +590,9 @@ def main():
         summary["experiments"][name] = {
             k: {"auroc": v["binary"].get("auroc"), "auprc": v["binary"].get("auprc"), "ece": v["binary"].get("ece"),
                 "fpr_at_possible": v["binary"]["at_possible"]["fpr"], "recall_at_possible": v["binary"]["at_possible"]["recall"],
-                "top1": v.get("patterns", {}).get("top1"), "top3": v.get("patterns", {}).get("top3"), "n": v["binary"]["n"]}
+                "top1": v.get("patterns", {}).get("top1"), "top3": v.get("patterns", {}).get("top3"),
+                "top1_twins_merged": v.get("patterns", {}).get("top1_twins_merged"), "top1_same_category": v.get("patterns", {}).get("top1_same_category"),
+                "recall_at_likely": v["binary"]["at_likely"]["recall"], "fpr_at_likely": v["binary"]["at_likely"]["fpr"], "n": v["binary"]["n"]}
             for k, v in res.items()
         }
         for k, v in res.items():

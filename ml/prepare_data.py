@@ -324,6 +324,29 @@ def main() -> None:
     rows = [r for r in rows if r["split"] == "train" or normalize(r["text"]) not in train_keys]
     print(f"dropped {before - len(rows)} eval rows that duplicate training text")
 
+    # IMC25: the same smishing campaign is often reported many times with small edits, so also drop
+    # held-out reports that are near-duplicates (word-trigram Jaccard > 0.5) of a report in the training slice
+    def shingles(t: str) -> set[str]:
+        w = normalize(t).split()
+        return {" ".join(w[i : i + 3]) for i in range(max(1, len(w) - 2))}
+
+    inv: dict[str, list[int]] = {}
+    train_sh = [shingles(r["text"]) for r in rows if r["source"] == "imc25_smishing_train"]
+    for k, sh in enumerate(train_sh):
+        for g in sh:
+            inv.setdefault(g, []).append(k)
+    keep, near = [], 0
+    for r in rows:
+        if r["source"] == "imc25_smishing":
+            sh = shingles(r["text"])
+            cand = Counter(k for g in sh for k in inv.get(g, ()))
+            if any(c / len(sh | train_sh[k]) > 0.5 for k, c in cand.items()):
+                near += 1
+                continue
+        keep.append(r)
+    rows = keep
+    print(f"dropped {near} IMC25 held-out reports that near-duplicate the IMC25 training slice")
+
     rows.sort(key=lambda r: r["id"])
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w", encoding="utf-8", newline="\n") as f:
