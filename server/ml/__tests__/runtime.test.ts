@@ -14,7 +14,12 @@ const GOLDEN = JSON.parse(readFileSync(join(__dirname, "..", "..", "..", "ml", "
  * expected failures (it.fails), so a model that fixes them makes the test
  * suite flag it, and nobody can quietly drop them. Reasons are in ml/MODEL_CARD.md.
  */
-const KNOWN_FAILURES: Record<string, string> = {};
+const KNOWN_FAILURES: Record<string, string> = {
+  // ruko-text-1.0.0 scores this classic KYC smishing at about 0.30. The genuine look-alike training messages
+  // (real bank KYC reminders, SBI alerts) pull "sbi" and "kyc" towards genuine. The cue lexicon still flags it
+  // (kyc_block, lexicon_band likely_scam), and so does the voice agent's own questioning.
+  en_kyc_sms: "model-only band misses a classic KYC smishing message",
+};
 
 afterEach(() => {
   configureModel(undefined);

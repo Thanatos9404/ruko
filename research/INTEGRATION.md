@@ -77,7 +77,11 @@ Speak `machine_draft` Hindi on calls only if you're comfortable that it is unrev
 
 ```ts
 import { analyzeText } from "../ml/index.js";
-const a = analyzeText(text);            // sync, ~1 ms; never throws; never logs text
+const a = analyzeText(text, { region: "india" });   // sync, ~1 ms; never throws; never logs text
+// options: topK (default 3), explain (default true), region: "india" | "global" | "all" (default "all").
+// Pass region "india" on Indian calls and the Indian public line: pattern candidates are then limited to the
+// 54 Indian patterns (probabilities renormalised), so a UK/US pattern with a foreign "truth" sentence is never
+// named. The scam probability and band are unaffected.
 // a.scam_probability  0..1 calibrated (null in lexicon_only mode)
 // a.band              "likely_scam" | "possible_scam" | "unlikely_scam" | "unknown"
 // a.patterns[]        { id, name, category, p_given_scam, lexicon_score, cues[] (spans) }

@@ -15,7 +15,8 @@ Pipeline
    digit (any script) -> "0", format chars (ZWJ/ZWNJ) dropped, letters, marks
    and numbers kept, anything else is a token break. "₹" becomes "rs".
 3. Features: word unigrams ("w:"), word bigrams ("b:"), and character n-grams
-   (n = 2..5) inside each space-padded token ("c:").
+   (n = 2..5) inside each space-padded token ("c:"). Since v2, the link, handle,
+   phone and account placeholders produce no features (see NO_FEATURE).
 4. TF-IDF with sublinear tf (1 + ln count), smooth idf, L2 norm over known
    features (identical to scikit-learn's TfidfVectorizer).
 """
@@ -27,7 +28,7 @@ import re
 import unicodedata
 from dataclasses import dataclass
 
-FEATURIZER_VERSION = 1
+FEATURIZER_VERSION = 2
 CHAR_N_MIN, CHAR_N_MAX = 2, 5
 
 # --- PII redaction --------------------------------------------------------
@@ -158,13 +159,25 @@ def normalize(text: str) -> str:
     return " ".join(t.text for t in tokenize(text))
 
 
-def features_from_tokens(toks: list[str]) -> list[str]:
+# v2: redacted links, handles, phone and account numbers produce no features. Genuine bank alerts,
+# OTPs and bills carry links and numbers too, and in synthetic data their frequency mostly reflects
+# how the generator was prompted, so the model must judge the words around them instead.
+# APK file names (xapk) still count: genuine messages almost never carry an .apk file.
+NO_FEATURE = {"xurl", "xhandle", "xphone", "xnum"}
+
+
+def features_from_tokens(toks: list[str], version: int = FEATURIZER_VERSION) -> list[str]:
+    nofeat = NO_FEATURE if version >= 2 else set()  # v1 kept placeholder features (used to re-evaluate old models)
     feats: list[str] = []
     for t in toks:
-        feats.append("w:" + t)
+        if t not in nofeat:
+            feats.append("w:" + t)
     for a, b in zip(toks, toks[1:]):
-        feats.append("b:" + a + "_" + b)
+        if a not in nofeat and b not in nofeat:
+            feats.append("b:" + a + "_" + b)
     for t in toks:
+        if t in nofeat:
+            continue
         chars = [" "] + list(t) + [" "]
         L = len(chars)
         for nlen in range(CHAR_N_MIN, CHAR_N_MAX + 1):
@@ -173,9 +186,9 @@ def features_from_tokens(toks: list[str]) -> list[str]:
     return feats
 
 
-def analyze(text: str) -> list[str]:
-    """Analyzer passed to scikit-learn's TfidfVectorizer."""
-    return features_from_tokens([t.text for t in tokenize(text)])
+def analyze(text: str, version: int = FEATURIZER_VERSION) -> list[str]:
+    """Feature strings for a text (the training pipeline's analyzer)."""
+    return features_from_tokens([t.text for t in tokenize(text)], version)
 
 
 # --- reference inference over the exported JSON model ------------------------

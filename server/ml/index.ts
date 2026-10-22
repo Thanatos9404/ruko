@@ -53,6 +53,8 @@ export interface TextAnalysis {
   /** Calibrated P(scam); null when the model is unavailable. */
   scam_probability: number | null;
   band: Band | "unknown";
+  /** Band from cue phrases alone (lexicon); shown next to the model's band, also used as the fallback band. */
+  lexicon_band: Band | "unknown";
   patterns: PatternCandidate[];
   /** Call signals (shared/signals.ts types) suggested by cue phrases. Suggestions only. */
   signals: { type: string; hits: CueHit[] }[];
@@ -208,6 +210,7 @@ export function analyzeText(input: string, opts: AnalyzeOptions = {}): TextAnaly
     },
     signals,
     truncated,
+    lexicon_band: (s.lexicon ? lexiconBand(lexPatterns.filter((r) => inRegion(r.id))[0]?.score ?? 0, signals) : "unknown") as Band | "unknown",
   };
 
   if (s.model) {
@@ -245,7 +248,7 @@ export function analyzeText(input: string, opts: AnalyzeOptions = {}): TextAnaly
   return {
     ...base,
     scam_probability: null,
-    band: s.lexicon ? lexiconBand(lexPatterns[0]?.score ?? 0, signals) : "unknown",
+    band: base.lexicon_band,
     patterns: lexPatterns.filter((r) => inRegion(r.id)).slice(0, topK).map((r) => describe(r.id, null)),
     evidence: [],
     counter_evidence: [],

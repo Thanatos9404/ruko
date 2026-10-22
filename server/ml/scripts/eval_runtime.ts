@@ -37,6 +37,9 @@ const SETS: Record<string, (r: Row) => boolean> = {
   ood_realworld_curated: (r) => r.split === "ood_realworld",
   ood_ridham115_indian_sms: (r) => r.split === "ood_ridham",
   test_mendeley_real_sms: (r) => r.split === "test" && r.source === "mendeley_sms",
+  ood_imc25_real_smishing_india: (r) => r.split === "ood_imc25_india",
+  ood_flowxai_en: (r) => r.split === "ood_flowxai",
+  ood_skyaara_genuine_payment_sms: (r) => r.split === "ood_skyaara",
 };
 
 function pct(xs: number[], p: number) {
@@ -70,8 +73,12 @@ for (const r of short) {
 }
 
 // ---- quality: model+lexicon fused ranking and lexicon-only fallback ----
-function quality(mode: "model" | "lexicon") {
-  configureModel(mode === "model" ? loadModelFile(modelPath) : null);
+/**
+ * "fused": the model's band, raised from unlikely to possible when the cue lexicon alone says likely_scam
+ * (strong pattern cues plus live call-signal cues). Evaluated here before any decision to ship it.
+ */
+function quality(mode: "model" | "lexicon" | "fused") {
+  configureModel(mode === "lexicon" ? null : loadModelFile(modelPath));
   const out: Record<string, unknown> = {};
   for (const [name, f] of Object.entries(SETS)) {
     const set = rows.filter(f);
@@ -79,8 +86,9 @@ function quality(mode: "model" | "lexicon") {
     let tpPoss = 0, fpPoss = 0, tpLik = 0, fpLik = 0, nS = 0, nG = 0, top1 = 0, top3 = 0, nP = 0, noPattern = 0;
     for (const r of set) {
       const a = analyzeText(r.text, { explain: false, topK: 3 });
-      const poss = a.band === "possible_scam" || a.band === "likely_scam";
-      const lik = a.band === "likely_scam";
+      const band = mode === "fused" && a.band === "unlikely_scam" && a.lexicon_band === "likely_scam" ? "possible_scam" : a.band;
+      const poss = band === "possible_scam" || band === "likely_scam";
+      const lik = band === "likely_scam";
       if (r.label === "scam") {
         nS++;
         if (poss) tpPoss++;
@@ -126,11 +134,12 @@ const result = {
     short_texts_le_300_chars: { n: latShort.length, p50: r4(pct(latShort, 50)), p95: r4(pct(latShort, 95)), p99: r4(pct(latShort, 99)) },
   },
   model_plus_lexicon: quality("model"),
+  fused_band_experiment: quality("fused"),
   lexicon_only_fallback: quality("lexicon"),
 };
 writeFileSync(join(ROOT, "ml/results/runtime_ts.json"), JSON.stringify(result, null, 1));
 console.log(JSON.stringify({ cold_start_ms: result.cold_start_ms, latency_ms: result.latency_ms, model_bytes: result.model_bytes }, null, 1));
-for (const k of ["model_plus_lexicon", "lexicon_only_fallback"] as const) {
+for (const k of ["model_plus_lexicon", "fused_band_experiment", "lexicon_only_fallback"] as const) {
   console.log(k);
   for (const [n, v] of Object.entries(result[k])) console.log("  ", n.padEnd(28), JSON.stringify(v));
 }

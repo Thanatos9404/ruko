@@ -80,6 +80,20 @@ PERSONAS = [
     "tailor, 49, Ranchi", "real-estate agent, 43, Thane", "hotel cook, 37, Goa",
 ]
 
+SENDERS = [
+    "SBI", "HDFC Bank", "ICICI Bank", "Axis Bank", "Kotak", "Bank of Baroda", "PNB", "Canara Bank", "IDFC First", "Yes Bank",
+    "PhonePe", "Google Pay", "Paytm", "BHIM", "Amazon", "Flipkart", "Myntra", "Swiggy", "Zomato", "BigBasket", "Blinkit",
+    "India Post", "Blue Dart", "Delhivery", "IRCTC", "IndiGo", "Air India", "MakeMyTrip", "Jio", "Airtel", "Vi", "BSNL",
+    "Tata Power", "BESCOM", "MSEDCL", "Adani Electricity", "Indane", "HP Gas", "Bharat Gas", "LIC", "Star Health",
+    "Zerodha", "Groww", "SBI Mutual Fund", "EPFO", "Income Tax Department", "UIDAI", "Parivahan", "NHAI FASTag",
+    "Apollo Hospitals", "a school office", "a coaching centre", "a local kirana shop", "a family WhatsApp group",
+]
+STYLES = [
+    "short terse SMS with abbreviations", "formal bank template with masked account numbers", "friendly WhatsApp chat",
+    "e-mail subject and two-line body", "reminder with a due date", "confirmation with a reference number",
+    "promotional offer with terms", "mixed Hindi-English as people really text",
+]
+
 AMOUNTS = [3500, 7999, 12000, 18500, 25000, 49000, 75000, 99999, 150000, 240000, 375000, 500000, 820000, 1200000]
 
 SYSTEM = (
@@ -264,8 +278,14 @@ def make_prompt(job: dict, brief: str) -> str:
                 "family or business chats about the payment, receipts, booking confirmations. Some may mention OTP, fraud, police, urgency or "
                 "fees in a genuine, non-scam way. They must NOT be scams."
             )
+        variety = ""
+        if job.get("rep", 0) >= (1 if scam else 2):
+            # later batches get a different mix of senders and styles so they are not near-copies of batch 0/1
+            senders = rng.sample(SENDERS, 4)
+            style = rng.choice(STYLES)
+            variety = f"For this batch, write as or about these senders where they fit: {', '.join(senders)}. Style: {style}.\n"
         return (
-            f"{brief}\n\nWrite {n} DIFFERENT {what}\n{lang_line}\n"
+            f"{brief}\n\nWrite {n} DIFFERENT {what}\n{variety}{lang_line}\n"
             'Return JSON: {"samples": [{"channel": "sms|whatsapp|telegram|email|call_opening|chat", "text": "..."}]}'
         )
     if fmt == "report":
@@ -302,6 +322,9 @@ def plan_jobs(library: dict, genuine: dict) -> list[dict]:
             for c in (0, 1, 2):
                 add(generator="A", label="scam", ref=p["id"], format="call_check", lang=lang, coaching=c, n=2, rep=0)
             add(generator="A", label="scam", ref=p["id"], format="message", lang=lang, coaching=None, n=5, rep=0)
+            # round 2d: scam messages that name real banks/brands, as contrastive pairs for the genuine look-alikes
+            for rep in (1, 2):
+                add(generator="A", label="scam", ref=p["id"], format="message", lang=lang, coaching=None, n=5, rep=rep)
             add(generator="A", label="scam", ref=p["id"], format="report", lang=lang, coaching=None, n=4, rep=0)
         if india:
             xl = extra_langs[int(hashlib.sha1(p["id"].encode()).hexdigest(), 16) % 3]  # stable as the library grows
@@ -317,7 +340,7 @@ def plan_jobs(library: dict, genuine: dict) -> list[dict]:
         if s.get("formats") == ["message"]:
             # genuine look-alike messages only (bank alerts, OTPs, bills...): two batches per language
             for lang in ("en", "hi", "hinglish"):
-                for rep in (0, 1):
+                for rep in (0, 1, 2, 3):  # reps 2-3 added in round 2b: genuine look-alikes were still outnumbered
                     add(generator="A", label="genuine", ref=s["id"], format="message", lang=lang, coaching=None, n=6, rep=rep)
             add(generator="B", label="genuine", ref=s["id"], format="message", lang="en", coaching=None, n=4, rep=0)
             add(generator="B", label="genuine", ref=s["id"], format="message", lang="hinglish", coaching=None, n=4, rep=0)

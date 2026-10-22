@@ -67,11 +67,12 @@ class Corpus:
     Built once per dataset (keyed by its SHA-256) and cached in ml/work/counts.pkl, so
     experiments only slice sparse matrices instead of re-tokenising text."""
 
-    def __init__(self, rows: list[dict], data_sha: str):
-        if COUNTS.exists():
-            with COUNTS.open("rb") as f:
+    def __init__(self, rows: list[dict], data_sha: str, version: int = FEATURIZER_VERSION):
+        cache = COUNTS.with_name(f"counts_v{version}.pkl")
+        if cache.exists():
+            with cache.open("rb") as f:
                 obj = pickle.load(f)
-            if obj.get("sha") == data_sha and obj.get("featurizer") == FEATURIZER_VERSION:
+            if obj.get("sha") == data_sha and obj.get("featurizer") == version:
                 self.names, self.C, self.row = obj["names"], obj["C"], obj["row"]
                 self.fid = {n: i for i, n in enumerate(self.names)}
                 print(f"  loaded cached counts: {self.C.shape[0]} rows x {self.C.shape[1]} features")
@@ -80,7 +81,7 @@ class Corpus:
         fid: dict[str, int] = {}
         indptr, indices, data = [0], [], []
         for r in rows:
-            c = Counter(analyze(r["text"]))
+            c = Counter(analyze(r["text"], version))
             for f, n in c.items():
                 j = fid.get(f)
                 if j is None:
@@ -97,9 +98,9 @@ class Corpus:
             shape=(len(rows), len(fid)),
         )
         self.row = {r["id"]: i for i, r in enumerate(rows)}
-        COUNTS.parent.mkdir(parents=True, exist_ok=True)
-        with COUNTS.open("wb") as f:
-            pickle.dump({"sha": data_sha, "featurizer": FEATURIZER_VERSION, "names": self.names, "C": self.C, "row": self.row}, f, protocol=5)
+        cache.parent.mkdir(parents=True, exist_ok=True)
+        with cache.open("wb") as f:
+            pickle.dump({"sha": data_sha, "featurizer": version, "names": self.names, "C": self.C, "row": self.row}, f, protocol=5)
         print(f"  featurised {len(rows)} rows -> {len(fid)} features in {time.time()-t0:.0f}s")
 
     def sub(self, recs: list[dict]) -> sparse.csr_matrix:
@@ -474,16 +475,33 @@ def eval_sets(rows):
 BOTH = ("bothbosu_scam_dialogue", "bothbosu_multi_agent", "bothbosu_single_agent")
 
 
+def reweight(rows, source_w=None, kind_w=None):
+    """Copies of rows with per-source weights replaced and per-kind weights multiplied."""
+    out = []
+    for r in rows:
+        w = (source_w or {}).get(r["source"], r.get("weight", 1.0)) * (kind_w or {}).get(r.get("kind"), 1.0)
+        out.append({**r, "weight": w})
+    return out
+
+
 def experiments(rows):
     syn = ("synthetic",)
     real = ("mendeley_sms", "imc25_smishing_train")
     main_src = syn + BOTH + real
+    no_imc = syn + BOTH + ("mendeley_sms",)
+    tr, va = pick(rows, "train", main_src), pick(rows, "val", main_src)
+    # Shipped configuration (round 2c, see MODEL_CARD): synthetic + BothBosu + Mendeley, standard weights,
+    # featurizer v2. The IMC25 real-smishing slice raised recall on real smishing but also false alarms on
+    # genuine bank/OTP/payment/promo messages at every threshold we looked at, so it is kept for evaluation
+    # and the "with IMC" model is reported as a variant.
+    IMC_W = {"source_w": {"imc25_smishing_train": 0.2}, "kind_w": {"hard_negative": 2.0}}
     return {
-        "main": (pick(rows, "train", main_src), pick(rows, "val", main_src)),
+        "main": (pick(rows, "train", no_imc), pick(rows, "val", no_imc)),
+        "variant_imc02_hn2": (reweight(tr, **IMC_W), va),
         "synthetic_only": (pick(rows, "train", syn), pick(rows, "val", syn)),
         "real_sms_only": (pick(rows, "train", real), pick(rows, "val", real)),
         "bothbosu_only": (pick(rows, "train", BOTH), pick(rows, "val", BOTH)),
-        "lang_holdout_ta_bn_mr": (pick(rows, "train", main_src, ("ta", "bn", "mr")), pick(rows, "val", main_src, ("ta", "bn", "mr"))),
+        "lang_holdout_ta_bn_mr": (pick(rows, "train", no_imc, ("ta", "bn", "mr")), pick(rows, "val", no_imc, ("ta", "bn", "mr"))),
     }
 
 
@@ -542,15 +560,16 @@ def main():
     ap.add_argument("--no-tune", action="store_true")
     ap.add_argument("--eval-model", default="", help="re-evaluate an existing model JSON on the current eval sets")
     ap.add_argument("--name", default="reeval")
+    ap.add_argument("--no-export", action="store_true", help="do not overwrite the shipped model (experiments only)")
     args = ap.parse_args()
     rows = load()
     data_sha = hashlib.sha256(DATA.read_bytes()).hexdigest()
     sets = eval_sets(rows)
     RESULTS.mkdir(parents=True, exist_ok=True)
     summary = {"dataset_sha256": data_sha, "experiments": {}}
-    corpus = Corpus(rows, data_sha)
     if args.eval_model:
         art = json.loads(Path(args.eval_model).read_text(encoding="utf-8"))
+        corpus = Corpus(rows, data_sha, art.get("featurizer_version", 1))
         res = evaluate(art, corpus, sets, slices=True)
         (RESULTS / f"{args.name}.json").write_text(json.dumps({
             "experiment": args.name, "model": args.eval_model, "model_version": art["model_version"],
@@ -561,6 +580,7 @@ def main():
             print(f"   {k:32s} n={b['n']:5d} auroc={b.get('auroc')} fpr@poss={b['at_possible']['fpr']} rec@poss={b['at_possible']['recall']} "
                   f"fpr@lik={b['at_likely']['fpr']} rec@lik={b['at_likely']['recall']} top1={v.get('patterns', {}).get('top1')}")
         return
+    corpus = Corpus(rows, data_sha)
     exps = experiments(rows)
     if args.only:
         exps = {k: v for k, v in exps.items() if k in args.only.split(",")}
@@ -568,7 +588,7 @@ def main():
         print(f"== {name}: train={len(train)} val={len(val)}")
         art = fit(corpus, train, val, HP, name, tune=(name == "main" and not args.no_tune))
         hp, grid = art["hyperparameters"], art.pop("_grid", [])
-        res = evaluate(art, corpus, sets, slices=(name == "main"))
+        res = evaluate(art, corpus, sets, slices=(name in ("main", "lang_holdout_ta_bn_mr")))
         res["val"] = evaluate(art, corpus, {"val": val}, False)["val"]
         info = {
             "experiment": name, "hyperparameters": hp, "tuning_grid": grid,
@@ -578,7 +598,7 @@ def main():
             "temperature": art["patterns"]["temperature"], "model_bytes": model_size(art), "fit_seconds": art.get("_fit_seconds"),
             "results": res,
         }
-        if name == "main":
+        if name == "main" and not args.no_export:
             short = {k: {"auroc": v["binary"].get("auroc"), "fpr_at_possible": v["binary"]["at_possible"]["fpr"],
                          "recall_at_possible": v["binary"]["at_possible"]["recall"], "top1": v.get("patterns", {}).get("top1")}
                      for k, v in res.items()}
@@ -587,6 +607,9 @@ def main():
             info["model_sha256"] = (MODEL_DIR / (MODEL_PATH.name + ".sha256")).read_text().split()[0]
             golden(art)
         (RESULTS / f"{name}.json").write_text(json.dumps(info, indent=1, ensure_ascii=False), encoding="utf-8")
+        mdir = ROOT / "ml" / "work" / "models"
+        mdir.mkdir(parents=True, exist_ok=True)
+        (mdir / f"{name}.json").write_text(json.dumps({k: v for k, v in art.items() if not k.startswith("_")}), encoding="utf-8")
         summary["experiments"][name] = {
             k: {"auroc": v["binary"].get("auroc"), "auprc": v["binary"].get("auprc"), "ece": v["binary"].get("ece"),
                 "fpr_at_possible": v["binary"]["at_possible"]["fpr"], "recall_at_possible": v["binary"]["at_possible"]["recall"],

@@ -11,10 +11,11 @@
  *    digit -> "0", format characters (ZWJ/ZWNJ) dropped, letters, marks and
  *    numbers kept, everything else breaks a token. "₹" becomes "rs".
  * 3. Features: word unigrams (w:), word bigrams (b:), char 2..5-grams inside
- *    each space-padded token (c:).
+ *    each space-padded token (c:). Since v2 the link, handle, phone and account
+ *    placeholders produce no features (NO_FEATURE).
  */
 
-export const FEATURIZER_VERSION = 1;
+export const FEATURIZER_VERSION = 2;
 const CHAR_N_MIN = 2;
 const CHAR_N_MAX = 5;
 
@@ -146,11 +147,20 @@ export interface FeatureHit {
   tok2?: number;
 }
 
+/**
+ * v2: redacted links, handles, phone and account numbers produce no features. Genuine bank alerts,
+ * OTPs and bills carry them too, and in synthetic data their frequency mostly reflects how the
+ * generator was prompted. APK file names (xapk) still count.
+ */
+export const NO_FEATURE = new Set(["xurl", "xhandle", "xphone", "xnum"]);
+
 export function featuresFromTokens(toks: string[]): FeatureHit[] {
   const out: FeatureHit[] = [];
-  for (let i = 0; i < toks.length; i++) out.push({ f: "w:" + toks[i], tok: i });
-  for (let i = 0; i + 1 < toks.length; i++) out.push({ f: "b:" + toks[i] + "_" + toks[i + 1], tok: i, tok2: i + 1 });
+  for (let i = 0; i < toks.length; i++) if (!NO_FEATURE.has(toks[i])) out.push({ f: "w:" + toks[i], tok: i });
+  for (let i = 0; i + 1 < toks.length; i++)
+    if (!NO_FEATURE.has(toks[i]) && !NO_FEATURE.has(toks[i + 1])) out.push({ f: "b:" + toks[i] + "_" + toks[i + 1], tok: i, tok2: i + 1 });
   for (let t = 0; t < toks.length; t++) {
+    if (NO_FEATURE.has(toks[t])) continue;
     const chars = [" ", ...Array.from(toks[t]), " "];
     const L = chars.length;
     for (let n = CHAR_N_MIN; n <= CHAR_N_MAX; n++) {

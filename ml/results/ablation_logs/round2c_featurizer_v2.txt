@@ -1,0 +1,29 @@
+  featurised 32660 rows -> 562961 features in 115s
+== main: train=14197 val=1625
+   test_synthetic_A                 n= 1135 auroc=0.9959 fpr@poss=0.021 rec@poss=0.959 top1=0.659 top3=0.7836
+   test_genB_cross_generator        n= 1069 auroc=0.9831 fpr@poss=0.0892 rec@poss=0.9532 top1=0.7241 top3=0.8679
+   test_mendeley_real_sms           n= 1578 auroc=0.9934 fpr@poss=0.0097 rec@poss=0.9225 top1=None top3=None
+   test_bothbosu                    n=  895 auroc=1.0 fpr@poss=0.0 rec@poss=1.0 top1=None top3=None
+   ood_ridham115_indian_sms         n= 1580 auroc=0.8325 fpr@poss=0.198 rec@poss=0.7189 top1=None top3=None
+   ood_flowxai_en                   n=  378 auroc=0.9157 fpr@poss=0.6095 rec@poss=0.9762 top1=None top3=None
+   ood_realworld_curated            n=  166 auroc=0.9128 fpr@poss=0.1707 rec@poss=0.8 top1=0.584 top3=0.744
+   ood_icfd31k_calls                n= 5500 auroc=0.5963 fpr@poss=0.871 rec@poss=0.9047 top1=None top3=None
+   ood_imc25_real_smishing_india    n= 2621 auroc=None fpr@poss=None rec@poss=0.8813 top1=None top3=None
+   ood_imc25_real_smishing_global   n= 1432 auroc=None fpr@poss=None rec@poss=0.831 top1=None top3=None
+   ood_skyaara_genuine_payment_sms  n=   33 auroc=None fpr@poss=0.4545 rec@poss=None top1=None top3=None
+   ood_marketing_spam_flag_rate     n=  451 auroc=None fpr@poss=0.6541 rec@poss=None top1=None top3=None
+   val                              n= 1625 auroc=0.9986 fpr@poss=0.0047 rec@poss=0.9805 top1=0.6154 top3=0.7615
+== variant_no_imc: train=12185 val=1625
+   test_synthetic_A                 n= 1135 auroc=0.9971 fpr@poss=0.0305 rec@poss=0.977 top1=0.6557 top3=0.7869
+   test_genB_cross_generator        n= 1069 auroc=0.9903 fpr@poss=0.0361 rec@poss=0.9498 top1=0.7157 top3=0.8679
+   test_mendeley_real_sms           n= 1578 auroc=0.9919 fpr@poss=0.0 rec@poss=0.8592 top1=None top3=None
+   test_bothbosu                    n=  895 auroc=1.0 fpr@poss=0.0 rec@poss=0.9954 top1=None top3=None
+   ood_ridham115_indian_sms         n= 1580 auroc=0.8751 fpr@poss=0.0881 rec@poss=0.6299 top1=None top3=None
+   ood_flowxai_en                   n=  378 auroc=0.9501 fpr@poss=0.2714 rec@poss=0.9524 top1=None top3=None
+   ood_realworld_curated            n=  166 auroc=0.9329 fpr@poss=0.1463 rec@poss=0.832 top1=0.576 top3=0.744
+   ood_icfd31k_calls                n= 5500 auroc=0.5924 fpr@poss=0.871 rec@poss=0.904 top1=None top3=None
+   ood_imc25_real_smishing_india    n= 2621 auroc=None fpr@poss=None rec@poss=0.6303 top1=None top3=None
+   ood_imc25_real_smishing_global   n= 1432 auroc=None fpr@poss=None rec@poss=0.4497 top1=None top3=None
+   ood_skyaara_genuine_payment_sms  n=   33 auroc=None fpr@poss=0.0606 rec@poss=None top1=None top3=None
+   ood_marketing_spam_flag_rate     n=  451 auroc=None fpr@poss=0.5698 rec@poss=None top1=None top3=None
+   val                              n= 1625 auroc=0.9988 fpr@poss=0.0104 rec@poss=0.9752 top1=0.6115 top3=0.7538

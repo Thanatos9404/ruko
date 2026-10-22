@@ -51,19 +51,19 @@
     "account"
    ],
    "features_sha256": "089bef7887eb0447aa8471d3549b3f46c3e57158687dac0058f74ea3d24d9cdb",
-   "p_scam": 0.9779437688527683,
+   "p_scam": 0.9798943989799056,
    "top_patterns": [
     [
      "digital_arrest",
-     0.9931991163866302
+     0.9999308071977824
     ],
     [
      "video_call_blackmail",
-     0.0036626430221479507
+     4.309671883190228e-05
     ],
     [
      "aeps_biometric_misuse",
-     0.00099501747630454
+     6.868294237967489e-06
     ]
    ]
   },
@@ -118,19 +118,19 @@
     "दो"
    ],
    "features_sha256": "66f94aa9df9a0c6b4f61b614d37ec4cc936f379c2a6fbf99942019464937dd59",
-   "p_scam": 0.998022760571881,
+   "p_scam": 0.9967677340068464,
    "top_patterns": [
     [
      "digital_arrest",
-     0.8301937261338133
+     0.9659762060376171
     ],
     [
      "video_call_blackmail",
-     0.08620060828047282
+     0.022569548534535796
     ],
     [
      "relative_emergency",
-     0.02766301605635358
+     0.004305014462222845
     ]
    ]
   },
@@ -184,19 +184,19 @@
     "lenge"
    ],
    "features_sha256": "09d024d4583091f9f25ffa452b85c0867f7c65e476b2785c6de1ce4e74825433",
-   "p_scam": 0.9986277348333114,
+   "p_scam": 0.9994513640229553,
    "top_patterns": [
     [
      "courier_parcel",
-     0.9773471824727432
-    ],
-    [
-     "digital_arrest",
-     0.00838574169106292
+     0.9927812089016681
     ],
     [
      "video_call_blackmail",
-     0.007519560175743482
+     0.0033614677536174804
+    ],
+    [
+     "foreign_gift_customs",
+     0.0007476282929715055
     ]
    ]
   },
@@ -229,20 +229,20 @@
     "call",
     "xphone"
    ],
-   "features_sha256": "301dc236d5669642b37002092960789d587d3eb187af919d5346fbe9eb501775",
-   "p_scam": 0.9972089153658545,
+   "features_sha256": "bc2d933934dc709ea8cad15b31da6f174edcb174b5011dd218dea9f780f32b73",
+   "p_scam": 0.29942785406094,
    "top_patterns": [
     [
      "kyc_block",
-     0.9997857709172863
+     0.999980159285258
     ],
     [
-     "apk_malware_invite",
-     0.00011273817989053516
+     "government_imposter_tax",
+     4.126507873313035e-06
     ],
     [
      "lpg_gas_connection",
-     1.9634188267259694e-05
+     2.2683953533138974e-06
     ]
    ]
   },
@@ -287,19 +287,19 @@
     "milega"
    ],
    "features_sha256": "a44c11c2ae955ddf4eac99b712204b26a772010d319ec2a61d72761d868d5181",
-   "p_scam": 0.9824573144191828,
+   "p_scam": 0.9755388073281226,
    "top_patterns": [
     [
      "task_job",
-     0.9968695559461856
+     0.9987767051407527
     ],
     [
      "video_call_blackmail",
-     0.0009821238719902139
+     0.0006397997755351348
     ],
     [
      "job_task_scam_global",
-     0.0007809159901701643
+     0.000242663948933112
     ]
    ]
   },
@@ -349,19 +349,19 @@
     "anything"
    ],
    "features_sha256": "01931190ed85ef3d29d7d19cff168ab10ee2aa16fe8f34c945fe607379a68be9",
-   "p_scam": 0.9949651280432374,
+   "p_scam": 0.9899627339657878,
    "top_patterns": [
     [
      "investment_trading",
-     0.9999753334612197
+     0.9999970389637148
     ],
     [
      "crypto_investment",
-     1.0217971308034802e-05
+     6.89611169582756e-07
     ],
     [
      "betting_gaming_app",
-     7.435386798422253e-06
+     5.858602827425231e-07
     ]
    ]
   },
@@ -404,19 +404,19 @@
     "बताना"
    ],
    "features_sha256": "7882bd80f57a6bccf52cec7c166ab6a4146ce1498156f201f2dfdca4a7ef74c8",
-   "p_scam": 0.9978984460420584,
+   "p_scam": 0.9973112653949257,
    "top_patterns": [
     [
      "relative_emergency",
-     0.8419691642028221
+     0.9383706259031291
     ],
     [
      "ai_voice_clone_emergency",
-     0.12640740024183897
+     0.04978785068314686
     ],
     [
-     "courier_parcel",
-     0.00285922622126766
+     "digital_arrest",
+     0.0014838782772047107
     ]
    ]
   },
@@ -467,19 +467,19 @@
     "money"
    ],
    "features_sha256": "e070564a5de99b9030f23012e009d165657e48775b85555952054f107b00a202",
-   "p_scam": 0.9997539902007736,
+   "p_scam": 0.9999002558188285,
    "top_patterns": [
     [
      "qr_code_receive",
-     0.9944251362464513
+     0.9885319495012361
     ],
     [
      "army_buyer_seller_olx",
-     0.005252231633644703
+     0.011400942042801813
     ],
     [
      "upi_collect_request",
-     0.00011975917879028557
+     5.080385689099532e-05
     ]
    ]
   },
@@ -528,19 +528,19 @@
     "asks"
    ],
    "features_sha256": "9d6fe2ad6aa38b8a1346d8b05924fd1df48840a927a59ad7f6cd47701c4dadd8",
-   "p_scam": 0.7998764927373304,
+   "p_scam": 0.8452645659856116,
    "top_patterns": [
     [
-     "fake_support_refund",
-     0.5535982529689487
+     "remote_access",
+     0.5131059994543121
     ],
     [
-     "remote_access",
-     0.40748558015338127
+     "fake_support_refund",
+     0.4816073895004693
     ],
     [
      "refund_cashback",
-     0.028098314582309426
+     0.004151359279130504
     ]
    ]
   },
@@ -580,20 +580,20 @@
     "officer",
     "xphone"
    ],
-   "features_sha256": "ee8e345fa2f5841d28e202ad6bbec439bc69ed4e3872ab83b83687594dc2ae60",
-   "p_scam": 0.9933921294611834,
+   "features_sha256": "28bf81372d07a4e2e5ab5acd8fb985b6926a8f84272eb6fca22479c0e95b8aef",
+   "p_scam": 0.9392674204087937,
    "top_patterns": [
     [
      "electricity_disconnection",
-     0.9999995068236752
-    ],
-    [
-     "sim_disconnection",
-     1.131872234791602e-07
+     0.9999995016752935
     ],
     [
      "lpg_gas_connection",
-     6.455212017161897e-08
+     2.0212944195430057e-07
+    ],
+    [
+     "apk_malware_invite",
+     3.6449648908205494e-08
     ]
    ]
   },
@@ -626,19 +626,19 @@
     "hain"
    ],
    "features_sha256": "1bb37eba0f4ff10a95dfa9cc2fe026115ad513b9ffe2575669c3f84f43604957",
-   "p_scam": 0.7494674066275221,
+   "p_scam": 0.890588145166529,
    "top_patterns": [
     [
-     "loan_app_harassment",
-     0.1458072890581535
+     "ai_voice_clone_emergency",
+     0.20122914255785176
     ],
     [
      "call_merging_otp",
-     0.13135342592097218
+     0.17307761330703306
     ],
     [
-     "ai_voice_clone_emergency",
-     0.11194034616936845
+     "loan_app_harassment",
+     0.10677073865733595
     ]
    ]
   },
@@ -685,19 +685,19 @@
     "youtube"
    ],
    "features_sha256": "6b41b292408b75cc0a06ed5110eff93cf7e9612fdbf9b43642fa84ec079fa2ab",
-   "p_scam": 0.9699385451870904,
+   "p_scam": 0.9816360325181338,
    "top_patterns": [
     [
      "video_call_blackmail",
-     0.9993910698734005
+     0.9999199924706272
     ],
     [
      "loan_app_harassment",
-     7.439243431915536e-05
+     1.4479460917271799e-05
     ],
     [
-     "betting_gaming_app",
-     5.486547224453729e-05
+     "task_job",
+     7.0672089604788025e-06
     ]
    ]
   },
@@ -746,19 +746,19 @@
     "parents"
    ],
    "features_sha256": "20d2d273b28165db573014c55e2c3f0553892de3e32ecf0eec1b201013e7d95e",
-   "p_scam": 0.9907896978507258,
+   "p_scam": 0.9394231768846123,
    "top_patterns": [
     [
-     "ai_voice_clone_emergency",
-     0.40440174022432196
-    ],
-    [
      "relative_emergency",
-     0.2684146485611676
+     0.3849222413748519
     ],
     [
-     "fake_friend_call_sg",
-     0.060021174087165244
+     "ai_voice_clone_emergency",
+     0.35608101471978176
+    ],
+    [
+     "mule_account_recruitment",
+     0.03603286496044719
     ]
    ]
   },
@@ -786,19 +786,19 @@
     "சொல்லக்கூடாது"
    ],
    "features_sha256": "56f94d40aed695bef7f7472451de9fe413e827669f26dff84e82b6a7e6039c13",
-   "p_scam": 0.6419112850529368,
+   "p_scam": 0.5914479780852703,
    "top_patterns": [
     [
      "aeps_biometric_misuse",
-     0.34453801659060784
+     0.37323216346943744
     ],
     [
      "video_call_blackmail",
-     0.20408378635368987
+     0.21801060722258694
     ],
     [
      "romance_social_media",
-     0.0864550423470774
+     0.07175688643877533
     ]
    ]
   },
@@ -830,19 +830,19 @@
     "otp"
    ],
    "features_sha256": "8710817f913321a6750d026ebec27184c8e8b0b9c9f40b4d6976879ae348df9a",
-   "p_scam": 3.447125398534434e-05,
+   "p_scam": 5.7615265355418163e-05,
    "top_patterns": [
     [
+     "call_merging_otp",
+     0.1224361427085921
+    ],
+    [
      "ponzi_deposit_scheme",
-     0.16006248774347753
+     0.09748441781792933
     ],
     [
      "sim_swap_esim",
-     0.07149774863107347
-    ],
-    [
-     "call_merging_otp",
-     0.06879929964871041
+     0.07629350038163067
     ]
    ]
   },
@@ -898,19 +898,19 @@
     "app"
    ],
    "features_sha256": "4b3b5569f09a07a49abf4d03077c1a06175042442c00f317a3b15ed19db5d3f0",
-   "p_scam": 0.0077352851784460355,
+   "p_scam": 0.007974186299404872,
    "top_patterns": [
     [
      "electricity_disconnection",
-     0.973309174979073
+     0.9561860951062819
     ],
     [
      "credit_card_limit_or_fee",
-     0.008114907688271653
+     0.011601240645711514
     ],
     [
      "bank_fraud_dept_impersonation",
-     0.001946308622948619
+     0.0065211275971636335
     ]
    ]
   },
@@ -953,19 +953,19 @@
     "me"
    ],
    "features_sha256": "804d0b9c3dee88d1685be785b6caa1fab871c3f898ceecc4cc7fc68c95738c98",
-   "p_scam": 4.787835599007796e-07,
+   "p_scam": 3.95569387964161e-06,
    "top_patterns": [
     [
-     "hacked_account_friend_request",
-     0.3836574012571415
+     "ai_voice_clone_emergency",
+     0.4035056394024171
     ],
     [
-     "ai_voice_clone_emergency",
-     0.23493142648979445
+     "hacked_account_friend_request",
+     0.3826108476609696
     ],
     [
      "romance_social_media",
-     0.11994212523619831
+     0.04977695952251925
     ]
    ]
   },
@@ -1002,19 +1002,19 @@
     "हूं"
    ],
    "features_sha256": "5f830902c56d236d6ddf423bf8dfa1f872af9f8367b4ea30182934388d7fa5d3",
-   "p_scam": 0.07106121289152023,
+   "p_scam": 0.35563709363268875,
    "top_patterns": [
     [
      "romance_social_media",
-     0.21729297578268544
+     0.3703973950899167
     ],
     [
      "hacked_account_friend_request",
-     0.11878573743293114
+     0.17432797184417492
     ],
     [
      "mule_account_recruitment",
-     0.11568851779956639
+     0.1003237563444419
     ]
    ]
   },
@@ -1050,19 +1050,19 @@
     "paas"
    ],
    "features_sha256": "fabce9e50df7c7655443c379258570f1899b253853f1d6fb355d88f95f2b900b",
-   "p_scam": 0.02049561850543539,
+   "p_scam": 0.031736233408677476,
    "top_patterns": [
     [
      "sim_swap_esim",
-     0.1927909086190086
+     0.20598341909701745
     ],
     [
-     "electricity_disconnection",
-     0.0725932718849496
+     "upi_collect_request",
+     0.08899386586571434
     ],
     [
-     "aeps_biometric_misuse",
-     0.05625155658552877
+     "fake_payment_screenshot",
+     0.07838012248608758
     ]
    ]
   },
@@ -1100,19 +1100,19 @@
     "otp"
    ],
    "features_sha256": "81d02b77c97969528ff5632907f0da2c8b4c59cf02c65563b9646adf9e2d65fd",
-   "p_scam": 0.0016296205300260738,
+   "p_scam": 0.00015228585710006778,
    "top_patterns": [
     [
      "bank_fraud_dept_impersonation",
-     0.5733699783053273
-    ],
-    [
-     "betting_gaming_app",
-     0.06836151656166396
+     0.8067302487509312
     ],
     [
      "boss_impersonation_whatsapp",
-     0.048651139802340274
+     0.03518498304077249
+    ],
+    [
+     "call_merging_otp",
+     0.02038911171980345
     ]
    ]
   },
@@ -1154,19 +1154,19 @@
     "account"
    ],
    "features_sha256": "3d1aaea8c9422dc7979110f161f42e5ff49e78cb9dcd0ef1fe10c9f6766a9e7e",
-   "p_scam": 0.08002738125411318,
+   "p_scam": 0.2042133692128902,
    "top_patterns": [
     [
      "digital_arrest",
-     0.24233712767742588
+     0.9264686451014391
     ],
     [
      "courier_parcel",
-     0.08490972326862462
+     0.010958337011984391
     ],
     [
-     "gift_card_payment_demand",
-     0.08410082882386642
+     "relative_emergency",
+     0.0042463749514472645
     ]
    ]
   },
@@ -1200,19 +1200,19 @@
     "है"
    ],
    "features_sha256": "edf4a10fe8b07bcb0cd03ad41cb727826168435ba8aca7972b73d4288222ff8e",
-   "p_scam": 7.244442189948105e-05,
+   "p_scam": 3.954320614200968e-05,
    "top_patterns": [
     [
      "mule_account_recruitment",
-     0.15420679616494593
+     0.37856275186282345
     ],
     [
-     "ponzi_deposit_scheme",
-     0.09640445664703569
+     "aeps_biometric_misuse",
+     0.1806718273831179
     ],
     [
-     "relative_emergency",
-     0.07957424390713136
+     "ai_voice_clone_emergency",
+     0.06950611580902955
     ]
    ]
   },
@@ -1245,19 +1245,19 @@
     "myself"
    ],
    "features_sha256": "5609ab8106c7d041e34cbc10cc5019f32aea25c200b9bb143483c9e48746bfc4",
-   "p_scam": 5.2683628135736394e-06,
+   "p_scam": 0.0001471358385995816,
    "top_patterns": [
     [
      "travel_pilgrimage_booking",
-     0.12738905606783432
+     0.1474139938313495
     ],
     [
      "aeps_biometric_misuse",
-     0.07879028238528127
+     0.09060181305752647
     ],
     [
-     "boss_impersonation_whatsapp",
-     0.04343858045908714
+     "romance_social_media",
+     0.08158079141813589
     ]
    ]
   },
@@ -1288,19 +1288,19 @@
     "account"
    ],
    "features_sha256": "200fb3dcccbef94ab76e1eed5e4819acd8d318db45615486938c3e7d8240a982",
-   "p_scam": 1.45667519087329e-05,
+   "p_scam": 0.0001721827548348417,
    "top_patterns": [
     [
+     "fake_charity_disaster",
+     0.24720765640750963
+    ],
+    [
+     "boss_impersonation_whatsapp",
+     0.1630725608568397
+    ],
+    [
      "ponzi_deposit_scheme",
-     0.18633318034354093
-    ],
-    [
-     "bank_fraud_dept_impersonation",
-     0.07943381349102023
-    ],
-    [
-     "mule_account_recruitment",
-     0.04586721412118806
+     0.10133344053355403
     ]
    ]
   },
@@ -1325,19 +1325,19 @@
     "চিনি"
    ],
    "features_sha256": "e82c8c2f9f595e0813fda3c4631c5e787bf7b8a149241bd4fe1b2fdf853120c0",
-   "p_scam": 9.245562349994403e-05,
+   "p_scam": 0.0006262755567525808,
    "top_patterns": [
     [
      "fake_charity_disaster",
-     0.2246253935090264
-    ],
-    [
-     "prize_lottery",
-     0.1180209363128453
+     0.20274982370076228
     ],
     [
      "sim_swap_esim",
-     0.06915695128043396
+     0.1592378011874082
+    ],
+    [
+     "prize_lottery",
+     0.06793069799064191
     ]
    ]
   },
@@ -1358,20 +1358,20 @@
     "visit",
     "xurl"
    ],
-   "features_sha256": "7edffd536da4054b4d58a4091c59af92ec3f9fa0e83cf8ab11baf311644e67e0",
-   "p_scam": 0.9999998924107176,
+   "features_sha256": "6d2fd5e95586d65908fd8bae97d307f3f4e105bbc466081096a6c801184edf16",
+   "p_scam": 0.715767904472304,
    "top_patterns": [
     [
-     "invoice_mandate_redirection",
-     0.24798864909889215
-    ],
-    [
-     "boss_impersonation_whatsapp",
-     0.11789925051340883
-    ],
-    [
      "wrong_transfer_return",
-     0.09266728837189982
+     0.2250750856624972
+    ],
+    [
+     "mule_account_recruitment",
+     0.1589637187777274
+    ],
+    [
+     "invoice_mandate_redirection",
+     0.07420704899263077
     ]
    ]
   },
@@ -1383,19 +1383,19 @@
     "ok"
    ],
    "features_sha256": "669803feffb104ce616d249d04eee4a6dcf2f977bf9123c24284b5b518f92a6f",
-   "p_scam": 5.380450852508748e-07,
+   "p_scam": 1.0314808844161745e-05,
    "top_patterns": [
     [
+     "fake_charity_disaster",
+     0.07942055656357878
+    ],
+    [
      "aeps_biometric_misuse",
-     0.06635103779090194
+     0.0645185864135067
     ],
     [
      "boss_impersonation_whatsapp",
-     0.05066413690835581
-    ],
-    [
-     "fake_charity_disaster",
-     0.04650069701553692
+     0.061610088333572594
     ]
    ]
   },
@@ -1405,19 +1405,19 @@
    "text": "",
    "tokens": [],
    "features_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "p_scam": 0.0006052845164070993,
+   "p_scam": 0.0018440457302991832,
    "top_patterns": [
     [
-     "aeps_biometric_misuse",
-     0.06851760459215127
+     "fake_charity_disaster",
+     0.08285877600585796
     ],
     [
      "boss_impersonation_whatsapp",
-     0.05231847783043021
+     0.07767409323674133
     ],
     [
-     "fake_charity_disaster",
-     0.048019088735442014
+     "aeps_biometric_misuse",
+     0.06731168013877802
     ]
    ]
   }

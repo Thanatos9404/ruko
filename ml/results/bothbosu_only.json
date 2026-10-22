@@ -1,0 +1,1363 @@
+{
+ "experiment": "bothbosu_only",
+ "hyperparameters": {
+  "Cb": 32.0,
+  "Cp": 64.0,
+  "Nb": 24000,
+  "Np": 700,
+  "M": 1200
+ },
+ "tuning_grid": [
+  {
+   "head": "binary",
+   "C": 32.0,
+   "val_auroc": 1.0
+  }
+ ],
+ "train": {
+  "n": 3384,
+  "by_source": {
+   "bothbosu_multi_agent": 1133,
+   "bothbosu_scam_dialogue": 1124,
+   "bothbosu_single_agent": 1127
+  },
+  "by_label": {
+   "genuine": 1680,
+   "scam": 1704
+  }
+ },
+ "pattern_classes": 0,
+ "vocab": 24000,
+ "thresholds": {
+  "likely_scam": 0.85,
+  "possible_scam": 0.5
+ },
+ "calibration": {
+  "a": 2.631,
+  "b": 0.237587
+ },
+ "temperature": 1.0,
+ "model_bytes": 614989,
+ "fit_seconds": 1.5,
+ "results": {
+  "test_synthetic_A": {
+   "binary": {
+    "n": 1517,
+    "n_scam": 992,
+    "n_genuine": 525,
+    "auroc": 0.6025,
+    "auroc_95ci": [
+     0.5743,
+     0.6333
+    ],
+    "auprc": 0.7339,
+    "brier": 0.5562,
+    "ece": 0.5659,
+    "reliability": [
+     {
+      "bin": "0.0-0.1",
+      "n": 1249,
+      "mean_p": 0.0123,
+      "frac_scam": 0.6237
+     },
+     {
+      "bin": "0.1-0.2",
+      "n": 57,
+      "mean_p": 0.1482,
+      "frac_scam": 0.7719
+     },
+     {
+      "bin": "0.2-0.3",
+      "n": 31,
+      "mean_p": 0.2509,
+      "frac_scam": 0.7097
+     },
+     {
+      "bin": "0.3-0.4",
+      "n": 34,
+      "mean_p": 0.3503,
+      "frac_scam": 0.7353
+     },
+     {
+      "bin": "0.4-0.5",
+      "n": 23,
+      "mean_p": 0.4504,
+      "frac_scam": 0.7826
+     },
+     {
+      "bin": "0.5-0.6",
+      "n": 20,
+      "mean_p": 0.5462,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.6-0.7",
+      "n": 16,
+      "mean_p": 0.6446,
+      "frac_scam": 0.8125
+     },
+     {
+      "bin": "0.7-0.8",
+      "n": 17,
+      "mean_p": 0.7611,
+      "frac_scam": 0.9412
+     },
+     {
+      "bin": "0.8-0.9",
+      "n": 25,
+      "mean_p": 0.8483,
+      "frac_scam": 0.8
+     },
+     {
+      "bin": "0.9-1.0",
+      "n": 45,
+      "mean_p": 0.9627,
+      "frac_scam": 0.7778
+     }
+    ],
+    "at_possible": {
+     "threshold": 0.5,
+     "tp": 104,
+     "fp": 19,
+     "fn": 888,
+     "tn": 506,
+     "precision": 0.8455,
+     "recall": 0.1048,
+     "f1": 0.1865,
+     "fpr": 0.0362,
+     "accuracy": 0.4021
+    },
+    "at_likely": {
+     "threshold": 0.85,
+     "tp": 43,
+     "fp": 12,
+     "fn": 949,
+     "tn": 513,
+     "precision": 0.7818,
+     "recall": 0.0433,
+     "f1": 0.0821,
+     "fpr": 0.0229,
+     "accuracy": 0.3665
+    },
+    "at_0.5": {
+     "threshold": 0.5,
+     "tp": 104,
+     "fp": 19,
+     "fn": 888,
+     "tn": 506,
+     "precision": 0.8455,
+     "recall": 0.1048,
+     "f1": 0.1865,
+     "fpr": 0.0362,
+     "accuracy": 0.4021
+    },
+    "fpr_hard_negatives": {
+     "n": 310,
+     "at_possible": 0.0581,
+     "at_likely": 0.0387
+    },
+    "fpr_genuine_payment_calls": {
+     "n": 65,
+     "at_possible": 0.0,
+     "at_likely": 0.0
+    }
+   }
+  },
+  "test_genB_cross_generator": {
+   "binary": {
+    "n": 1069,
+    "n_scam": 598,
+    "n_genuine": 471,
+    "auroc": 0.6056,
+    "auroc_95ci": [
+     0.57,
+     0.6394
+    ],
+    "auprc": 0.6715,
+    "brier": 0.4378,
+    "ece": 0.4243,
+    "reliability": [
+     {
+      "bin": "0.0-0.1",
+      "n": 763,
+      "mean_p": 0.0146,
+      "frac_scam": 0.5111
+     },
+     {
+      "bin": "0.1-0.2",
+      "n": 52,
+      "mean_p": 0.1445,
+      "frac_scam": 0.6731
+     },
+     {
+      "bin": "0.2-0.3",
+      "n": 47,
+      "mean_p": 0.2445,
+      "frac_scam": 0.5745
+     },
+     {
+      "bin": "0.3-0.4",
+      "n": 30,
+      "mean_p": 0.3495,
+      "frac_scam": 0.6
+     },
+     {
+      "bin": "0.4-0.5",
+      "n": 17,
+      "mean_p": 0.455,
+      "frac_scam": 0.6471
+     },
+     {
+      "bin": "0.5-0.6",
+      "n": 24,
+      "mean_p": 0.5448,
+      "frac_scam": 0.6667
+     },
+     {
+      "bin": "0.6-0.7",
+      "n": 20,
+      "mean_p": 0.6555,
+      "frac_scam": 0.7
+     },
+     {
+      "bin": "0.7-0.8",
+      "n": 27,
+      "mean_p": 0.7571,
+      "frac_scam": 0.6296
+     },
+     {
+      "bin": "0.8-0.9",
+      "n": 20,
+      "mean_p": 0.8427,
+      "frac_scam": 0.8
+     },
+     {
+      "bin": "0.9-1.0",
+      "n": 69,
+      "mean_p": 0.9689,
+      "frac_scam": 0.7826
+     }
+    ],
+    "at_possible": {
+     "threshold": 0.5,
+     "tp": 117,
+     "fp": 43,
+     "fn": 481,
+     "tn": 428,
+     "precision": 0.7312,
+     "recall": 0.1957,
+     "f1": 0.3087,
+     "fpr": 0.0913,
+     "accuracy": 0.5098
+    },
+    "at_likely": {
+     "threshold": 0.85,
+     "tp": 59,
+     "fp": 17,
+     "fn": 539,
+     "tn": 454,
+     "precision": 0.7763,
+     "recall": 0.0987,
+     "f1": 0.1751,
+     "fpr": 0.0361,
+     "accuracy": 0.4799
+    },
+    "at_0.5": {
+     "threshold": 0.5,
+     "tp": 117,
+     "fp": 43,
+     "fn": 481,
+     "tn": 428,
+     "precision": 0.7312,
+     "recall": 0.1957,
+     "f1": 0.3087,
+     "fpr": 0.0913,
+     "accuracy": 0.5098
+    },
+    "fpr_hard_negatives": {
+     "n": 219,
+     "at_possible": 0.1324,
+     "at_likely": 0.0594
+    },
+    "fpr_genuine_payment_calls": {
+     "n": 76,
+     "at_possible": 0.0,
+     "at_likely": 0.0
+    }
+   }
+  },
+  "test_mendeley_real_sms": {
+   "binary": {
+    "n": 1578,
+    "n_scam": 142,
+    "n_genuine": 1436,
+    "auroc": 0.8616,
+    "auroc_95ci": [
+     0.8226,
+     0.9045
+    ],
+    "auprc": 0.648,
+    "brier": 0.073,
+    "ece": 0.0766,
+    "reliability": [
+     {
+      "bin": "0.0-0.1",
+      "n": 1532,
+      "mean_p": 0.0029,
+      "frac_scam": 0.0659
+     },
+     {
+      "bin": "0.1-0.2",
+      "n": 13,
+      "mean_p": 0.1427,
+      "frac_scam": 0.7692
+     },
+     {
+      "bin": "0.2-0.3",
+      "n": 12,
+      "mean_p": 0.2418,
+      "frac_scam": 0.8333
+     },
+     {
+      "bin": "0.3-0.4",
+      "n": 8,
+      "mean_p": 0.3413,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.4-0.5",
+      "n": 1,
+      "mean_p": 0.4493,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.5-0.6",
+      "n": 5,
+      "mean_p": 0.5426,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.6-0.7",
+      "n": 1,
+      "mean_p": 0.6037,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.7-0.8",
+      "n": 1,
+      "mean_p": 0.7237,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.8-0.9",
+      "n": 1,
+      "mean_p": 0.8858,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.9-1.0",
+      "n": 4,
+      "mean_p": 0.9712,
+      "frac_scam": 1.0
+     }
+    ],
+    "at_possible": {
+     "threshold": 0.5,
+     "tp": 12,
+     "fp": 0,
+     "fn": 130,
+     "tn": 1436,
+     "precision": 1.0,
+     "recall": 0.0845,
+     "f1": 0.1558,
+     "fpr": 0.0,
+     "accuracy": 0.9176
+    },
+    "at_likely": {
+     "threshold": 0.85,
+     "tp": 5,
+     "fp": 0,
+     "fn": 137,
+     "tn": 1436,
+     "precision": 1.0,
+     "recall": 0.0352,
+     "f1": 0.068,
+     "fpr": 0.0,
+     "accuracy": 0.9132
+    },
+    "at_0.5": {
+     "threshold": 0.5,
+     "tp": 12,
+     "fp": 0,
+     "fn": 130,
+     "tn": 1436,
+     "precision": 1.0,
+     "recall": 0.0845,
+     "f1": 0.1558,
+     "fpr": 0.0,
+     "accuracy": 0.9176
+    }
+   }
+  },
+  "test_bothbosu": {
+   "binary": {
+    "n": 895,
+    "n_scam": 439,
+    "n_genuine": 456,
+    "auroc": 1.0,
+    "auroc_95ci": [
+     1.0,
+     1.0
+    ],
+    "auprc": 1.0,
+    "brier": 0.0,
+    "ece": 0.0001,
+    "reliability": [
+     {
+      "bin": "0.0-0.1",
+      "n": 456,
+      "mean_p": 0.0001,
+      "frac_scam": 0.0
+     },
+     {
+      "bin": "0.9-1.0",
+      "n": 439,
+      "mean_p": 1.0,
+      "frac_scam": 1.0
+     }
+    ],
+    "at_possible": {
+     "threshold": 0.5,
+     "tp": 439,
+     "fp": 0,
+     "fn": 0,
+     "tn": 456,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "fpr": 0.0,
+     "accuracy": 1.0
+    },
+    "at_likely": {
+     "threshold": 0.85,
+     "tp": 439,
+     "fp": 0,
+     "fn": 0,
+     "tn": 456,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "fpr": 0.0,
+     "accuracy": 1.0
+    },
+    "at_0.5": {
+     "threshold": 0.5,
+     "tp": 439,
+     "fp": 0,
+     "fn": 0,
+     "tn": 456,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "fpr": 0.0,
+     "accuracy": 1.0
+    }
+   }
+  },
+  "ood_ridham115_indian_sms": {
+   "binary": {
+    "n": 1580,
+    "n_scam": 797,
+    "n_genuine": 783,
+    "auroc": 0.6683,
+    "auroc_95ci": [
+     0.642,
+     0.6942
+    ],
+    "auprc": 0.6536,
+    "brier": 0.4324,
+    "ece": 0.4355,
+    "reliability": [
+     {
+      "bin": "0.0-0.1",
+      "n": 1320,
+      "mean_p": 0.0139,
+      "frac_scam": 0.4598
+     },
+     {
+      "bin": "0.1-0.2",
+      "n": 84,
+      "mean_p": 0.1428,
+      "frac_scam": 0.7143
+     },
+     {
+      "bin": "0.2-0.3",
+      "n": 53,
+      "mean_p": 0.247,
+      "frac_scam": 0.7358
+     },
+     {
+      "bin": "0.3-0.4",
+      "n": 32,
+      "mean_p": 0.3493,
+      "frac_scam": 0.5625
+     },
+     {
+      "bin": "0.4-0.5",
+      "n": 20,
+      "mean_p": 0.4617,
+      "frac_scam": 0.85
+     },
+     {
+      "bin": "0.5-0.6",
+      "n": 19,
+      "mean_p": 0.5399,
+      "frac_scam": 0.8947
+     },
+     {
+      "bin": "0.6-0.7",
+      "n": 9,
+      "mean_p": 0.6452,
+      "frac_scam": 0.5556
+     },
+     {
+      "bin": "0.7-0.8",
+      "n": 12,
+      "mean_p": 0.7524,
+      "frac_scam": 0.6667
+     },
+     {
+      "bin": "0.8-0.9",
+      "n": 12,
+      "mean_p": 0.8532,
+      "frac_scam": 0.8333
+     },
+     {
+      "bin": "0.9-1.0",
+      "n": 19,
+      "mean_p": 0.9572,
+      "frac_scam": 0.8421
+     }
+    ],
+    "at_possible": {
+     "threshold": 0.5,
+     "tp": 56,
+     "fp": 15,
+     "fn": 741,
+     "tn": 768,
+     "precision": 0.7887,
+     "recall": 0.0703,
+     "f1": 0.129,
+     "fpr": 0.0192,
+     "accuracy": 0.5215
+    },
+    "at_likely": {
+     "threshold": 0.85,
+     "tp": 21,
+     "fp": 4,
+     "fn": 776,
+     "tn": 779,
+     "precision": 0.84,
+     "recall": 0.0263,
+     "f1": 0.0511,
+     "fpr": 0.0051,
+     "accuracy": 0.5063
+    },
+    "at_0.5": {
+     "threshold": 0.5,
+     "tp": 56,
+     "fp": 15,
+     "fn": 741,
+     "tn": 768,
+     "precision": 0.7887,
+     "recall": 0.0703,
+     "f1": 0.129,
+     "fpr": 0.0192,
+     "accuracy": 0.5215
+    }
+   }
+  },
+  "ood_flowxai_en": {
+   "binary": {
+    "n": 378,
+    "n_scam": 168,
+    "n_genuine": 210,
+    "auroc": 0.8421,
+    "auroc_95ci": [
+     0.8011,
+     0.8807
+    ],
+    "auprc": 0.8215,
+    "brier": 0.1961,
+    "ece": 0.1685,
+    "reliability": [
+     {
+      "bin": "0.0-0.1",
+      "n": 166,
+      "mean_p": 0.0156,
+      "frac_scam": 0.1807
+     },
+     {
+      "bin": "0.1-0.2",
+      "n": 20,
+      "mean_p": 0.1418,
+      "frac_scam": 0.4
+     },
+     {
+      "bin": "0.2-0.3",
+      "n": 12,
+      "mean_p": 0.2597,
+      "frac_scam": 0.25
+     },
+     {
+      "bin": "0.3-0.4",
+      "n": 7,
+      "mean_p": 0.3378,
+      "frac_scam": 0.2857
+     },
+     {
+      "bin": "0.4-0.5",
+      "n": 12,
+      "mean_p": 0.4625,
+      "frac_scam": 0.4167
+     },
+     {
+      "bin": "0.5-0.6",
+      "n": 2,
+      "mean_p": 0.5715,
+      "frac_scam": 0.5
+     },
+     {
+      "bin": "0.6-0.7",
+      "n": 9,
+      "mean_p": 0.6418,
+      "frac_scam": 0.3333
+     },
+     {
+      "bin": "0.7-0.8",
+      "n": 12,
+      "mean_p": 0.7687,
+      "frac_scam": 0.4167
+     },
+     {
+      "bin": "0.8-0.9",
+      "n": 16,
+      "mean_p": 0.8581,
+      "frac_scam": 0.75
+     },
+     {
+      "bin": "0.9-1.0",
+      "n": 122,
+      "mean_p": 0.9853,
+      "frac_scam": 0.8115
+     }
+    ],
+    "at_possible": {
+     "threshold": 0.5,
+     "tp": 120,
+     "fp": 41,
+     "fn": 48,
+     "tn": 169,
+     "precision": 0.7453,
+     "recall": 0.7143,
+     "f1": 0.7295,
+     "fpr": 0.1952,
+     "accuracy": 0.7646
+    },
+    "at_likely": {
+     "threshold": 0.85,
+     "tp": 106,
+     "fp": 25,
+     "fn": 62,
+     "tn": 185,
+     "precision": 0.8092,
+     "recall": 0.631,
+     "f1": 0.709,
+     "fpr": 0.119,
+     "accuracy": 0.7698
+    },
+    "at_0.5": {
+     "threshold": 0.5,
+     "tp": 120,
+     "fp": 41,
+     "fn": 48,
+     "tn": 169,
+     "precision": 0.7453,
+     "recall": 0.7143,
+     "f1": 0.7295,
+     "fpr": 0.1952,
+     "accuracy": 0.7646
+    },
+    "fpr_hard_negatives": {
+     "n": 176,
+     "at_possible": 0.233,
+     "at_likely": 0.142
+    }
+   }
+  },
+  "ood_realworld_curated": {
+   "binary": {
+    "n": 166,
+    "n_scam": 125,
+    "n_genuine": 41,
+    "auroc": 0.6234,
+    "auroc_95ci": [
+     0.5189,
+     0.7216
+    ],
+    "auprc": 0.8343,
+    "brier": 0.6534,
+    "ece": 0.6695,
+    "reliability": [
+     {
+      "bin": "0.0-0.1",
+      "n": 141,
+      "mean_p": 0.0098,
+      "frac_scam": 0.7234
+     },
+     {
+      "bin": "0.1-0.2",
+      "n": 6,
+      "mean_p": 0.1407,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.2-0.3",
+      "n": 2,
+      "mean_p": 0.225,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.3-0.4",
+      "n": 3,
+      "mean_p": 0.3391,
+      "frac_scam": 0.6667
+     },
+     {
+      "bin": "0.4-0.5",
+      "n": 2,
+      "mean_p": 0.4416,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.5-0.6",
+      "n": 1,
+      "mean_p": 0.5597,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.6-0.7",
+      "n": 1,
+      "mean_p": 0.6582,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.7-0.8",
+      "n": 1,
+      "mean_p": 0.7663,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.8-0.9",
+      "n": 3,
+      "mean_p": 0.8455,
+      "frac_scam": 0.6667
+     },
+     {
+      "bin": "0.9-1.0",
+      "n": 6,
+      "mean_p": 0.973,
+      "frac_scam": 1.0
+     }
+    ],
+    "at_possible": {
+     "threshold": 0.5,
+     "tp": 11,
+     "fp": 1,
+     "fn": 114,
+     "tn": 40,
+     "precision": 0.9167,
+     "recall": 0.088,
+     "f1": 0.1606,
+     "fpr": 0.0244,
+     "accuracy": 0.3072
+    },
+    "at_likely": {
+     "threshold": 0.85,
+     "tp": 6,
+     "fp": 1,
+     "fn": 119,
+     "tn": 40,
+     "precision": 0.8571,
+     "recall": 0.048,
+     "f1": 0.0909,
+     "fpr": 0.0244,
+     "accuracy": 0.2771
+    },
+    "at_0.5": {
+     "threshold": 0.5,
+     "tp": 11,
+     "fp": 1,
+     "fn": 114,
+     "tn": 40,
+     "precision": 0.9167,
+     "recall": 0.088,
+     "f1": 0.1606,
+     "fpr": 0.0244,
+     "accuracy": 0.3072
+    }
+   }
+  },
+  "ood_icfd31k_calls": {
+   "binary": {
+    "n": 5500,
+    "n_scam": 5438,
+    "n_genuine": 62,
+    "auroc": 0.6446,
+    "auroc_95ci": [
+     0.5821,
+     0.7082
+    ],
+    "auprc": 0.993,
+    "brier": 0.2808,
+    "ece": 0.3507,
+    "reliability": [
+     {
+      "bin": "0.0-0.1",
+      "n": 1009,
+      "mean_p": 0.0336,
+      "frac_scam": 0.9822
+     },
+     {
+      "bin": "0.1-0.2",
+      "n": 324,
+      "mean_p": 0.1451,
+      "frac_scam": 0.9784
+     },
+     {
+      "bin": "0.2-0.3",
+      "n": 250,
+      "mean_p": 0.2472,
+      "frac_scam": 0.992
+     },
+     {
+      "bin": "0.3-0.4",
+      "n": 185,
+      "mean_p": 0.3522,
+      "frac_scam": 0.9892
+     },
+     {
+      "bin": "0.4-0.5",
+      "n": 205,
+      "mean_p": 0.4501,
+      "frac_scam": 0.9659
+     },
+     {
+      "bin": "0.5-0.6",
+      "n": 192,
+      "mean_p": 0.5516,
+      "frac_scam": 0.9792
+     },
+     {
+      "bin": "0.6-0.7",
+      "n": 212,
+      "mean_p": 0.6513,
+      "frac_scam": 0.9764
+     },
+     {
+      "bin": "0.7-0.8",
+      "n": 243,
+      "mean_p": 0.7518,
+      "frac_scam": 0.9918
+     },
+     {
+      "bin": "0.8-0.9",
+      "n": 339,
+      "mean_p": 0.8536,
+      "frac_scam": 0.9912
+     },
+     {
+      "bin": "0.9-1.0",
+      "n": 2541,
+      "mean_p": 0.9811,
+      "frac_scam": 0.9953
+     }
+    ],
+    "at_possible": {
+     "threshold": 0.5,
+     "tp": 3501,
+     "fp": 26,
+     "fn": 1937,
+     "tn": 36,
+     "precision": 0.9926,
+     "recall": 0.6438,
+     "f1": 0.781,
+     "fpr": 0.4194,
+     "accuracy": 0.6431
+    },
+    "at_likely": {
+     "threshold": 0.85,
+     "tp": 2718,
+     "fp": 14,
+     "fn": 2720,
+     "tn": 48,
+     "precision": 0.9949,
+     "recall": 0.4998,
+     "f1": 0.6654,
+     "fpr": 0.2258,
+     "accuracy": 0.5029
+    },
+    "at_0.5": {
+     "threshold": 0.5,
+     "tp": 3501,
+     "fp": 26,
+     "fn": 1937,
+     "tn": 36,
+     "precision": 0.9926,
+     "recall": 0.6438,
+     "f1": 0.781,
+     "fpr": 0.4194,
+     "accuracy": 0.6431
+    }
+   }
+  },
+  "ood_imc25_real_smishing_india": {
+   "binary": {
+    "n": 2621,
+    "n_scam": 2621,
+    "n_genuine": 0,
+    "brier": 0.9206,
+    "ece": 0.9507,
+    "reliability": [
+     {
+      "bin": "0.0-0.1",
+      "n": 2388,
+      "mean_p": 0.0186,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.1-0.2",
+      "n": 98,
+      "mean_p": 0.1343,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.2-0.3",
+      "n": 31,
+      "mean_p": 0.2356,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.3-0.4",
+      "n": 26,
+      "mean_p": 0.3549,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.4-0.5",
+      "n": 18,
+      "mean_p": 0.4536,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.5-0.6",
+      "n": 11,
+      "mean_p": 0.5752,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.6-0.7",
+      "n": 9,
+      "mean_p": 0.6714,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.7-0.8",
+      "n": 12,
+      "mean_p": 0.7444,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.8-0.9",
+      "n": 8,
+      "mean_p": 0.8519,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.9-1.0",
+      "n": 20,
+      "mean_p": 0.9395,
+      "frac_scam": 1.0
+     }
+    ],
+    "at_possible": {
+     "threshold": 0.5,
+     "tp": 60,
+     "fp": 0,
+     "fn": 2561,
+     "tn": 0,
+     "precision": 1.0,
+     "recall": 0.0229,
+     "f1": 0.0448,
+     "fpr": null,
+     "accuracy": 0.0229
+    },
+    "at_likely": {
+     "threshold": 0.85,
+     "tp": 24,
+     "fp": 0,
+     "fn": 2597,
+     "tn": 0,
+     "precision": 1.0,
+     "recall": 0.0092,
+     "f1": 0.0181,
+     "fpr": null,
+     "accuracy": 0.0092
+    },
+    "at_0.5": {
+     "threshold": 0.5,
+     "tp": 60,
+     "fp": 0,
+     "fn": 2561,
+     "tn": 0,
+     "precision": 1.0,
+     "recall": 0.0229,
+     "f1": 0.0448,
+     "fpr": null,
+     "accuracy": 0.0229
+    }
+   }
+  },
+  "ood_imc25_real_smishing_global": {
+   "binary": {
+    "n": 1432,
+    "n_scam": 1432,
+    "n_genuine": 0,
+    "brier": 0.8261,
+    "ece": 0.8769,
+    "reliability": [
+     {
+      "bin": "0.0-0.1",
+      "n": 1077,
+      "mean_p": 0.0149,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.1-0.2",
+      "n": 100,
+      "mean_p": 0.1465,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.2-0.3",
+      "n": 53,
+      "mean_p": 0.2466,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.3-0.4",
+      "n": 36,
+      "mean_p": 0.3508,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.4-0.5",
+      "n": 29,
+      "mean_p": 0.4649,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.5-0.6",
+      "n": 27,
+      "mean_p": 0.556,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.6-0.7",
+      "n": 29,
+      "mean_p": 0.6336,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.7-0.8",
+      "n": 15,
+      "mean_p": 0.7432,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.8-0.9",
+      "n": 17,
+      "mean_p": 0.8446,
+      "frac_scam": 1.0
+     },
+     {
+      "bin": "0.9-1.0",
+      "n": 49,
+      "mean_p": 0.9702,
+      "frac_scam": 1.0
+     }
+    ],
+    "at_possible": {
+     "threshold": 0.5,
+     "tp": 137,
+     "fp": 0,
+     "fn": 1295,
+     "tn": 0,
+     "precision": 1.0,
+     "recall": 0.0957,
+     "f1": 0.1746,
+     "fpr": null,
+     "accuracy": 0.0957
+    },
+    "at_likely": {
+     "threshold": 0.85,
+     "tp": 55,
+     "fp": 0,
+     "fn": 1377,
+     "tn": 0,
+     "precision": 1.0,
+     "recall": 0.0384,
+     "f1": 0.074,
+     "fpr": null,
+     "accuracy": 0.0384
+    },
+    "at_0.5": {
+     "threshold": 0.5,
+     "tp": 137,
+     "fp": 0,
+     "fn": 1295,
+     "tn": 0,
+     "precision": 1.0,
+     "recall": 0.0957,
+     "f1": 0.1746,
+     "fpr": null,
+     "accuracy": 0.0957
+    }
+   }
+  },
+  "ood_skyaara_genuine_payment_sms": {
+   "binary": {
+    "n": 33,
+    "n_scam": 0,
+    "n_genuine": 33,
+    "brier": 0.0757,
+    "ece": 0.1175,
+    "reliability": [
+     {
+      "bin": "0.0-0.1",
+      "n": 26,
+      "mean_p": 0.0167,
+      "frac_scam": 0.0
+     },
+     {
+      "bin": "0.1-0.2",
+      "n": 2,
+      "mean_p": 0.1429,
+      "frac_scam": 0.0
+     },
+     {
+      "bin": "0.3-0.4",
+      "n": 2,
+      "mean_p": 0.3401,
+      "frac_scam": 0.0
+     },
+     {
+      "bin": "0.4-0.5",
+      "n": 1,
+      "mean_p": 0.4912,
+      "frac_scam": 0.0
+     },
+     {
+      "bin": "0.9-1.0",
+      "n": 2,
+      "mean_p": 0.9927,
+      "frac_scam": 0.0
+     }
+    ],
+    "at_possible": {
+     "threshold": 0.5,
+     "tp": 0,
+     "fp": 2,
+     "fn": 0,
+     "tn": 31,
+     "precision": 0.0,
+     "recall": null,
+     "f1": null,
+     "fpr": 0.0606,
+     "accuracy": 0.9394
+    },
+    "at_likely": {
+     "threshold": 0.85,
+     "tp": 0,
+     "fp": 2,
+     "fn": 0,
+     "tn": 31,
+     "precision": 0.0,
+     "recall": null,
+     "f1": null,
+     "fpr": 0.0606,
+     "accuracy": 0.9394
+    },
+    "at_0.5": {
+     "threshold": 0.5,
+     "tp": 0,
+     "fp": 2,
+     "fn": 0,
+     "tn": 31,
+     "precision": 0.0,
+     "recall": null,
+     "f1": null,
+     "fpr": 0.0606,
+     "accuracy": 0.9394
+    },
+    "fpr_hard_negatives": {
+     "n": 33,
+     "at_possible": 0.0606,
+     "at_likely": 0.0606
+    }
+   }
+  },
+  "ood_marketing_spam_flag_rate": {
+   "binary": {
+    "n": 451,
+    "n_scam": 0,
+    "n_genuine": 451,
+    "brier": 0.0042,
+    "ece": 0.012,
+    "reliability": [
+     {
+      "bin": "0.0-0.1",
+      "n": 444,
+      "mean_p": 0.0056,
+      "frac_scam": 0.0
+     },
+     {
+      "bin": "0.1-0.2",
+      "n": 1,
+      "mean_p": 0.1415,
+      "frac_scam": 0.0
+     },
+     {
+      "bin": "0.2-0.3",
+      "n": 4,
+      "mean_p": 0.2556,
+      "frac_scam": 0.0
+     },
+     {
+      "bin": "0.7-0.8",
+      "n": 1,
+      "mean_p": 0.7648,
+      "frac_scam": 0.0
+     },
+     {
+      "bin": "0.9-1.0",
+      "n": 1,
+      "mean_p": 0.9822,
+      "frac_scam": 0.0
+     }
+    ],
+    "at_possible": {
+     "threshold": 0.5,
+     "tp": 0,
+     "fp": 2,
+     "fn": 0,
+     "tn": 449,
+     "precision": 0.0,
+     "recall": null,
+     "f1": null,
+     "fpr": 0.0044,
+     "accuracy": 0.9956
+    },
+    "at_likely": {
+     "threshold": 0.85,
+     "tp": 0,
+     "fp": 1,
+     "fn": 0,
+     "tn": 450,
+     "precision": 0.0,
+     "recall": null,
+     "f1": null,
+     "fpr": 0.0022,
+     "accuracy": 0.9978
+    },
+    "at_0.5": {
+     "threshold": 0.5,
+     "tp": 0,
+     "fp": 2,
+     "fn": 0,
+     "tn": 449,
+     "precision": 0.0,
+     "recall": null,
+     "f1": null,
+     "fpr": 0.0044,
+     "accuracy": 0.9956
+    }
+   }
+  },
+  "val": {
+   "binary": {
+    "n": 521,
+    "n_scam": 257,
+    "n_genuine": 264,
+    "auroc": 1.0,
+    "auroc_95ci": [
+     1.0,
+     1.0
+    ],
+    "auprc": 1.0,
+    "brier": 0.0,
+    "ece": 0.0,
+    "reliability": [
+     {
+      "bin": "0.0-0.1",
+      "n": 264,
+      "mean_p": 0.0,
+      "frac_scam": 0.0
+     },
+     {
+      "bin": "0.9-1.0",
+      "n": 257,
+      "mean_p": 0.9999,
+      "frac_scam": 1.0
+     }
+    ],
+    "at_possible": {
+     "threshold": 0.5,
+     "tp": 257,
+     "fp": 0,
+     "fn": 0,
+     "tn": 264,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "fpr": 0.0,
+     "accuracy": 1.0
+    },
+    "at_likely": {
+     "threshold": 0.85,
+     "tp": 257,
+     "fp": 0,
+     "fn": 0,
+     "tn": 264,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "fpr": 0.0,
+     "accuracy": 1.0
+    },
+    "at_0.5": {
+     "threshold": 0.5,
+     "tp": 257,
+     "fp": 0,
+     "fn": 0,
+     "tn": 264,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "fpr": 0.0,
+     "accuracy": 1.0
+    }
+   }
+  }
+ }
+}
