@@ -65,6 +65,8 @@ export interface DecisionInput {
   noConversation?: boolean;
   /** The engine already retried the call once without reaching the customer. */
   retried?: boolean;
+  /** The call ended (hang-up, drop) before the assistant reached set_decision. */
+  incomplete?: boolean;
   now?: string;
 }
 
@@ -160,6 +162,16 @@ export function decide(input: DecisionInput): Decision {
       code: "PATTERN_SUSPECTED",
       text: "The assistant matched the conversation to a known scam pattern, so the payment waits for confirmation through the bank's official channel.",
       signal_ids: ids(hinted),
+    });
+  }
+
+  // A check cut short (scammers coach victims to hang up on the bank) never releases on its own.
+  if (outcome === "release" && !input.noConversation && input.incomplete && !positiveGenuineEvidence(sigs)) {
+    outcome = "delay";
+    delay = DELAY_HIGH_MIN;
+    reasons.push({
+      code: "CHECK_INCOMPLETE",
+      text: "The call ended before the safety check finished. The payment waits; the customer can confirm in the app or ask for a call-back from the bank's official number.",
     });
   }
 

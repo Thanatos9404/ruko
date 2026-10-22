@@ -10,7 +10,7 @@ export interface Rate {
 export interface PublishedRun {
   run_id: string;
   label: string;
-  set: "dev" | "holdout" | "holdout2";
+  set: "dev" | "holdout" | "holdout2" | "holdout3" | "holdout4";
   clean_holdout: boolean;
   scenarios: number;
   scam_catch: Rate;

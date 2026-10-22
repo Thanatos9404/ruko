@@ -23,7 +23,7 @@ interface Rate {
 interface Run {
   run_id: string;
   label: string;
-  set: "dev" | "holdout" | "holdout2";
+  set: "dev" | "holdout" | "holdout2" | "holdout3" | "holdout4";
   clean_holdout: boolean;
   scenarios: number;
   scam_catch: Rate;
@@ -106,7 +106,7 @@ const HONESTY =
 export function Evaluation() {
   const results = useResource(() => getJson<Results>("/eval/results.json"), []);
   const dev = useResource(() => getJson<Summary>("/eval/summary.json"), []);
-  const fresh = useResource(() => getJson<Summary>("/eval/summary-holdout2.json"), []);
+  const fresh = useResource(() => getJson<Summary>("/eval/summary-fresh.json"), []);
   const samples = useResource(() => getJson<Sample[]>("/eval/samples.json"), []);
   const r = results.data;
 
@@ -255,7 +255,7 @@ function RunPanel({ run, lead }: { run: Run; lead?: boolean }) {
       className={cn("h-full", lead && "ring-1 ring-[color-mix(in_oklab,var(--go)_35%,transparent)]")}
       title={
         <span className="flex flex-wrap items-center gap-2">
-          {run.set === "dev" ? "Development set" : "Fresh held-out set"}
+          {run.set === "dev" ? "Development set" : run.clean_holdout ? "Fresh held-out set" : "Held-out set (previously seen)"}
           {run.clean_holdout ? (
             <span className="inline-flex items-center gap-1 rounded-full bg-go-soft px-2 py-0.5 text-[11.5px] font-semibold text-go">
               <BadgeCheck className="size-3.5" strokeWidth={1.9} aria-hidden />
@@ -407,7 +407,7 @@ function History({ r }: { r: Results }) {
                     <span className="mt-0.5 block font-mono text-[11px] text-muted">{x.run_id}</span>
                   </td>
                   <td>
-                    <span className="block text-ink-2">{x.set === "dev" ? "Development" : x.set === "holdout" ? "Held-out set 1" : "Fresh held-out"}</span>
+                    <span className="block text-ink-2">{x.set === "dev" ? "Development" : x.clean_holdout ? `Fresh held-out (set ${x.set === "holdout" ? 1 : x.set.slice(-1)})` : `Held-out set ${x.set === "holdout" ? 1 : x.set.slice(-1)}`}</span>
                     {x.clean_holdout ? (
                       <span className="mt-0.5 inline-flex items-center gap-1 text-[12px] font-semibold text-go">
                         <BadgeCheck className="size-3.5" strokeWidth={1.9} aria-hidden />

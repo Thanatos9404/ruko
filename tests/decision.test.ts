@@ -102,6 +102,14 @@ describe("post-call decision policy", () => {
     });
   });
 
+  it("a check cut short before the assistant decided never releases on its own", () => {
+    const d = decide({ check: ordinary([sig("own_initiative", "it's my decision")]), incomplete: true });
+    expect(d.outcome).toBe("delay");
+    expect(d.reasons.map((r) => r.code)).toContain("CHECK_INCOMPLETE");
+    // With positive evidence it can still release.
+    expect(decide({ check: ordinary([sig("verified_independently", "I visited their shop")]), incomplete: true }).outcome).toBe("release");
+  });
+
   it("delays when the assistant itself tagged a scam pattern but heard no warning sign", () => {
     const d = decide({ check: ordinary([sig("purpose_consistent", "it's my part-time job payment", "high", "task_job")]), agentRecommendation: "release" });
     expect(d.outcome).toBe("delay");

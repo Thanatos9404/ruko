@@ -490,6 +490,8 @@ export class CheckService {
         check: c,
         agentRecommendation: opts.agentRecommendation !== undefined ? opts.agentRecommendation : (c.agent_recommendation?.outcome ?? null),
         noConversation: opts.noConversation,
+        // The assistant never recommended anything: the call ended before the check finished.
+        incomplete: !c.agent_recommendation && opts.agentRecommendation == null,
         now: this.iso(),
       });
       if (contactPending && d.outcome === "release") {
@@ -551,7 +553,7 @@ export class CheckService {
     if (Date.parse(c.hold_expires_at) > this.now().getTime()) return c;
     const talked = (c.call?.transcript?.some((t) => t.role === "customer") ?? false) || c.signals.length > 0;
     if (!talked) return this.applyNoAnswer(c, "Hold expired with no answer");
-    const d = decide({ check: c, agentRecommendation: c.agent_recommendation?.outcome ?? null, now: this.iso() });
+    const d = decide({ check: c, agentRecommendation: c.agent_recommendation?.outcome ?? null, incomplete: !c.agent_recommendation, now: this.iso() });
     c.decision = d;
     c.status = "decided";
     this.event(c, "decision.made", `Hold expired; policy applied: ${d.outcome}.`);

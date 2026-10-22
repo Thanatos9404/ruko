@@ -14,20 +14,30 @@ import { estimateSeconds } from "./score.js";
 interface RunSpec {
   run_id: string;
   label: string;
-  set: "dev" | "holdout" | "holdout2";
+  set: "dev" | "holdout" | "holdout2" | "holdout3" | "holdout4";
   clean_holdout: boolean;
 }
 
-const VERSION = "v3";
+const VERSION = "v5";
+// Order matters: [0] is the development run, [1] the fresh held-out headline.
 const CURRENT: RunSpec[] = [
-  { run_id: "v3-dev-qwen3-30b", label: "Development set (96)", set: "dev", clean_holdout: false },
-  { run_id: "v3-holdout2-qwen3-30b", label: "Fresh held-out set (28), never used for tuning", set: "holdout2", clean_holdout: true },
-  { run_id: "v3-holdout1-qwen3-30b", label: "Held-out set 1 (28), seen when tuning v3", set: "holdout", clean_holdout: false },
+  { run_id: "v5-dev-qwen3-30b", label: "Development set (96)", set: "dev", clean_holdout: false },
+  { run_id: "v5-holdout4-qwen3-30b", label: "Fresh held-out set 4 (28), frozen before any v5 run, heavy coaching in Hindi/Hinglish", set: "holdout4", clean_holdout: true },
+  { run_id: "v5-holdout3-qwen3-30b", label: "Held-out set 3 (28), previously seen (v4)", set: "holdout3", clean_holdout: false },
+  { run_id: "v5-holdout2-qwen3-30b", label: "Held-out set 2 (28), previously seen (v3, v4)", set: "holdout2", clean_holdout: false },
+  { run_id: "v5-holdout1-qwen3-30b", label: "Held-out set 1 (28), previously seen", set: "holdout", clean_holdout: false },
 ];
 const HISTORY: RunSpec[] = [
   { run_id: "v1-qwen3-30b", label: "v1 · development set", set: "dev", clean_holdout: false },
   { run_id: "v2-dev-qwen3-30b", label: "v2 · development set", set: "dev", clean_holdout: false },
   { run_id: "v2-holdout-qwen3-30b", label: "v2 · held-out set 1 (clean for v2)", set: "holdout", clean_holdout: true },
+  { run_id: "v3-dev-qwen3-30b", label: "v3 · development set", set: "dev", clean_holdout: false },
+  { run_id: "v3-holdout2-qwen3-30b", label: "v3 · held-out set 2 (clean for v3)", set: "holdout2", clean_holdout: true },
+  { run_id: "v3-holdout1-qwen3-30b", label: "v3 · held-out set 1 (seen while tuning)", set: "holdout", clean_holdout: false },
+  { run_id: "v4-dev-qwen3-30b", label: "v4 · development set (faster; text model changed during the run)", set: "dev", clean_holdout: false },
+  { run_id: "v4-holdout3-qwen3-30b", label: "v4 · held-out set 3 (clean for v4)", set: "holdout3", clean_holdout: true },
+  { run_id: "v4-holdout2-qwen3-30b", label: "v4 · held-out set 2", set: "holdout2", clean_holdout: false },
+  { run_id: "v4-holdout1-qwen3-30b", label: "v4 · held-out set 1", set: "holdout", clean_holdout: false },
 ];
 
 const read = async (id: string) => JSON.parse(await readFile(join("eval", "results", id, "summary.json"), "utf8")) as Summary;
@@ -92,7 +102,7 @@ const results = {
 await mkdir("public/eval", { recursive: true });
 await writeFile("public/eval/results.json", JSON.stringify(results, null, 1));
 await writeFile("public/eval/summary.json", JSON.stringify(current[0].s));
-await writeFile("public/eval/summary-holdout2.json", JSON.stringify(current[1].s));
+await writeFile("public/eval/summary-fresh.json", JSON.stringify(current[1].s));
 
 // Samples from the current development run and the fresh held-out run.
 const samples = [];
