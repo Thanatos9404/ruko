@@ -19,6 +19,7 @@ import { buildScenarios, type EvalScenario } from "./scenarios.js";
 import { buildHoldout } from "./holdout.js";
 import { buildHoldout2 } from "./holdout2.js";
 import { buildHoldout3 } from "./holdout3.js";
+import { buildHoldout4 } from "./holdout4.js";
 import { runConversation, type ConversationResult } from "./conversation.js";
 import { scoreRun } from "./score.js";
 import { writeReports } from "./report.js";
@@ -52,13 +53,15 @@ let scenarios: EvalScenario[] =
       ? buildHoldout2()
       : set === "holdout3"
         ? buildHoldout3()
-        : set === "all"
-          ? [...buildScenarios(), ...buildHoldout(), ...buildHoldout2(), ...buildHoldout3()]
-          : set === "dev"
-            ? buildScenarios()
-            : (() => {
-                throw new Error(`unknown --set ${set}`);
-              })();
+        : set === "holdout4"
+          ? buildHoldout4()
+          : set === "all"
+            ? [...buildScenarios(), ...buildHoldout(), ...buildHoldout2(), ...buildHoldout3(), ...buildHoldout4()]
+            : set === "dev"
+              ? buildScenarios()
+              : (() => {
+                  throw new Error(`unknown --set ${set}`);
+                })();
 if (only) scenarios = scenarios.filter((s) => s.kind === only || s.id.includes(only));
 if (limit > 0) {
   // Spread a small run across kinds and languages instead of taking the first N.

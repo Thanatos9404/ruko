@@ -392,15 +392,8 @@ export class CheckService {
     const critical = criticalRisk(c);
     const positive = positiveGenuineEvidence(c.signals);
     const probed = new Set(c.events.filter((e) => e.type === "guidance.probe").map((e) => e.detail));
+    // The opening question already asked who is guiding them, so there is no default re-ask.
     if (p) ask = p.ask_next[lang];
-    else {
-      const asked = new Set(c.signals.map((s) => s.type));
-      if (!asked.has("coached_on_call"))
-        ask =
-          lang === "hi"
-            ? "क्या इस समय कोई और फ़ोन या वीडियो कॉल पर आपको बता रहा है कि क्या करना है?"
-            : "Is anyone on another call or video call with you right now, telling you what to do?";
-    }
     const mitigating = c.signals.filter((s) => s.confidence !== "low" && s.severity === "mitigating").length;
     // Adaptive depth: on critical pre-call risk, a cover story isn't enough. Probe once or twice
     // for what a coached customer is told to hide, then for positive evidence.
