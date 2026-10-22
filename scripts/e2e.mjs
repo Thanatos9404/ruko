@@ -31,15 +31,20 @@ for (const sc of scenarios.data) {
   await page.setViewport({ width: 1280, height: 900 });
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto(`${base}/demo`, { waitUntil: "networkidle0" });
+  await page.goto(`${base}/demo`, { waitUntil: "load", timeout: 60000 });
   await page.waitForSelector("[role=radio]");
   await sleep(500);
   if (!(await clickText(page, sc.title))) console.error(`no chip for ${sc.title}`);
   await sleep(400);
   const amount = new Intl.NumberFormat("en-IN").format(sc.payment.amount_inr);
   if (!(await clickText(page, `Pay ₹${amount}`))) console.error(`no pay button for ${sc.id}`);
-  await sleep(2500);
-  const text = await phoneText(page);
+  // Up to 10 s: a serverless cold start can add a few seconds to the first payment.
+  let text = "";
+  for (let i = 0; i < 20; i++) {
+    await sleep(500);
+    text = await phoneText(page);
+    if (/Payment paused|Payment sent|Too many|slow down/.test(text)) break;
+  }
   const ok = /Payment paused|Payment sent/.test(text) && !/Too many|slow down/.test(text);
   console.log(`${ok ? "PASS" : "FAIL"} ${sc.id.padEnd(18)} → ${/Payment paused/.test(text) ? "held" : /Payment sent/.test(text) ? "allowed" : text.slice(0, 80)}${errors.length ? ` (page errors: ${errors.join("; ")})` : ""}`);
   if (!ok || errors.length) failures++;
@@ -51,7 +56,7 @@ for (const sc of scenarios.data) {
   const ctx = await browser.createBrowserContext();
   const page = await ctx.newPage();
   await page.setViewport({ width: 1280, height: 900 });
-  await page.goto(`${base}/demo`, { waitUntil: "networkidle0" });
+  await page.goto(`${base}/demo`, { waitUntil: "load", timeout: 60000 });
   await sleep(800);
   await clickText(page, "Pay ₹1,90,000");
   await sleep(2500);
@@ -83,7 +88,7 @@ for (const sc of scenarios.data) {
   const ctx = await browser.createBrowserContext();
   const page = await ctx.newPage();
   await page.setViewport({ width: 1440, height: 900 });
-  await page.goto(`${base}/`, { waitUntil: "networkidle0" });
+  await page.goto(`${base}/`, { waitUntil: "load", timeout: 60000 });
   await page.evaluate(() => document.getElementById("demo")?.scrollIntoView());
   await sleep(1200);
   const embed = await page.evaluate(() => {
