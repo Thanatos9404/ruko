@@ -1,0 +1,3 @@
+# Raw third-party downloads (npm tarballs, captured page scripts, full REA Evidence)
+# stay local. Only trimmed REA outputs under raw/ are committed.
+.cache/

@@ -1,0 +1,22 @@
+{
+ "parent_evidence_id": "ev_c906e402ff24558299bb2503b769d8f8b8541298530105c379780a1b35b3fac6",
+ "graph_id": "jag_efec49a23a3758d9e5a13ae096cb3b370030c0c08d1e837c898f0046899e4dd1",
+ "node_kind_counts": {
+  "artifact": 2,
+  "electron-main": 1,
+  "electron-renderer": 1,
+  "javascript-asset": 3,
+  "javascript-module": 5,
+  "package": 1,
+  "source-map": 2,
+  "source-module": 187
+ },
+ "original_sources_non_vendor": [
+  "../src/call.ts",
+  "../src/events.ts",
+  "../src/global.ts"
+ ],
+ "vendor_original_source_count": {
+  "sip.js": 91
+ }
+}

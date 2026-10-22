@@ -1,0 +1,912 @@
+{
+ "evidence_id": "ev_04209567b5f8f20ec87dd0dc09b192342f4810a52b61bc3d710fe1d8cb19d915",
+ "subject": null,
+ "provider": {
+  "id": "rea-javascript-application-workflows",
+  "name": "REA JavaScript application workflows",
+  "version": "1"
+ },
+ "analysis_profile": null,
+ "predicate_type": "rea.javascript-semantic-trace",
+ "operation": "trace_javascript_semantics",
+ "parameters": {
+  "application_evidence_id": "ev_189c2c3189fc489ed53a4415252914195b3acab96a5d46ce488ebad64e372505",
+  "query": {
+   "seed": {
+    "kind": "semantic-node",
+    "node_id": "jsrg_node_12c66e0e075760814f7d7ab3764314140140e688f04019b6c04715af08b3d2b1"
+   },
+   "direction": "forward-influence",
+   "include_ambiguous_dynamic_edges": false,
+   "expected": {
+    "role": "sink",
+    "classes": [
+     "timer",
+     "call-site",
+     "request"
+    ]
+   }
+  }
+ },
+ "raw_result": null,
+ "normalized_result": {
+  "query_id": "jsrq_247ae7a2edc78f97aa00edaefad6ec63e6e08d465d79930a4f6180e35f10d499",
+  "source_graph_id": "jsrg_e7f308ea88b9aaa7da5291b9d46470a48f298db183efd1b1d5a8538209e97bac",
+  "seed": {
+   "kind": "semantic-node",
+   "node_id": "jsrg_node_12c66e0e075760814f7d7ab3764314140140e688f04019b6c04715af08b3d2b1"
+  },
+  "direction": "forward-influence",
+  "status": "ambiguous",
+  "seed_node_ids": [
+   "jsrg_node_12c66e0e075760814f7d7ab3764314140140e688f04019b6c04715af08b3d2b1"
+  ],
+  "evidence_contexts": [
+   {
+    "authority": "static-relationship-inference",
+    "state": "inferred",
+    "confidence": "high",
+    "artifact": {
+     "available": true,
+     "artifact_id": "art_853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965"
+    },
+    "extractor": {
+     "name": "rea-javascript-semantic-analysis",
+     "version": "1",
+     "operation": "analyze_javascript_application",
+     "executable_sha256": null
+    },
+    "coverage": {
+     "status": "complete",
+     "truncated": false,
+     "omitted_count": 0,
+     "limits": []
+    },
+    "limitations": [
+     "This relationship is a conservative static candidate; it does not prove runtime execution or causal flow."
+    ],
+    "evidence_ids": [],
+    "context_id": "jsrg_evidence_673e93d11849f8ffc37a0578f1ce66afeb90419b5b61fc6267ba721e6e47f7d2"
+   },
+   {
+    "authority": "unknown",
+    "state": "unknown",
+    "confidence": "unknown",
+    "artifact": {
+     "available": true,
+     "artifact_id": "art_853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965"
+    },
+    "extractor": {
+     "name": "rea-javascript-semantic-analysis",
+     "version": "1",
+     "operation": "analyze_javascript_application",
+     "executable_sha256": null
+    },
+    "coverage": {
+     "status": "complete",
+     "truncated": false,
+     "omitted_count": 0,
+     "limits": []
+    },
+    "limitations": [
+     "Dynamic syntax prevents an exact static relationship."
+    ],
+    "evidence_ids": [],
+    "context_id": "jsrg_evidence_d0e1a487d6a06beb1f150e2b36d5202c590659311850aa5576eb823c6f8f1465"
+   },
+   {
+    "authority": "ast-static-analysis",
+    "state": "observed",
+    "confidence": "exact",
+    "artifact": {
+     "available": true,
+     "artifact_id": "art_853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965"
+    },
+    "extractor": {
+     "name": "rea-javascript-semantic-analysis",
+     "version": "1",
+     "operation": "analyze_javascript_application",
+     "executable_sha256": null
+    },
+    "coverage": {
+     "status": "complete",
+     "truncated": false,
+     "omitted_count": 0,
+     "limits": []
+    },
+    "limitations": [],
+    "evidence_ids": [],
+    "context_id": "jsrg_evidence_f19fa72a126c0bccd170060f644f9196b72a310339a996b2ad28a440881061f0"
+   }
+  ],
+  "nodes": [
+   {
+    "kind": "literal",
+    "identity": {
+     "artifact_sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "module_path": "dist/index.js",
+     "source_range": {
+      "start": {
+       "line": 12668,
+       "column": 4
+      },
+      "end": {
+       "line": 12668,
+       "column": 18
+      }
+     },
+     "role_key": "literal:scope:program:0:489992:binding:DIAL_EXTENSION:binding:\"7000\""
+    },
+    "function_node_id": null,
+    "application_node_ids": [],
+    "label": "\"7000\"",
+    "properties": {
+     "value": "7000"
+    },
+    "evidence": {
+     "context_id": "jsrg_evidence_f19fa72a126c0bccd170060f644f9196b72a310339a996b2ad28a440881061f0",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12668,
+        "column": 4
+       },
+       "end": {
+        "line": 12668,
+        "column": 18
+       }
+      }
+     }
+    },
+    "node_id": "jsrg_node_12c66e0e075760814f7d7ab3764314140140e688f04019b6c04715af08b3d2b1"
+   },
+   {
+    "kind": "binding",
+    "identity": {
+     "artifact_sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "module_path": "dist/index.js",
+     "source_range": {
+      "start": {
+       "line": 12668,
+       "column": 4
+      },
+      "end": {
+       "line": 12668,
+       "column": 18
+      }
+     },
+     "role_key": "binding:scope:program:0:489992:binding:DIAL_EXTENSION"
+    },
+    "function_node_id": null,
+    "application_node_ids": [],
+    "label": "DIAL_EXTENSION",
+    "properties": {},
+    "evidence": {
+     "context_id": "jsrg_evidence_f19fa72a126c0bccd170060f644f9196b72a310339a996b2ad28a440881061f0",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12668,
+        "column": 4
+       },
+       "end": {
+        "line": 12668,
+        "column": 18
+       }
+      }
+     }
+    },
+    "node_id": "jsrg_node_4fa9662dec4215300459b046a2c0e3e0a274b3c83eb9a211123d03646ae2fd4a"
+   },
+   {
+    "kind": "expression",
+    "identity": {
+     "artifact_sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "module_path": "dist/index.js",
+     "source_range": {
+      "start": {
+       "line": 12892,
+       "column": 44
+      },
+      "end": {
+       "line": 12892,
+       "column": 58
+      }
+     },
+     "role_key": "reference:8684:read:DIAL_EXTENSION"
+    },
+    "function_node_id": "jsrg_node_a504c7ed55492f706f3b264bd84008d69ef75862c1931f4bf7c675270706be79",
+    "application_node_ids": [],
+    "label": "DIAL_EXTENSION",
+    "properties": {},
+    "evidence": {
+     "context_id": "jsrg_evidence_f19fa72a126c0bccd170060f644f9196b72a310339a996b2ad28a440881061f0",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12892,
+        "column": 44
+       },
+       "end": {
+        "line": 12892,
+        "column": 58
+       }
+      }
+     }
+    },
+    "node_id": "jsrg_node_834dd9896cf6b38332200463161f5860123f2f2c900312460bfe2c2b72f4b437"
+   },
+   {
+    "kind": "function",
+    "identity": {
+     "artifact_sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "module_path": "dist/index.js",
+     "source_range": {
+      "start": {
+       "line": 12888,
+       "column": 2
+      },
+      "end": {
+       "line": 12971,
+       "column": 3
+      }
+     },
+     "role_key": "callable:callable:method:481985:485615"
+    },
+    "function_node_id": null,
+    "application_node_ids": [],
+    "label": "connect",
+    "properties": {
+     "name": "connect"
+    },
+    "evidence": {
+     "context_id": "jsrg_evidence_f19fa72a126c0bccd170060f644f9196b72a310339a996b2ad28a440881061f0",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12888,
+        "column": 2
+       },
+       "end": {
+        "line": 12971,
+        "column": 3
+       }
+      }
+     }
+    },
+    "node_id": "jsrg_node_a504c7ed55492f706f3b264bd84008d69ef75862c1931f4bf7c675270706be79"
+   },
+   {
+    "kind": "promise",
+    "identity": {
+     "artifact_sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "module_path": "dist/index.js",
+     "source_range": {
+      "start": {
+       "line": 12932,
+       "column": 10
+      },
+      "end": {
+       "line": 12970,
+       "column": 6
+      }
+     },
+     "role_key": "promise:constructor:484222:485610"
+    },
+    "function_node_id": "jsrg_node_a504c7ed55492f706f3b264bd84008d69ef75862c1931f4bf7c675270706be79",
+    "application_node_ids": [],
+    "label": "Promise.new",
+    "properties": {
+     "method": "new",
+     "operation_kind": "constructor",
+     "ownership": "awaited",
+     "source_resolution": "complete"
+    },
+    "evidence": {
+     "context_id": "jsrg_evidence_f19fa72a126c0bccd170060f644f9196b72a310339a996b2ad28a440881061f0",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12932,
+        "column": 10
+       },
+       "end": {
+        "line": 12970,
+        "column": 6
+       }
+      }
+     }
+    },
+    "node_id": "jsrg_node_a85e92912d0ba512ae9116d36c556ae9bd0734cca47adbe2804558727d53ac3b"
+   },
+   {
+    "kind": "task",
+    "identity": {
+     "artifact_sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "module_path": "dist/index.js",
+     "source_range": {
+      "start": {
+       "line": 12919,
+       "column": 8
+      },
+      "end": {
+       "line": 12919,
+       "column": 50
+      }
+     },
+     "role_key": "promise:awaited-expression:483707:483749"
+    },
+    "function_node_id": "jsrg_node_a504c7ed55492f706f3b264bd84008d69ef75862c1931f4bf7c675270706be79",
+    "application_node_ids": [],
+    "label": "awaited expression",
+    "properties": {
+     "method": "await",
+     "operation_kind": "awaited-expression",
+     "ownership": "awaited",
+     "source_resolution": "unresolved"
+    },
+    "evidence": {
+     "context_id": "jsrg_evidence_f19fa72a126c0bccd170060f644f9196b72a310339a996b2ad28a440881061f0",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12919,
+        "column": 8
+       },
+       "end": {
+        "line": 12919,
+        "column": 50
+       }
+      }
+     }
+    },
+    "node_id": "jsrg_node_df523f9f0a95f6977b86f87d9d618ca6bcf064483d7cbffc083fc0f1bdeb8302"
+   },
+   {
+    "kind": "task",
+    "identity": {
+     "artifact_sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "module_path": "dist/index.js",
+     "source_range": {
+      "start": {
+       "line": 12917,
+       "column": 6
+      },
+      "end": {
+       "line": 12917,
+       "column": 29
+      }
+     },
+     "role_key": "promise:awaited-expression:483640:483663"
+    },
+    "function_node_id": "jsrg_node_a504c7ed55492f706f3b264bd84008d69ef75862c1931f4bf7c675270706be79",
+    "application_node_ids": [],
+    "label": "awaited expression",
+    "properties": {
+     "method": "await",
+     "operation_kind": "awaited-expression",
+     "ownership": "awaited",
+     "source_resolution": "unresolved"
+    },
+    "evidence": {
+     "context_id": "jsrg_evidence_f19fa72a126c0bccd170060f644f9196b72a310339a996b2ad28a440881061f0",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12917,
+        "column": 6
+       },
+       "end": {
+        "line": 12917,
+        "column": 29
+       }
+      }
+     }
+    },
+    "node_id": "jsrg_node_e21197a21c5ddc387a6bfe2821081af945e938ecd76e3be95a42ec0ea147f627"
+   }
+  ],
+  "relations": [
+   {
+    "source_node_id": "jsrg_node_4fa9662dec4215300459b046a2c0e3e0a274b3c83eb9a211123d03646ae2fd4a",
+    "target_node_id": "jsrg_node_834dd9896cf6b38332200463161f5860123f2f2c900312460bfe2c2b72f4b437",
+    "relation": "reads",
+    "resolution": "resolved",
+    "properties": {},
+    "evidence": {
+     "context_id": "jsrg_evidence_673e93d11849f8ffc37a0578f1ce66afeb90419b5b61fc6267ba721e6e47f7d2",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12892,
+        "column": 44
+       },
+       "end": {
+        "line": 12892,
+        "column": 58
+       }
+      }
+     }
+    },
+    "relation_id": "jsrg_relation_117fb8ada7e61ef52d3fc52620bb9e33706a4098c7e16aa5c5741338801c3b74"
+   },
+   {
+    "source_node_id": "jsrg_node_4fa9662dec4215300459b046a2c0e3e0a274b3c83eb9a211123d03646ae2fd4a",
+    "target_node_id": "jsrg_node_a504c7ed55492f706f3b264bd84008d69ef75862c1931f4bf7c675270706be79",
+    "relation": "captures",
+    "resolution": "resolved",
+    "properties": {},
+    "evidence": {
+     "context_id": "jsrg_evidence_673e93d11849f8ffc37a0578f1ce66afeb90419b5b61fc6267ba721e6e47f7d2",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12892,
+        "column": 44
+       },
+       "end": {
+        "line": 12892,
+        "column": 58
+       }
+      }
+     }
+    },
+    "relation_id": "jsrg_relation_1cf686f09fd7701abfa2ba83990ab9aa9ad8d425d5afb88e1599d5fca16e3bbe"
+   },
+   {
+    "source_node_id": "jsrg_node_a504c7ed55492f706f3b264bd84008d69ef75862c1931f4bf7c675270706be79",
+    "target_node_id": "jsrg_node_e21197a21c5ddc387a6bfe2821081af945e938ecd76e3be95a42ec0ea147f627",
+    "relation": "awaits",
+    "resolution": "resolved",
+    "properties": {},
+    "evidence": {
+     "context_id": "jsrg_evidence_673e93d11849f8ffc37a0578f1ce66afeb90419b5b61fc6267ba721e6e47f7d2",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12888,
+        "column": 2
+       },
+       "end": {
+        "line": 12971,
+        "column": 3
+       }
+      }
+     }
+    },
+    "relation_id": "jsrg_relation_211f1ace90b1d6892d8d76c8c10ef8744a8bbf29aab2fb234ff6346d56314329"
+   },
+   {
+    "source_node_id": "jsrg_node_a504c7ed55492f706f3b264bd84008d69ef75862c1931f4bf7c675270706be79",
+    "target_node_id": "jsrg_node_a85e92912d0ba512ae9116d36c556ae9bd0734cca47adbe2804558727d53ac3b",
+    "relation": "awaits",
+    "resolution": "resolved",
+    "properties": {},
+    "evidence": {
+     "context_id": "jsrg_evidence_673e93d11849f8ffc37a0578f1ce66afeb90419b5b61fc6267ba721e6e47f7d2",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12888,
+        "column": 2
+       },
+       "end": {
+        "line": 12971,
+        "column": 3
+       }
+      }
+     }
+    },
+    "relation_id": "jsrg_relation_42d7f356cf08c26d8d21dbd37364fcc8165b668d305d30f0d4ad74cdc54c1a9c"
+   },
+   {
+    "source_node_id": "jsrg_node_a504c7ed55492f706f3b264bd84008d69ef75862c1931f4bf7c675270706be79",
+    "target_node_id": "jsrg_node_df523f9f0a95f6977b86f87d9d618ca6bcf064483d7cbffc083fc0f1bdeb8302",
+    "relation": "awaits",
+    "resolution": "resolved",
+    "properties": {},
+    "evidence": {
+     "context_id": "jsrg_evidence_673e93d11849f8ffc37a0578f1ce66afeb90419b5b61fc6267ba721e6e47f7d2",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12888,
+        "column": 2
+       },
+       "end": {
+        "line": 12971,
+        "column": 3
+       }
+      }
+     }
+    },
+    "relation_id": "jsrg_relation_671c2cec3c85135707b2f7611c635b89eee99adf238e5668e2a3637f6cefe6de"
+   },
+   {
+    "source_node_id": "jsrg_node_12c66e0e075760814f7d7ab3764314140140e688f04019b6c04715af08b3d2b1",
+    "target_node_id": "jsrg_node_4fa9662dec4215300459b046a2c0e3e0a274b3c83eb9a211123d03646ae2fd4a",
+    "relation": "defines",
+    "resolution": "resolved",
+    "properties": {},
+    "evidence": {
+     "context_id": "jsrg_evidence_673e93d11849f8ffc37a0578f1ce66afeb90419b5b61fc6267ba721e6e47f7d2",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12668,
+        "column": 4
+       },
+       "end": {
+        "line": 12668,
+        "column": 18
+       }
+      }
+     }
+    },
+    "relation_id": "jsrg_relation_f59831e29d0b688865cc904feeb58d94894b1f8b06b4bb269c5f48b209fb2c56"
+   }
+  ],
+  "unknowns": [
+   {
+    "node_id": "jsrg_node_a504c7ed55492f706f3b264bd84008d69ef75862c1931f4bf7c675270706be79",
+    "family": "call-flow",
+    "relation_kinds": [
+     "calls"
+    ],
+    "reason": "dynamic-call",
+    "detail": "Unsupported MemberExpression call target.",
+    "candidate_node_ids": [],
+    "evidence": {
+     "context_id": "jsrg_evidence_d0e1a487d6a06beb1f150e2b36d5202c590659311850aa5576eb823c6f8f1465",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12931,
+        "column": 4
+       },
+       "end": {
+        "line": 12931,
+        "column": 32
+       }
+      }
+     }
+    },
+    "unknown_id": "jsrg_unknown_05cc443823b7f23e54379e4dab26ee6f15628256dfebbe75ffe156cbe5739978"
+   },
+   {
+    "node_id": "jsrg_node_df523f9f0a95f6977b86f87d9d618ca6bcf064483d7cbffc083fc0f1bdeb8302",
+    "family": "promise-ownership",
+    "relation_kinds": [
+     "chains"
+    ],
+    "reason": "ambiguous-target",
+    "detail": "Static await source resolution was unresolved.",
+    "candidate_node_ids": [],
+    "evidence": {
+     "context_id": "jsrg_evidence_d0e1a487d6a06beb1f150e2b36d5202c590659311850aa5576eb823c6f8f1465",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12919,
+        "column": 8
+       },
+       "end": {
+        "line": 12919,
+        "column": 50
+       }
+      }
+     }
+    },
+    "unknown_id": "jsrg_unknown_0fe20f3c74d7b624f39c45f4b0a59b8c7a9f91102d580464739b4c8e9dde44d5"
+   },
+   {
+    "node_id": "jsrg_node_a504c7ed55492f706f3b264bd84008d69ef75862c1931f4bf7c675270706be79",
+    "family": "call-flow",
+    "relation_kinds": [
+     "calls"
+    ],
+    "reason": "dynamic-call",
+    "detail": "Unsupported MemberExpression call target.",
+    "candidate_node_ids": [],
+    "evidence": {
+     "context_id": "jsrg_evidence_d0e1a487d6a06beb1f150e2b36d5202c590659311850aa5576eb823c6f8f1465",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12917,
+        "column": 12
+       },
+       "end": {
+        "line": 12917,
+        "column": 27
+       }
+      }
+     }
+    },
+    "unknown_id": "jsrg_unknown_40db580da1e8a8dc4290dfb39d34aad64ad4ee8378a2c1bd3cbe65c6404f7b6d"
+   },
+   {
+    "node_id": "jsrg_node_a504c7ed55492f706f3b264bd84008d69ef75862c1931f4bf7c675270706be79",
+    "family": "call-flow",
+    "relation_kinds": [
+     "calls"
+    ],
+    "reason": "dynamic-call",
+    "detail": "Unsupported MemberExpression call target.",
+    "candidate_node_ids": [],
+    "evidence": {
+     "context_id": "jsrg_evidence_d0e1a487d6a06beb1f150e2b36d5202c590659311850aa5576eb823c6f8f1465",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12892,
+        "column": 19
+       },
+       "end": {
+        "line": 12892,
+        "column": 36
+       }
+      }
+     }
+    },
+    "unknown_id": "jsrg_unknown_5616f578077818d992017885c1afeaf2f8798155712bc26f954baeefb44c300a"
+   },
+   {
+    "node_id": "jsrg_node_e21197a21c5ddc387a6bfe2821081af945e938ecd76e3be95a42ec0ea147f627",
+    "family": "promise-ownership",
+    "relation_kinds": [
+     "chains"
+    ],
+    "reason": "ambiguous-target",
+    "detail": "Static await source resolution was unresolved.",
+    "candidate_node_ids": [],
+    "evidence": {
+     "context_id": "jsrg_evidence_d0e1a487d6a06beb1f150e2b36d5202c590659311850aa5576eb823c6f8f1465",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12917,
+        "column": 6
+       },
+       "end": {
+        "line": 12917,
+        "column": 29
+       }
+      }
+     }
+    },
+    "unknown_id": "jsrg_unknown_65a62ea87aa58cd39938cf560e28afece5c8350130336b72cbed04fc9b13abee"
+   },
+   {
+    "node_id": "jsrg_node_a504c7ed55492f706f3b264bd84008d69ef75862c1931f4bf7c675270706be79",
+    "family": "call-flow",
+    "relation_kinds": [
+     "calls"
+    ],
+    "reason": "dynamic-call",
+    "detail": "Unresolved call target URL.",
+    "candidate_node_ids": [],
+    "evidence": {
+     "context_id": "jsrg_evidence_d0e1a487d6a06beb1f150e2b36d5202c590659311850aa5576eb823c6f8f1465",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12889,
+        "column": 21
+       },
+       "end": {
+        "line": 12889,
+        "column": 24
+       }
+      }
+     }
+    },
+    "unknown_id": "jsrg_unknown_90727b509d678dd4970c221e8936fea499485e093ac4e4c6de3bc131a6fcbe1e"
+   },
+   {
+    "node_id": "jsrg_node_a504c7ed55492f706f3b264bd84008d69ef75862c1931f4bf7c675270706be79",
+    "family": "call-flow",
+    "relation_kinds": [
+     "calls"
+    ],
+    "reason": "dynamic-call",
+    "detail": "Unsupported MemberExpression call target.",
+    "candidate_node_ids": [],
+    "evidence": {
+     "context_id": "jsrg_evidence_d0e1a487d6a06beb1f150e2b36d5202c590659311850aa5576eb823c6f8f1465",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12891,
+        "column": 16
+       },
+       "end": {
+        "line": 12891,
+        "column": 33
+       }
+      }
+     }
+    },
+    "unknown_id": "jsrg_unknown_a64b9e51dce2ef5fcc04c2d89dcce85f8d887ae43680764534c3fa14bae80546"
+   },
+   {
+    "node_id": "jsrg_node_a504c7ed55492f706f3b264bd84008d69ef75862c1931f4bf7c675270706be79",
+    "family": "call-flow",
+    "relation_kinds": [
+     "calls"
+    ],
+    "reason": "dynamic-call",
+    "detail": "Unsupported MemberExpression call target.",
+    "candidate_node_ids": [],
+    "evidence": {
+     "context_id": "jsrg_evidence_d0e1a487d6a06beb1f150e2b36d5202c590659311850aa5576eb823c6f8f1465",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12919,
+        "column": 14
+       },
+       "end": {
+        "line": 12919,
+        "column": 48
+       }
+      }
+     }
+    },
+    "unknown_id": "jsrg_unknown_d64c8bc7a90be7847af1c4a04e1726f16bf1bd185b27fca8c6b8ad699824dfe4"
+   },
+   {
+    "node_id": "jsrg_node_a504c7ed55492f706f3b264bd84008d69ef75862c1931f4bf7c675270706be79",
+    "family": "call-flow",
+    "relation_kinds": [
+     "calls"
+    ],
+    "reason": "dynamic-call",
+    "detail": "Unresolved call target Promise.",
+    "candidate_node_ids": [],
+    "evidence": {
+     "context_id": "jsrg_evidence_d0e1a487d6a06beb1f150e2b36d5202c590659311850aa5576eb823c6f8f1465",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12932,
+        "column": 14
+       },
+       "end": {
+        "line": 12932,
+        "column": 21
+       }
+      }
+     }
+    },
+    "unknown_id": "jsrg_unknown_ed31c14f95b2b9952f46683415d1f208cc752febcb6487374f97b8cedeb9a1e2"
+   }
+  ],
+  "expected_match_node_ids": [],
+  "summary": {
+   "total_seed_matches": 1,
+   "traversed_nodes": 7,
+   "traversed_relations": 6,
+   "traversed_functions": 1,
+   "traversed_modules": 1,
+   "relevant_unknowns": 9
+  },
+  "coverage": {
+   "status": "partial"
+  },
+  "limitations": [
+   "Boundary extraction covers unshadowed JSON/global coercions plus parse and validation method candidates.",
+   "Candidate relations remain ambiguous and do not establish a resolved semantic path.",
+   "Child-process extraction covers asynchronous node:child_process creation, literal argv/env/stdio options, exit/error listeners, and kill signals.",
+   "Configuration extraction covers process.env, process.argv, node:fs reads, and direct logical defaults.",
+   "Event extraction covers EventEmitter-style literal registrations, removals, and dispatch candidates; dynamic names remain unknown.",
+   "Function fingerprints are static candidates; equal digests can remain ambiguous and do not prove behavioral equivalence.",
+   "Local data flow does not claim control-flow-sensitive reaching definitions or arbitrary dynamic property resolution.",
+   "Promise ownership covers explicit unshadowed Promise construction, static factories, aggregation, chaining, and await syntax only.",
+   "Relevant dynamic, unsupported, incomplete, or ambiguous semantics remain unknown.",
+   "Request extraction covers fetch, WebSocket, node:http/node:https construction, direct option fields, and exact local response consumers.",
+   "Resource extraction covers built-in filesystem/network acquisition and exact local close/destroy/end handles.",
+   "Semantic graph reachability is a static inference and does not prove runtime execution.",
+   "The semantic graph contains static syntax observations and conservative relationship candidates; it does not claim runtime execution.",
+   "Timer extraction covers global or node:timers scheduling and exact local-handle cancellation."
+  ],
+  "source_evidence_id": "ev_189c2c3189fc489ed53a4415252914195b3acab96a5d46ce488ebad64e372505",
+  "evidence_links": [
+   "ev_189c2c3189fc489ed53a4415252914195b3acab96a5d46ce488ebad64e372505"
+  ]
+ },
+ "confidence": "inferred",
+ "authority": "analyst-inference",
+ "environment": null,
+ "limitations": [
+  "Artifact identity is unavailable for this observation.",
+  "Boundary extraction covers unshadowed JSON/global coercions plus parse and validation method candidates.",
+  "Candidate relations remain ambiguous and do not establish a resolved semantic path.",
+  "Child-process extraction covers asynchronous node:child_process creation, literal argv/env/stdio options, exit/error listeners, and kill signals.",
+  "Configuration extraction covers process.env, process.argv, node:fs reads, and direct logical defaults.",
+  "Event extraction covers EventEmitter-style literal registrations, removals, and dispatch candidates; dynamic names remain unknown.",
+  "Function fingerprints are static candidates; equal digests can remain ambiguous and do not prove behavioral equivalence.",
+  "Local data flow does not claim control-flow-sensitive reaching definitions or arbitrary dynamic property resolution.",
+  "Promise ownership covers explicit unshadowed Promise construction, static factories, aggregation, chaining, and await syntax only.",
+  "Relevant dynamic, unsupported, incomplete, or ambiguous semantics remain unknown.",
+  "Request extraction covers fetch, WebSocket, node:http/node:https construction, direct option fields, and exact local response consumers.",
+  "Resource extraction covers built-in filesystem/network acquisition and exact local close/destroy/end handles.",
+  "Semantic graph reachability is a static inference and does not prove runtime execution.",
+  "The semantic graph contains static syntax observations and conservative relationship candidates; it does not claim runtime execution.",
+  "Timer extraction covers global or node:timers scheduling and exact local-handle cancellation."
+ ],
+ "relationship_coverage": null,
+ "locations": [],
+ "evidence_links": [
+  "ev_189c2c3189fc489ed53a4415252914195b3acab96a5d46ce488ebad64e372505"
+ ]
+}

@@ -1,0 +1,587 @@
+{
+ "evidence_id": "ev_9ed012dda2b97a8aec28753990590c9bc986cf4fd72122fc4891249df60112c7",
+ "subject": null,
+ "provider": {
+  "id": "rea-javascript-application-workflows",
+  "name": "REA JavaScript application workflows",
+  "version": "1"
+ },
+ "analysis_profile": null,
+ "predicate_type": "rea.javascript-semantic-trace",
+ "operation": "trace_javascript_semantics",
+ "parameters": {
+  "application_evidence_id": "ev_189c2c3189fc489ed53a4415252914195b3acab96a5d46ce488ebad64e372505",
+  "query": {
+   "seed": {
+    "kind": "semantic-node",
+    "node_id": "jsrg_node_7519ca5e069e511bc2758a009712fb8fc74292c62dc7df6f70434f0b4e4b94cb"
+   },
+   "direction": "forward-influence",
+   "include_ambiguous_dynamic_edges": false,
+   "expected": {
+    "role": "sink",
+    "classes": [
+     "timer",
+     "call-site",
+     "request"
+    ]
+   }
+  }
+ },
+ "raw_result": null,
+ "normalized_result": {
+  "query_id": "jsrq_919d83bc63536ed203bfc181d138db5c007eeac307fecca8b287002c9ebeec5a",
+  "source_graph_id": "jsrg_e7f308ea88b9aaa7da5291b9d46470a48f298db183efd1b1d5a8538209e97bac",
+  "seed": {
+   "kind": "semantic-node",
+   "node_id": "jsrg_node_7519ca5e069e511bc2758a009712fb8fc74292c62dc7df6f70434f0b4e4b94cb"
+  },
+  "direction": "forward-influence",
+  "status": "partial",
+  "seed_node_ids": [
+   "jsrg_node_7519ca5e069e511bc2758a009712fb8fc74292c62dc7df6f70434f0b4e4b94cb"
+  ],
+  "evidence_contexts": [
+   {
+    "authority": "static-relationship-inference",
+    "state": "inferred",
+    "confidence": "high",
+    "artifact": {
+     "available": true,
+     "artifact_id": "art_853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965"
+    },
+    "extractor": {
+     "name": "rea-javascript-semantic-analysis",
+     "version": "1",
+     "operation": "analyze_javascript_application",
+     "executable_sha256": null
+    },
+    "coverage": {
+     "status": "complete",
+     "truncated": false,
+     "omitted_count": 0,
+     "limits": []
+    },
+    "limitations": [
+     "This relationship is a conservative static candidate; it does not prove runtime execution or causal flow."
+    ],
+    "evidence_ids": [],
+    "context_id": "jsrg_evidence_673e93d11849f8ffc37a0578f1ce66afeb90419b5b61fc6267ba721e6e47f7d2"
+   },
+   {
+    "authority": "unknown",
+    "state": "unknown",
+    "confidence": "unknown",
+    "artifact": {
+     "available": true,
+     "artifact_id": "art_853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965"
+    },
+    "extractor": {
+     "name": "rea-javascript-semantic-analysis",
+     "version": "1",
+     "operation": "analyze_javascript_application",
+     "executable_sha256": null
+    },
+    "coverage": {
+     "status": "complete",
+     "truncated": false,
+     "omitted_count": 0,
+     "limits": []
+    },
+    "limitations": [
+     "Dynamic syntax prevents an exact static relationship."
+    ],
+    "evidence_ids": [],
+    "context_id": "jsrg_evidence_d0e1a487d6a06beb1f150e2b36d5202c590659311850aa5576eb823c6f8f1465"
+   },
+   {
+    "authority": "ast-static-analysis",
+    "state": "observed",
+    "confidence": "exact",
+    "artifact": {
+     "available": true,
+     "artifact_id": "art_853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965"
+    },
+    "extractor": {
+     "name": "rea-javascript-semantic-analysis",
+     "version": "1",
+     "operation": "analyze_javascript_application",
+     "executable_sha256": null
+    },
+    "coverage": {
+     "status": "complete",
+     "truncated": false,
+     "omitted_count": 0,
+     "limits": []
+    },
+    "limitations": [],
+    "evidence_ids": [],
+    "context_id": "jsrg_evidence_f19fa72a126c0bccd170060f644f9196b72a310339a996b2ad28a440881061f0"
+   }
+  ],
+  "nodes": [
+   {
+    "kind": "literal",
+    "identity": {
+     "artifact_sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "module_path": "dist/index.js",
+     "source_range": {
+      "start": {
+       "line": 12671,
+       "column": 4
+      },
+      "end": {
+       "line": 12671,
+       "column": 23
+      }
+     },
+     "role_key": "literal:scope:program:0:489992:binding:DISCONNECT_GRACE_MS:binding:6000"
+    },
+    "function_node_id": null,
+    "application_node_ids": [],
+    "label": "6000",
+    "properties": {
+     "value": 6000
+    },
+    "evidence": {
+     "context_id": "jsrg_evidence_f19fa72a126c0bccd170060f644f9196b72a310339a996b2ad28a440881061f0",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12671,
+        "column": 4
+       },
+       "end": {
+        "line": 12671,
+        "column": 23
+       }
+      }
+     }
+    },
+    "node_id": "jsrg_node_7519ca5e069e511bc2758a009712fb8fc74292c62dc7df6f70434f0b4e4b94cb"
+   },
+   {
+    "kind": "expression",
+    "identity": {
+     "artifact_sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "module_path": "dist/index.js",
+     "source_range": {
+      "start": {
+       "line": 12993,
+       "column": 11
+      },
+      "end": {
+       "line": 12993,
+       "column": 30
+      }
+     },
+     "role_key": "reference:8755:read:DISCONNECT_GRACE_MS"
+    },
+    "function_node_id": "jsrg_node_f1d03fdef813c0c0a34765c1bbc13eb8751cb993d6e63dbd61407fa9eebaf727",
+    "application_node_ids": [],
+    "label": "DISCONNECT_GRACE_MS",
+    "properties": {},
+    "evidence": {
+     "context_id": "jsrg_evidence_f19fa72a126c0bccd170060f644f9196b72a310339a996b2ad28a440881061f0",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12993,
+        "column": 11
+       },
+       "end": {
+        "line": 12993,
+        "column": 30
+       }
+      }
+     }
+    },
+    "node_id": "jsrg_node_95c75ff5e69fb11df4080c30a7d2e2ead965743d777b3f1dbdee86c24cd907ee"
+   },
+   {
+    "kind": "expression",
+    "identity": {
+     "artifact_sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "module_path": "dist/index.js",
+     "source_range": {
+      "start": {
+       "line": 12993,
+       "column": 11
+      },
+      "end": {
+       "line": 12993,
+       "column": 30
+      }
+     },
+     "role_key": "argument:call:call:486345:486579:1"
+    },
+    "function_node_id": "jsrg_node_f1d03fdef813c0c0a34765c1bbc13eb8751cb993d6e63dbd61407fa9eebaf727",
+    "application_node_ids": [],
+    "label": "argument 1",
+    "properties": {},
+    "evidence": {
+     "context_id": "jsrg_evidence_f19fa72a126c0bccd170060f644f9196b72a310339a996b2ad28a440881061f0",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12993,
+        "column": 11
+       },
+       "end": {
+        "line": 12993,
+        "column": 30
+       }
+      }
+     }
+    },
+    "node_id": "jsrg_node_9627711fcf7481c82ef82f6b5696c535110ee1916bf035104b6d6542e94be73b"
+   },
+   {
+    "kind": "binding",
+    "identity": {
+     "artifact_sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "module_path": "dist/index.js",
+     "source_range": {
+      "start": {
+       "line": 12671,
+       "column": 4
+      },
+      "end": {
+       "line": 12671,
+       "column": 23
+      }
+     },
+     "role_key": "binding:scope:program:0:489992:binding:DISCONNECT_GRACE_MS"
+    },
+    "function_node_id": null,
+    "application_node_ids": [],
+    "label": "DISCONNECT_GRACE_MS",
+    "properties": {},
+    "evidence": {
+     "context_id": "jsrg_evidence_f19fa72a126c0bccd170060f644f9196b72a310339a996b2ad28a440881061f0",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12671,
+        "column": 4
+       },
+       "end": {
+        "line": 12671,
+        "column": 23
+       }
+      }
+     }
+    },
+    "node_id": "jsrg_node_d6a84f029861ebdaf8e1e00cb64423d98ec35db17f405e153d6be57b5be00071"
+   },
+   {
+    "kind": "function",
+    "identity": {
+     "artifact_sha256": "853a3a0180e5039dece3595b4038bda60e8add58b06cfffb5b9c59bb25d9c965",
+     "module_path": "dist/index.js",
+     "source_range": {
+      "start": {
+       "line": 12982,
+       "column": 20
+      },
+      "end": {
+       "line": 12998,
+       "column": 5
+      }
+     },
+     "role_key": "callable:callable:function:486103:486713"
+    },
+    "function_node_id": null,
+    "application_node_ids": [],
+    "label": "onState",
+    "properties": {
+     "name": "onState"
+    },
+    "evidence": {
+     "context_id": "jsrg_evidence_f19fa72a126c0bccd170060f644f9196b72a310339a996b2ad28a440881061f0",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12982,
+        "column": 20
+       },
+       "end": {
+        "line": 12998,
+        "column": 5
+       }
+      }
+     }
+    },
+    "node_id": "jsrg_node_f1d03fdef813c0c0a34765c1bbc13eb8751cb993d6e63dbd61407fa9eebaf727"
+   }
+  ],
+  "relations": [
+   {
+    "source_node_id": "jsrg_node_d6a84f029861ebdaf8e1e00cb64423d98ec35db17f405e153d6be57b5be00071",
+    "target_node_id": "jsrg_node_f1d03fdef813c0c0a34765c1bbc13eb8751cb993d6e63dbd61407fa9eebaf727",
+    "relation": "captures",
+    "resolution": "resolved",
+    "properties": {},
+    "evidence": {
+     "context_id": "jsrg_evidence_673e93d11849f8ffc37a0578f1ce66afeb90419b5b61fc6267ba721e6e47f7d2",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12993,
+        "column": 11
+       },
+       "end": {
+        "line": 12993,
+        "column": 30
+       }
+      }
+     }
+    },
+    "relation_id": "jsrg_relation_2233cb041765172bec545610df6766c98c11c68f4a55bdb460f90513ae3fde89"
+   },
+   {
+    "source_node_id": "jsrg_node_d6a84f029861ebdaf8e1e00cb64423d98ec35db17f405e153d6be57b5be00071",
+    "target_node_id": "jsrg_node_95c75ff5e69fb11df4080c30a7d2e2ead965743d777b3f1dbdee86c24cd907ee",
+    "relation": "reads",
+    "resolution": "resolved",
+    "properties": {},
+    "evidence": {
+     "context_id": "jsrg_evidence_673e93d11849f8ffc37a0578f1ce66afeb90419b5b61fc6267ba721e6e47f7d2",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12993,
+        "column": 11
+       },
+       "end": {
+        "line": 12993,
+        "column": 30
+       }
+      }
+     }
+    },
+    "relation_id": "jsrg_relation_46abee81e97eca68586c2b3320f8a0ea26e024181d9a8db53b6066493b653d78"
+   },
+   {
+    "source_node_id": "jsrg_node_95c75ff5e69fb11df4080c30a7d2e2ead965743d777b3f1dbdee86c24cd907ee",
+    "target_node_id": "jsrg_node_9627711fcf7481c82ef82f6b5696c535110ee1916bf035104b6d6542e94be73b",
+    "relation": "aliases",
+    "resolution": "resolved",
+    "properties": {},
+    "evidence": {
+     "context_id": "jsrg_evidence_673e93d11849f8ffc37a0578f1ce66afeb90419b5b61fc6267ba721e6e47f7d2",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12993,
+        "column": 11
+       },
+       "end": {
+        "line": 12993,
+        "column": 30
+       }
+      }
+     }
+    },
+    "relation_id": "jsrg_relation_861b253c55ab5566c1288847c11d26066cbb9f99f3901163fed8473b62f72947"
+   },
+   {
+    "source_node_id": "jsrg_node_7519ca5e069e511bc2758a009712fb8fc74292c62dc7df6f70434f0b4e4b94cb",
+    "target_node_id": "jsrg_node_d6a84f029861ebdaf8e1e00cb64423d98ec35db17f405e153d6be57b5be00071",
+    "relation": "defines",
+    "resolution": "resolved",
+    "properties": {},
+    "evidence": {
+     "context_id": "jsrg_evidence_673e93d11849f8ffc37a0578f1ce66afeb90419b5b61fc6267ba721e6e47f7d2",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12671,
+        "column": 4
+       },
+       "end": {
+        "line": 12671,
+        "column": 23
+       }
+      }
+     }
+    },
+    "relation_id": "jsrg_relation_f5d81800cc22f1ce44d5254461193c2acd1a60aa1a4a22085ab702c76b00d27e"
+   }
+  ],
+  "unknowns": [
+   {
+    "node_id": "jsrg_node_f1d03fdef813c0c0a34765c1bbc13eb8751cb993d6e63dbd61407fa9eebaf727",
+    "family": "call-flow",
+    "relation_kinds": [
+     "calls"
+    ],
+    "reason": "dynamic-call",
+    "detail": "Unresolved call target clearTimeout.",
+    "candidate_node_ids": [],
+    "evidence": {
+     "context_id": "jsrg_evidence_d0e1a487d6a06beb1f150e2b36d5202c590659311850aa5576eb823c6f8f1465",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12995,
+        "column": 8
+       },
+       "end": {
+        "line": 12995,
+        "column": 20
+       }
+      }
+     }
+    },
+    "unknown_id": "jsrg_unknown_8f63d71ed80c5d4b5dc2fcec2344e4a741081251c344e6fc2224e82ad61e7bbb"
+   },
+   {
+    "node_id": "jsrg_node_f1d03fdef813c0c0a34765c1bbc13eb8751cb993d6e63dbd61407fa9eebaf727",
+    "family": "call-flow",
+    "relation_kinds": [
+     "calls"
+    ],
+    "reason": "dynamic-call",
+    "detail": "Unresolved call target setTimeout.",
+    "candidate_node_ids": [],
+    "evidence": {
+     "context_id": "jsrg_evidence_d0e1a487d6a06beb1f150e2b36d5202c590659311850aa5576eb823c6f8f1465",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12988,
+        "column": 30
+       },
+       "end": {
+        "line": 12988,
+        "column": 40
+       }
+      }
+     }
+    },
+    "unknown_id": "jsrg_unknown_b89f20aeab8ffcbde5ff8eb35fdef189185ba9c67a97e2e32d664b1ae897b27b"
+   },
+   {
+    "node_id": "jsrg_node_f1d03fdef813c0c0a34765c1bbc13eb8751cb993d6e63dbd61407fa9eebaf727",
+    "family": "call-flow",
+    "relation_kinds": [
+     "calls"
+    ],
+    "reason": "dynamic-call",
+    "detail": "Unsupported MemberExpression call target.",
+    "candidate_node_ids": [],
+    "evidence": {
+     "context_id": "jsrg_evidence_d0e1a487d6a06beb1f150e2b36d5202c590659311850aa5576eb823c6f8f1465",
+     "location": {
+      "available": true,
+      "value": {
+       "kind": "source-range",
+       "source": "dist/index.js",
+       "start": {
+        "line": 12985,
+        "column": 8
+       },
+       "end": {
+        "line": 12985,
+        "column": 21
+       }
+      }
+     }
+    },
+    "unknown_id": "jsrg_unknown_bc74a70b7c1e0cc14b8cc18d9b5489f1d4bfedfd8eea0ff6475b35c81ad91dac"
+   }
+  ],
+  "expected_match_node_ids": [],
+  "summary": {
+   "total_seed_matches": 1,
+   "traversed_nodes": 5,
+   "traversed_relations": 4,
+   "traversed_functions": 1,
+   "traversed_modules": 1,
+   "relevant_unknowns": 3
+  },
+  "coverage": {
+   "status": "partial"
+  },
+  "limitations": [
+   "Boundary extraction covers unshadowed JSON/global coercions plus parse and validation method candidates.",
+   "Child-process extraction covers asynchronous node:child_process creation, literal argv/env/stdio options, exit/error listeners, and kill signals.",
+   "Configuration extraction covers process.env, process.argv, node:fs reads, and direct logical defaults.",
+   "Event extraction covers EventEmitter-style literal registrations, removals, and dispatch candidates; dynamic names remain unknown.",
+   "Function fingerprints are static candidates; equal digests can remain ambiguous and do not prove behavioral equivalence.",
+   "Local data flow does not claim control-flow-sensitive reaching definitions or arbitrary dynamic property resolution.",
+   "Promise ownership covers explicit unshadowed Promise construction, static factories, aggregation, chaining, and await syntax only.",
+   "Relevant dynamic, unsupported, incomplete, or ambiguous semantics remain unknown.",
+   "Request extraction covers fetch, WebSocket, node:http/node:https construction, direct option fields, and exact local response consumers.",
+   "Resource extraction covers built-in filesystem/network acquisition and exact local close/destroy/end handles.",
+   "Semantic graph reachability is a static inference and does not prove runtime execution.",
+   "The semantic graph contains static syntax observations and conservative relationship candidates; it does not claim runtime execution.",
+   "Timer extraction covers global or node:timers scheduling and exact local-handle cancellation."
+  ],
+  "source_evidence_id": "ev_189c2c3189fc489ed53a4415252914195b3acab96a5d46ce488ebad64e372505",
+  "evidence_links": [
+   "ev_189c2c3189fc489ed53a4415252914195b3acab96a5d46ce488ebad64e372505"
+  ]
+ },
+ "confidence": "inferred",
+ "authority": "analyst-inference",
+ "environment": null,
+ "limitations": [
+  "Artifact identity is unavailable for this observation.",
+  "Boundary extraction covers unshadowed JSON/global coercions plus parse and validation method candidates.",
+  "Child-process extraction covers asynchronous node:child_process creation, literal argv/env/stdio options, exit/error listeners, and kill signals.",
+  "Configuration extraction covers process.env, process.argv, node:fs reads, and direct logical defaults.",
+  "Event extraction covers EventEmitter-style literal registrations, removals, and dispatch candidates; dynamic names remain unknown.",
+  "Function fingerprints are static candidates; equal digests can remain ambiguous and do not prove behavioral equivalence.",
+  "Local data flow does not claim control-flow-sensitive reaching definitions or arbitrary dynamic property resolution.",
+  "Promise ownership covers explicit unshadowed Promise construction, static factories, aggregation, chaining, and await syntax only.",
+  "Relevant dynamic, unsupported, incomplete, or ambiguous semantics remain unknown.",
+  "Request extraction covers fetch, WebSocket, node:http/node:https construction, direct option fields, and exact local response consumers.",
+  "Resource extraction covers built-in filesystem/network acquisition and exact local close/destroy/end handles.",
+  "Semantic graph reachability is a static inference and does not prove runtime execution.",
+  "The semantic graph contains static syntax observations and conservative relationship candidates; it does not claim runtime execution.",
+  "Timer extraction covers global or node:timers scheduling and exact local-handle cancellation."
+ ],
+ "relationship_coverage": null,
+ "locations": [],
+ "evidence_links": [
+  "ev_189c2c3189fc489ed53a4415252914195b3acab96a5d46ce488ebad64e372505"
+ ]
+}

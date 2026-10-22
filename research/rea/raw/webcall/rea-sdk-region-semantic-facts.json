@@ -1,0 +1,1672 @@
+{
+ "parent_evidence_id": "ev_189c2c3189fc489ed53a4415252914195b3acab96a5d46ce488ebad64e372505",
+ "subject_sha256": {
+  "sha256": "4a22a7520fd5b9340c66f5f9d8fcff1434d3346cbcdf61108f1b01f3b1b9066a"
+ },
+ "note": "Semantic nodes REA retained inside the SDK region (dist/index.js lines 12632-13092: the src/events.ts and src/call.ts modules per the bundle source map). Kinds limited to literal/timer/request/response/event/listener/task/promise/boundary/function. Source text is not included.",
+ "nodes": [
+  {
+   "kind": "function",
+   "label": "Emitter",
+   "properties": {
+    "name": "Emitter"
+   },
+   "range": {
+    "start": {
+     "line": 12633,
+     "column": 14
+    },
+    "end": {
+     "line": 12665,
+     "column": 1
+    }
+   },
+   "node_id": "jsrg_node_a36e5e6e60b81a4af9d6e6ad8dfcb4f53bb9f3e520f4a8003aae38254c3c7f7a"
+  },
+  {
+   "kind": "function",
+   "label": "constructor",
+   "properties": {
+    "name": "constructor"
+   },
+   "range": {
+    "start": {
+     "line": 12634,
+     "column": 2
+    },
+    "end": {
+     "line": 12636,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_838ab2e1907bb51ed67fa8bf130b5087ddcdcc12c6abee908094892b85311bd4"
+  },
+  {
+   "kind": "function",
+   "label": "on",
+   "properties": {
+    "name": "on"
+   },
+   "range": {
+    "start": {
+     "line": 12637,
+     "column": 2
+    },
+    "end": {
+     "line": 12641,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_6422a075e3cc04365c9ad233595cc51747626ffbc0a0e45947ba65d01636551b"
+  },
+  {
+   "kind": "function",
+   "label": "once",
+   "properties": {
+    "name": "once"
+   },
+   "range": {
+    "start": {
+     "line": 12642,
+     "column": 2
+    },
+    "end": {
+     "line": 12648,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_c0ae961332babbcf89ce6580c5c1f1275ec00b3cf0b8d464e83ad8fcdf025426"
+  },
+  {
+   "kind": "function",
+   "label": "wrapper",
+   "properties": {
+    "name": "wrapper"
+   },
+   "range": {
+    "start": {
+     "line": 12643,
+     "column": 20
+    },
+    "end": {
+     "line": 12646,
+     "column": 5
+    }
+   },
+   "node_id": "jsrg_node_cdc2916afcc067e543b75a7a7bb2de42d859126c85441f2dd02e4cf9975a4434"
+  },
+  {
+   "kind": "event",
+   "label": null,
+   "properties": {
+    "emitter_key": "this",
+    "event_name": null
+   },
+   "range": {
+    "start": {
+     "line": 12644,
+     "column": 6
+    },
+    "end": {
+     "line": 12644,
+     "column": 30
+    }
+   },
+   "node_id": "jsrg_node_4e1883824d1989e5b2a02a4dd2be8566c1b1febd1b8c09790ea5dbfb922cb8a3"
+  },
+  {
+   "kind": "listener",
+   "label": "off",
+   "properties": {
+    "emitter_key": "this",
+    "event_name": null,
+    "method": "off"
+   },
+   "range": {
+    "start": {
+     "line": 12644,
+     "column": 22
+    },
+    "end": {
+     "line": 12644,
+     "column": 29
+    }
+   },
+   "node_id": "jsrg_node_19597ab60d4336aac00018a0448b8fb9ef37e941ce4f661a0ef382e3015e9c4b"
+  },
+  {
+   "kind": "event",
+   "label": null,
+   "properties": {
+    "emitter_key": "this",
+    "event_name": null
+   },
+   "range": {
+    "start": {
+     "line": 12647,
+     "column": 11
+    },
+    "end": {
+     "line": 12647,
+     "column": 34
+    }
+   },
+   "node_id": "jsrg_node_fb26badf49513fe18c0d519a8243417be5d825586e2adb5e34c1fe418ea3e110"
+  },
+  {
+   "kind": "listener",
+   "label": "on",
+   "properties": {
+    "emitter_key": "this",
+    "event_name": null,
+    "method": "on"
+   },
+   "range": {
+    "start": {
+     "line": 12647,
+     "column": 26
+    },
+    "end": {
+     "line": 12647,
+     "column": 33
+    }
+   },
+   "node_id": "jsrg_node_ff04f436aa7183aa281ef823e70b86672b185bcd2ec8bbb94621ef76d73de574"
+  },
+  {
+   "kind": "function",
+   "label": "off",
+   "properties": {
+    "name": "off"
+   },
+   "range": {
+    "start": {
+     "line": 12649,
+     "column": 2
+    },
+    "end": {
+     "line": 12652,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_d3ada4330c4afe3f9416fa1a1d3a0b38bc94b55e18668cae4e9e05b8507810c9"
+  },
+  {
+   "kind": "function",
+   "label": "emit",
+   "properties": {
+    "name": "emit"
+   },
+   "range": {
+    "start": {
+     "line": 12653,
+     "column": 2
+    },
+    "end": {
+     "line": 12661,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_e0ac2a875110802ced05cbbaee83774aee7a22c83019b8ee7d33c1b7aaaeba9e"
+  },
+  {
+   "kind": "function",
+   "label": "removeAllListeners",
+   "properties": {
+    "name": "removeAllListeners"
+   },
+   "range": {
+    "start": {
+     "line": 12662,
+     "column": 2
+    },
+    "end": {
+     "line": 12664,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_32bc653c7e477eb2927e123010fa71cd6a6982d6f2256d2aa1ab156bee1fc730"
+  },
+  {
+   "kind": "literal",
+   "label": "\"7000\"",
+   "properties": {
+    "value": "7000"
+   },
+   "range": {
+    "start": {
+     "line": 12668,
+     "column": 4
+    },
+    "end": {
+     "line": 12668,
+     "column": 18
+    }
+   },
+   "node_id": "jsrg_node_12c66e0e075760814f7d7ab3764314140140e688f04019b6c04715af08b3d2b1"
+  },
+  {
+   "kind": "literal",
+   "label": "30000",
+   "properties": {
+    "value": 30000
+   },
+   "range": {
+    "start": {
+     "line": 12669,
+     "column": 4
+    },
+    "end": {
+     "line": 12669,
+     "column": 22
+    }
+   },
+   "node_id": "jsrg_node_43cf15a345ec3f0f552c757f7450ce87d83fda5bbdeee252a3ef780f6be942ec"
+  },
+  {
+   "kind": "literal",
+   "label": "100",
+   "properties": {
+    "value": 100
+   },
+   "range": {
+    "start": {
+     "line": 12670,
+     "column": 4
+    },
+    "end": {
+     "line": 12670,
+     "column": 22
+    }
+   },
+   "node_id": "jsrg_node_c6ecc688db5e36a71a8f46b0d77cf5caf233448b921dfa831adc224ad0b6174c"
+  },
+  {
+   "kind": "literal",
+   "label": "6000",
+   "properties": {
+    "value": 6000
+   },
+   "range": {
+    "start": {
+     "line": 12671,
+     "column": 4
+    },
+    "end": {
+     "line": 12671,
+     "column": 23
+    }
+   },
+   "node_id": "jsrg_node_7519ca5e069e511bc2758a009712fb8fc74292c62dc7df6f70434f0b4e4b94cb"
+  },
+  {
+   "kind": "literal",
+   "label": "true",
+   "properties": {
+    "value": true
+   },
+   "range": {
+    "start": {
+     "line": 12672,
+     "column": 4
+    },
+    "end": {
+     "line": 12672,
+     "column": 17
+    }
+   },
+   "node_id": "jsrg_node_21bdb5b101de0c07d092d3e7575b01aed2abcd7731f6e5a2a385fc19b23a5d28"
+  },
+  {
+   "kind": "literal",
+   "label": "true",
+   "properties": {
+    "value": true
+   },
+   "range": {
+    "start": {
+     "line": 12672,
+     "column": 4
+    },
+    "end": {
+     "line": 12672,
+     "column": 17
+    }
+   },
+   "node_id": "jsrg_node_665de650d88bf95409968afa3a8d7b349a298240ceef1b03511219a4fc1e5046"
+  },
+  {
+   "kind": "literal",
+   "label": "true",
+   "properties": {
+    "value": true
+   },
+   "range": {
+    "start": {
+     "line": 12672,
+     "column": 4
+    },
+    "end": {
+     "line": 12672,
+     "column": 17
+    }
+   },
+   "node_id": "jsrg_node_c9146c48e65534a983ce073f3b78fa2a638b1b6048d81ec213fe42865686504e"
+  },
+  {
+   "kind": "function",
+   "label": "WebCallError",
+   "properties": {
+    "name": "WebCallError"
+   },
+   "range": {
+    "start": {
+     "line": 12678,
+     "column": 19
+    },
+    "end": {
+     "line": 12686,
+     "column": 1
+    }
+   },
+   "node_id": "jsrg_node_86a8b5355c62f14587dfaf2b059812935386ed67dbe561f8d3729914b246ce84"
+  },
+  {
+   "kind": "function",
+   "label": "constructor",
+   "properties": {
+    "name": "constructor"
+   },
+   "range": {
+    "start": {
+     "line": 12679,
+     "column": 2
+    },
+    "end": {
+     "line": 12685,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_505d17929080b07345a8ed111c571f052d998a1036b9312195b72aacd9caa70c"
+  },
+  {
+   "kind": "function",
+   "label": "BolnaWebCall",
+   "properties": {
+    "name": "BolnaWebCall"
+   },
+   "range": {
+    "start": {
+     "line": 12687,
+     "column": 19
+    },
+    "end": {
+     "line": 13089,
+     "column": 1
+    }
+   },
+   "node_id": "jsrg_node_aba0d6f65462aca96b6b977b0253b18d5aedd660c0e7c203476b04ede8ed6d91"
+  },
+  {
+   "kind": "function",
+   "label": "constructor",
+   "properties": {
+    "name": "constructor"
+   },
+   "range": {
+    "start": {
+     "line": 12688,
+     "column": 2
+    },
+    "end": {
+     "line": 12714,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_2d819d387735db93654e305f2efa82db10605fe0da1f830f9364887769df3f8c"
+  },
+  {
+   "kind": "function",
+   "label": "getState",
+   "properties": {
+    "name": "getState"
+   },
+   "range": {
+    "start": {
+     "line": 12715,
+     "column": 2
+    },
+    "end": {
+     "line": 12717,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_e052876da90ea6464c5af2fecb759ac2fd8975f40ccf56627e508872e11fe59e"
+  },
+  {
+   "kind": "function",
+   "label": "getRunId",
+   "properties": {
+    "name": "getRunId"
+   },
+   "range": {
+    "start": {
+     "line": 12718,
+     "column": 2
+    },
+    "end": {
+     "line": 12720,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_4e711bd9d6f93268b379c9aeeb85088ee33d85a1805996b59b4e960d5eaa61d4"
+  },
+  {
+   "kind": "function",
+   "label": "isMuted",
+   "properties": {
+    "name": "isMuted"
+   },
+   "range": {
+    "start": {
+     "line": 12721,
+     "column": 2
+    },
+    "end": {
+     "line": 12723,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_0b2fe4363f9396f1da8d38bc3557d25d0b6c99eb655c20555239cdaf0a766429"
+  },
+  {
+   "kind": "function",
+   "label": "setMuted",
+   "properties": {
+    "name": "setMuted"
+   },
+   "range": {
+    "start": {
+     "line": 12725,
+     "column": 2
+    },
+    "end": {
+     "line": 12732,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_52f6a719bad02f2a0ab5ba3ba3a09ea184884775c3526b8d295b5e02f530ce60"
+  },
+  {
+   "kind": "function",
+   "label": "start",
+   "properties": {
+    "name": "start"
+   },
+   "range": {
+    "start": {
+     "line": 12736,
+     "column": 2
+    },
+    "end": {
+     "line": 12767,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_d9a9b8c28f3a1db5d48889878b5893ab92a0b5d6f247cc9d3058ac9a7bbfc668"
+  },
+  {
+   "kind": "task",
+   "label": "awaited expression",
+   "properties": {
+    "method": "await",
+    "operation_kind": "awaited-expression",
+    "ownership": "awaited",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 12745,
+     "column": 22
+    },
+    "end": {
+     "line": 12745,
+     "column": 89
+    }
+   },
+   "node_id": "jsrg_node_c83db0b1c7f251ab6628b70c76c112bb72470d6f4a7c2943375c8247fb6aca0b"
+  },
+  {
+   "kind": "task",
+   "label": "awaited expression",
+   "properties": {
+    "method": "await",
+    "operation_kind": "awaited-expression",
+    "ownership": "awaited",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 12749,
+     "column": 6
+    },
+    "end": {
+     "line": 12749,
+     "column": 54
+    }
+   },
+   "node_id": "jsrg_node_6a3e7e05c3102437b1f458c4484c91303f0fc5832017dc935179372111a4d445"
+  },
+  {
+   "kind": "task",
+   "label": "awaited expression",
+   "properties": {
+    "method": "await",
+    "operation_kind": "awaited-expression",
+    "ownership": "awaited",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 12752,
+     "column": 6
+    },
+    "end": {
+     "line": 12752,
+     "column": 51
+    }
+   },
+   "node_id": "jsrg_node_ee6b0a1d82aee4d6f3cc66556376ce4851bb655c5160a65e04a9ed27bf5c5e0d"
+  },
+  {
+   "kind": "task",
+   "label": "awaited expression",
+   "properties": {
+    "method": "await",
+    "operation_kind": "awaited-expression",
+    "ownership": "awaited",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 12754,
+     "column": 8
+    },
+    "end": {
+     "line": 12754,
+     "column": 31
+    }
+   },
+   "node_id": "jsrg_node_734bb9e0c6d2dbff27ee069b56e1b3d0db44eb6a792824995f4ef00c5aab2f40"
+  },
+  {
+   "kind": "function",
+   "label": "stop",
+   "properties": {
+    "name": "stop"
+   },
+   "range": {
+    "start": {
+     "line": 12769,
+     "column": 2
+    },
+    "end": {
+     "line": 12775,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_8d9b9390f88f267a9ad5e192738979f3c6e771007d9d994fc985422295bee9b3"
+  },
+  {
+   "kind": "task",
+   "label": "awaited expression",
+   "properties": {
+    "method": "await",
+    "operation_kind": "awaited-expression",
+    "ownership": "awaited",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 12773,
+     "column": 4
+    },
+    "end": {
+     "line": 12773,
+     "column": 27
+    }
+   },
+   "node_id": "jsrg_node_3a20bca635190ab26cecc847e6afa60d81761749777c350967a17d3eef76a1af"
+  },
+  {
+   "kind": "function",
+   "label": "fetchSession",
+   "properties": {
+    "name": "fetchSession"
+   },
+   "range": {
+    "start": {
+     "line": 12779,
+     "column": 2
+    },
+    "end": {
+     "line": 12821,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_e5510555d01812e7f8c2e195be3f9baf31dbc8efe30cac4c70d434d78039ff22"
+  },
+  {
+   "kind": "task",
+   "label": "awaited expression",
+   "properties": {
+    "method": "await",
+    "operation_kind": "awaited-expression",
+    "ownership": "awaited",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 12792,
+     "column": 29
+    },
+    "end": {
+     "line": 12792,
+     "column": 47
+    }
+   },
+   "node_id": "jsrg_node_e95c303fee0f4dd56cfb769f552d1af3910ee1bc2c2921882aadb8cf78047dc2"
+  },
+  {
+   "kind": "request",
+   "label": "fetch",
+   "properties": {
+    "endpoint": null,
+    "method": "fetch",
+    "operation_kind": "request"
+   },
+   "range": {
+    "start": {
+     "line": 12793,
+     "column": 29
+    },
+    "end": {
+     "line": 12799,
+     "column": 8
+    }
+   },
+   "node_id": "jsrg_node_0435097afadae1cb1f11e3c0283d9b0a58c9c62a66ccb4ed1dcbb29445db1185"
+  },
+  {
+   "kind": "task",
+   "label": "awaited expression",
+   "properties": {
+    "method": "await",
+    "operation_kind": "awaited-expression",
+    "ownership": "awaited",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 12793,
+     "column": 23
+    },
+    "end": {
+     "line": 12799,
+     "column": 8
+    }
+   },
+   "node_id": "jsrg_node_fb903519360b7c22e8f0ae99d212fbbd60644d290ab46b8d2ba96002f857a3ea"
+  },
+  {
+   "kind": "function",
+   "label": null,
+   "properties": {
+    "name": null
+   },
+   "range": {
+    "start": {
+     "line": 12801,
+     "column": 49
+    },
+    "end": {
+     "line": 12801,
+     "column": 59
+    }
+   },
+   "node_id": "jsrg_node_6ac3fc8809678a5a5f8750f150542f4d90cc47cc243305500dd7ec56860e05c6"
+  },
+  {
+   "kind": "promise",
+   "label": "Promise.catch",
+   "properties": {
+    "method": "catch",
+    "operation_kind": "chain",
+    "ownership": "awaited",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 12801,
+     "column": 27
+    },
+    "end": {
+     "line": 12801,
+     "column": 60
+    }
+   },
+   "node_id": "jsrg_node_6037bc62c6389446c3f2170dc30fe2c83caa60744fa40f4b7ea85da930905718"
+  },
+  {
+   "kind": "response",
+   "label": "json",
+   "properties": {
+    "endpoint": null,
+    "method": "json",
+    "operation_kind": "response-consumer"
+   },
+   "range": {
+    "start": {
+     "line": 12801,
+     "column": 27
+    },
+    "end": {
+     "line": 12801,
+     "column": 42
+    }
+   },
+   "node_id": "jsrg_node_315cc944eb52142ef856cd79d8e6713c42f01bfded0853d6c838c97273c5475a"
+  },
+  {
+   "kind": "response",
+   "label": "json",
+   "properties": {
+    "endpoint": null,
+    "method": "json",
+    "operation_kind": "response-consumer"
+   },
+   "range": {
+    "start": {
+     "line": 12811,
+     "column": 27
+    },
+    "end": {
+     "line": 12811,
+     "column": 42
+    }
+   },
+   "node_id": "jsrg_node_2be14fdfbf750f5d291238e36ab4d8a5b0de8dcb8a14b59b22e8d1c1bfdb2987"
+  },
+  {
+   "kind": "task",
+   "label": "awaited expression",
+   "properties": {
+    "method": "await",
+    "operation_kind": "awaited-expression",
+    "ownership": "awaited",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 12811,
+     "column": 21
+    },
+    "end": {
+     "line": 12811,
+     "column": 42
+    }
+   },
+   "node_id": "jsrg_node_c04846fec226ad91f463db34067652269e5af92137161ffb4b0b6118a5da2a3d"
+  },
+  {
+   "kind": "function",
+   "label": "preflightMicrophone",
+   "properties": {
+    "name": "preflightMicrophone"
+   },
+   "range": {
+    "start": {
+     "line": 12825,
+     "column": 2
+    },
+    "end": {
+     "line": 12832,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_07969fccee6c162f9e67db3ee1c6ed9cf18943eaf205095ec947c76edb24b856"
+  },
+  {
+   "kind": "task",
+   "label": "awaited expression",
+   "properties": {
+    "method": "await",
+    "operation_kind": "awaited-expression",
+    "ownership": "awaited",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 12827,
+     "column": 21
+    },
+    "end": {
+     "line": 12827,
+     "column": 100
+    }
+   },
+   "node_id": "jsrg_node_28592e96dfde5097adb3288121f247aa1467e2101f08a7b44d76dc4d1a0cc8bb"
+  },
+  {
+   "kind": "function",
+   "label": null,
+   "properties": {
+    "name": null
+   },
+   "range": {
+    "start": {
+     "line": 12828,
+     "column": 33
+    },
+    "end": {
+     "line": 12828,
+     "column": 56
+    }
+   },
+   "node_id": "jsrg_node_3b850e3a869ee098b9813e4e135f3a16f29849ff65554712d53b40d60a7d767e"
+  },
+  {
+   "kind": "function",
+   "label": "ensureAudioElement",
+   "properties": {
+    "name": "ensureAudioElement"
+   },
+   "range": {
+    "start": {
+     "line": 12833,
+     "column": 2
+    },
+    "end": {
+     "line": 12843,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_47dcf8aef7a93d6a05a9e8289ffec0b3147f3206e99e96e9899b091218c942ab"
+  },
+  {
+   "kind": "function",
+   "label": "attachRemoteAudio",
+   "properties": {
+    "name": "attachRemoteAudio"
+   },
+   "range": {
+    "start": {
+     "line": 12844,
+     "column": 2
+    },
+    "end": {
+     "line": 12867,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_eff69d7c36dcf99575aa4b70cd3f8f2a28ba927dbefcff5e6c494f9802f1b896"
+  },
+  {
+   "kind": "function",
+   "label": null,
+   "properties": {
+    "name": null
+   },
+   "range": {
+    "start": {
+     "line": 12848,
+     "column": 30
+    },
+    "end": {
+     "line": 12850,
+     "column": 5
+    }
+   },
+   "node_id": "jsrg_node_1b4b50075508ad05645a31b19039eac71e59765fc1734407b7ad3624bdde6fc6"
+  },
+  {
+   "kind": "function",
+   "label": null,
+   "properties": {
+    "name": null
+   },
+   "range": {
+    "start": {
+     "line": 12853,
+     "column": 25
+    },
+    "end": {
+     "line": 12865,
+     "column": 5
+    }
+   },
+   "node_id": "jsrg_node_f32c88872f22ff67b20d02e38a1582716b0df0cae509675232b6db39726dc6d8"
+  },
+  {
+   "kind": "promise",
+   "label": "Promise.catch",
+   "properties": {
+    "method": "catch",
+    "operation_kind": "chain",
+    "ownership": "detached",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 12853,
+     "column": 4
+    },
+    "end": {
+     "line": 12865,
+     "column": 6
+    }
+   },
+   "node_id": "jsrg_node_dd5423d3ff46f7b30dbca419e0f6e0bd0756afad86c9512f55248d5edbdaacec"
+  },
+  {
+   "kind": "function",
+   "label": "startVolumeMeter",
+   "properties": {
+    "name": "startVolumeMeter"
+   },
+   "range": {
+    "start": {
+     "line": 12868,
+     "column": 2
+    },
+    "end": {
+     "line": 12884,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_575e429dcfc2abc98efba5ba84200263936f84ea1c0c11d1318c0476838a11ff"
+  },
+  {
+   "kind": "function",
+   "label": null,
+   "properties": {
+    "name": null
+   },
+   "range": {
+    "start": {
+     "line": 12876,
+     "column": 37
+    },
+    "end": {
+     "line": 12881,
+     "column": 7
+    }
+   },
+   "node_id": "jsrg_node_d8469bfdfc4d5083b4955660d9a26d64a5210b6a0efe1064803cf522f1679b89"
+  },
+  {
+   "kind": "timer",
+   "label": "setInterval",
+   "properties": {
+    "delay_milliseconds": null,
+    "method": "setInterval"
+   },
+   "range": {
+    "start": {
+     "line": 12876,
+     "column": 25
+    },
+    "end": {
+     "line": 12881,
+     "column": 28
+    }
+   },
+   "node_id": "jsrg_node_3b1f084ef296dd8e4d7eb4632559f4fba5a4a387975abad5dee255e1281ce649"
+  },
+  {
+   "kind": "function",
+   "label": "connect",
+   "properties": {
+    "name": "connect"
+   },
+   "range": {
+    "start": {
+     "line": 12888,
+     "column": 2
+    },
+    "end": {
+     "line": 12971,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_a504c7ed55492f706f3b264bd84008d69ef75862c1931f4bf7c675270706be79"
+  },
+  {
+   "kind": "task",
+   "label": "awaited expression",
+   "properties": {
+    "method": "await",
+    "operation_kind": "awaited-expression",
+    "ownership": "awaited",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 12917,
+     "column": 6
+    },
+    "end": {
+     "line": 12917,
+     "column": 29
+    }
+   },
+   "node_id": "jsrg_node_e21197a21c5ddc387a6bfe2821081af945e938ecd76e3be95a42ec0ea147f627"
+  },
+  {
+   "kind": "task",
+   "label": "awaited expression",
+   "properties": {
+    "method": "await",
+    "operation_kind": "awaited-expression",
+    "ownership": "awaited",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 12919,
+     "column": 8
+    },
+    "end": {
+     "line": 12919,
+     "column": 50
+    }
+   },
+   "node_id": "jsrg_node_df523f9f0a95f6977b86f87d9d618ca6bcf064483d7cbffc083fc0f1bdeb8302"
+  },
+  {
+   "kind": "function",
+   "label": null,
+   "properties": {
+    "name": null
+   },
+   "range": {
+    "start": {
+     "line": 12932,
+     "column": 22
+    },
+    "end": {
+     "line": 12970,
+     "column": 5
+    }
+   },
+   "node_id": "jsrg_node_7f3afd08e4ccee26d592b283c3b979ed639634dc20647b87470a662ceb60067f"
+  },
+  {
+   "kind": "promise",
+   "label": "Promise.new",
+   "properties": {
+    "method": "new",
+    "operation_kind": "constructor",
+    "ownership": "awaited",
+    "source_resolution": "complete"
+   },
+   "range": {
+    "start": {
+     "line": 12932,
+     "column": 10
+    },
+    "end": {
+     "line": 12970,
+     "column": 6
+    }
+   },
+   "node_id": "jsrg_node_a85e92912d0ba512ae9116d36c556ae9bd0734cca47adbe2804558727d53ac3b"
+  },
+  {
+   "kind": "function",
+   "label": null,
+   "properties": {
+    "name": null
+   },
+   "range": {
+    "start": {
+     "line": 12934,
+     "column": 33
+    },
+    "end": {
+     "line": 12940,
+     "column": 7
+    }
+   },
+   "node_id": "jsrg_node_7fafc8a90aa282aaf235a2141127a725083ac9cb6cc9ad7437ff6041dfb8ce4b"
+  },
+  {
+   "kind": "timer",
+   "label": "setTimeout",
+   "properties": {
+    "delay_milliseconds": null,
+    "method": "setTimeout"
+   },
+   "range": {
+    "start": {
+     "line": 12934,
+     "column": 22
+    },
+    "end": {
+     "line": 12940,
+     "column": 28
+    }
+   },
+   "node_id": "jsrg_node_8c56270d393e8fee175cb6805ddaaaed48bf5b4c38cb40081cdc723a0671cddc"
+  },
+  {
+   "kind": "function",
+   "label": null,
+   "properties": {
+    "name": null
+   },
+   "range": {
+    "start": {
+     "line": 12937,
+     "column": 31
+    },
+    "end": {
+     "line": 12938,
+     "column": 9
+    }
+   },
+   "node_id": "jsrg_node_4629e7282311cd1b73625c81accfe2d3f2e7ed9b5761a1e075b5623896de37ab"
+  },
+  {
+   "kind": "promise",
+   "label": "Promise.catch",
+   "properties": {
+    "method": "catch",
+    "operation_kind": "chain",
+    "ownership": "detached",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 12937,
+     "column": 8
+    },
+    "end": {
+     "line": 12938,
+     "column": 10
+    }
+   },
+   "node_id": "jsrg_node_d1940697e70597cf61ceef68ea17cf40e04ae17c29711f06591faf65adf6d8e5"
+  },
+  {
+   "kind": "event",
+   "label": null,
+   "properties": {
+    "emitter_key": "expression:484541:484560",
+    "event_name": null
+   },
+   "range": {
+    "start": {
+     "line": 12941,
+     "column": 6
+    },
+    "end": {
+     "line": 12963,
+     "column": 8
+    }
+   },
+   "node_id": "jsrg_node_cf7b4bc60594c2f44d5ce8d472aef901ac8434d8c6fa6736eb2ebcd4ac5e5cac"
+  },
+  {
+   "kind": "function",
+   "label": null,
+   "properties": {
+    "name": null
+   },
+   "range": {
+    "start": {
+     "line": 12941,
+     "column": 38
+    },
+    "end": {
+     "line": 12963,
+     "column": 7
+    }
+   },
+   "node_id": "jsrg_node_c4db3ad6bde390909e1c05622121b9001637bee5e7d659caedbfa2bd627c59e0"
+  },
+  {
+   "kind": "listener",
+   "label": "addListener",
+   "properties": {
+    "emitter_key": "expression:484541:484560",
+    "event_name": null,
+    "method": "addListener"
+   },
+   "range": {
+    "start": {
+     "line": 12941,
+     "column": 6
+    },
+    "end": {
+     "line": 12963,
+     "column": 8
+    }
+   },
+   "node_id": "jsrg_node_fd30acd37f4f2c869c7ef9b7880f3901e94363bf5a6cddf42fff503b3ab9745d"
+  },
+  {
+   "kind": "function",
+   "label": null,
+   "properties": {
+    "name": null
+   },
+   "range": {
+    "start": {
+     "line": 12964,
+     "column": 29
+    },
+    "end": {
+     "line": 12969,
+     "column": 7
+    }
+   },
+   "node_id": "jsrg_node_6c2040a4b4de6d43e322a0f6039ebb84ffb73e7432b473d24e17ec95f590339f"
+  },
+  {
+   "kind": "promise",
+   "label": "Promise.catch",
+   "properties": {
+    "method": "catch",
+    "operation_kind": "chain",
+    "ownership": "detached",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 12964,
+     "column": 6
+    },
+    "end": {
+     "line": 12969,
+     "column": 8
+    }
+   },
+   "node_id": "jsrg_node_d9141ae830e3703464c8dad0fe9ace45bf7cff1932fde461fb9ecdf758f860df"
+  },
+  {
+   "kind": "function",
+   "label": "peerConnection",
+   "properties": {
+    "name": "peerConnection"
+   },
+   "range": {
+    "start": {
+     "line": 12972,
+     "column": 2
+    },
+    "end": {
+     "line": 12975,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_b4d5105fd0ff7832c2718f256e20ac138e887be807b8e3e54f8eff5080d10280"
+  },
+  {
+   "kind": "function",
+   "label": "watchConnection",
+   "properties": {
+    "name": "watchConnection"
+   },
+   "range": {
+    "start": {
+     "line": 12979,
+     "column": 2
+    },
+    "end": {
+     "line": 13009,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_54382c093d930c120d43cb520aa4a315aa1213e5286e95b10066bf607bcf03d8"
+  },
+  {
+   "kind": "function",
+   "label": "onState",
+   "properties": {
+    "name": "onState"
+   },
+   "range": {
+    "start": {
+     "line": 12982,
+     "column": 20
+    },
+    "end": {
+     "line": 12998,
+     "column": 5
+    }
+   },
+   "node_id": "jsrg_node_f1d03fdef813c0c0a34765c1bbc13eb8751cb993d6e63dbd61407fa9eebaf727"
+  },
+  {
+   "kind": "function",
+   "label": null,
+   "properties": {
+    "name": null
+   },
+   "range": {
+    "start": {
+     "line": 12988,
+     "column": 41
+    },
+    "end": {
+     "line": 12993,
+     "column": 9
+    }
+   },
+   "node_id": "jsrg_node_8cdcedc131f90a3186286b95ce4d5602fa6eddc33671b1e3e59258a7e81f3175"
+  },
+  {
+   "kind": "timer",
+   "label": "setTimeout",
+   "properties": {
+    "delay_milliseconds": null,
+    "method": "setTimeout"
+   },
+   "range": {
+    "start": {
+     "line": 12988,
+     "column": 30
+    },
+    "end": {
+     "line": 12993,
+     "column": 31
+    }
+   },
+   "node_id": "jsrg_node_a9e61d76f7b64555992c845541d014d839c0e4ca9dc4ad0b3dd4d4e66a2ab286"
+  },
+  {
+   "kind": "function",
+   "label": "onIce",
+   "properties": {
+    "name": "onIce"
+   },
+   "range": {
+    "start": {
+     "line": 12999,
+     "column": 18
+    },
+    "end": {
+     "line": 13003,
+     "column": 5
+    }
+   },
+   "node_id": "jsrg_node_002ce414cee19980f4e8eddcded867401010051c24de85e13e81546bf8d912fc"
+  },
+  {
+   "kind": "function",
+   "label": "sendHangup",
+   "properties": {
+    "name": "sendHangup"
+   },
+   "range": {
+    "start": {
+     "line": 13010,
+     "column": 2
+    },
+    "end": {
+     "line": 13018,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_5055e388e6a6b5bd1f7b3ee26a724cd8edb88f3fca54a0fdccbe150b4912331b"
+  },
+  {
+   "kind": "task",
+   "label": "awaited expression",
+   "properties": {
+    "method": "await",
+    "operation_kind": "awaited-expression",
+    "ownership": "awaited",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 13014,
+     "column": 55
+    },
+    "end": {
+     "line": 13014,
+     "column": 74
+    }
+   },
+   "node_id": "jsrg_node_17585df5c9eb13a710c82b5b55d141c36c88582aa0186d23e5622fb2111b7a0c"
+  },
+  {
+   "kind": "task",
+   "label": "awaited expression",
+   "properties": {
+    "method": "await",
+    "operation_kind": "awaited-expression",
+    "ownership": "awaited",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 13015,
+     "column": 61
+    },
+    "end": {
+     "line": 13015,
+     "column": 83
+    }
+   },
+   "node_id": "jsrg_node_d4e9d4c598a85ba30e2fa896edb471ef0cbf4f25d4698fc1547ea9464258bded"
+  },
+  {
+   "kind": "function",
+   "label": "installPagehideTeardown",
+   "properties": {
+    "name": "installPagehideTeardown"
+   },
+   "range": {
+    "start": {
+     "line": 13022,
+     "column": 2
+    },
+    "end": {
+     "line": 13028,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_5b163fccfcb777516d04c26865a17b18058658b59361c47d00c4087a500f0c8a"
+  },
+  {
+   "kind": "function",
+   "label": null,
+   "properties": {
+    "name": null
+   },
+   "range": {
+    "start": {
+     "line": 13023,
+     "column": 27
+    },
+    "end": {
+     "line": 13026,
+     "column": 5
+    }
+   },
+   "node_id": "jsrg_node_c44781cfa6f2eed28e8f02cb85915f05d29e699eda4181b6c169c4cafa7f47ea"
+  },
+  {
+   "kind": "function",
+   "label": "teardown",
+   "properties": {
+    "name": "teardown"
+   },
+   "range": {
+    "start": {
+     "line": 13029,
+     "column": 2
+    },
+    "end": {
+     "line": 13068,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_24fe0ea599756f94eb7c621cbf66b29e9a92db8fb97be107a50d07cb9f4a449e"
+  },
+  {
+   "kind": "function",
+   "label": null,
+   "properties": {
+    "name": null
+   },
+   "range": {
+    "start": {
+     "line": 13050,
+     "column": 38
+    },
+    "end": {
+     "line": 13051,
+     "column": 7
+    }
+   },
+   "node_id": "jsrg_node_0f0ef0acd890b73ce5209c50feb1d722d3642c9fdace21020c777b7a1700a455"
+  },
+  {
+   "kind": "promise",
+   "label": "Promise.catch",
+   "properties": {
+    "method": "catch",
+    "operation_kind": "chain",
+    "ownership": "detached",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 13050,
+     "column": 6
+    },
+    "end": {
+     "line": 13051,
+     "column": 8
+    }
+   },
+   "node_id": "jsrg_node_65ec7049844a82cc9c0cec027da3f352ec6978f82e83d604942d4ce80f94da33"
+  },
+  {
+   "kind": "function",
+   "label": null,
+   "properties": {
+    "name": null
+   },
+   "range": {
+    "start": {
+     "line": 13063,
+     "column": 42
+    },
+    "end": {
+     "line": 13064,
+     "column": 5
+    }
+   },
+   "node_id": "jsrg_node_66ae35c93cb625639187a893f37eb25ee6f872d072f5ba0086e887d53e8a6146"
+  },
+  {
+   "kind": "promise",
+   "label": "Promise.catch",
+   "properties": {
+    "method": "catch",
+    "operation_kind": "chain",
+    "ownership": "detached",
+    "source_resolution": "unresolved"
+   },
+   "range": {
+    "start": {
+     "line": 13063,
+     "column": 19
+    },
+    "end": {
+     "line": 13064,
+     "column": 6
+    }
+   },
+   "node_id": "jsrg_node_bcf051d583ea25a85b4078b12d301a167da393e819792a66fbf4ff8a7b8b38f7"
+  },
+  {
+   "kind": "function",
+   "label": "setState",
+   "properties": {
+    "name": "setState"
+   },
+   "range": {
+    "start": {
+     "line": 13072,
+     "column": 2
+    },
+    "end": {
+     "line": 13077,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_620d5513ae8f789fdc078d52acc8db5a2f1279d77e5006ae2d81c1a487c796b7"
+  },
+  {
+   "kind": "function",
+   "label": "fail",
+   "properties": {
+    "name": "fail"
+   },
+   "range": {
+    "start": {
+     "line": 13078,
+     "column": 2
+    },
+    "end": {
+     "line": 13082,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_849e9784f91227bd658ac002ede1c8ea13664ba6566158668cda02b4dd83a0d4"
+  },
+  {
+   "kind": "function",
+   "label": "toCallError",
+   "properties": {
+    "name": "toCallError"
+   },
+   "range": {
+    "start": {
+     "line": 13083,
+     "column": 2
+    },
+    "end": {
+     "line": 13088,
+     "column": 3
+    }
+   },
+   "node_id": "jsrg_node_83e438abe3689b7449d79185b76a1056e828ec394fd8b8399080abf619d0fd17"
+  },
+  {
+   "kind": "boundary",
+   "label": "String",
+   "properties": {
+    "boundary_kind": "coerce",
+    "method": "String"
+   },
+   "range": {
+    "start": {
+     "line": 13087,
+     "column": 83
+    },
+    "end": {
+     "line": 13087,
+     "column": 94
+    }
+   },
+   "node_id": "jsrg_node_ec647e17e872030040872c256f4a8953770d86ec96f4ccbbbd8b96926418b269"
+  }
+ ]
+}
