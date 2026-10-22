@@ -49,7 +49,7 @@ describe("post-call decision policy", () => {
   });
 
   it("releases an explained payment with no warning signs", () => {
-    const d = decide({ check: check([sig("knows_payee", "my landlord of 3 years"), sig("own_initiative", "my own rent")]), agentRecommendation: "release" });
+    const d = decide({ check: ordinary([sig("knows_payee", "my landlord of 3 years"), sig("own_initiative", "my own rent")]), agentRecommendation: "release" });
     expect(d.outcome).toBe("release");
     expect(d.pattern).toBeNull();
     expect(d.escalated_over_agent).toBe(false);
@@ -86,9 +86,18 @@ describe("post-call decision policy", () => {
       expect(d.outcome).toBe("release");
     });
 
-    it("releases when the customer knows the payee personally and the purpose fits", () => {
-      const d = decide({ check: check([sig("knows_payee", "my cousin Arjun"), sig("purpose_consistent", "his wedding hall booking")]), agentRecommendation: "release" });
-      expect(d.outcome).toBe("release");
+    it("releases when the customer knows the payee personally and the purpose fits (no hard rule)", () => {
+      const p = payment({ amount_inr: 2_40_000, payee: { name: "Arjun Mehta", handle: "arjun@okdemo", is_new: true, prior_payments: 0 } });
+      const c = customer({ language: "en" });
+      const onCall = { signals: [sig("knows_payee", "my cousin Arjun"), sig("purpose_consistent", "his wedding hall booking")], contact: { status: "not_requested" as const }, risk: assessRisk(p, c, device()), customer: c, payment: p };
+      expect(decide({ check: onCall, agentRecommendation: "release" }).outcome).toBe("release");
+    });
+
+    it("after a hard rule, only an independent check releases: a cover story about a 'cousin' does not", () => {
+      // The payee is a "Safe Custody Account": a hard rule.
+      const d = decide({ check: check([sig("knows_payee", "it's my cousin"), sig("own_initiative", "my own decision")]), agentRecommendation: "release" });
+      expect(d.outcome).toBe("delay");
+      expect(d.reasons.map((r) => r.code)).toContain("SAFE_DEFAULT_CRITICAL_RISK");
     });
 
     it("medium-confidence answers are not positive evidence", () => {

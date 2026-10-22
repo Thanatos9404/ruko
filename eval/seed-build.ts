@@ -14,11 +14,12 @@ import { runTool, type ToolDeps } from "../server/engine/toolHandlers.js";
 import { buildScenarios, type EvalScenario } from "./scenarios.js";
 import { buildHoldout } from "./holdout.js";
 import { buildHoldout2 } from "./holdout2.js";
+import { buildHoldout4 } from "./holdout4.js";
 import type { ConversationResult } from "./conversation.js";
 import type { Check } from "../shared/types.js";
 
-const RUNS = ["v3-dev-qwen3-30b", "v3-holdout2-qwen3-30b"];
-const all = new Map<string, EvalScenario>([...buildScenarios(), ...buildHoldout(), ...buildHoldout2()].map((s) => [s.id, s]));
+const RUNS = ["v5-dev-qwen3-30b", "v5-holdout4-qwen3-30b"];
+const all = new Map<string, EvalScenario>([...buildScenarios(), ...buildHoldout(), ...buildHoldout2(), ...buildHoldout4()].map((s) => [s.id, s]));
 
 function pickDev(rows: ConversationResult[]): ConversationResult[] {
   // A balanced slice of the dev set: two scams per pattern (one English, one Hindi/Hinglish), all ambiguous, and genuine payments.
@@ -71,7 +72,7 @@ for (const id of ids) list.push(publicCheck(await checks.require(id)));
 await mkdir("server/data", { recursive: true });
 await writeFile(
   "server/data/seed-checks.json",
-  JSON.stringify({ version: `v3-${list.length}`, note: "Eval conversations (synthetic customers) replayed through the real engine. Not real customers.", checks: list }),
+  JSON.stringify({ version: `v5-${list.length}`, note: "Eval conversations (synthetic customers) replayed through the real engine. Not real customers.", checks: list }),
 );
 const by = (f: (c: (typeof list)[number]) => string) => list.reduce<Record<string, number>>((a, c) => ((a[f(c)] = (a[f(c)] ?? 0) + 1), a), {});
 console.log(`seed: ${list.length} checks`, by((c) => (c.risk.action === "allow" ? "allowed" : c.decision?.outcome ?? "undecided")));

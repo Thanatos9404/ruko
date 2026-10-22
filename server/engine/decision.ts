@@ -49,8 +49,11 @@ export function criticalRisk(check: Pick<Check, "risk">): boolean {
  * purpose fits, or a named family member is helping with a purpose that fits.
  * A cover story alone ("it's my own decision") is not enough.
  */
-export function positiveGenuineEvidence(signals: Pick<Signal, "type" | "confidence">[]): boolean {
+export function positiveGenuineEvidence(signals: Pick<Signal, "type" | "confidence">[], opts: { strict?: boolean } = {}): boolean {
   const sure = new Set(signals.filter((s) => s.confidence === "high").map((s) => s.type));
+  // After a hard rule (a "safe account" payee, a mule-listed payee, a remote-access app), what the
+  // customer says about the payee isn't enough: only an independent check counts.
+  if (opts.strict) return sure.has("verified_independently");
   return (
     sure.has("verified_independently") ||
     (sure.has("knows_payee") && (sure.has("purpose_consistent") || sure.has("own_initiative") || sure.has("family_helping"))) ||
@@ -176,12 +179,15 @@ export function decide(input: DecisionInput): Decision {
   }
 
   // Safe default: on critical pre-call risk, release only on positive evidence that the payment is genuine.
-  if (outcome === "release" && !input.noConversation && criticalRisk(check) && !positiveGenuineEvidence(sigs)) {
+  const hardRule = check.risk.reasons.some((r) => r.hard);
+  if (outcome === "release" && !input.noConversation && criticalRisk(check) && !positiveGenuineEvidence(sigs, { strict: hardRule })) {
     outcome = "delay";
     delay = DELAY_HIGH_MIN;
     reasons.push({
       code: "SAFE_DEFAULT_CRITICAL_RISK",
-      text: "Pre-payment risk was critical and the call gave no positive evidence that the payment is genuine (the customer checked the payee themselves, or knows the payee personally and the purpose fits). The payment waits; the customer can confirm in the app or ask for a call-back.",
+      text: hardRule
+        ? "A hard pre-payment rule fired (such as a 'safe account' payee), and only an independent check of the payee can release that. The payment waits; the customer can confirm in the app or ask for a call-back."
+        : "Pre-payment risk was critical and the call gave no positive evidence that the payment is genuine (the customer checked the payee themselves, or knows the payee personally and the purpose fits). The payment waits; the customer can confirm in the app or ask for a call-back.",
     });
     reasons.push({
       code: "ESCALATED_TO_FRAUD_DESK",

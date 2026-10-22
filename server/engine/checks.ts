@@ -390,7 +390,7 @@ export class CheckService {
     let ask: string | null = null;
     let probe: string | null = null;
     const critical = criticalRisk(c);
-    const positive = positiveGenuineEvidence(c.signals);
+    const positive = positiveGenuineEvidence(c.signals, { strict: c.risk.reasons.some((r) => r.hard) });
     const probed = new Set(c.events.filter((e) => e.type === "guidance.probe").map((e) => e.detail));
     // The opening question already asked who is guiding them, so there is no default re-ask.
     if (p) ask = p.ask_next[lang];
