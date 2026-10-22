@@ -149,7 +149,7 @@ Environment variables (Project → Settings → Environment Variables):
 | `RUKO_API_KEYS` | bank API keys, `tenant:key` pairs |
 | `RUKO_ACCESS_CODES` | access codes for live calls (give to judges); without them, live calls are off |
 | `RUKO_DAILY_CALL_CAP`, `RUKO_PER_VISITOR_DAILY_CAP`, `RUKO_WALLET_FLOOR_CENTS` | the credit-budget gate |
-| `NEBIUS_API_KEY` | the public checker's free text mode (falls back to rule-based matching without it) |
+| `NEBIUS_API_KEY` | local evaluation only (read from a `.env` outside the repo); never set on a deployment, which never calls an LLM for the public checker |
 | `BLOB_READ_WRITE_TOKEN` | optional durable audit archive |
 
 After the first deploy, point the Bolna agents' tools and webhook at it (free; no call placed):
@@ -177,7 +177,7 @@ Returns `action: "hold"`, the code word, every risk reason with its weight, and 
 - **No secrets in the browser.** Web-call sessions are minted server-side; the Bolna key never leaves the server.
 - **Bolna → Ruko** tool calls carry a bearer token (constant-time compared) and can be restricted to Bolna's published IPs; webhooks need a secret URL token and are verified by fetching the execution back from Bolna.
 - **Never asks for secrets.** The prompts forbid OTP/PIN/card/account requests; evidence quotes are scrubbed of digit runs before they enter the audit log; the eval audits every agent turn.
-- **Public checker:** phone numbers, UPI IDs, e-mails, links and long digit runs are redacted on the server before the LLM sees anything or anything is stored; only anonymous counters (production traffic only, small groups folded) and redacted summaries are kept.
+- **Public checker:** official-advisory library + on-server text classifier; no LLM, and nothing the person types is stored. Phone numbers, UPI IDs, e-mails, links and long digit runs are redacted on the server before the classifier runs; only anonymous counters are kept (production traffic only, small groups folded).
 - **Disclosure:** every agent's greeting says it is automated and that the call is recorded (our policy, and the DPDP notice). Separately, TRAI PR 119/2026 requires banks to pre-declare automated calls and their caller IDs to the operator. The trusted contact is only called after a warning sign and the customer's consent (data minimisation).
 - **No real personal data:** demo people and payees are invented; phone numbers use the UK Ofcom drama range (+44 7700 900xxx), since India has no reserved fictional range.
 - `npm run scan:secrets` checks every file git would commit for key patterns and for the literal values in local env files.

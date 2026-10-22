@@ -23,6 +23,13 @@ function check(signals: Signal[], over: Partial<Check> = {}): Pick<Check, "signa
   return { signals, contact: { status: "not_requested" }, risk: assessRisk(p, c, device()), customer: c, payment: p, ...over };
 }
 
+/** An ordinary hold: a new payee and a larger-than-usual amount, no call, no hard rule. */
+function ordinary(signals: Signal[]): Pick<Check, "signals" | "contact" | "risk" | "customer" | "payment" | "call"> {
+  const p = payment({ amount_inr: 30_000, payee: { name: "Sharma Traders", handle: "sharma@okdemo", is_new: true, prior_payments: 0 } });
+  const c = customer({ language: "en" });
+  return { signals, contact: { status: "not_requested" }, risk: assessRisk(p, c, device({ active_call: false })), customer: c, payment: p };
+}
+
 describe("post-call decision policy", () => {
   it("blocks when a critical sign is backed by another strong sign, and names the pattern", () => {
     const d = decide({
@@ -56,14 +63,49 @@ describe("post-call decision policy", () => {
   });
 
   it("an agent 'block' with no recorded evidence becomes a delay", () => {
-    const d = decide({ check: check([]), agentRecommendation: "block" });
+    const d = decide({ check: ordinary([]), agentRecommendation: "block" });
     expect(d.outcome).toBe("delay");
     expect(d.reasons.map((r) => r.code)).toContain("AGENT_CAUTION");
   });
 
   it("ignores low-confidence signals", () => {
-    const d = decide({ check: check([sig("coached_on_call", "maybe", "low")]), agentRecommendation: "release" });
+    const d = decide({ check: ordinary([sig("coached_on_call", "maybe", "low")]), agentRecommendation: "release" });
     expect(d.outcome).toBe("release");
+  });
+
+  describe("safe default on critical pre-call risk", () => {
+    it("never releases on a cover story alone: delays and escalates to the fraud desk", () => {
+      // Safe-custody payee and an active call: critical risk. The customer only says it's their own decision.
+      const d = decide({ check: check([sig("own_initiative", "it's my own decision"), sig("purpose_consistent", "it's an investment")]), agentRecommendation: "release" });
+      expect(d.outcome).toBe("delay");
+      expect(d.reasons.map((r) => r.code)).toEqual(expect.arrayContaining(["SAFE_DEFAULT_CRITICAL_RISK", "ESCALATED_TO_FRAUD_DESK"]));
+    });
+
+    it("releases on positive evidence: the customer checked the payee independently", () => {
+      const d = decide({ check: check([sig("verified_independently", "I visited the office and have the signed agreement")]), agentRecommendation: "release" });
+      expect(d.outcome).toBe("release");
+    });
+
+    it("releases when the customer knows the payee personally and the purpose fits", () => {
+      const d = decide({ check: check([sig("knows_payee", "my cousin Arjun"), sig("purpose_consistent", "his wedding hall booking")]), agentRecommendation: "release" });
+      expect(d.outcome).toBe("release");
+    });
+
+    it("medium-confidence answers are not positive evidence", () => {
+      const d = decide({ check: check([sig("verified_independently", "I think I checked", "medium")]), agentRecommendation: "release" });
+      expect(d.outcome).toBe("delay");
+    });
+
+    it("an ordinary hold still releases on a consistent explanation", () => {
+      const d = decide({ check: ordinary([sig("own_initiative", "my own order"), sig("purpose_consistent", "stock for my shop")]), agentRecommendation: "release" });
+      expect(d.outcome).toBe("release");
+    });
+  });
+
+  it("delays when the assistant itself tagged a scam pattern but heard no warning sign", () => {
+    const d = decide({ check: ordinary([sig("purpose_consistent", "it's my part-time job payment", "high", "task_job")]), agentRecommendation: "release" });
+    expect(d.outcome).toBe("delay");
+    expect(d.reasons.map((r) => r.code)).toContain("PATTERN_SUSPECTED");
   });
 
   it("delays briefly when the customer could not be reached", () => {

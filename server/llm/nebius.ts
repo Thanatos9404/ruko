@@ -10,8 +10,9 @@ import { NEBIUS_ENV_PATH } from "../env.js";
 export const NEBIUS_BASE = "https://api.tokenfactory.nebius.com/v1/";
 
 export function nebiusKey(): string | null {
-  if (process.env.NEBIUS_API_KEY) return process.env.NEBIUS_API_KEY;
+  // Nebius is a local dev and eval tool only. A deployment never calls it, even if a key is set.
   if (process.env.VERCEL || process.env.NODE_ENV === "test") return null;
+  if (process.env.NEBIUS_API_KEY) return process.env.NEBIUS_API_KEY;
   try {
     if (!existsSync(NEBIUS_ENV_PATH)) return null;
     const m = readFileSync(NEBIUS_ENV_PATH, "utf8").match(/^NEBIUS_API_KEY\s*=\s*"?([^"\r\n]+)"?/m);

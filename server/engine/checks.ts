@@ -20,6 +20,32 @@ import { signalDef, SEVERITY_RANK } from "../../shared/signals.js";
 import { inferPattern, patternById, truthFor, PATTERNS } from "../../shared/patterns.js";
 import type { KV } from "../store/store.js";
 import { assessRisk, DEFAULT_POLICY, type PolicyConfig } from "./policy.js";
+import { criticalRisk, positiveGenuineEvidence } from "./decision.js";
+
+/** Probes for coached customers, asked only on critical pre-call risk with no positive evidence yet. */
+const PROBES: { id: string; text: Record<"en" | "hi", string> }[] = [
+  {
+    id: "told_what_to_say",
+    text: {
+      en: "Has anyone told you what to say to the bank about this payment?",
+      hi: "क्या किसी ने आपको बताया है कि इस भुगतान के बारे में बैंक को क्या कहना है?",
+    },
+  },
+  {
+    id: "hang_up",
+    text: {
+      en: "If someone is still on the other call, could you hang up? I'll wait.",
+      hi: "अगर कोई अब भी दूसरी कॉल पर है, तो क्या आप वह कॉल काट सकते हैं? मैं इंतज़ार करूँगी।",
+    },
+  },
+  {
+    id: "checked_payee",
+    text: {
+      en: "Have you met this payee or checked them yourself, outside this call or chat?",
+      hi: "क्या आप इस पाने वाले से मिले हैं, या इस कॉल या चैट के बाहर ख़ुद जाँच की है?",
+    },
+  },
+];
 import { decide } from "./decision.js";
 import { newCheckId, newCodeWord, newSecret, newSignalId, sha256, safeEqual } from "./ids.js";
 
@@ -353,6 +379,8 @@ export class CheckService {
     ask_next: string | null;
     strong_signs: number;
     decide_now: boolean;
+    /** Set when ask_next is a cover-story probe (logged so it isn't asked twice). */
+    probe: string | null;
     tip: string;
   } {
     const lang = c.customer.language;
@@ -360,6 +388,10 @@ export class CheckService {
     const p = inferred ? patternById(inferred.id) : fallbackPattern ? patternById(fallbackPattern) : undefined;
     const strong = c.signals.filter((s) => s.confidence !== "low" && SEVERITY_RANK[s.severity] >= 3).length;
     let ask: string | null = null;
+    let probe: string | null = null;
+    const critical = criticalRisk(c);
+    const positive = positiveGenuineEvidence(c.signals);
+    const probed = new Set(c.events.filter((e) => e.type === "guidance.probe").map((e) => e.detail));
     if (p) ask = p.ask_next[lang];
     else {
       const asked = new Set(c.signals.map((s) => s.type));
@@ -370,6 +402,9 @@ export class CheckService {
             : "Is anyone on another call or video call with you right now, telling you what to do?";
     }
     const mitigating = c.signals.filter((s) => s.confidence !== "low" && s.severity === "mitigating").length;
+    // Adaptive depth: on critical pre-call risk, a cover story isn't enough. Probe once or twice
+    // for what a coached customer is told to hide, then for positive evidence.
+    const nextProbe = critical && !positive && strong === 0 ? PROBES.find((pr) => !probed.has(pr.id) && (pr.id !== "hang_up" || c.device.active_call)) : undefined;
     let tip: string;
     // Two strong warning signs are enough: decide now, then offer the trusted contact.
     // The fast path needs two warning signs heard with high confidence; anything less gets another question.
@@ -379,8 +414,17 @@ export class CheckService {
       tip = "Enough warning signs. Don't speak yet: call set_decision now (block or delay), then say say_this and tell_customer together.";
       ask = null;
     } else if (strong === 1) tip = "One warning sign. Say say_this, ask ask_next, then decide.";
-    else if (mitigating >= 2) {
-      tip = "No warning signs so far. If you have asked whether anyone else is on the call, finish with set_decision (release).";
+    else if (p && strong === 0) {
+      tip = "Their answer matches a known scam pattern but no warning sign is confirmed yet. Ask ask_next before deciding.";
+    } else if (nextProbe) {
+      probe = nextProbe.id;
+      ask = nextProbe.text[lang];
+      tip =
+        "Pre-payment risk is critical. A release needs positive evidence: they checked the payee themselves, or know the payee personally and the purpose fits. Ask ask_next, kindly, before deciding.";
+    } else if (mitigating >= 2) {
+      tip = critical && !positive
+        ? "No warning signs, but no positive evidence either on a critical-risk payment: recommend delay."
+        : "No warning signs so far. If you have asked whether anyone else is on the call, finish with set_decision (release).";
       ask = null;
     } else tip = "Acknowledge briefly and ask the next question.";
     return {
@@ -389,6 +433,7 @@ export class CheckService {
       ask_next: ask,
       strong_signs: strong,
       decide_now: decideNow,
+      probe,
       tip,
     };
   }

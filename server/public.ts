@@ -4,7 +4,6 @@ import { analyzeText, getSources, libraryPattern, pick, type TextAnalysis } from
 import type { KV } from "./store/store.js";
 import { HttpError } from "./http.js";
 import { nebiusChat, nebiusKey, redactPII, type LlmMessage } from "./llm/nebius.js";
-import { newReportId } from "./engine/ids.js";
 
 /**
  * The free, public "Is this a scam?" text checker. Anyone can use it without
@@ -128,14 +127,6 @@ async function bump(kv: KV, opts: { newConversation: boolean; pattern: string | 
   await kv.set("stats:public", s, 365 * 24 * 3600);
 }
 
-async function logRedacted(kv: KV, summary: string, pattern: string | null, lang: Lang, source: "text") {
-  const report = { id: newReportId(), at: new Date().toISOString(), pattern_id: pattern ?? "unknown", summary: summary.slice(0, 300), language: lang, source };
-  await kv.set(`report:${report.id}`, report, 90 * 24 * 3600);
-  const idx = (await kv.get<string[]>("index:reports")) ?? [];
-  idx.unshift(report.id);
-  await kv.set("index:reports", idx.slice(0, 200), 90 * 24 * 3600);
-}
-
 export async function limitCounter(kv: KV, key: string, max: number, ttl: number): Promise<boolean> {
   const n = (await kv.get<number>(key)) ?? 0;
   if (n >= max) return false;
@@ -179,7 +170,9 @@ export async function publicChat(
     : "";
 
   let reply: ChatReply | null = null;
-  const llmAvailable = Boolean(nebiusKey() || opts.llm);
+  // The public checker is model-free by default: official-advisory library plus the on-server text
+  // classifier. An LLM reading is an opt-in for local development only (RUKO_PUBLIC_LLM=nebius).
+  const llmAvailable = Boolean(opts.llm || (process.env.RUKO_PUBLIC_LLM === "nebius" && !process.env.VERCEL && nebiusKey()));
   const underCap = llmAvailable && (await limitCounter(kv, `cap:chat:${day}`, opts.dailyCap, 2 * 24 * 3600));
   if (underCap) {
     try {
@@ -237,7 +230,7 @@ export async function publicChat(
   // Counters are public, so they only count real production traffic (never dev, preview, e2e or tagged tests).
   if (opts.count !== false) {
     await bump(kv, { newConversation: firstMessage, pattern: reply.pattern?.id ?? null, lang, risk: reply.risk });
-    if (firstMessage) await logRedacted(kv, clean[clean.length - 1].content, reply.pattern?.id ?? null, lang, "text");
+    // Nothing the person typed is stored, not even redacted: only anonymous counts.
   }
   return reply;
 }

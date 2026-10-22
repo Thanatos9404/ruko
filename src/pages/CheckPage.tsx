@@ -44,7 +44,7 @@ const COPY = {
       "My son's number is off and a caller says he's arrested and needs bail money",
     ],
     send: "Check",
-    privacy: "Don't type names, phone numbers, account numbers or codes. Anything that looks like one is removed on our server before it is analysed or stored.",
+    privacy: "Don't type names, phone numbers, account numbers or codes. Anything that looks like one is removed on our server before it is analysed. No LLM reads it, and nothing you type is stored; we keep only anonymous counts.",
     voice: "Prefer to talk?",
     voiceLead: "Call the Ruko line in your browser. A Bolna voice agent listens and gives the same official advice.",
     voiceBtn: "Talk to Ruko",
@@ -62,7 +62,7 @@ const COPY = {
       "बेटे का फ़ोन बंद है और कोई कहता है वह गिरफ़्तार है, ज़मानत के पैसे चाहिए",
     ],
     send: "जाँचें",
-    privacy: "नाम, फ़ोन नंबर, खाता नंबर या कोड न लिखें। ऐसी कोई भी चीज़ जाँच या सहेजने से पहले हमारे सर्वर पर हटा दी जाती है।",
+    privacy: "नाम, फ़ोन नंबर, खाता नंबर या कोड न लिखें। ऐसी कोई भी चीज़ जाँच से पहले हमारे सर्वर पर हटा दी जाती है। कोई LLM इसे नहीं पढ़ता, और आपका लिखा कुछ भी सहेजा नहीं जाता; हम सिर्फ़ गुमनाम गिनती रखते हैं।",
     voice: "बोलकर बताना है?",
     voiceLead: "ब्राउज़र में रुको लाइन पर बात करें। बोलना की वॉइस एजेंट वही आधिकारिक सलाह देगी।",
     voiceBtn: "रुको से बात करें",
@@ -362,7 +362,11 @@ function Answer({ data, lang }: { data: Reply; lang: Lang }) {
         <p className="mt-2 text-[11px] text-muted">{lang === "hi" ? "यह अनुवाद मशीन से बना ड्राफ़्ट है; समीक्षा बाकी है।" : "Machine-drafted translation, awaiting review."}</p>
       )}
       <p className="mt-2 text-[11px] text-muted">
-        {data.method === "llm+library" ? "AI reading + official wording from Ruko's library" : "Rule-based match against Ruko's library"}
+        {data.method === "llm+library"
+          ? "Local dev: LLM reading + official wording from Ruko's library"
+          : lang === "hi"
+            ? "आधिकारिक सलाह की लाइब्रेरी + सर्वर पर टेक्स्ट क्लासिफ़ायर · कोई LLM नहीं · कुछ सहेजा नहीं जाता"
+            : "Official-advisory library + on-server text classifier · no LLM · nothing stored"}
         {/* Shown only when the model sees warning signs: its "no pattern" score is weak evidence and must never read as "safe". */}
         {data.model && data.model.scam_probability !== null && data.model.band !== "unlikely_scam" && (
           <>

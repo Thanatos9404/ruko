@@ -3,6 +3,7 @@ import { signalDef } from "../../shared/signals.js";
 import { matchText, patternById, truthFor } from "../../shared/patterns.js";
 import { amountForSpeech, formatINR } from "../../shared/format.js";
 import { CheckService, NotFoundError, ValidationError, scrubEvidence, type StoredCheck } from "./checks.js";
+import { criticalRisk } from "./decision.js";
 import { codeWordHi, newReportId } from "./ids.js";
 import type { KV } from "../store/store.js";
 import { analyzeText, libraryPattern, pick } from "../ml/index.js";
@@ -90,6 +91,10 @@ export async function getCheckContext(deps: ToolDeps, args: Args): Promise<ToolR
     code_word: l === "hi" && c.code_word ? codeWordHi(c.code_word) : c.code_word,
     why_paused: c.risk.reasons.filter((r) => r.weight > 0).slice(0, 3).map((r) => r.title),
     trusted_contact_on_file: tc ? `${tc.name} (${tc.relation})` : "none",
+    pre_call_risk: criticalRisk(c) ? "critical" : c.risk.band,
+    release_needs: criticalRisk(c)
+      ? "positive evidence: they checked the payee themselves, or know the payee personally and the purpose fits"
+      : "no warning signs",
     on_a_call_while_paying: c.device.active_call
       ? `yes${c.device.active_call_minutes ? `, for ${c.device.active_call_minutes} minutes` : ""}${c.device.caller_in_contacts === false ? ", with a number not in their contacts" : c.device.caller_in_contacts ? ", with a saved contact" : ""}`
       : "no",
@@ -147,6 +152,7 @@ export async function recordSignal(deps: ToolDeps, args: Args, source: "agent" |
   // A question from the research library for the model's pattern, when the core library has none yet.
   const libP = ml?.opinion.patterns[0] && ml.opinion.band !== "unlikely_scam" ? libraryPattern(ml.opinion.patterns[0].id) : undefined;
   const mlAsk = libP?.red_flag_questions ? (pick(libP.red_flag_questions as { en: string[] }, lang(current)) as string[] | undefined)?.[0] : undefined;
+  if (g.probe) await deps.checks.noteEvent(id, "guidance.probe", g.probe);
   if (g.decide_now) {
     // Put the instruction first, so the model calls set_decision before it speaks.
     return {

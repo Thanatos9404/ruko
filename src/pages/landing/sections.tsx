@@ -374,7 +374,7 @@ export function FreeChecker() {
               <p className="t-eyebrow mb-4">Free for everyone</p>
               <h2 className="t-h2">Got a strange call? Ask Ruko.</h2>
               <p className="t-lead mt-4 max-w-[48ch]">
-                Describe it in English or Hindi. Ruko matches it against official advisories and tells you what to do, with the 1930 helpline and Chakshu a tap away. No sign-up, and nothing personal is kept.
+                Describe it in English or Hindi. Ruko checks it against a library of official advisories with an on-server text classifier, and tells you what to do, with the 1930 helpline and Chakshu a tap away. No sign-up, no LLM, and nothing you type is stored.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Button href="/check" icon={<ArrowRight size={16} />}>

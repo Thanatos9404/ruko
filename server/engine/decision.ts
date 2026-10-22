@@ -28,6 +28,36 @@ function counted(s: Signal): boolean {
   return s.confidence !== "low";
 }
 
+/**
+ * Critical pre-call risk: a hard rule fired (safe-account payee, remote access,
+ * payee on a risk list), the customer was on a call while paying, or a very large
+ * payment goes to a first-time payee. On these, a release needs positive evidence.
+ */
+export function criticalRisk(check: Pick<Check, "risk">): boolean {
+  const codes = new Set(check.risk.reasons.map((r) => r.code));
+  return (
+    check.risk.band === "high" ||
+    check.risk.reasons.some((r) => r.hard) ||
+    codes.has("ACTIVE_CALL_DURING_PAYMENT") ||
+    (codes.has("VERY_LARGE_AMOUNT") && codes.has("NEW_PAYEE"))
+  );
+}
+
+/**
+ * Positive evidence that a payment is genuine, heard with high confidence: the
+ * customer checked the payee themselves, or knows the payee personally and the
+ * purpose fits, or a named family member is helping with a purpose that fits.
+ * A cover story alone ("it's my own decision") is not enough.
+ */
+export function positiveGenuineEvidence(signals: Pick<Signal, "type" | "confidence">[]): boolean {
+  const sure = new Set(signals.filter((s) => s.confidence === "high").map((s) => s.type));
+  return (
+    sure.has("verified_independently") ||
+    (sure.has("knows_payee") && (sure.has("purpose_consistent") || sure.has("own_initiative") || sure.has("family_helping"))) ||
+    (sure.has("family_helping") && sure.has("purpose_consistent"))
+  );
+}
+
 export interface DecisionInput {
   check: Pick<Check, "signals" | "contact" | "risk" | "customer" | "payment" | "call">;
   agentRecommendation?: Outcome | null;
@@ -118,6 +148,32 @@ export function decide(input: DecisionInput): Decision {
         ? `No critical signs, and the customer's answers support the payment: ${describe(mitigating)}.`
         : "The conversation raised no warning signs.",
       signal_ids: ids(mitigating),
+    });
+  }
+
+  // The assistant itself tagged a known scam pattern: a release would contradict it.
+  const hinted = sigs.filter((s) => s.pattern_hint);
+  if (outcome === "release" && !input.noConversation && hinted.length && !positiveGenuineEvidence(sigs)) {
+    outcome = "delay";
+    delay = DELAY_HIGH_MIN;
+    reasons.push({
+      code: "PATTERN_SUSPECTED",
+      text: "The assistant matched the conversation to a known scam pattern, so the payment waits for confirmation through the bank's official channel.",
+      signal_ids: ids(hinted),
+    });
+  }
+
+  // Safe default: on critical pre-call risk, release only on positive evidence that the payment is genuine.
+  if (outcome === "release" && !input.noConversation && criticalRisk(check) && !positiveGenuineEvidence(sigs)) {
+    outcome = "delay";
+    delay = DELAY_HIGH_MIN;
+    reasons.push({
+      code: "SAFE_DEFAULT_CRITICAL_RISK",
+      text: "Pre-payment risk was critical and the call gave no positive evidence that the payment is genuine (the customer checked the payee themselves, or knows the payee personally and the purpose fits). The payment waits; the customer can confirm in the app or ask for a call-back.",
+    });
+    reasons.push({
+      code: "ESCALATED_TO_FRAUD_DESK",
+      text: "The case goes to the bank's fraud desk for a human call-back.",
     });
   }
 

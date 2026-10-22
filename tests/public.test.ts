@@ -34,9 +34,15 @@ describe("public text checker", () => {
     expect(stats.checks).toBe(1);
     expect(stats.conversations).toBe(1);
     expect(stats.by_pattern.digital_arrest).toBe(1);
-    const reports = (await kv.get<string[]>("index:reports")) ?? [];
-    const rep = await kv.get<{ summary: string }>(`report:${reports[0]}`);
-    expect(rep?.summary).not.toMatch(/98765|okicici/);
+    // Nothing the person typed is stored, not even redacted.
+    expect((await kv.get<string[]>("index:reports")) ?? []).toHaveLength(0);
+  });
+
+  it("never reads with an LLM by default: library plus the text classifier", async () => {
+    const kv = new MemoryStore();
+    const r = await publicChat(kv, { language: "en", messages: [{ role: "user", content: "Customer care asked me to install AnyDesk to process my refund" }] }, { visitorKey: "v9", dailyCap: 10, perHour: 10 });
+    expect(r.method).toBe("library-only");
+    expect(r.reply.length).toBeGreaterThan(20);
   });
 
   it("falls back to the rule-based library when the LLM is unavailable or over its daily cap", async () => {
