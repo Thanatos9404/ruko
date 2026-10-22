@@ -1,0 +1,567 @@
+{
+ "evidence_id": "ev_aa069076dcd74f720186febae8d3ca1ae81fa9b8fe3e61da3545bb37ff2f2ad6",
+ "subject": null,
+ "provider": {
+  "id": "rea-cdp-browser",
+  "name": "REA Chrome DevTools Protocol observation provider",
+  "version": "2"
+ },
+ "analysis_profile": null,
+ "predicate_type": "rea.web-bundle-analysis",
+ "operation": "analyze_web_bundle",
+ "parameters": {
+  "cdp_endpoint": "http://127.0.0.1:9333",
+  "allowed_origins": [],
+  "target_id": "E339A168F736C725B39F46A30714FBAC",
+  "observation_ms": 500,
+  "include_accessibility_text": false,
+  "include_console_text": false,
+  "include_json_body_shapes": false,
+  "include_websocket_shapes": false,
+  "include_storage_keys": false,
+  "include_storage_fingerprints": false,
+  "include_script_sources": true,
+  "fetch_source_maps": false
+ },
+ "raw_result": null,
+ "normalized_result": {
+  "capture": {
+   "target_url": "https://www.bolna.ai/",
+   "scripts_observed": 27,
+   "scripts_analyzed": 27,
+   "source_artifacts": [
+    {
+     "sha256": "87aeaa1cd1a2432f201a1650990d8588f78c061206fc99cd1f9b60efc75fb11f",
+     "bytes": 8579,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "4f023ea01ef22e6d891abc114e61d278424c0b344d9b4510b13e220f736d9bca",
+     "bytes": 473,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "1f66802031178c482a6d0027983cf68904d8ecee9ceeba1a4e74c243bd2c7987",
+     "bytes": 2058,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "3609a996883b30f5b22a3b021e41323429f526054e7fedbd4aff4b3d3b5c21c1",
+     "bytes": 124248,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "32e1983756ab2496d49e77389ccaa1785f318fe0ed3994fa1b3aa48f7adda7fd",
+     "bytes": 4258,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "3d911981e68786fc955ff99649e86a93e7ef8804df6aa893172afebc29f6efc8",
+     "bytes": 4271,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "b00859cd3c896d420f0cae01e4bd7d0550ac61ee28423ffdaad1fe96bf774463",
+     "bytes": 10226,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "23a60cd8a9d0b610d40f2ed560900a35a29e68e5b4898e2edd8cc6eba7468c95",
+     "bytes": 3583,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "7df349a17782de02f6bf7e95fb4f8bfc474edbb64ab21633c6120ee993a12b5a",
+     "bytes": 73778,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "09dca6a1005d91ab023ef9cd23be87a49aec81f68a86db9943b1d51e3b537cb7",
+     "bytes": 34,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "96d0821498d0b0605818a7309f25a385e62e4e52d552663cedd908e18a00c31c",
+     "bytes": 633061,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "abb3e1dbc671d56fcca10c5d4196f96104346e657f4332b30e1814c73d7d1984",
+     "bytes": 187823,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "9b4209f95a3003cf7a85c7949f993e00fbf82c31550d3c92d269756d7e4fa9ff",
+     "bytes": 15729,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "87d88cf19508923bfde7c693daa4837689a37380058b5cfb12b355247d1e1d26",
+     "bytes": 2508,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "3655df531a36910f5b3b482a464c8c5561d3b543ef1d445b8c37eb75a2bf6ca1",
+     "bytes": 18623,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "d26b7050c05736546cf30d2add608a3fa9003defbc0ce5dff2a3abcd6620b542",
+     "bytes": 4599,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "ec1cc72dc83396da024426c6708f87cca9197ed74272e6b082daa5786849fa44",
+     "bytes": 24451,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "8d7a3ee0ab05029f99253f887a9e38b8d309cefd1be3c3a2d51f68f581313129",
+     "bytes": 446,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "a222f9b5c69ff9088152e4475b5899680ae0401646a5a0eb1ab396affac3de97",
+     "bytes": 142737,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "9f022b4ffbe47e86c84c38adf3c202b0f60ebf3b9e95586cc8683fa282f54fa2",
+     "bytes": 6113,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "c95b105e040d668c879f83b4760fefe3ae2c3e12e3b5cf553277e599a0542b60",
+     "bytes": 20686,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "e6babf8c3fe27dc556e2b3c9107c8fffa2035ac101189ff7c32cc453286c5940",
+     "bytes": 172835,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "c0126c7af98efeb4bb266ee493ffddbd3640b5a9ec288d0facd94e179305a72b",
+     "bytes": 16235,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "30eb23eea774de7b25cc7ca1bf74c59ed081db9af29c83e9a5be196db0c36638",
+     "bytes": 8347,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "43ef2d3ec8d5b620ec8c5fc2bfc14c3a9836620f75a0a14a0c025ab753cf6f68",
+     "bytes": 72,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "ccb9d4f19ee25e470cce28e43b3d5e1b1aca9e76cb70cdf3cc37165a9bcf22fa",
+     "bytes": 6658,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "58e25c037e2ffb12406d706584f186eb159914f99335edef8c549c4e8de78a25",
+     "bytes": 104505,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    }
+   ]
+  },
+  "observations": {
+   "chunks": {
+    "nodes": [
+     {
+      "script_key": "scr_116edb528aacd8269d9f24953c978fa768314251cb803f641d3c37888bf233fe",
+      "url": "https://www.bolna.ai/_next/static/chunks/app/book-demo/page-6133ad346bf2caa3.js?<query-redacted>",
+      "artifact_sha256": "87aeaa1cd1a2432f201a1650990d8588f78c061206fc99cd1f9b60efc75fb11f",
+      "bytes": 8579
+     },
+     {
+      "script_key": "scr_14a494eb52e44661f82bf22482d61b6eac3c937e37a2c557f05f423bf4abed31",
+      "url": "https://www.bolna.ai/_next/static/chunks/main-app-4006fb8530a0b191.js?<query-redacted>",
+      "artifact_sha256": "4f023ea01ef22e6d891abc114e61d278424c0b344d9b4510b13e220f736d9bca",
+      "bytes": 473
+     },
+     {
+      "script_key": "scr_21ea27d83813ce058e15ee6770a86aa3e01337de8cf527dab066fca896413fc4",
+      "url": "https://www.bolna.ai/",
+      "artifact_sha256": "1f66802031178c482a6d0027983cf68904d8ecee9ceeba1a4e74c243bd2c7987",
+      "bytes": 2058
+     },
+     {
+      "script_key": "scr_243f04d3b4d388101adebb3eb2bc67640546ae264f02ce91a404ef984a3e4dcc",
+      "url": "https://www.bolna.ai/_next/static/chunks/8685-7647b909375d7005.js?<query-redacted>",
+      "artifact_sha256": "3609a996883b30f5b22a3b021e41323429f526054e7fedbd4aff4b3d3b5c21c1",
+      "bytes": 124248
+     },
+     {
+      "script_key": "scr_26f25d70b7709f181eaa3febe92ffda3e6560775e3776e0034ac9e2e007d17e6",
+      "url": "https://www.bolna.ai/_next/static/chunks/webpack-a38e5b57671528e2.js?<query-redacted>",
+      "artifact_sha256": "32e1983756ab2496d49e77389ccaa1785f318fe0ed3994fa1b3aa48f7adda7fd",
+      "bytes": 4258
+     },
+     {
+      "script_key": "scr_2b9dedd563aa2db8aaa8e2f05a666caad1326f0276b8558ccfcaf50047f6975a",
+      "url": "https://www.bolna.ai/",
+      "artifact_sha256": "3d911981e68786fc955ff99649e86a93e7ef8804df6aa893172afebc29f6efc8",
+      "bytes": 4271
+     },
+     {
+      "script_key": "scr_2f7124ad876f835b66cc2ba17f85837dd3f7003ec5005caef5d5403669c89a0f",
+      "url": "https://www.bolna.ai/_next/static/chunks/2934-f7805a9d4241b072.js?<query-redacted>",
+      "artifact_sha256": "b00859cd3c896d420f0cae01e4bd7d0550ac61ee28423ffdaad1fe96bf774463",
+      "bytes": 10226
+     },
+     {
+      "script_key": "scr_40b22675b30426b3276045940d5f1aa2c076ca4311bfe2b47ab2b555f759653d",
+      "url": "https://www.bolna.ai/_next/static/chunks/9379-07e92386518ce454.js?<query-redacted>",
+      "artifact_sha256": "23a60cd8a9d0b610d40f2ed560900a35a29e68e5b4898e2edd8cc6eba7468c95",
+      "bytes": 3583
+     },
+     {
+      "script_key": "scr_43cda3eb817bee445c6f4c942257d6c501c044d0dcb83fbff90119d42f43c315",
+      "url": "https://www.bolna.ai/_next/static/chunks/app/page-c972f1578b4dadd8.js?<query-redacted>",
+      "artifact_sha256": "7df349a17782de02f6bf7e95fb4f8bfc474edbb64ab21633c6120ee993a12b5a",
+      "bytes": 73778
+     },
+     {
+      "script_key": "scr_4a503a2c8d6dcb6ee7aede7239290b5f9e36965166e23c8dadc602433c8b812b",
+      "url": "https://www.bolna.ai/",
+      "artifact_sha256": "09dca6a1005d91ab023ef9cd23be87a49aec81f68a86db9943b1d51e3b537cb7",
+      "bytes": 34
+     },
+     {
+      "script_key": "scr_5be744a6cae389b075502dfa308aa63618bc810cb33f309ec945083a32d75c02",
+      "url": "https://www.bolna.ai/_next/static/chunks/3318-86e391bb505053c5.js?<query-redacted>",
+      "artifact_sha256": "96d0821498d0b0605818a7309f25a385e62e4e52d552663cedd908e18a00c31c",
+      "bytes": 633061
+     },
+     {
+      "script_key": "scr_6475f2d43cc0597ed5f62a73188f1d5e30338806d2663836f23829584a0bf926",
+      "url": "https://www.bolna.ai/_next/static/chunks/49409d0d-3aa6b3c0791dc51d.js?<query-redacted>",
+      "artifact_sha256": "abb3e1dbc671d56fcca10c5d4196f96104346e657f4332b30e1814c73d7d1984",
+      "bytes": 187823
+     },
+     {
+      "script_key": "scr_6506cca2828a8e62b8101492b80113a77db1dfb03196e8d05e67cac644a3f075",
+      "url": "https://www.bolna.ai/_next/static/chunks/5738-c1d1a191ed3b083a.js?<query-redacted>",
+      "artifact_sha256": "9b4209f95a3003cf7a85c7949f993e00fbf82c31550d3c92d269756d7e4fa9ff",
+      "bytes": 15729
+     },
+     {
+      "script_key": "scr_704175052ee172cfe4a0f30a9251e392c7c2a420d2b407c3e1a9fb6d9fdd7813",
+      "url": "https://www.bolna.ai/",
+      "artifact_sha256": "87d88cf19508923bfde7c693daa4837689a37380058b5cfb12b355247d1e1d26",
+      "bytes": 2508
+     },
+     {
+      "script_key": "scr_855cb4e03d3b90d24e9c024cf10a90ab7636d1d12a0fbc562ecd00a9420321b9",
+      "url": "https://www.bolna.ai/_next/static/chunks/1122-7cc2014f451f858a.js?<query-redacted>",
+      "artifact_sha256": "3655df531a36910f5b3b482a464c8c5561d3b543ef1d445b8c37eb75a2bf6ca1",
+      "bytes": 18623
+     },
+     {
+      "script_key": "scr_8f2fb2424d6269a46a0833d07356a9435a969720181ae3b5745e3a2ca1e39d87",
+      "url": "https://www.bolna.ai/_next/static/chunks/app/layout-380c48d612a72cfb.js?<query-redacted>",
+      "artifact_sha256": "d26b7050c05736546cf30d2add608a3fa9003defbc0ce5dff2a3abcd6620b542",
+      "bytes": 4599
+     },
+     {
+      "script_key": "scr_8f54bbc6753cefe026a5d53a8454d6bea71dc4d3ff6f5f55029697fea8ef2a6a",
+      "url": "https://www.bolna.ai/_next/static/chunks/3480-6dd829c545eacbe9.js?<query-redacted>",
+      "artifact_sha256": "ec1cc72dc83396da024426c6708f87cca9197ed74272e6b082daa5786849fa44",
+      "bytes": 24451
+     },
+     {
+      "script_key": "scr_90f678d5161382c86c348dd4a184b5078bae63bd64bbc6025992f3b3a957ad3a",
+      "url": "https://www.bolna.ai/",
+      "artifact_sha256": "8d7a3ee0ab05029f99253f887a9e38b8d309cefd1be3c3a2d51f68f581313129",
+      "bytes": 446
+     },
+     {
+      "script_key": "scr_a7420361d8e3fd733ed8ecd41a1ad864e0df2f806c291f06d77b3833c614102b",
+      "url": "https://www.bolna.ai/_next/static/chunks/249-da09f6cdb09cb347.js?<query-redacted>",
+      "artifact_sha256": "a222f9b5c69ff9088152e4475b5899680ae0401646a5a0eb1ab396affac3de97",
+      "bytes": 142737
+     },
+     {
+      "script_key": "scr_acef8e77c32addff6919f3877753796d6da2d4ac75eb5ca00892ce0b3f25050a",
+      "url": "https://www.bolna.ai/_next/static/chunks/493ff4cd-969b642fdf80cd37.js?<query-redacted>",
+      "artifact_sha256": "9f022b4ffbe47e86c84c38adf3c202b0f60ebf3b9e95586cc8683fa282f54fa2",
+      "bytes": 6113
+     },
+     {
+      "script_key": "scr_d184ead2bed757fe077e2015da879069fc7d93c240f929855f392a702c32a451",
+      "url": "https://www.bolna.ai/_next/static/chunks/6934-b25a57c67ce364e2.js?<query-redacted>",
+      "artifact_sha256": "c95b105e040d668c879f83b4760fefe3ae2c3e12e3b5cf553277e599a0542b60",
+      "bytes": 20686
+     },
+     {
+      "script_key": "scr_df79e3e9fbb2c178c4d399482d8db25a5f3f5d53a12df1ea52ec614a3ce725f8",
+      "url": "https://www.bolna.ai/_next/static/chunks/be0aa090-733f8398f81a6147.js?<query-redacted>",
+      "artifact_sha256": "e6babf8c3fe27dc556e2b3c9107c8fffa2035ac101189ff7c32cc453286c5940",
+      "bytes": 172835
+     },
+     {
+      "script_key": "scr_e6fee7e57a035c90a792b54f94339c05435d111d9337fab2b561b3b4703ff456",
+      "url": "https://www.bolna.ai/_next/static/chunks/1447-d2ed99c4d7fedc99.js?<query-redacted>",
+      "artifact_sha256": "c0126c7af98efeb4bb266ee493ffddbd3640b5a9ec288d0facd94e179305a72b",
+      "bytes": 16235
+     },
+     {
+      "script_key": "scr_ea45041582ad6654e2b16b7a62d30733605e532bcaa5a3e0f2827408884a243f",
+      "url": "https://www.bolna.ai/_next/static/chunks/332-d1240bc5b682bb39.js?<query-redacted>",
+      "artifact_sha256": "30eb23eea774de7b25cc7ca1bf74c59ed081db9af29c83e9a5be196db0c36638",
+      "bytes": 8347
+     },
+     {
+      "script_key": "scr_ea7131d0523adca565620a9401e710e8b297511b148d0736aa7d2d4215aaf897",
+      "url": "https://www.bolna.ai/",
+      "artifact_sha256": "43ef2d3ec8d5b620ec8c5fc2bfc14c3a9836620f75a0a14a0c025ab753cf6f68",
+      "bytes": 72
+     },
+     {
+      "script_key": "scr_ee879d901b7134b65b826e09a8e85f6c91878dbf6fa5233f26e94bb5aa0b82d2",
+      "url": "https://www.bolna.ai/_next/static/chunks/360-520b4ea9b5b53d93.js?<query-redacted>",
+      "artifact_sha256": "ccb9d4f19ee25e470cce28e43b3d5e1b1aca9e76cb70cdf3cc37165a9bcf22fa",
+      "bytes": 6658
+     },
+     {
+      "script_key": "scr_f55793d73b37390d502bd63f990ab1858a89f0d6c17fef41b9a6a0601a2df8b5",
+      "url": "https://www.bolna.ai/_next/static/chunks/9921-f2130cfbc3b41f52.js?<query-redacted>",
+      "artifact_sha256": "58e25c037e2ffb12406d706584f186eb159914f99335edef8c549c4e8de78a25",
+      "bytes": 104505
+     }
+    ],
+    "edges": [
+     {
+      "from_script_key": "scr_a7420361d8e3fd733ed8ecd41a1ad864e0df2f806c291f06d77b3833c614102b",
+      "kind": "require",
+      "specifier": "@emotion/is-prop-valid",
+      "resolved_url": null,
+      "location": {
+       "script_key": "scr_a7420361d8e3fd733ed8ecd41a1ad864e0df2f806c291f06d77b3833c614102b",
+       "line": 1,
+       "column": 109397
+      }
+     }
+    ]
+   },
+   "routes": [],
+   "endpoints": [
+    {
+     "value": "",
+     "mechanism": "call:fetch",
+     "location": {
+      "script_key": "scr_243f04d3b4d388101adebb3eb2bc67640546ae264f02ce91a404ef984a3e4dcc",
+      "line": 1,
+      "column": 68949
+     }
+    }
+   ],
+   "webmcp_declarations": [],
+   "source_maps": {
+    "status": "not_requested",
+    "requested": 0,
+    "processed": 0,
+    "items": []
+   }
+  },
+  "inferences": [
+   {
+    "kind": "vendor_fingerprint",
+    "value": "React",
+    "confidence": "medium",
+    "basis": [
+     {
+      "script_key": "scr_243f04d3b4d388101adebb3eb2bc67640546ae264f02ce91a404ef984a3e4dcc",
+      "artifact_sha256": "3609a996883b30f5b22a3b021e41323429f526054e7fedbd4aff4b3d3b5c21c1",
+      "line": null,
+      "column": null,
+      "detector": "react-runtime"
+     }
+    ]
+   },
+   {
+    "kind": "vendor_fingerprint",
+    "value": "Next.js",
+    "confidence": "high",
+    "basis": [
+     {
+      "script_key": "scr_26f25d70b7709f181eaa3febe92ffda3e6560775e3776e0034ac9e2e007d17e6",
+      "artifact_sha256": "32e1983756ab2496d49e77389ccaa1785f318fe0ed3994fa1b3aa48f7adda7fd",
+      "line": null,
+      "column": null,
+      "detector": "next-runtime"
+     }
+    ]
+   },
+   {
+    "kind": "vendor_fingerprint",
+    "value": "Next.js",
+    "confidence": "high",
+    "basis": [
+     {
+      "script_key": "scr_2b9dedd563aa2db8aaa8e2f05a666caad1326f0276b8558ccfcaf50047f6975a",
+      "artifact_sha256": "3d911981e68786fc955ff99649e86a93e7ef8804df6aa893172afebc29f6efc8",
+      "line": null,
+      "column": null,
+      "detector": "next-runtime"
+     }
+    ]
+   },
+   {
+    "kind": "vendor_fingerprint",
+    "value": "Next.js",
+    "confidence": "high",
+    "basis": [
+     {
+      "script_key": "scr_90f678d5161382c86c348dd4a184b5078bae63bd64bbc6025992f3b3a957ad3a",
+      "artifact_sha256": "8d7a3ee0ab05029f99253f887a9e38b8d309cefd1be3c3a2d51f68f581313129",
+      "line": null,
+      "column": null,
+      "detector": "next-runtime"
+     }
+    ]
+   },
+   {
+    "kind": "endpoint_candidate",
+    "value": "[]",
+    "confidence": "low",
+    "basis": [
+     {
+      "script_key": "scr_d184ead2bed757fe077e2015da879069fc7d93c240f929855f392a702c32a451",
+      "artifact_sha256": "c95b105e040d668c879f83b4760fefe3ae2c3e12e3b5cf553277e599a0542b60",
+      "line": 1,
+      "column": 15938,
+      "detector": "call:children.get:unverified-network-receiver"
+     }
+    ]
+   },
+   {
+    "kind": "endpoint_candidate",
+    "value": "[...]",
+    "confidence": "low",
+    "basis": [
+     {
+      "script_key": "scr_d184ead2bed757fe077e2015da879069fc7d93c240f929855f392a702c32a451",
+      "artifact_sha256": "c95b105e040d668c879f83b4760fefe3ae2c3e12e3b5cf553277e599a0542b60",
+      "line": 1,
+      "column": 16295,
+      "detector": "call:children.get:unverified-network-receiver"
+     }
+    ]
+   },
+   {
+    "kind": "endpoint_candidate",
+    "value": "[[...]]",
+    "confidence": "low",
+    "basis": [
+     {
+      "script_key": "scr_d184ead2bed757fe077e2015da879069fc7d93c240f929855f392a702c32a451",
+      "artifact_sha256": "c95b105e040d668c879f83b4760fefe3ae2c3e12e3b5cf553277e599a0542b60",
+      "line": 1,
+      "column": 16408,
+      "detector": "call:children.get:unverified-network-receiver"
+     }
+    ]
+   },
+   {
+    "kind": "vendor_fingerprint",
+    "value": "React",
+    "confidence": "medium",
+    "basis": [
+     {
+      "script_key": "scr_df79e3e9fbb2c178c4d399482d8db25a5f3f5d53a12df1ea52ec614a3ce725f8",
+      "artifact_sha256": "e6babf8c3fe27dc556e2b3c9107c8fffa2035ac101189ff7c32cc453286c5940",
+      "line": null,
+      "column": null,
+      "detector": "react-runtime"
+     }
+    ]
+   }
+  ],
+  "unknowns": [],
+  "completeness": {
+   "status": "complete",
+   "parsed_scripts": 27,
+   "parse_failures": 0,
+   "visited_ast_nodes": 351552
+  },
+  "limitations": [
+   "Static bundle findings are observations or bounded inferences; REA does not execute captured JavaScript.",
+   "Bare string arguments of unbound HTTP-method-named calls are low-confidence endpoint candidates; form, translation, storage and other APIs can use the same syntax. URL-shaped findings still do not prove network execution.",
+   "Endpoint candidates are deduplicated by script, value and detector; basis retains only the first matching source coordinate. They are not a complete call-site inventory or a runtime occurrence count. completeness.status=\"complete\" describes examination of captured source, not a call-site census.",
+   "String-built routes and endpoints, encrypted configuration, and server-side behavior may remain unknown.",
+   "Page-declared WebMCP metadata is untrusted and is never registered or invoked as an REA tool."
+  ]
+ },
+ "confidence": "observed",
+ "authority": "external-service",
+ "environment": null,
+ "limitations": [
+  "Artifact identity is unavailable for this observation.",
+  "Static bundle findings are observations or bounded inferences; REA does not execute captured JavaScript.",
+  "Bare string arguments of unbound HTTP-method-named calls are low-confidence endpoint candidates; form, translation, storage and other APIs can use the same syntax. URL-shaped findings still do not prove network execution.",
+  "Endpoint candidates are deduplicated by script, value and detector; basis retains only the first matching source coordinate. They are not a complete call-site inventory or a runtime occurrence count. completeness.status=\"complete\" describes examination of captured source, not a call-site census.",
+  "String-built routes and endpoints, encrypted configuration, and server-side behavior may remain unknown.",
+  "Page-declared WebMCP metadata is untrusted and is never registered or invoked as an REA tool."
+ ],
+ "relationship_coverage": null,
+ "locations": [],
+ "evidence_links": []
+}

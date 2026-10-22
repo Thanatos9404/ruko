@@ -1,0 +1,101 @@
+{
+  "source": "https://obliqq.framer.ai/ (public Framer site), observed 2026-10-22 with rea-agents 6.5.0",
+  "evidence": {
+    "list_browser_targets": "ev_4e39cf1ab81a5d6f63113504b2e18cb68c3a707d85824e23a67ea12e26dbf9e9",
+    "inspect_web_page (obliqq + framerusercontent origins, script sources)": "ev_dd1984814081b39d24792478ecde04d291e837a2d44ff58f00d7e8795b6dfe8b",
+    "analyze_web_bundle": "ev_356dbbffa6e4ec45c846f6decf9ab2e1e1ddb8c9c7455ccee2c6309cde2396ca",
+    "export_web_scripts": "ev_ce577d9f6aaf907f269fb57b5334f126a922b399d24df9869737417650285c23",
+    "capture_browser_scenario (1440x900, reduced_motion no-preference, 5x PageDown, screenshot per step)": "ev_fd591c32a26038eaa0dcdd7f4dee2cf53fcf3e5ae53fc2844047756f93e21f5f",
+    "export_web_scripts -> local search of the site's own component modules": "export.json (manifest with per-file sha256)",
+    "analyze_javascript_application (page module, script_main, shared-lib)": "ev_35e9ec577ff68078fb911f3b46ca4fb9188bde01d2fe635aa73b1d95f0146fb3"
+  },
+  "how_values_were_obtained": "Numbers below are Framer effect settings read from the site's exported component modules (REA export_web_scripts output), cross-checked against scenario screenshots. They are parameters, not code. REA's semantic graph does not retain object-literal property values in Framer's minified ESM, so the literal/property traces came back empty (see rea-site-literals.json and traces/).",
+  "stack": {
+    "runtime": "Framer site runtime + Framer Motion chunk + React (25 ES modules from framerusercontent.com)",
+    "smooth_scroll": "Lenis via Framer's Smooth Scroll component",
+    "custom_cursor": "none (system cursor; pointer on links)",
+    "sticky_pinned_sections": "none",
+    "canvas_webgl": "none (no CANVAS node in the DOM inventory)"
+  },
+  "smooth_scroll": {
+    "library": "lenis",
+    "options": { "duration": 1.0, "lerp": "disabled (duration mode)", "easing": "Lenis default exponential-out: t => min(1, 1.001 - 2^(-10t))" },
+    "behaviours": [
+      "own requestAnimationFrame loop calling lenis.raf(t)",
+      "every descendant with computed overflow:auto gets data-lenis-prevent so nested scroll areas scroll natively",
+      "in-page anchor links are routed through lenis.scrollTo"
+    ],
+    "ruko_delta": "kit SmoothScroll uses duration 1.1 + quartic-out; matching obliqq means duration 1.0 + expo-out. Add data-lenis-prevent to the call captions, engine timeline and console tables."
+  },
+  "hero_text_reveal": {
+    "granularity": "word (not character)",
+    "trigger": "on mount",
+    "from": { "opacity": 0.001, "filter": "blur(10px)", "y": 10 },
+    "to": { "opacity": 1, "filter": "blur(0px)", "y": 0 },
+    "transition": { "type": "spring", "stiffness": 163, "damping": 40, "mass": 1 },
+    "per_word_stagger_s": 0.05,
+    "start_delay_s": { "headline": 0, "subheading": 0.1 },
+    "ruko_delta": "kit WordReveal uses blur 14px, y 0.18em, 1 s tween, 0.07 s gap, 0.15 s delay. The obliqq feel is shorter: overdamped spring 163/40, 10 px blur, 10 px rise, 0.05 s gap."
+  },
+  "block_appear_on_scroll": {
+    "trigger": "element 50% in view (some at threshold 0), animate once",
+    "pattern": "fade + rise; later siblings start lower AND later, a cascading fan",
+    "y_from_px_seen": { "64": "most common (12 uses)", "80": 2, "96": 3, "112": 2, "128": 1 },
+    "delay_s_seen": { "0": "most common (12 uses)", "0.1": 5, "0.2": 1, "0.3": 1, "0.4": 1 },
+    "suggested_ladder": "sibling i: y_from = 64 + 16*i px, delay = 0.1*i s (i = 0..4); the exact enter/transition pairing per element is not recoverable from counts alone",
+    "transition": { "type": "spring", "stiffness": 150, "damping": 30, "mass": 1 },
+    "small_elements": { "y_from": 24, "transition": { "type": "tween", "duration": 0.6, "ease": [0.12, 0.23, 0.5, 1] } },
+    "blur": "none on blocks (blur is reserved for the hero words)",
+    "ruko_delta": "kit Reveal uses y 18 + blur 8 + 0.55 s tween at -12% margin. For obliqq parity: drop blur on large blocks, use viewport { once: true, amount: 0.5 }, spring 150/30, and increase y and delay per sibling index."
+  },
+  "scroll_linked_transforms": {
+    "mapping": "Framer 'layer in view' transform = scroll progress of the element with offset ['start end', 'end end'], interpolated between two targets and smoothed by a spring",
+    "motion12_recipe": "const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end end'] }); const v = useSpring(useTransform(scrollYProgress, [0, 1], [from, to]), spring)",
+    "effects": [
+      { "use": "hero product screenshot tilt-in", "from": { "rotateX": 20, "scale": 0.8, "y": -80 }, "to": { "rotateX": 0, "scale": 1, "y": 0 }, "spring": { "stiffness": 400, "damping": 100, "mass": 1 }, "needs": "perspective on parent (about 1200px), transform-origin top center" },
+      { "use": "media zoom-out inside clipped rounded frame", "from": { "scale": 1.3 }, "to": { "scale": 1 }, "spring": { "stiffness": 150, "damping": 37, "mass": 1 } },
+      { "use": "text block drift", "from": { "y": 60 }, "to": { "y": 0 }, "spring": { "stiffness": 150, "damping": 37, "mass": 1 } },
+      { "use": "side elements converge", "from": { "x": "±40 or ±200" }, "to": { "x": 0 }, "spring": { "stiffness": 150, "damping": 40, "mass": 1 } }
+    ]
+  },
+  "nav": {
+    "states": ["Desktop - Primary (transparent, full width)", "Desktop - On Scroll (floating pill)"],
+    "switch_trigger": "a section after the hero enters the viewport (threshold 0); not a pixel scrollY test",
+    "on_scroll_style": { "background": "rgba(255,255,255,0.25)", "backdrop_filter": "blur(10px)", "border": "1px rgba(117,115,114,0.15)", "radius": 100 },
+    "link_hover": { "background": "rgba(255,255,255,0.2)" },
+    "ruko_delta": "kit Nav docks at scrollY > 40 with layout animation, which is close. Switching on a hero-end sentinel and adding the 10px blur / 25% white / 15% warm-grey border makes it match."
+  },
+  "marquee": {
+    "speed_px_per_s": { "logos": 40, "integration_rows": 20 },
+    "direction": "left (integration rows alternate direction)",
+    "hover": "slow to 0.5x speed (hoverFactor 0.5), not pause",
+    "edge_fade": "mask fade 20-25% of width on each side",
+    "scroll_coupling": "each frame, the ticker offset is nudged by the window scroll delta times a factor, eased with a 0.1 lerp, so logos speed up while the page scrolls",
+    "motion12_recipe": "useAnimationFrame for base drift + useVelocity(useScroll().scrollY) mapped through useTransform/useSpring to add to the offset; wrap with a modulo"
+  },
+  "hover_and_press": {
+    "default_hover_transition": { "type": "spring", "bounce": 0.2, "duration": 0.4 },
+    "image_card": { "hover_scale": 1.15, "frame_radius_px": 16, "overflow": "hidden" },
+    "primary_button": "background to 85% opacity of ink",
+    "ghost_link": "warm tint background rgba(97,74,68,0.06)",
+    "icon_swap": "two icons cross-fade opacity 0<->1 on hover",
+    "tap": { "scale": 0.9, "where": "small icon buttons" }
+  },
+  "ambient_loop": { "rotate": 360, "duration_s": 1, "ease": "linear", "repeat": "loop", "note": "one small decorative element only" },
+  "type_and_colour_tokens": {
+    "font": "Open Runde (headings 600, body 400/500)",
+    "heading_tracking": "-0.03em",
+    "line_height": { "headings": "120%", "body": "150%" },
+    "scale_px": [16, 18, 20, 24, 28, 40, 44, 52],
+    "colours": { "ink": "#1a1615", "ink_2": "#453f3d", "eyebrow_warm_brown": "#614a44", "muted": "rgb(117,113,112)", "surface": "rgb(244,241,238)", "hairline": "rgb(227,225,225)" },
+    "radii_px": { "cards": 16, "large_media": 24, "pills": 100 },
+    "backgrounds": "sky-blue to sand vertical gradient behind hero and feature screenshots; soft cloud imagery at hero edges"
+  },
+  "performance_observed": {
+    "scripts": "25 modules, ~1.45 MB uncompressed (framer runtime 473 KB, page module 286 KB, motion 151 KB, react 145 KB)",
+    "images": "24 images, ~0.97 MB",
+    "fonts": "3 woff2 files, ~471 KB total",
+    "dom_nodes": 1935,
+    "notes": "Lenis keeps a permanent rAF loop; scroll transforms are springs per element. Headless Chrome numbers, not a field measurement."
+  }
+}

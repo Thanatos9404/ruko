@@ -1,0 +1,1262 @@
+{
+ "evidence_id": "ev_dd1984814081b39d24792478ecde04d291e837a2d44ff58f00d7e8795b6dfe8b",
+ "subject": null,
+ "provider": {
+  "id": "rea-cdp-browser",
+  "name": "REA Chrome DevTools Protocol observation provider",
+  "version": "2"
+ },
+ "analysis_profile": null,
+ "predicate_type": "rea.web-page-inspection",
+ "operation": "inspect_web_page",
+ "parameters": {
+  "cdp_endpoint": "http://127.0.0.1:9333",
+  "allowed_origins": [
+   "https://fonts.gstatic.com",
+   "https://framerusercontent.com",
+   "https://obliqq.framer.ai"
+  ],
+  "target_id": "C81F3EA45C13D162F117D90A68B28797",
+  "observation_ms": 3000,
+  "include_accessibility_text": false,
+  "include_console_text": false,
+  "include_json_body_shapes": false,
+  "include_websocket_shapes": false,
+  "include_storage_keys": false,
+  "include_storage_fingerprints": false,
+  "include_script_sources": true
+ },
+ "raw_result": null,
+ "normalized_result": {
+  "browser": {
+   "product": "Chrome/155.0.8059.85",
+   "protocol_version": "1.3",
+   "revision": "537.36 (@0e66b94549a8bd85f03fbdf189b752d6e7b63c32)",
+   "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+   "js_version": "15.5.35.25"
+  },
+  "target": {
+   "target_id": "C81F3EA45C13D162F117D90A68B28797",
+   "type": "page",
+   "title": "OBLIQ.in",
+   "url": "https://obliqq.framer.ai/",
+   "origin": "https://obliqq.framer.ai",
+   "attached": null
+  },
+  "capture_window": {
+   "started_at": "2026-10-22T15:11:02.920Z",
+   "ended_at": "2026-10-22T15:11:06.232Z",
+   "observation_ms": 3000
+  },
+  "completeness": {
+   "status": "policy_filtered",
+   "conditions": [
+    "attach_limited",
+    "policy_filtered"
+   ],
+   "policy_filtered_sections": [
+    "accessibility",
+    "console_text",
+    "json_body_shapes",
+    "metadata",
+    "resources",
+    "scripts",
+    "storage_keys",
+    "websocket_shapes"
+   ],
+   "attach_limited_sections": [
+    "console_events",
+    "metadata",
+    "network_requests",
+    "websocket_connections",
+    "websocket_frames"
+   ],
+   "truncated_sections": [],
+   "unavailable_sections": [],
+   "excluded": [
+    {
+     "section": "accessibility",
+     "reason": "not_approved",
+     "count": 1214
+    },
+    {
+     "section": "console_text",
+     "reason": "not_approved",
+     "count": null
+    },
+    {
+     "section": "json_body_shapes",
+     "reason": "not_approved",
+     "count": null
+    },
+    {
+     "section": "metadata",
+     "reason": "disallowed_origin",
+     "count": 10
+    },
+    {
+     "section": "resources",
+     "reason": "disallowed_origin",
+     "count": 3
+    },
+    {
+     "section": "resources",
+     "reason": "unsupported_url",
+     "count": 3
+    },
+    {
+     "section": "scripts",
+     "reason": "disallowed_origin",
+     "count": 3
+    },
+    {
+     "section": "storage_keys",
+     "reason": "not_approved",
+     "count": null
+    },
+    {
+     "section": "websocket_shapes",
+     "reason": "not_approved",
+     "count": null
+    }
+   ],
+   "dropped_events": {
+    "scripts": 0,
+    "network_requests": 0,
+    "console_events": 0,
+    "websocket_connections": 0,
+    "websocket_frames": 0,
+    "webmcp_tools": 0,
+    "timeline_events": 0,
+    "total": 0
+   }
+  },
+  "frames": [
+   {
+    "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+    "parent_frame_id": null,
+    "url": "https://obliqq.framer.ai/",
+    "origin": "https://obliqq.framer.ai"
+   }
+  ],
+  "dom": {
+   "total_nodes": 1935,
+   "nodes": "<trimmed 1935 nodes; see full capture in scratch>"
+  },
+  "accessibility": {
+   "total_nodes": 1264,
+   "text_capture": {
+    "status": "not_approved",
+    "retained_bytes": 0,
+    "excluded_fields": 1214
+   },
+   "nodes": "<trimmed 1264 nodes; see full capture in scratch>"
+  },
+  "scripts": {
+   "total": 26,
+   "items": [
+    {
+     "script_key": "scr_009f68342dde083f172230e9271ab76e4e9aa87125641c596990974ebaed20f1",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/e2TB71JKK.DBUDPYfa.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "2c4418888b992b1d7c5d35892cb3e7627ce07442cda4c97275c1f8bbe083e5a9",
+     "length": 12292,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/e2TB71JKK.DBUDPYfa.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_9e75743b3a975fe0ec9700e830b62aeb558a5f87804b14c5450e1fbd2528ca4b"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "2c4418888b992b1d7c5d35892cb3e7627ce07442cda4c97275c1f8bbe083e5a9",
+       "bytes": 12292,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_016fdc01ddf30955c06d2a4517f05c98859429f516176f4bbe3c5619ad71de4f",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/script_main.0dfisnd8.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "a7bb99a7869e661a833d61f9767a05258fe1b0720f4534d712835dd7b765fba4",
+     "length": 94938,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/script_main.0dfisnd8.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_0d8c6018c0ad04684eada41cbf844be59cc17e3cf0e30b76aab37a6c18d48c95"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "a7bb99a7869e661a833d61f9767a05258fe1b0720f4534d712835dd7b765fba4",
+       "bytes": 94940,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_037db05a8ca10447aa593e2caa937547cecf436e52691f30a6bcbd770f710c5c",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/Ep2r8kEta.BoCIhx_n.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "3d75250e6458903af322fd9d21a3c0c3e514efe280662040a7803ab59dd8ea8f",
+     "length": 33646,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/Ep2r8kEta.BoCIhx_n.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_645a75533e1d7f23594a689ef27be84b6b5c7aad9f48aeccefbd27fe6df6d50c"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "3d75250e6458903af322fd9d21a3c0c3e514efe280662040a7803ab59dd8ea8f",
+       "bytes": 33646,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_049704be4c75ca59da8ef1c6b1e5ed2b10070a790722b7bc3355df7f1f053817",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/ceNjEn0pZ.CyG-Je93.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "d48ed6adf4647471dce876b8a7a7500ec325a35a9adb3b350c401f399b7a0ddd",
+     "length": 26065,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/ceNjEn0pZ.CyG-Je93.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_8bf4317885cfaf08b5c9ab0234e5077c381bb15f4a3cc0914c90faf4aba90a19"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "d48ed6adf4647471dce876b8a7a7500ec325a35a9adb3b350c401f399b7a0ddd",
+       "bytes": 26065,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_118ed59794c58c87eebfce7fe0a3fda22f48462efc2b7cec75d3aaf5a53818f2",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/motion.CU2VUewv.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "42faf2a6e9a5af5a4438de9dd6764bf00dc7d248fdcbe3b6ff9deaf531261ade",
+     "length": 150891,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/motion.CU2VUewv.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_366f55e6b5ca963d23ee2ddf76d6002c40253cdef4dba1511d04148f6aeab6a3"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "42faf2a6e9a5af5a4438de9dd6764bf00dc7d248fdcbe3b6ff9deaf531261ade",
+       "bytes": 150891,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_253834a2242b121ffe3f12bde842709bddfe9cb0f6c8bc2f97f0dedf1ab9256d",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/gB-PdzFQIYYyudOD90PdxPT5SfDpeOCa35w3TwZLBeY.BhZzfFEd.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "a56bc0fd20afe1663a5b51190aae5c8b46ae309cf13186ba6284917668b465c0",
+     "length": 22759,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/gB-PdzFQIYYyudOD90PdxPT5SfDpeOCa35w3TwZLBeY.BhZzfFEd.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_76afa9314a0c2fd50b8ed66f100505f6269781158566845f432f507b50f63d52"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "a56bc0fd20afe1663a5b51190aae5c8b46ae309cf13186ba6284917668b465c0",
+       "bytes": 22763,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_2d0eb000aafac81051b09e27b31da440ae6515408f413338021974b631c221fa",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/h4JcoWJSF.CF0Oofg0.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "5c471b503257360aad7846382eaff6de87f790ecd777951bd201c9a8745d790c",
+     "length": 12407,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/h4JcoWJSF.CF0Oofg0.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_f8148497da655f9f5a4b4187ec78b9c592b16efd5ac977df9b9d05ccc868c5a5"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "5c471b503257360aad7846382eaff6de87f790ecd777951bd201c9a8745d790c",
+       "bytes": 12407,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_33a7e284cf179235ddb780357e170c2c2a4fdb55c459b37c6e8e8dcd407cfc4f",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/w6f14WWdd1fWd5O6MtJApkcdw7kG4io2gdw8TjQ8vkg.CDI1AnrR.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "5475f5c1a3d1a20804978907dde670a37c8e7c181546d6d03d0bd8e3a849088c",
+     "length": 997,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/w6f14WWdd1fWd5O6MtJApkcdw7kG4io2gdw8TjQ8vkg.CDI1AnrR.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_46a8aa729a95a2a5f7705b07ca44266d069e682de29cb90229fbe1636813c47e"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "5475f5c1a3d1a20804978907dde670a37c8e7c181546d6d03d0bd8e3a849088c",
+       "bytes": 997,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_34bc3e5a5a52be05cda0514963ebc207f0b05c181676d0395ae25c41d787561b",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/6dpVZms3lHzVd6JP2UTG8YfgT7Kuwxx91rFmSBwJ4qI.B_4URQWx.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "de1f666a79a504ece54a360145287efaeface530c01a8e2cfd13ad7f46495f96",
+     "length": 286072,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/6dpVZms3lHzVd6JP2UTG8YfgT7Kuwxx91rFmSBwJ4qI.B_4URQWx.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_9b80a0370e07eddff7fd9def58e2b682822e53b703fd239097ccb2f855b55123"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "de1f666a79a504ece54a360145287efaeface530c01a8e2cfd13ad7f46495f96",
+       "bytes": 286090,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_3606c577e073b1f27115be727a410bfb4a1eb7d803f79f6c96494b7c5f2c9032",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/lpN9RaA0p.x_El2dSS.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "603ae95543029a06c9de0a122ab1dc339fa40ffd6407e169b253d30978eae9e6",
+     "length": 1167,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/lpN9RaA0p.x_El2dSS.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_6fc7ad7e20cffa6762eed01bb74e1b014efc822225d06a88767b38ed1dd6de0f"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "603ae95543029a06c9de0a122ab1dc339fa40ffd6407e169b253d30978eae9e6",
+       "bytes": 1167,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_376a5aacede328946a964b6ede707ddefd03b442004e52a8beeb3c10ad74f88b",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/q2-CwetE4_7Tf5h02907IjL-rfJBcbnbFN4ubOiXgfM.DOAkcOm4.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "15a74632a4eeec324de252307da74646a2c5f1d80461bd8550798de7eb885345",
+     "length": 1115,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/q2-CwetE4_7Tf5h02907IjL-rfJBcbnbFN4ubOiXgfM.DOAkcOm4.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_6dcc5befd153d3edcdeb57c4024c1a996d1c45d014955739f0c5fe72888d4b16"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "15a74632a4eeec324de252307da74646a2c5f1d80461bd8550798de7eb885345",
+       "bytes": 1115,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_503779caec01d2e42dd22d61ca0b311f0750b8907d9ccd36f50bcd6a791be47a",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/oM4DrnKwh.Bf3kikQ_.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "5da4c3ed93e463475e69c93c5c7c61e4d7af7d351580aa64ff95753062d96aff",
+     "length": 5050,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/oM4DrnKwh.Bf3kikQ_.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_d6134b14da9d0c87fcca7a39e50098baeacab48c58461e7cab39fce4fe738e41"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "5da4c3ed93e463475e69c93c5c7c61e4d7af7d351580aa64ff95753062d96aff",
+       "bytes": 5050,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_6d7a2d75ad503328336ad931ddeb7340ee9ec17f58ba32a617761f76f519ec84",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/PX9hIOIVM.Dx-rXCtM.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "dd7457e8d62d1280f0ab386a3773bdec3cf51cb5e1f80a266ae62178963aefdd",
+     "length": 19658,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/PX9hIOIVM.Dx-rXCtM.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_7713731c26740f1a9e191327988e313c13ddd27caece07f74b137940394468a9"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "dd7457e8d62d1280f0ab386a3773bdec3cf51cb5e1f80a266ae62178963aefdd",
+       "bytes": 19658,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_8e4826681b477c27a8137595ea68b720925325db1499487d90b467cb40ec1834",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/XrWQqo06r.BBRPfyNv.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "43e5d6f6c9f3d6fc8b17e8b5ace830c87e7cb0d2db4a26aa16f2940cb8166757",
+     "length": 12583,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/XrWQqo06r.BBRPfyNv.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_fc2d23bc5e95982398dcafa30f0f9ce369f3ae600f312925cba95c6e251b68aa"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "43e5d6f6c9f3d6fc8b17e8b5ace830c87e7cb0d2db4a26aa16f2940cb8166757",
+       "bytes": 12583,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_a1f36aa0757ee37fe7f31c28f21bf0a7f567fdc14b1915a4e1a446a00e6a02fb",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/rolldown-runtime.Dh6celcD.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "4cf74e844dce3bc61a15b3687b05aceff75f4da99181156d04f8ef181283f429",
+     "length": 629,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_c44925a7e707b61d52672fec466fc8136a885b70fd047be12180d565b5803b50"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "4cf74e844dce3bc61a15b3687b05aceff75f4da99181156d04f8ef181283f429",
+       "bytes": 629,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_b849b65cc6ee4ba8969137c84c31ba6179917bcdeba3d6ceb8c447f8aee357ba",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/WiH3d3HBs.Dkuk7KLM.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "ed5b10b0c83a713f1ebb866fbe5e39455bcb55c5efca71908ac8b3ff51ac6510",
+     "length": 78029,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/WiH3d3HBs.Dkuk7KLM.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_b0875aa9892486f2da6d68ba65d4c4003de878547be716651e1388fd05c84ef4"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "ed5b10b0c83a713f1ebb866fbe5e39455bcb55c5efca71908ac8b3ff51ac6510",
+       "bytes": 78037,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_bc1daace92b520279b8b0e1c34a858680df6c0a73ced754bf5ced969ac32eac8",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/shared-lib.DX81oTQ0.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "9ccd92890e6b6f47699e91c33e1ad1284754ddc06ca970d5c067f9e73acfb8c5",
+     "length": 18708,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/shared-lib.DX81oTQ0.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_f99d47d4d6a13b21e3aa842204aa601d48b31200794ef2b88ccbe8ce75b0d512"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "9ccd92890e6b6f47699e91c33e1ad1284754ddc06ca970d5c067f9e73acfb8c5",
+       "bytes": 18708,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_cce1538310824889676163bee1f9187b9ca8c6de49d7ec120ceb2a7548c1ce10",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/2VdbrlvJr8ajn2yEOlsj3FtoNV47nlDa7FS6RjwM6Vc.VIkmRWqN.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "a402501aaaa23bdc58dc36c54122da330e936c24b124181a0502005e5f3eeb14",
+     "length": 1060,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/2VdbrlvJr8ajn2yEOlsj3FtoNV47nlDa7FS6RjwM6Vc.VIkmRWqN.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_cf3d206b07d6bd2191f31d2c049bd15b05d7445fbd986512688212c7a35af4d6"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "a402501aaaa23bdc58dc36c54122da330e936c24b124181a0502005e5f3eeb14",
+       "bytes": 1060,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_d333217ff0111705352c5ade0f0f4179cc5219614868e787ce864d874b6ff63e",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/RzrSMAJJvXq-bWcKPZGbg8zzalb9BkM-4xoP50p7sv0.CwX5gJP4.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "050cc5a7746b3f3146c6eabc3fc096e3b7f2f09f703471254ca4ba7b2c47992a",
+     "length": 72064,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/RzrSMAJJvXq-bWcKPZGbg8zzalb9BkM-4xoP50p7sv0.CwX5gJP4.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_44dd1357eb85d1d495356f8fddd1076105b0de57629e842bd95ff9cec7ad7632"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "050cc5a7746b3f3146c6eabc3fc096e3b7f2f09f703471254ca4ba7b2c47992a",
+       "bytes": 72072,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_d8408192b9be291e2dcb7b8102649732c6e24d796728fa550fbedb729455169b",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/XPGja3vc1.DrfAayr7.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "425be98ceeff5ffc35cc5b2a6b57a63b410dcf88daf884dcc3e88cc2a0c27ea4",
+     "length": 2852,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/XPGja3vc1.DrfAayr7.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_02696ec56940859c937a972ab6e9402508db4db8249df45e71b537b9874e91a9"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "425be98ceeff5ffc35cc5b2a6b57a63b410dcf88daf884dcc3e88cc2a0c27ea4",
+       "bytes": 2852,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_ed6629e4f6c720c694b07637dfcee696b5cf431e9d22ce171951d9a358dcabc1",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/shOHdvsZO.C-m1NRX4.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "bc594d2af5a535119d16f77aebc5f028565c2a344aa2c974e280a1e054a2a22c",
+     "length": 2711,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/shOHdvsZO.C-m1NRX4.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_89d2700a02e9a4a6583ebd96f2ce1566979ac7628c4a7c509d24454e81d9357c"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "bc594d2af5a535119d16f77aebc5f028565c2a344aa2c974e280a1e054a2a22c",
+       "bytes": 2711,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_f135a0b38929ee7e56c2d69cc9441dbce20c3fd0c8460bf98f7049d3f23cd88f",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/uwmmbeA4Q.B5FYZ6eH.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "a4c45ab5ce7bad2ec193cb77f9e062bf5c9d5051e4f2e0199d958248548924f7",
+     "length": 5050,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/uwmmbeA4Q.B5FYZ6eH.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_9a64f2032b2235911491db2eeea50f38ed385d8c2561699bf0745761c60d149e"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "a4c45ab5ce7bad2ec193cb77f9e062bf5c9d5051e4f2e0199d958248548924f7",
+       "bytes": 5050,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_f362b2eddce4a0f6e5b82e323f7dfda6510a9b0542ad53fbded246fe61d17944",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/react.DS6-5m9n.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "d561ca0d04e530d5e9f16d03e5d94e3bb8e80df741a52ef073578a15dddb4a38",
+     "length": 144666,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/react.DS6-5m9n.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_74d3e59042eff29b2546c27647dea81d11fcf119a0331b7db319ea458aeebaae"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "d561ca0d04e530d5e9f16d03e5d94e3bb8e80df741a52ef073578a15dddb4a38",
+       "bytes": 144666,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_f7b0345c797d04351fd2b1bae01736653ed9aef477f09388bb10de325f71fd2a",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/DrbjvzOzc.jF17kxAJ.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "a0ca025afd085fd0dd3b01cfc0fd7aee1b06d1d909018341eb855451790370ef",
+     "length": 5992,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/DrbjvzOzc.jF17kxAJ.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_766fd3831833ca5279567a0333cdf4d33bf18b8fe76b15af74f74e34bdb983a6"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "a0ca025afd085fd0dd3b01cfc0fd7aee1b06d1d909018341eb855451790370ef",
+       "bytes": 5992,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_f840b39c7f3a57c49fafc30c31bca35dac9becf5157cb3d6bb5ef5c7f893933e",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "cdp_hash": "d13309b7f74434a23c3ec0d8f44b1ef5c5e5448c2dbc8cc1d2eff640a4e9dbe3",
+     "length": 10888,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "unmatched",
+      "reason": "no_exact_sanitized_url"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "d13309b7f74434a23c3ec0d8f44b1ef5c5e5448c2dbc8cc1d2eff640a4e9dbe3",
+       "bytes": 10888,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_fbd2599f2c61f0a2ad28d3640d58bfd6a5b815f8772bcf8f25a671371f7c53c6",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/framer.Cs62vUZB.mjs",
+     "origin": "https://framerusercontent.com",
+     "cdp_hash": "70d45627e0039e80f7892d420866c8f0ce3cab694debc0c9a1bcd951ddccabda",
+     "length": 473363,
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/framer.Cs62vUZB.mjs.map",
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_9645a2cb3cc8223268d01df7cafd02de84ae8b2ba6cad23c3b7ae51cc1d10aec"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "70d45627e0039e80f7892d420866c8f0ce3cab694debc0c9a1bcd951ddccabda",
+       "bytes": 473377,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    }
+   ]
+  },
+  "resources": [
+   {
+    "resource_key": "res_02696ec56940859c937a972ab6e9402508db4db8249df45e71b537b9874e91a9",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/XPGja3vc1.DrfAayr7.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 2852
+   },
+   {
+    "resource_key": "res_0d8c6018c0ad04684eada41cbf844be59cc17e3cf0e30b76aab37a6c18d48c95",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/script_main.0dfisnd8.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 94940
+   },
+   {
+    "resource_key": "res_0dafbe3f97adbaea88a9eb98d80eaaa90121bd55db945ae74cabe44dc3079566",
+    "url": "https://framerusercontent.com/images/UQ3VAeUsm7aRhKUqekI3Sx8YmY.jpg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/avif",
+    "content_size": 23515
+   },
+   {
+    "resource_key": "res_1bca0962fbc6fdd98c88bb263f244fc4e8a18f10db88fef21b67c8b369df4071",
+    "url": "https://framerusercontent.com/images/PQwDHpHHo6LkBn288aRKPox3tY.svg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 781
+   },
+   {
+    "resource_key": "res_2825e696b0940cb0b41205548930c5ffb25a097e6c70b380e710b338a7b59432",
+    "url": "https://framerusercontent.com/images/G0nzyLwjIqnhroSjOYxRMDHQ0dI.svg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 1080
+   },
+   {
+    "resource_key": "res_291f30bef10e69ce1f0e07f901f1951977a6d0060c807297fb3b636f33507ea0",
+    "url": "https://framerusercontent.com/images/3lt1gABWpzXcHQByY6oEYaqhkkA.jpg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/avif",
+    "content_size": 73958
+   },
+   {
+    "resource_key": "res_2d7ce49ddea3f3b331e1d578cb7a8fc259dedb63686a3187db2c67b8ba6e1c91",
+    "url": "https://framerusercontent.com/images/CETEJNIiyGnwauuXU1kWh7qEVg.svg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 1124
+   },
+   {
+    "resource_key": "res_2dfed3bb106ac70b0a5f634e1636fe62b4ef34dfc9dfe2aa05929d39663fd7b6",
+    "url": "https://framerusercontent.com/images/vEwVsUctVIZOnnUDjiFAZnBfQ0.svg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 4031
+   },
+   {
+    "resource_key": "res_36364b7a4dbdd7f1b219f358724aa639a4c0fa6d04a467565257e1b78146011a",
+    "url": "https://framerusercontent.com/images/Et6DumDmh2RQ0iDyCSQ6tfsZ8.jpg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/avif",
+    "content_size": 22726
+   },
+   {
+    "resource_key": "res_366f55e6b5ca963d23ee2ddf76d6002c40253cdef4dba1511d04148f6aeab6a3",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/motion.CU2VUewv.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 150891
+   },
+   {
+    "resource_key": "res_36b390d7ff14068092261f2a9601124de6d986639def37d1be1bdad43af9764e",
+    "url": "https://framerusercontent.com/images/WZBieSq9HMlZV6YHFeHuWZrubY.svg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 1229
+   },
+   {
+    "resource_key": "res_388b3b0ef4536a83a020c1ec9abde8496888bfd7807d23af4b51a6af5dc0c35f",
+    "url": "https://framerusercontent.com/images/OMudghgJ8cOQBZy5AnYNjXwFYqo.svg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 5115
+   },
+   {
+    "resource_key": "res_44dd1357eb85d1d495356f8fddd1076105b0de57629e842bd95ff9cec7ad7632",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/RzrSMAJJvXq-bWcKPZGbg8zzalb9BkM-4xoP50p7sv0.CwX5gJP4.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 72072
+   },
+   {
+    "resource_key": "res_46299067fe9721826a55070bd27a8b372033407680de0d06ab76f2623cd89ef1",
+    "url": "https://framerusercontent.com/images/JLKCf0k33nXsBtTOLxbgoXjv6Ss.svg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 1851
+   },
+   {
+    "resource_key": "res_46a8aa729a95a2a5f7705b07ca44266d069e682de29cb90229fbe1636813c47e",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/w6f14WWdd1fWd5O6MtJApkcdw7kG4io2gdw8TjQ8vkg.CDI1AnrR.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 997
+   },
+   {
+    "resource_key": "res_509eca7ad868810ff11b5d9ded9688ff7417faf89eca5ac802e48e999bccb9c7",
+    "url": "https://framerusercontent.com/images/iR8Ma0AjH7EaIAPThF3xcp9l3bM.png?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/avif",
+    "content_size": 41104
+   },
+   {
+    "resource_key": "res_5d3c20bbe1309d2e94a0d24ec1371d06dff1827ba43eb5f0b64077579bd1001e",
+    "url": "https://framerusercontent.com/images/q35SYQJu5IgRBDeusEbLgh8Lu5o.png?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/avif",
+    "content_size": 2351
+   },
+   {
+    "resource_key": "res_645a75533e1d7f23594a689ef27be84b6b5c7aad9f48aeccefbd27fe6df6d50c",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/Ep2r8kEta.BoCIhx_n.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 33646
+   },
+   {
+    "resource_key": "res_6dcc5befd153d3edcdeb57c4024c1a996d1c45d014955739f0c5fe72888d4b16",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/q2-CwetE4_7Tf5h02907IjL-rfJBcbnbFN4ubOiXgfM.DOAkcOm4.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 1115
+   },
+   {
+    "resource_key": "res_6fc7ad7e20cffa6762eed01bb74e1b014efc822225d06a88767b38ed1dd6de0f",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/lpN9RaA0p.x_El2dSS.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 1167
+   },
+   {
+    "resource_key": "res_729e2439dc15293b068ced03581bc16c4a01824f4995cf23f21a9568eed40c0a",
+    "url": "https://framerusercontent.com/images/3KGY9KbY0xx6nriJohA0sGcmC80.svg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 1149
+   },
+   {
+    "resource_key": "res_74a0f9070964aff23b0e56782cf693b1807b1e12319b33a14b5d80f351020162",
+    "url": "https://framerusercontent.com/images/zzCXfLmrUqT1MHeNQDn6cB68nlc.png?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/avif",
+    "content_size": 89963
+   },
+   {
+    "resource_key": "res_74d3e59042eff29b2546c27647dea81d11fcf119a0331b7db319ea458aeebaae",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/react.DS6-5m9n.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 144666
+   },
+   {
+    "resource_key": "res_75c06331732fd0aa6d24db77b50ada66622c3973375ec9892103d28d6dcda0df",
+    "url": "https://framerusercontent.com/assets/hG3wmGmFwadB6X5XPVXkMlmLr8o.woff2",
+    "origin": "https://framerusercontent.com",
+    "type": "Font",
+    "mime_type": "application/octet-stream",
+    "content_size": 162732
+   },
+   {
+    "resource_key": "res_766fd3831833ca5279567a0333cdf4d33bf18b8fe76b15af74f74e34bdb983a6",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/DrbjvzOzc.jF17kxAJ.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 5992
+   },
+   {
+    "resource_key": "res_76afa9314a0c2fd50b8ed66f100505f6269781158566845f432f507b50f63d52",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/gB-PdzFQIYYyudOD90PdxPT5SfDpeOCa35w3TwZLBeY.BhZzfFEd.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 22763
+   },
+   {
+    "resource_key": "res_7713731c26740f1a9e191327988e313c13ddd27caece07f74b137940394468a9",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/PX9hIOIVM.Dx-rXCtM.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 19658
+   },
+   {
+    "resource_key": "res_7bedb52f3a071fd2214e1058b34b7216e3e8814657993ff2eeff20dabcb2a26c",
+    "url": "https://framerusercontent.com/images/GAPrNTGokhXDrpYlaBRMcEI1eb4.svg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 4586
+   },
+   {
+    "resource_key": "res_89d2700a02e9a4a6583ebd96f2ce1566979ac7628c4a7c509d24454e81d9357c",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/shOHdvsZO.C-m1NRX4.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 2711
+   },
+   {
+    "resource_key": "res_8bf4317885cfaf08b5c9ab0234e5077c381bb15f4a3cc0914c90faf4aba90a19",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/ceNjEn0pZ.CyG-Je93.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 26065
+   },
+   {
+    "resource_key": "res_9645a2cb3cc8223268d01df7cafd02de84ae8b2ba6cad23c3b7ae51cc1d10aec",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/framer.Cs62vUZB.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 473377
+   },
+   {
+    "resource_key": "res_9a64f2032b2235911491db2eeea50f38ed385d8c2561699bf0745761c60d149e",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/uwmmbeA4Q.B5FYZ6eH.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 5050
+   },
+   {
+    "resource_key": "res_9b80a0370e07eddff7fd9def58e2b682822e53b703fd239097ccb2f855b55123",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/6dpVZms3lHzVd6JP2UTG8YfgT7Kuwxx91rFmSBwJ4qI.B_4URQWx.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 286090
+   },
+   {
+    "resource_key": "res_9e75743b3a975fe0ec9700e830b62aeb558a5f87804b14c5450e1fbd2528ca4b",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/e2TB71JKK.DBUDPYfa.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 12292
+   },
+   {
+    "resource_key": "res_a9a5ac19a5fc11f4503335c6c59a4646095d8caff716fef9771fcdd85a4d6c03",
+    "url": "https://framerusercontent.com/images/r6zjSUgLQkP33zYAqzN6hO1MW6g.jpg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/avif",
+    "content_size": 95822
+   },
+   {
+    "resource_key": "res_aa892a14d0d8fa11658d71367d6c4180357daef13fed3cd4ec7ee0b0bac66b91",
+    "url": "https://framerusercontent.com/images/rIwx0YXJUHFQJwp5wOOGPGDHtfg.svg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 1533
+   },
+   {
+    "resource_key": "res_af057b75b4e96b1b686c827b66677908706d678eb1c587e27840653251407a05",
+    "url": "https://framerusercontent.com/assets/HJY4SY2JywrSZ2l1AEW9Tm9cO8.woff2",
+    "origin": "https://framerusercontent.com",
+    "type": "Font",
+    "mime_type": "application/octet-stream",
+    "content_size": 165396
+   },
+   {
+    "resource_key": "res_b0875aa9892486f2da6d68ba65d4c4003de878547be716651e1388fd05c84ef4",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/WiH3d3HBs.Dkuk7KLM.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 78037
+   },
+   {
+    "resource_key": "res_bee586a2c2970c9690d944bde15e6e828578fc2fd93ac90ca3114081d5460d1a",
+    "url": "https://framerusercontent.com/images/ifxrnl2yckxKabgOKUM14KuibRU.png?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/avif",
+    "content_size": 134875
+   },
+   {
+    "resource_key": "res_c10b1b2f03f8697abb2fd2211549a9e54b6b0113fb5c083f2c61ceb4f85093bf",
+    "url": "https://framerusercontent.com/images/7z8nIe5VNDZRfkorYvrXVIwyKac.svg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 779
+   },
+   {
+    "resource_key": "res_c44925a7e707b61d52672fec466fc8136a885b70fd047be12180d565b5803b50",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/rolldown-runtime.Dh6celcD.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 629
+   },
+   {
+    "resource_key": "res_cf3d206b07d6bd2191f31d2c049bd15b05d7445fbd986512688212c7a35af4d6",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/2VdbrlvJr8ajn2yEOlsj3FtoNV47nlDa7FS6RjwM6Vc.VIkmRWqN.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 1060
+   },
+   {
+    "resource_key": "res_d118a15b41396919aa146395c94e0bdd42f028748bc123fc039033660a99bbdd",
+    "url": "https://framerusercontent.com/images/021VVvexJAvEOe3HzihhFr7Vc.svg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 3493
+   },
+   {
+    "resource_key": "res_d1d587e03072cc8b9b3d950c24657fb4733f5a5609e68404dad918bcfeb5332c",
+    "url": "https://framerusercontent.com/assets/3exmuO07FP19gMM08TQrpXl3BGQ.woff2",
+    "origin": "https://framerusercontent.com",
+    "type": "Font",
+    "mime_type": "application/octet-stream",
+    "content_size": 154604
+   },
+   {
+    "resource_key": "res_d1e7d9783b9628356548ca93f2d6c1ab66f77fe1a7da80cdb3a0e313a0199706",
+    "url": "https://framerusercontent.com/images/qazH0744I2w9AnpfmUJIze7g.png?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/avif",
+    "content_size": 38190
+   },
+   {
+    "resource_key": "res_d6134b14da9d0c87fcca7a39e50098baeacab48c58461e7cab39fce4fe738e41",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/oM4DrnKwh.Bf3kikQ_.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 5050
+   },
+   {
+    "resource_key": "res_e0661270bc2747ff8fd7de857994472fc7afae044a45579f0e48bea58c0e70fc",
+    "url": "https://framerusercontent.com/images/JzxexaeJ1VrTA2beNFkJv1XxAU.svg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 1083
+   },
+   {
+    "resource_key": "res_e81b70246f26ac9db6b38db3aa709331d47988df0ce19d97eec56533568fbcc1",
+    "url": "https://framerusercontent.com/images/pfcMvn2yqXD2Cl6VWthMkHlhaKQ.png?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/avif",
+    "content_size": 444724
+   },
+   {
+    "resource_key": "res_ef6bac982d7abdece6f6726c9c316bd2c6967f31d5a614a89f86809f8d3dbcbb",
+    "url": "https://framerusercontent.com/images/x8lLoogiCtXVj0rROYScrZZvHMk.svg?<query-redacted>",
+    "origin": "https://framerusercontent.com",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 1641
+   },
+   {
+    "resource_key": "res_f8148497da655f9f5a4b4187ec78b9c592b16efd5ac977df9b9d05ccc868c5a5",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/h4JcoWJSF.CF0Oofg0.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 12407
+   },
+   {
+    "resource_key": "res_f99d47d4d6a13b21e3aa842204aa601d48b31200794ef2b88ccbe8ce75b0d512",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/shared-lib.DX81oTQ0.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 18708
+   },
+   {
+    "resource_key": "res_fc2d23bc5e95982398dcafa30f0f9ce369f3ae600f312925cba95c6e251b68aa",
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/XrWQqo06r.BBRPfyNv.mjs",
+    "origin": "https://framerusercontent.com",
+    "type": "Script",
+    "mime_type": "text/javascript",
+    "content_size": 12583
+   }
+  ],
+  "network": {
+   "requests": [],
+   "websocket_connections": [],
+   "coverage_started_at": "2026-10-22T15:11:02.920Z",
+   "prior_activity_available": false
+  },
+  "console": {
+   "events": [],
+   "coverage_started_at": "2026-10-22T15:11:02.920Z",
+   "prior_activity_available": false
+  },
+  "workers": [],
+  "metadata": {
+   "responses": [],
+   "dom_urls": "<trimmed 194 entries>",
+   "agent_hints": [],
+   "excluded_dom_urls": 10,
+   "headers_allowlisted": true
+  },
+  "storage": {
+   "origin": "https://obliqq.framer.ai",
+   "usage_bytes": 0,
+   "quota_bytes": 613794444902,
+   "local_storage_keys": [],
+   "session_storage_keys": [],
+   "indexed_db_names": [],
+   "cache_names": [],
+   "content_fingerprints": [],
+   "fingerprint_algorithm": "sha256",
+   "fingerprints_complete": false,
+   "values_redacted": true
+  },
+  "limitations": [
+   "Observation starts when REA attaches; prior network and console activity is unavailable.",
+   "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+   "Source maps are reported only as declarative URLs and are not fetched.",
+   "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+   "CDP discovery omitted the target attachment state; attached is reported as unknown."
+  ]
+ },
+ "confidence": "observed",
+ "authority": "external-service",
+ "environment": {
+  "id": "Chrome/155.0.8059.85@537.36 (@0e66b94549a8bd85f03fbdf189b752d6e7b63c32)",
+  "platform": "unknown",
+  "architecture": "unknown",
+  "isolation": "none"
+ },
+ "limitations": [
+  "Artifact identity is unavailable for this observation.",
+  "Observation starts when REA attaches; prior network and console activity is unavailable.",
+  "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+  "Source maps are reported only as declarative URLs and are not fetched.",
+  "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+  "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+  "Browser host platform and architecture were not observed."
+ ],
+ "relationship_coverage": null,
+ "locations": [],
+ "evidence_links": []
+}

@@ -1,0 +1,851 @@
+{
+ "evidence_id": "ev_fd591c32a26038eaa0dcdd7f4dee2cf53fcf3e5ae53fc2844047756f93e21f5f",
+ "subject": null,
+ "provider": {
+  "id": "rea-playwright-browser-scenario",
+  "name": "REA Playwright browser scenario capture provider",
+  "version": "1"
+ },
+ "analysis_profile": null,
+ "predicate_type": "rea.browser-scenario-capture",
+ "operation": "capture_browser_scenario",
+ "parameters": {
+  "browser": {
+   "mode": "launch",
+   "executable_path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+   "headless": true
+  },
+  "start_url": {
+   "url": "https://obliqq.framer.ai/",
+   "query": []
+  },
+  "environment": {
+   "viewport": {
+    "width": 1440,
+    "height": 900,
+    "device_scale_factor": 1
+   },
+   "locale": "en-US",
+   "timezone": "UTC",
+   "color_scheme": "light",
+   "reduced_motion": "no-preference",
+   "service_workers": "block"
+  },
+  "actions": [
+   {
+    "step_id": "load_settle",
+    "action": "wait_for_timeout",
+    "duration_ms": 2500
+   },
+   {
+    "step_id": "pgdn_1",
+    "action": "press",
+    "locator": {
+     "kind": "css",
+     "selector": "body"
+    },
+    "key": "PageDown"
+   },
+   {
+    "step_id": "settle_1",
+    "action": "wait_for_timeout",
+    "duration_ms": 1500
+   },
+   {
+    "step_id": "pgdn_2",
+    "action": "press",
+    "locator": {
+     "kind": "css",
+     "selector": "body"
+    },
+    "key": "PageDown"
+   },
+   {
+    "step_id": "settle_2",
+    "action": "wait_for_timeout",
+    "duration_ms": 1500
+   },
+   {
+    "step_id": "pgdn_3",
+    "action": "press",
+    "locator": {
+     "kind": "css",
+     "selector": "body"
+    },
+    "key": "PageDown"
+   },
+   {
+    "step_id": "settle_3",
+    "action": "wait_for_timeout",
+    "duration_ms": 1500
+   },
+   {
+    "step_id": "pgdn_4",
+    "action": "press",
+    "locator": {
+     "kind": "css",
+     "selector": "body"
+    },
+    "key": "PageDown"
+   },
+   {
+    "step_id": "settle_4",
+    "action": "wait_for_timeout",
+    "duration_ms": 1500
+   },
+   {
+    "step_id": "pgdn_5",
+    "action": "press",
+    "locator": {
+     "kind": "css",
+     "selector": "body"
+    },
+    "key": "PageDown"
+   },
+   {
+    "step_id": "settle_5",
+    "action": "wait_for_timeout",
+    "duration_ms": 1500
+   }
+  ],
+  "storage": {
+   "cookies": [],
+   "local_storage": [],
+   "session_storage": []
+  },
+  "secrets": [],
+  "capture": {
+   "after_each_step": [
+    "screenshot"
+   ],
+   "at_end": [
+    "url"
+   ],
+   "events": [],
+   "network": {
+    "request_body": false,
+    "response_body": false,
+    "header_values": false
+   }
+  },
+  "scenario_sha256": "f422ad5787c793f728fe52b177aa734f6ae169f3417f9091815db9383f7ab20a"
+ },
+ "raw_result": null,
+ "normalized_result": {
+  "browser": {
+   "mode": "launch",
+   "process_ownership": "provider-owned",
+   "cleanup": "terminated-owned-process",
+   "product": "Chromium",
+   "version": "155.0.8059.85"
+  },
+  "scenario": {
+   "start_origin": "https://obliqq.framer.ai",
+   "action_count": 11,
+   "secret_references": [],
+   "network_content": {
+    "request_body": false,
+    "response_body": false,
+    "header_values": false
+   },
+   "event_families": []
+  },
+  "duration_ms": 15766,
+  "steps": [
+   {
+    "step_index": 0,
+    "step_id": "scenario_start",
+    "action": "goto_start",
+    "elapsed_ms": 2888,
+    "before_url": {
+     "url": "about:blank",
+     "origin": null,
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "after_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "event_sequence_start": 1,
+    "event_sequence_end": 0,
+    "artifacts": {
+     "screenshot": {
+      "state": "captured",
+      "value": {
+       "sha256": "4a5b7b2e891a02cbc8f77557b1652f5e9390e3b536d5c0a1f3b3423c73e7e721",
+       "bytes": 177287,
+       "media_type": "image/png",
+       "data_base64": "<omitted 236384 chars>"
+      }
+     },
+     "dom": {
+      "state": "not_requested"
+     },
+     "accessibility": {
+      "state": "not_requested"
+     },
+     "url": {
+      "state": "not_requested"
+     },
+     "history": {
+      "state": "not_requested"
+     },
+     "storage": {
+      "state": "not_requested"
+     }
+    },
+    "completeness": {
+     "status": "complete",
+     "equality_eligible": true,
+     "missing_sections": [],
+     "truncated_sections": []
+    },
+    "status": "completed",
+    "error": null
+   },
+   {
+    "step_index": 1,
+    "step_id": "load_settle",
+    "action": "wait_for_timeout",
+    "elapsed_ms": 2597,
+    "before_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "after_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "event_sequence_start": 1,
+    "event_sequence_end": 0,
+    "artifacts": {
+     "screenshot": {
+      "state": "captured",
+      "value": {
+       "sha256": "c8eb9d4db27e175bf156b9524aec3258accd0645be4db765ab167620203f7817",
+       "bytes": 240854,
+       "media_type": "image/png",
+       "data_base64": "<omitted 321140 chars>"
+      }
+     },
+     "dom": {
+      "state": "not_requested"
+     },
+     "accessibility": {
+      "state": "not_requested"
+     },
+     "url": {
+      "state": "not_requested"
+     },
+     "history": {
+      "state": "not_requested"
+     },
+     "storage": {
+      "state": "not_requested"
+     }
+    },
+    "completeness": {
+     "status": "complete",
+     "equality_eligible": true,
+     "missing_sections": [],
+     "truncated_sections": []
+    },
+    "status": "completed",
+    "error": null
+   },
+   {
+    "step_index": 2,
+    "step_id": "pgdn_1",
+    "action": "press",
+    "elapsed_ms": 122,
+    "before_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "after_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "event_sequence_start": 1,
+    "event_sequence_end": 0,
+    "artifacts": {
+     "screenshot": {
+      "state": "captured",
+      "value": {
+       "sha256": "42002032e7544f9d804c38475981fc7ac1abb80c91d89abae1ef5c25c9c41242",
+       "bytes": 243838,
+       "media_type": "image/png",
+       "data_base64": "<omitted 325120 chars>"
+      }
+     },
+     "dom": {
+      "state": "not_requested"
+     },
+     "accessibility": {
+      "state": "not_requested"
+     },
+     "url": {
+      "state": "not_requested"
+     },
+     "history": {
+      "state": "not_requested"
+     },
+     "storage": {
+      "state": "not_requested"
+     }
+    },
+    "completeness": {
+     "status": "complete",
+     "equality_eligible": true,
+     "missing_sections": [],
+     "truncated_sections": []
+    },
+    "status": "completed",
+    "error": null
+   },
+   {
+    "step_index": 3,
+    "step_id": "settle_1",
+    "action": "wait_for_timeout",
+    "elapsed_ms": 1605,
+    "before_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "after_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "event_sequence_start": 1,
+    "event_sequence_end": 0,
+    "artifacts": {
+     "screenshot": {
+      "state": "captured",
+      "value": {
+       "sha256": "725be2d3ea27ec0c4a289c7ecd4f0c3eab876ff75ffc67ce5f43015bf5d3372f",
+       "bytes": 165282,
+       "media_type": "image/png",
+       "data_base64": "<omitted 220376 chars>"
+      }
+     },
+     "dom": {
+      "state": "not_requested"
+     },
+     "accessibility": {
+      "state": "not_requested"
+     },
+     "url": {
+      "state": "not_requested"
+     },
+     "history": {
+      "state": "not_requested"
+     },
+     "storage": {
+      "state": "not_requested"
+     }
+    },
+    "completeness": {
+     "status": "complete",
+     "equality_eligible": true,
+     "missing_sections": [],
+     "truncated_sections": []
+    },
+    "status": "completed",
+    "error": null
+   },
+   {
+    "step_index": 4,
+    "step_id": "pgdn_2",
+    "action": "press",
+    "elapsed_ms": 105,
+    "before_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "after_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "event_sequence_start": 1,
+    "event_sequence_end": 0,
+    "artifacts": {
+     "screenshot": {
+      "state": "captured",
+      "value": {
+       "sha256": "2ac39cfc9219b6df1f4c7395f637fb13426b571345395b82b996c62772de485a",
+       "bytes": 168166,
+       "media_type": "image/png",
+       "data_base64": "<omitted 224224 chars>"
+      }
+     },
+     "dom": {
+      "state": "not_requested"
+     },
+     "accessibility": {
+      "state": "not_requested"
+     },
+     "url": {
+      "state": "not_requested"
+     },
+     "history": {
+      "state": "not_requested"
+     },
+     "storage": {
+      "state": "not_requested"
+     }
+    },
+    "completeness": {
+     "status": "complete",
+     "equality_eligible": true,
+     "missing_sections": [],
+     "truncated_sections": []
+    },
+    "status": "completed",
+    "error": null
+   },
+   {
+    "step_index": 5,
+    "step_id": "settle_2",
+    "action": "wait_for_timeout",
+    "elapsed_ms": 1688,
+    "before_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "after_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "event_sequence_start": 1,
+    "event_sequence_end": 0,
+    "artifacts": {
+     "screenshot": {
+      "state": "captured",
+      "value": {
+       "sha256": "f5ba6bede02e8f09a9dc89f25f52d6fd9424d92593cc11a01c207143ad0c68fa",
+       "bytes": 722763,
+       "media_type": "image/png",
+       "data_base64": "<omitted 963684 chars>"
+      }
+     },
+     "dom": {
+      "state": "not_requested"
+     },
+     "accessibility": {
+      "state": "not_requested"
+     },
+     "url": {
+      "state": "not_requested"
+     },
+     "history": {
+      "state": "not_requested"
+     },
+     "storage": {
+      "state": "not_requested"
+     }
+    },
+    "completeness": {
+     "status": "complete",
+     "equality_eligible": true,
+     "missing_sections": [],
+     "truncated_sections": []
+    },
+    "status": "completed",
+    "error": null
+   },
+   {
+    "step_index": 6,
+    "step_id": "pgdn_3",
+    "action": "press",
+    "elapsed_ms": 231,
+    "before_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "after_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "event_sequence_start": 1,
+    "event_sequence_end": 0,
+    "artifacts": {
+     "screenshot": {
+      "state": "captured",
+      "value": {
+       "sha256": "24d73552f07416af779d3e05b0f4f6a836e3591616a98c219f1368e68c5961bd",
+       "bytes": 730377,
+       "media_type": "image/png",
+       "data_base64": "<omitted 973836 chars>"
+      }
+     },
+     "dom": {
+      "state": "not_requested"
+     },
+     "accessibility": {
+      "state": "not_requested"
+     },
+     "url": {
+      "state": "not_requested"
+     },
+     "history": {
+      "state": "not_requested"
+     },
+     "storage": {
+      "state": "not_requested"
+     }
+    },
+    "completeness": {
+     "status": "complete",
+     "equality_eligible": true,
+     "missing_sections": [],
+     "truncated_sections": []
+    },
+    "status": "completed",
+    "error": null
+   },
+   {
+    "step_index": 7,
+    "step_id": "settle_3",
+    "action": "wait_for_timeout",
+    "elapsed_ms": 1582,
+    "before_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "after_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "event_sequence_start": 1,
+    "event_sequence_end": 0,
+    "artifacts": {
+     "screenshot": {
+      "state": "captured",
+      "value": {
+       "sha256": "ae3541408c65a44fbf3afa3e38ac8b6a8d59eea775ff7cf56cf9d3e4e81e0916",
+       "bytes": 188433,
+       "media_type": "image/png",
+       "data_base64": "<omitted 251244 chars>"
+      }
+     },
+     "dom": {
+      "state": "not_requested"
+     },
+     "accessibility": {
+      "state": "not_requested"
+     },
+     "url": {
+      "state": "not_requested"
+     },
+     "history": {
+      "state": "not_requested"
+     },
+     "storage": {
+      "state": "not_requested"
+     }
+    },
+    "completeness": {
+     "status": "complete",
+     "equality_eligible": true,
+     "missing_sections": [],
+     "truncated_sections": []
+    },
+    "status": "completed",
+    "error": null
+   },
+   {
+    "step_index": 8,
+    "step_id": "pgdn_4",
+    "action": "press",
+    "elapsed_ms": 109,
+    "before_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "after_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "event_sequence_start": 1,
+    "event_sequence_end": 0,
+    "artifacts": {
+     "screenshot": {
+      "state": "captured",
+      "value": {
+       "sha256": "ca4689ac3de61bdcecd079934fd6642f10a793f2cee2898fca0e8004493bc83b",
+       "bytes": 188052,
+       "media_type": "image/png",
+       "data_base64": "<omitted 250736 chars>"
+      }
+     },
+     "dom": {
+      "state": "not_requested"
+     },
+     "accessibility": {
+      "state": "not_requested"
+     },
+     "url": {
+      "state": "not_requested"
+     },
+     "history": {
+      "state": "not_requested"
+     },
+     "storage": {
+      "state": "not_requested"
+     }
+    },
+    "completeness": {
+     "status": "complete",
+     "equality_eligible": true,
+     "missing_sections": [],
+     "truncated_sections": []
+    },
+    "status": "completed",
+    "error": null
+   },
+   {
+    "step_index": 9,
+    "step_id": "settle_4",
+    "action": "wait_for_timeout",
+    "elapsed_ms": 1594,
+    "before_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "after_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "event_sequence_start": 1,
+    "event_sequence_end": 0,
+    "artifacts": {
+     "screenshot": {
+      "state": "captured",
+      "value": {
+       "sha256": "ca7212f3a2a724b835234fc1e2d1269dffad4c101cc46344e469451284bdb2f5",
+       "bytes": 168122,
+       "media_type": "image/png",
+       "data_base64": "<omitted 224164 chars>"
+      }
+     },
+     "dom": {
+      "state": "not_requested"
+     },
+     "accessibility": {
+      "state": "not_requested"
+     },
+     "url": {
+      "state": "not_requested"
+     },
+     "history": {
+      "state": "not_requested"
+     },
+     "storage": {
+      "state": "not_requested"
+     }
+    },
+    "completeness": {
+     "status": "complete",
+     "equality_eligible": true,
+     "missing_sections": [],
+     "truncated_sections": []
+    },
+    "status": "completed",
+    "error": null
+   },
+   {
+    "step_index": 10,
+    "step_id": "pgdn_5",
+    "action": "press",
+    "elapsed_ms": 79,
+    "before_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "after_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "event_sequence_start": 1,
+    "event_sequence_end": 0,
+    "artifacts": {
+     "screenshot": {
+      "state": "captured",
+      "value": {
+       "sha256": "3696fa28428443d10a672e262906fba9990fec496061d06f5b26727cfb4f91fb",
+       "bytes": 163408,
+       "media_type": "image/png",
+       "data_base64": "<omitted 217880 chars>"
+      }
+     },
+     "dom": {
+      "state": "not_requested"
+     },
+     "accessibility": {
+      "state": "not_requested"
+     },
+     "url": {
+      "state": "not_requested"
+     },
+     "history": {
+      "state": "not_requested"
+     },
+     "storage": {
+      "state": "not_requested"
+     }
+    },
+    "completeness": {
+     "status": "complete",
+     "equality_eligible": true,
+     "missing_sections": [],
+     "truncated_sections": []
+    },
+    "status": "completed",
+    "error": null
+   },
+   {
+    "step_index": 11,
+    "step_id": "settle_5",
+    "action": "wait_for_timeout",
+    "elapsed_ms": 1580,
+    "before_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "after_url": {
+     "url": "https://obliqq.framer.ai/",
+     "origin": "https://obliqq.framer.ai",
+     "query_parameter_names": [],
+     "redacted": false
+    },
+    "event_sequence_start": 1,
+    "event_sequence_end": 0,
+    "artifacts": {
+     "screenshot": {
+      "state": "captured",
+      "value": {
+       "sha256": "424d556ab3b4f20d26bed164a54562c3ae4a2e5a8ac5e92c3fea509c0b4e1d28",
+       "bytes": 170518,
+       "media_type": "image/png",
+       "data_base64": "<omitted 227360 chars>"
+      }
+     },
+     "dom": {
+      "state": "not_requested"
+     },
+     "accessibility": {
+      "state": "not_requested"
+     },
+     "url": {
+      "state": "captured",
+      "value": {
+       "url": "https://obliqq.framer.ai/",
+       "origin": "https://obliqq.framer.ai",
+       "query_parameter_names": [],
+       "redacted": false
+      }
+     },
+     "history": {
+      "state": "not_requested"
+     },
+     "storage": {
+      "state": "not_requested"
+     }
+    },
+    "completeness": {
+     "status": "complete",
+     "equality_eligible": true,
+     "missing_sections": [],
+     "truncated_sections": []
+    },
+    "status": "completed",
+    "error": null
+   }
+  ],
+  "events": {
+   "retained": 0,
+   "dropped": 0,
+   "items": []
+  },
+  "completeness": {
+   "status": "complete",
+   "equality_eligible": true,
+   "missing_sections": [],
+   "truncated_sections": []
+  },
+  "limitations": [
+   "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+   "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+   "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+   "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+   "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+   "Storage values are hashed only after declared-secret redaction."
+  ]
+ },
+ "confidence": "observed",
+ "authority": "controlled-replay",
+ "environment": {
+  "id": "Chromium@155.0.8059.85",
+  "platform": "unknown",
+  "architecture": "unknown",
+  "isolation": "process"
+ },
+ "limitations": [
+  "Artifact identity is unavailable for this observation.",
+  "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+  "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+  "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+  "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+  "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+  "Storage values are hashed only after declared-secret redaction.",
+  "Browser host platform and architecture were not observed."
+ ],
+ "relationship_coverage": null,
+ "locations": [],
+ "evidence_links": []
+}

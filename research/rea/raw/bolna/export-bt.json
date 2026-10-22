@@ -1,0 +1,328 @@
+{
+ "evidence_id": "ev_6673dce203aed50241bf975b714c7d0c41cdde76e0967ab869125048d1adbc99",
+ "subject": {
+  "name": "inspect-bt.json",
+  "digest": {
+   "sha256": "e12ef8eb655fac11d22079d1c968805b1c486fd9b127a1fe72105a9842037409"
+  },
+  "local_path": "<scratch>\\out\\bolna\\inspect-bt.json",
+  "format": "file",
+  "architecture": null
+ },
+ "provider": {
+  "id": "rea-web-script-export",
+  "name": "REA captured script export",
+  "version": "1"
+ },
+ "analysis_profile": null,
+ "predicate_type": "rea.web-script-export",
+ "operation": "export_web_scripts",
+ "parameters": {
+  "capture_path": "<scratch>\\out\\bolna\\inspect-bt.json",
+  "output_directory": "<scratch>\\cache\\bolna-bt-scripts"
+ },
+ "raw_result": null,
+ "normalized_result": {
+  "capture_path": "<scratch>\\out\\bolna\\inspect-bt.json",
+  "capture_sha256": "e12ef8eb655fac11d22079d1c968805b1c486fd9b127a1fe72105a9842037409",
+  "capture_kind": "page-inspection",
+  "source_evidence_id": "ev_c8607a6c8500b88b446db65237ecedcada9180e6b7ed59880ad2f33ac0267248",
+  "capture_completeness": {
+   "status": "policy_filtered",
+   "conditions": [
+    "attach_limited",
+    "policy_filtered"
+   ],
+   "policy_filtered_sections": [
+    "accessibility",
+    "console_text",
+    "json_body_shapes",
+    "metadata",
+    "resources",
+    "storage_keys",
+    "websocket_shapes"
+   ],
+   "attach_limited_sections": [
+    "console_events",
+    "metadata",
+    "network_requests",
+    "websocket_connections",
+    "websocket_frames"
+   ],
+   "truncated_sections": [],
+   "unavailable_sections": [],
+   "excluded": [
+    {
+     "section": "accessibility",
+     "reason": "not_approved",
+     "count": 562
+    },
+    {
+     "section": "console_text",
+     "reason": "not_approved",
+     "count": null
+    },
+    {
+     "section": "json_body_shapes",
+     "reason": "not_approved",
+     "count": null
+    },
+    {
+     "section": "metadata",
+     "reason": "disallowed_origin",
+     "count": 63
+    },
+    {
+     "section": "resources",
+     "reason": "disallowed_origin",
+     "count": 22
+    },
+    {
+     "section": "storage_keys",
+     "reason": "not_approved",
+     "count": null
+    },
+    {
+     "section": "websocket_shapes",
+     "reason": "not_approved",
+     "count": null
+    }
+   ],
+   "dropped_events": {
+    "scripts": 0,
+    "network_requests": 0,
+    "console_events": 0,
+    "websocket_connections": 0,
+    "websocket_frames": 0,
+    "webmcp_tools": 0,
+    "timeline_events": 0,
+    "total": 0
+   }
+  },
+  "output_directory": "<scratch>\\cache\\bolna-bt-scripts",
+  "analysis_input": {
+   "input_path": "<scratch>\\cache\\bolna-bt-scripts\\files",
+   "format": "directory"
+  },
+  "scripts": [
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_25887eb7077e4fec0b3940949b5919aaee1a161614a5ce958c2c9e5d73643160",
+     "frame_id": "76B27E4333A859E1E39C95D6F7F1CB0C",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/symphony/buildathon/assets/routes-fUN6ZzhH.js",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/02036063f4f18fe812b29b5cf68692b92ce42add34127fd75ec2f7d2ffff7dca/symphony/buildathon/assets/routes-fUN6ZzhH.js",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "c78b5fa7de4dcea0001cc46beb98011b02797fecc109eb701ebd1495bd2ccd1b",
+     "bytes": 45226,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_3984b093a655d73575c62c543461c51e69b7dc09afd1d4ebe6df479137b84e6f",
+     "frame_id": "76B27E4333A859E1E39C95D6F7F1CB0C",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/~flock.js",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/02036063f4f18fe812b29b5cf68692b92ce42add34127fd75ec2f7d2ffff7dca/~flock.js",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "a86e084b4f82709814be6c15fd6305daa783fda87ad95402da9a4d3a1dd6d748",
+     "bytes": 21296,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_3decb76f2655d9cc6a834056ac46066774ff27ff62d7b1d1ca91ab281b33611d",
+     "frame_id": "76B27E4333A859E1E39C95D6F7F1CB0C",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/symphony/buildathon/assets/index-BbIF1qaw.js",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/02036063f4f18fe812b29b5cf68692b92ce42add34127fd75ec2f7d2ffff7dca/symphony/buildathon/assets/index-BbIF1qaw.js",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "d98587164f52b7e8fa8fd97ac42a6c04c9ce5da5ac8caa7b9b0728e25e55318b",
+     "bytes": 341178,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_4771454066ff35ea91b9d9374a8db3d9438c8d5a2b3b22a53de3b4d093951db8",
+     "frame_id": "76B27E4333A859E1E39C95D6F7F1CB0C",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/symphony/buildathon",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-4-dcad8f4604d517fbb5e690f25a7911f249aeac575018ef8995aeb53512194f3b.js",
+     "layout": "isolated",
+     "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+     "sha256": "44491343799935d3a7674c56c6529da8110059d215a497484fab66e7b82fabc6",
+     "bytes": 56,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_596b5d983a9a249ea76a71cb4c9fdda9be772b3edd55f875b3beae73068312e6",
+     "frame_id": "76B27E4333A859E1E39C95D6F7F1CB0C",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/symphony/buildathon/assets/SiteChrome-BECMu8FM.js",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/02036063f4f18fe812b29b5cf68692b92ce42add34127fd75ec2f7d2ffff7dca/symphony/buildathon/assets/SiteChrome-BECMu8FM.js",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "d5fe8c7a21dbd7554f59d835c33eb011d2f6e24aa4424cf19723222e168b85f1",
+     "bytes": 15575,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_5a014dc43a6e772dcb0b58b5c305fb3bbf99d2114ac1e1cb3dafb9ff71a6943a",
+     "frame_id": "76B27E4333A859E1E39C95D6F7F1CB0C",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/symphony/buildathon",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-6-85b3e345c8fd1975af820a89f409bf041bc62d965a6cad1b255321306a99272f.js",
+     "layout": "isolated",
+     "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+     "sha256": "7c53f6762562a1300512b6378fa0377513a9e57bc7a0ccce88f927d177e652a7",
+     "bytes": 911,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_7e99a7d217691c71ae6d8ffd0d351314587e9182f8976a2cf957b8be92b16543",
+     "frame_id": "76B27E4333A859E1E39C95D6F7F1CB0C",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/__l5e/events.b21a279f52bb8621.js",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/02036063f4f18fe812b29b5cf68692b92ce42add34127fd75ec2f7d2ffff7dca/__l5e/events.b21a279f52bb8621.js",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "cbb3e1e38a0e20bdbe4c49fe9aaa30767732e9155191806ec5936e35a51c5035",
+     "bytes": 25568,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_91b3cb1c0a15e02c89cfcee13eaac6d32b7968cbf7ef8f268bdc9bce701a2e4c",
+     "frame_id": "76B27E4333A859E1E39C95D6F7F1CB0C",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/symphony/buildathon",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-8-5caedaa52b07ba35ff5a169d7b9f102d4a174882f59940f39f8760f3e38cdec1.js",
+     "layout": "isolated",
+     "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+     "sha256": "cc530bf8011d6ff1ec6d7eba56563304ea8928d347b39fd634660ff0989b9726",
+     "bytes": 613,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   }
+  ],
+  "limitations": [
+   "Observation starts when REA attaches; prior network and console activity is unavailable.",
+   "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+   "Source maps are reported only as declarative URLs and are not fetched.",
+   "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+   "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+   "Only script bytes retained in this capture are exported. Sources are not refetched or executed, and a response or Debugger source does not prove execution.",
+   "Ordinary unambiguous URL paths preserve relative module layouts by origin, including case-distinct spellings. Query variants, exact path collisions, file/directory prefixes, inline sources, and unrepresentable paths are isolated. A case-distinct pair is isolated only when the destination filesystem cannot store both spellings; the record names that pair. Browser module relationships of isolated paths remain unknown.",
+   "Local JavaScript analysis does not implement browser import maps, root-relative URL resolution, remote URL loading, or browser runtime behavior. It may strip import queries and fragments; isolated variants are not canonical targets.",
+   "Source-map declarations are retained as metadata. No source maps or missing dependencies are fetched or reconstructed.",
+   "Scenario response bytes preserve the output of Playwright's Response.body() API; any source-body provenance caveat from the capture is retained in this manifest. Debugger sources are the exposed text encoded as UTF-8. Redacted bytes are exported exactly as retained, and may no longer parse as JavaScript."
+  ],
+  "manifest": {
+   "path": "<scratch>\\cache\\bolna-bt-scripts\\manifest.json",
+   "sha256": "c4578b01d3c0f47f4c00f682d3c60673c86a35a27e003a299eaf170f18227e73",
+   "bytes": 11349
+  }
+ },
+ "confidence": "derived",
+ "authority": "historical-reference",
+ "environment": null,
+ "limitations": [
+  "Observation starts when REA attaches; prior network and console activity is unavailable.",
+  "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+  "Source maps are reported only as declarative URLs and are not fetched.",
+  "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+  "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+  "Only script bytes retained in this capture are exported. Sources are not refetched or executed, and a response or Debugger source does not prove execution.",
+  "Ordinary unambiguous URL paths preserve relative module layouts by origin, including case-distinct spellings. Query variants, exact path collisions, file/directory prefixes, inline sources, and unrepresentable paths are isolated. A case-distinct pair is isolated only when the destination filesystem cannot store both spellings; the record names that pair. Browser module relationships of isolated paths remain unknown.",
+  "Local JavaScript analysis does not implement browser import maps, root-relative URL resolution, remote URL loading, or browser runtime behavior. It may strip import queries and fragments; isolated variants are not canonical targets.",
+  "Source-map declarations are retained as metadata. No source maps or missing dependencies are fetched or reconstructed.",
+  "Scenario response bytes preserve the output of Playwright's Response.body() API; any source-body provenance caveat from the capture is retained in this manifest. Debugger sources are the exposed text encoded as UTF-8. Redacted bytes are exported exactly as retained, and may no longer parse as JavaScript."
+ ],
+ "relationship_coverage": null,
+ "locations": [
+  {
+   "kind": "artifact-path",
+   "path": "<scratch>\\cache\\bolna-bt-scripts\\manifest.json"
+  }
+ ],
+ "evidence_links": [
+  "ev_c8607a6c8500b88b446db65237ecedcada9180e6b7ed59880ad2f33ac0267248"
+ ]
+}

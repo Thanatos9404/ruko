@@ -1,0 +1,58 @@
+{
+  "source": "https://www.bolna.ai/ and https://www.bolna.ai/symphony/buildathon (public pages), observed 2026-10-22 with rea-agents 6.5.0",
+  "evidence": {
+    "home list/inspect/bundle": ["ev_b3cd44cffe643d77e500615cfd311fc6b939091eff4b8e30f590acf87c9edec9", "ev_c6c21c398b97b40b3e586e1585fb227a950249af025212b1bfdfd3e204a06500", "ev_aa069076dcd74f720186febae8d3ca1ae81fa9b8fe3e61da3545bb37ff2f2ad6"],
+    "buildathon inspect/bundle": ["ev_c8607a6c8500b88b446db65237ecedcada9180e6b7ed59880ad2f33ac0267248", "ev_d867fa76aaa993a4d758cafcfaab27050fb877c7ae00fee66719bbd59b043e16"],
+    "scenario home -> buildathon (1440x900 dark, reduced_motion no-preference, PageDown x5 each, screenshot per step, final DOM, network+console events)": "ev_0b64ec3e9a557dff6b6ebedd182db490d15b5dcae6a185ef7f58c33a937d5305",
+    "export_web_scripts": ["ev_31d5896ef0c8e1b9bbc2aebe03e914719c082151a3a5173a241351c1cb709e34", "ev_6673dce203aed50241bf975b714c7d0c41cdde76e0967ab869125048d1adbc99"]
+  },
+  "etiquette": "robots.txt disallows /_next/static/ for crawlers. Nothing was fetched outside normal page loads: scripts were read from the browser's own Debugger sources, source maps were not fetched (--fetch-source-maps not used). Six page loads in total across all targets.",
+  "home": {
+    "stack": "Next.js App Router on Vercel, React, framer-motion 11.18.2 (version string in the motion chunk); REA vendor fingerprints: React, Next.js",
+    "hero_build": "CSS only: deep navy page, square grid lines (~80 px cells), a soft diagonal blue light beam, centered pill 'Backed by Y Combinator', large light-weight headline with a per-word saffron/white/green gradient on 'Built for India', square-cornered cyan CTA with a waveform glyph. REA DOM inventory: 0 CANVAS, 4 AUDIO (voice samples), 45 SVG.",
+    "section_language": [
+      "monospace uppercase eyebrow tags in small boxed dark-teal chips",
+      "monospace display headings for developer sections",
+      "horizon arc glow: a wide ellipse with a blue rim light behind a section intro",
+      "full-width hairline dividers between sections",
+      "code panel with macOS dots and language tabs (Python / JavaScript / cURL) and line numbers",
+      "saturated colour-block step cards (amber, violet) joined by hand-drawn arrows",
+      "logo strip with edge fade"
+    ],
+    "motion": {
+      "library": "framer-motion 11",
+      "reveal": { "initial": { "opacity": 0, "y": "20-30", "scale": "0.9-0.95" }, "transition": "easeOut 0.4-0.5 s, delay 0.1 s x index (stagger)", "trigger": "whileInView (5 uses)" },
+      "shared_layout": "layoutId used 18 times (tab and pill indicators)",
+      "scroll": "useScroll used 3 times"
+    },
+    "fonts": "2 self-hosted woff2 subsets via next/font, preloaded (~70 KB each); headline grotesk + monospace UI labels",
+    "performance_observed": "~40 script requests (~1.55 MB uncompressed first-party JS incl. a ~630 KB chunk that looks like a syntax highlighter), ~36 images, 160 KB CSS, plus Google/Meta analytics tags"
+  },
+  "buildathon": {
+    "stack": "separate Vite + React + Tailwind app (assets from buildathon.bolna-ai.lovable.app) served under /symphony/buildathon; REA vendor fingerprint: React; 5 first-party scripts (main 341 KB)",
+    "hero_build": "static 1920x1080 JPEG of concentric green arcs as an object-cover background (not canvas/WebGL); title is a PNG wordmark in pixelated serif lettering inside the h1 with alt text; glass pill (black 55%, backdrop blur xl, saturate 150%, soft drop shadow + 1 px inset top highlight at 6% white) holding the YC x Symphony marks; orange-outlined chip 'Path to YC'; meta row with green line icons; gradient green pill CTA",
+    "type": "Space Grotesk 400-700 from Google Fonts (display=swap) as the display face; uppercase labels with wide tracking 0.18-0.25em; dates in YC orange",
+    "textures": "halftone dot PNGs at 10-25% opacity, mix-blend soft-light, radial mask-image fade",
+    "scroll_sequence": {
+      "section": "'How it works': a tall section with a sticky top-0 h-screen inner stage",
+      "progress": "p = clamp(-rect.top / (rect.height - innerHeight), 0, 1) from a passive scroll listener",
+      "drives": ["progress-bar width (inline %)", "step circles switch to filled green with 700 ms ease-out CSS transitions", "a muted background MP4 scrubbed by setting currentTime = p x duration, radial-masked at 10% opacity"],
+      "library": "none (React state + CSS transitions)"
+    },
+    "marquee": "CSS keyframes 30 s linear infinite, paused on hover, edge fade via mask-image linear-gradient (transparent -> black 12% ... 88% -> transparent)",
+    "cards": "prize cards with the arc artwork as background, outlined numerals, orange 'Grand prize' pill",
+    "hover": "icon tiles get an animate-ping halo on hover",
+    "reduced_motion": "not handled",
+    "performance_observed": "light JS; 2 Space Grotesk woff2; 2 MP4 (one autoplay loop, one scrubbed with preload=auto: heavy on mobile data); ~20 images"
+  },
+  "techniques_for_ruko_in_its_own_way": [
+    "Keep Ruko's own SVG Arcs as the Symphony nod, but make them live: driven by the call's audio level (Bolna's own buildathon arcs are a static JPEG/video).",
+    "Generate a halftone texture in CSS (radial-gradient dot pattern with mask-image) instead of shipping PNGs.",
+    "Use Fragment Mono uppercase eyebrow chips with 0.18em tracking for 'developer' labels (Bolna's mono-chip language), keep Open Runde/Inter for prose.",
+    "Use a dark 'stage' band (near-black with a horizon rim glow) for the live call section inside the warm light obliqq-style page.",
+    "Build 'How Ruko decides' as a pinned sticky sequence with motion useScroll: progress line, steps lighting up at thresholds, Arcs/waveform scrubbed instead of a video.",
+    "Add a tabbed code panel (cURL / JS / Python) for the bank integration with a layoutId tab indicator.",
+    "Use one pixel-type word (Ruko already ships Silkscreen/PixelWord) as a nod to the BUILDATHON wordmark; do not reuse their PNGs or the YC/Symphony marks beyond factual mentions.",
+    "Respect prefers-reduced-motion everywhere (Bolna's pages don't; Ruko's kit already does)."
+  ]
+}

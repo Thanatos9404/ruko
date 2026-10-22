@@ -1,0 +1,317 @@
+{
+ "evidence_id": "ev_d867fa76aaa993a4d758cafcfaab27050fb877c7ae00fee66719bbd59b043e16",
+ "subject": null,
+ "provider": {
+  "id": "rea-cdp-browser",
+  "name": "REA Chrome DevTools Protocol observation provider",
+  "version": "2"
+ },
+ "analysis_profile": null,
+ "predicate_type": "rea.web-bundle-analysis",
+ "operation": "analyze_web_bundle",
+ "parameters": {
+  "cdp_endpoint": "http://127.0.0.1:9333",
+  "allowed_origins": [],
+  "target_id": "76B27E4333A859E1E39C95D6F7F1CB0C",
+  "observation_ms": 500,
+  "include_accessibility_text": false,
+  "include_console_text": false,
+  "include_json_body_shapes": false,
+  "include_websocket_shapes": false,
+  "include_storage_keys": false,
+  "include_storage_fingerprints": false,
+  "include_script_sources": true,
+  "fetch_source_maps": false
+ },
+ "raw_result": null,
+ "normalized_result": {
+  "capture": {
+   "target_url": "https://www.bolna.ai/symphony/buildathon",
+   "scripts_observed": 8,
+   "scripts_analyzed": 8,
+   "source_artifacts": [
+    {
+     "sha256": "c78b5fa7de4dcea0001cc46beb98011b02797fecc109eb701ebd1495bd2ccd1b",
+     "bytes": 45226,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "a86e084b4f82709814be6c15fd6305daa783fda87ad95402da9a4d3a1dd6d748",
+     "bytes": 21296,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "d98587164f52b7e8fa8fd97ac42a6c04c9ce5da5ac8caa7b9b0728e25e55318b",
+     "bytes": 341178,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "44491343799935d3a7674c56c6529da8110059d215a497484fab66e7b82fabc6",
+     "bytes": 56,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "d5fe8c7a21dbd7554f59d835c33eb011d2f6e24aa4424cf19723222e168b85f1",
+     "bytes": 15575,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "7c53f6762562a1300512b6378fa0377513a9e57bc7a0ccce88f927d177e652a7",
+     "bytes": 911,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "cbb3e1e38a0e20bdbe4c49fe9aaa30767732e9155191806ec5936e35a51c5035",
+     "bytes": 25568,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    },
+    {
+     "sha256": "cc530bf8011d6ff1ec6d7eba56563304ea8928d347b39fd634660ff0989b9726",
+     "bytes": 613,
+     "media_type": "text/javascript",
+     "charset": "utf-8",
+     "text_available": true
+    }
+   ]
+  },
+  "observations": {
+   "chunks": {
+    "nodes": [
+     {
+      "script_key": "scr_25887eb7077e4fec0b3940949b5919aaee1a161614a5ce958c2c9e5d73643160",
+      "url": "https://www.bolna.ai/symphony/buildathon/assets/routes-fUN6ZzhH.js",
+      "artifact_sha256": "c78b5fa7de4dcea0001cc46beb98011b02797fecc109eb701ebd1495bd2ccd1b",
+      "bytes": 45226
+     },
+     {
+      "script_key": "scr_3984b093a655d73575c62c543461c51e69b7dc09afd1d4ebe6df479137b84e6f",
+      "url": "https://www.bolna.ai/~flock.js",
+      "artifact_sha256": "a86e084b4f82709814be6c15fd6305daa783fda87ad95402da9a4d3a1dd6d748",
+      "bytes": 21296
+     },
+     {
+      "script_key": "scr_3decb76f2655d9cc6a834056ac46066774ff27ff62d7b1d1ca91ab281b33611d",
+      "url": "https://www.bolna.ai/symphony/buildathon/assets/index-BbIF1qaw.js",
+      "artifact_sha256": "d98587164f52b7e8fa8fd97ac42a6c04c9ce5da5ac8caa7b9b0728e25e55318b",
+      "bytes": 341178
+     },
+     {
+      "script_key": "scr_4771454066ff35ea91b9d9374a8db3d9438c8d5a2b3b22a53de3b4d093951db8",
+      "url": "https://www.bolna.ai/symphony/buildathon",
+      "artifact_sha256": "44491343799935d3a7674c56c6529da8110059d215a497484fab66e7b82fabc6",
+      "bytes": 56
+     },
+     {
+      "script_key": "scr_596b5d983a9a249ea76a71cb4c9fdda9be772b3edd55f875b3beae73068312e6",
+      "url": "https://www.bolna.ai/symphony/buildathon/assets/SiteChrome-BECMu8FM.js",
+      "artifact_sha256": "d5fe8c7a21dbd7554f59d835c33eb011d2f6e24aa4424cf19723222e168b85f1",
+      "bytes": 15575
+     },
+     {
+      "script_key": "scr_5a014dc43a6e772dcb0b58b5c305fb3bbf99d2114ac1e1cb3dafb9ff71a6943a",
+      "url": "https://www.bolna.ai/symphony/buildathon",
+      "artifact_sha256": "7c53f6762562a1300512b6378fa0377513a9e57bc7a0ccce88f927d177e652a7",
+      "bytes": 911
+     },
+     {
+      "script_key": "scr_7e99a7d217691c71ae6d8ffd0d351314587e9182f8976a2cf957b8be92b16543",
+      "url": "https://www.bolna.ai/__l5e/events.b21a279f52bb8621.js",
+      "artifact_sha256": "cbb3e1e38a0e20bdbe4c49fe9aaa30767732e9155191806ec5936e35a51c5035",
+      "bytes": 25568
+     },
+     {
+      "script_key": "scr_91b3cb1c0a15e02c89cfcee13eaac6d32b7968cbf7ef8f268bdc9bce701a2e4c",
+      "url": "https://www.bolna.ai/symphony/buildathon",
+      "artifact_sha256": "cc530bf8011d6ff1ec6d7eba56563304ea8928d347b39fd634660ff0989b9726",
+      "bytes": 613
+     }
+    ],
+    "edges": [
+     {
+      "from_script_key": "scr_25887eb7077e4fec0b3940949b5919aaee1a161614a5ce958c2c9e5d73643160",
+      "kind": "static_import",
+      "specifier": "./SiteChrome-BECMu8FM.js",
+      "resolved_url": "https://www.bolna.ai/symphony/buildathon/assets/SiteChrome-BECMu8FM.js",
+      "location": {
+       "script_key": "scr_25887eb7077e4fec0b3940949b5919aaee1a161614a5ce958c2c9e5d73643160",
+       "line": 1,
+       "column": 0
+      }
+     },
+     {
+      "from_script_key": "scr_25887eb7077e4fec0b3940949b5919aaee1a161614a5ce958c2c9e5d73643160",
+      "kind": "static_import",
+      "specifier": "./index-BbIF1qaw.js",
+      "resolved_url": "https://www.bolna.ai/symphony/buildathon/assets/index-BbIF1qaw.js",
+      "location": {
+       "script_key": "scr_25887eb7077e4fec0b3940949b5919aaee1a161614a5ce958c2c9e5d73643160",
+       "line": 1,
+       "column": 125
+      }
+     },
+     {
+      "from_script_key": "scr_3decb76f2655d9cc6a834056ac46066774ff27ff62d7b1d1ca91ab281b33611d",
+      "kind": "dynamic_import",
+      "specifier": "./routes-fUN6ZzhH.js",
+      "resolved_url": "https://www.bolna.ai/symphony/buildathon/assets/routes-fUN6ZzhH.js",
+      "location": {
+       "script_key": "scr_3decb76f2655d9cc6a834056ac46066774ff27ff62d7b1d1ca91ab281b33611d",
+       "line": 13,
+       "column": 88346
+      }
+     },
+     {
+      "from_script_key": "scr_3decb76f2655d9cc6a834056ac46066774ff27ff62d7b1d1ca91ab281b33611d",
+      "kind": "dynamic_import",
+      "specifier": "./submit-CKZ-Kgk0.js",
+      "resolved_url": "https://www.bolna.ai/symphony/buildathon/assets/submit-CKZ-Kgk0.js",
+      "location": {
+       "script_key": "scr_3decb76f2655d9cc6a834056ac46066774ff27ff62d7b1d1ca91ab281b33611d",
+       "line": 13,
+       "column": 88430
+      }
+     },
+     {
+      "from_script_key": "scr_596b5d983a9a249ea76a71cb4c9fdda9be772b3edd55f875b3beae73068312e6",
+      "kind": "static_import",
+      "specifier": "./index-BbIF1qaw.js",
+      "resolved_url": "https://www.bolna.ai/symphony/buildathon/assets/index-BbIF1qaw.js",
+      "location": {
+       "script_key": "scr_596b5d983a9a249ea76a71cb4c9fdda9be772b3edd55f875b3beae73068312e6",
+       "line": 1,
+       "column": 0
+      }
+     }
+    ]
+   },
+   "routes": [
+    {
+     "value": "/",
+     "mechanism": "property:path",
+     "location": {
+      "script_key": "scr_3decb76f2655d9cc6a834056ac46066774ff27ff62d7b1d1ca91ab281b33611d",
+      "line": 13,
+      "column": 88957
+     }
+    },
+    {
+     "value": "/submit",
+     "mechanism": "property:path",
+     "location": {
+      "script_key": "scr_3decb76f2655d9cc6a834056ac46066774ff27ff62d7b1d1ca91ab281b33611d",
+      "line": 13,
+      "column": 89026
+     }
+    }
+   ],
+   "endpoints": [],
+   "webmcp_declarations": [],
+   "source_maps": {
+    "status": "not_requested",
+    "requested": 0,
+    "processed": 0,
+    "items": []
+   }
+  },
+  "inferences": [
+   {
+    "kind": "endpoint_candidate",
+    "value": "consent",
+    "confidence": "low",
+    "basis": [
+     {
+      "script_key": "scr_25887eb7077e4fec0b3940949b5919aaee1a161614a5ce958c2c9e5d73643160",
+      "artifact_sha256": "c78b5fa7de4dcea0001cc46beb98011b02797fecc109eb701ebd1495bd2ccd1b",
+      "line": 1,
+      "column": 5321,
+      "detector": "call:t.get:unverified-network-receiver"
+     }
+    ]
+   },
+   {
+    "kind": "bundle_runtime",
+    "value": "Vite",
+    "confidence": "medium",
+    "basis": [
+     {
+      "script_key": "scr_3decb76f2655d9cc6a834056ac46066774ff27ff62d7b1d1ca91ab281b33611d",
+      "artifact_sha256": "d98587164f52b7e8fa8fd97ac42a6c04c9ce5da5ac8caa7b9b0728e25e55318b",
+      "line": null,
+      "column": null,
+      "detector": "vite-runtime"
+     }
+    ]
+   },
+   {
+    "kind": "vendor_fingerprint",
+    "value": "React",
+    "confidence": "medium",
+    "basis": [
+     {
+      "script_key": "scr_3decb76f2655d9cc6a834056ac46066774ff27ff62d7b1d1ca91ab281b33611d",
+      "artifact_sha256": "d98587164f52b7e8fa8fd97ac42a6c04c9ce5da5ac8caa7b9b0728e25e55318b",
+      "line": null,
+      "column": null,
+      "detector": "react-runtime"
+     }
+    ]
+   },
+   {
+    "kind": "endpoint_candidate",
+    "value": "Location",
+    "confidence": "low",
+    "basis": [
+     {
+      "script_key": "scr_3decb76f2655d9cc6a834056ac46066774ff27ff62d7b1d1ca91ab281b33611d",
+      "artifact_sha256": "d98587164f52b7e8fa8fd97ac42a6c04c9ce5da5ac8caa7b9b0728e25e55318b",
+      "line": 10,
+      "column": 36995,
+      "detector": "call:t.get:unverified-network-receiver"
+     }
+    ]
+   }
+  ],
+  "unknowns": [],
+  "completeness": {
+   "status": "complete",
+   "parsed_scripts": 8,
+   "parse_failures": 0,
+   "visited_ast_nodes": 141734
+  },
+  "limitations": [
+   "Static bundle findings are observations or bounded inferences; REA does not execute captured JavaScript.",
+   "Bare string arguments of unbound HTTP-method-named calls are low-confidence endpoint candidates; form, translation, storage and other APIs can use the same syntax. URL-shaped findings still do not prove network execution.",
+   "Endpoint candidates are deduplicated by script, value and detector; basis retains only the first matching source coordinate. They are not a complete call-site inventory or a runtime occurrence count. completeness.status=\"complete\" describes examination of captured source, not a call-site census.",
+   "String-built routes and endpoints, encrypted configuration, and server-side behavior may remain unknown.",
+   "Page-declared WebMCP metadata is untrusted and is never registered or invoked as an REA tool."
+  ]
+ },
+ "confidence": "observed",
+ "authority": "external-service",
+ "environment": null,
+ "limitations": [
+  "Artifact identity is unavailable for this observation.",
+  "Static bundle findings are observations or bounded inferences; REA does not execute captured JavaScript.",
+  "Bare string arguments of unbound HTTP-method-named calls are low-confidence endpoint candidates; form, translation, storage and other APIs can use the same syntax. URL-shaped findings still do not prove network execution.",
+  "Endpoint candidates are deduplicated by script, value and detector; basis retains only the first matching source coordinate. They are not a complete call-site inventory or a runtime occurrence count. completeness.status=\"complete\" describes examination of captured source, not a call-site census.",
+  "String-built routes and endpoints, encrypted configuration, and server-side behavior may remain unknown.",
+  "Page-declared WebMCP metadata is untrusted and is never registered or invoked as an REA tool."
+ ],
+ "relationship_coverage": null,
+ "locations": [],
+ "evidence_links": []
+}

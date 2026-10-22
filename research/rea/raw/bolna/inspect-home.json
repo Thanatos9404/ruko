@@ -1,0 +1,1337 @@
+{
+ "evidence_id": "ev_c6c21c398b97b40b3e586e1585fb227a950249af025212b1bfdfd3e204a06500",
+ "subject": null,
+ "provider": {
+  "id": "rea-cdp-browser",
+  "name": "REA Chrome DevTools Protocol observation provider",
+  "version": "2"
+ },
+ "analysis_profile": null,
+ "predicate_type": "rea.web-page-inspection",
+ "operation": "inspect_web_page",
+ "parameters": {
+  "cdp_endpoint": "http://127.0.0.1:9333",
+  "allowed_origins": [
+   "https://www.bolna.ai"
+  ],
+  "target_id": "E339A168F736C725B39F46A30714FBAC",
+  "observation_ms": 3000,
+  "include_accessibility_text": false,
+  "include_console_text": false,
+  "include_json_body_shapes": false,
+  "include_websocket_shapes": false,
+  "include_storage_keys": false,
+  "include_storage_fingerprints": false,
+  "include_script_sources": true
+ },
+ "raw_result": null,
+ "normalized_result": {
+  "browser": {
+   "product": "Chrome/155.0.8059.85",
+   "protocol_version": "1.3",
+   "revision": "537.36 (@0e66b94549a8bd85f03fbdf189b752d6e7b63c32)",
+   "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+   "js_version": "15.5.35.25"
+  },
+  "target": {
+   "target_id": "E339A168F736C725B39F46A30714FBAC",
+   "type": "page",
+   "title": "Bolna AI – Voice AI Agents for Indian Languages",
+   "url": "https://www.bolna.ai/",
+   "origin": "https://www.bolna.ai",
+   "attached": null
+  },
+  "capture_window": {
+   "started_at": "2026-10-22T15:23:59.193Z",
+   "ended_at": "2026-10-22T15:24:02.985Z",
+   "observation_ms": 3000
+  },
+  "completeness": {
+   "status": "policy_filtered",
+   "conditions": [
+    "attach_limited",
+    "policy_filtered"
+   ],
+   "policy_filtered_sections": [
+    "accessibility",
+    "console_text",
+    "json_body_shapes",
+    "metadata",
+    "resources",
+    "scripts",
+    "storage_keys",
+    "websocket_shapes"
+   ],
+   "attach_limited_sections": [
+    "console_events",
+    "metadata",
+    "network_requests",
+    "websocket_connections",
+    "websocket_frames"
+   ],
+   "truncated_sections": [],
+   "unavailable_sections": [],
+   "excluded": [
+    {
+     "section": "accessibility",
+     "reason": "not_approved",
+     "count": 1237
+    },
+    {
+     "section": "console_text",
+     "reason": "not_approved",
+     "count": null
+    },
+    {
+     "section": "json_body_shapes",
+     "reason": "not_approved",
+     "count": null
+    },
+    {
+     "section": "metadata",
+     "reason": "disallowed_origin",
+     "count": 25
+    },
+    {
+     "section": "metadata",
+     "reason": "unsupported_url",
+     "count": 5
+    },
+    {
+     "section": "resources",
+     "reason": "disallowed_origin",
+     "count": 9
+    },
+    {
+     "section": "scripts",
+     "reason": "disallowed_origin",
+     "count": 10
+    },
+    {
+     "section": "scripts",
+     "reason": "unattributed_origin",
+     "count": 3
+    },
+    {
+     "section": "storage_keys",
+     "reason": "not_approved",
+     "count": null
+    },
+    {
+     "section": "websocket_shapes",
+     "reason": "not_approved",
+     "count": null
+    }
+   ],
+   "dropped_events": {
+    "scripts": 0,
+    "network_requests": 0,
+    "console_events": 0,
+    "websocket_connections": 0,
+    "websocket_frames": 0,
+    "webmcp_tools": 0,
+    "timeline_events": 0,
+    "total": 0
+   }
+  },
+  "frames": [
+   {
+    "frame_id": "E339A168F736C725B39F46A30714FBAC",
+    "parent_frame_id": null,
+    "url": "https://www.bolna.ai/",
+    "origin": "https://www.bolna.ai"
+   }
+  ],
+  "dom": {
+   "total_nodes": 1468,
+   "nodes": "<trimmed 1468 nodes>"
+  },
+  "accessibility": {
+   "total_nodes": 1609,
+   "text_capture": {
+    "status": "not_approved",
+    "retained_bytes": 0,
+    "excluded_fields": 1237
+   },
+   "nodes": "<trimmed 1609 nodes>"
+  },
+  "scripts": {
+   "total": 27,
+   "items": [
+    {
+     "script_key": "scr_116edb528aacd8269d9f24953c978fa768314251cb803f641d3c37888bf233fe",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/app/book-demo/page-6133ad346bf2caa3.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "87aeaa1cd1a2432f201a1650990d8588f78c061206fc99cd1f9b60efc75fb11f",
+     "length": 8563,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_35ca9d08370a23f958478da798e73ab70d16c7e121026b87723e8a983eeb3a21"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "87aeaa1cd1a2432f201a1650990d8588f78c061206fc99cd1f9b60efc75fb11f",
+       "bytes": 8579,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_14a494eb52e44661f82bf22482d61b6eac3c937e37a2c557f05f423bf4abed31",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/main-app-4006fb8530a0b191.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "4f023ea01ef22e6d891abc114e61d278424c0b344d9b4510b13e220f736d9bca",
+     "length": 473,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_535750418154408766de22e6b307dd24d5d89c9cbd2f655cb30b3505e80754c5"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "4f023ea01ef22e6d891abc114e61d278424c0b344d9b4510b13e220f736d9bca",
+       "bytes": 473,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_21ea27d83813ce058e15ee6770a86aa3e01337de8cf527dab066fca896413fc4",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "1f66802031178c482a6d0027983cf68904d8ecee9ceeba1a4e74c243bd2c7987",
+     "length": 2058,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "unmatched",
+      "reason": "no_exact_sanitized_url"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "1f66802031178c482a6d0027983cf68904d8ecee9ceeba1a4e74c243bd2c7987",
+       "bytes": 2058,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_243f04d3b4d388101adebb3eb2bc67640546ae264f02ce91a404ef984a3e4dcc",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/8685-7647b909375d7005.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "3609a996883b30f5b22a3b021e41323429f526054e7fedbd4aff4b3d3b5c21c1",
+     "length": 124248,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_672e23da6d0edc0f2a2e7dc39a43849cff3db5b22794572d7c1cf1e1fe347d0d"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "3609a996883b30f5b22a3b021e41323429f526054e7fedbd4aff4b3d3b5c21c1",
+       "bytes": 124248,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_26f25d70b7709f181eaa3febe92ffda3e6560775e3776e0034ac9e2e007d17e6",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/webpack-a38e5b57671528e2.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "32e1983756ab2496d49e77389ccaa1785f318fe0ed3994fa1b3aa48f7adda7fd",
+     "length": 4258,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_ca3dd6276af3a2c381171265a8ba075190ed4182fb60ffd572f5c2eaff09cea8"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "32e1983756ab2496d49e77389ccaa1785f318fe0ed3994fa1b3aa48f7adda7fd",
+       "bytes": 4258,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_2b9dedd563aa2db8aaa8e2f05a666caad1326f0276b8558ccfcaf50047f6975a",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "3d911981e68786fc955ff99649e86a93e7ef8804df6aa893172afebc29f6efc8",
+     "length": 4271,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "unmatched",
+      "reason": "no_exact_sanitized_url"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "3d911981e68786fc955ff99649e86a93e7ef8804df6aa893172afebc29f6efc8",
+       "bytes": 4271,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_2f7124ad876f835b66cc2ba17f85837dd3f7003ec5005caef5d5403669c89a0f",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/2934-f7805a9d4241b072.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "b00859cd3c896d420f0cae01e4bd7d0550ac61ee28423ffdaad1fe96bf774463",
+     "length": 10226,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_e8e12cb3a5f3499f9643dc51ff3a31fb13f52bbf85c0599dca0c8a7253eec04c"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "b00859cd3c896d420f0cae01e4bd7d0550ac61ee28423ffdaad1fe96bf774463",
+       "bytes": 10226,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_40b22675b30426b3276045940d5f1aa2c076ca4311bfe2b47ab2b555f759653d",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/9379-07e92386518ce454.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "23a60cd8a9d0b610d40f2ed560900a35a29e68e5b4898e2edd8cc6eba7468c95",
+     "length": 3583,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_53e1d4818574cc0e986d119caf899860d3484415ad69e7b64ac2ee33d2967998"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "23a60cd8a9d0b610d40f2ed560900a35a29e68e5b4898e2edd8cc6eba7468c95",
+       "bytes": 3583,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_43cda3eb817bee445c6f4c942257d6c501c044d0dcb83fbff90119d42f43c315",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/app/page-c972f1578b4dadd8.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "7df349a17782de02f6bf7e95fb4f8bfc474edbb64ab21633c6120ee993a12b5a",
+     "length": 73764,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_44310b489df21e985059cd78b6b61ea02b277a4ed942366bc5e9217f5cae1a6e"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "7df349a17782de02f6bf7e95fb4f8bfc474edbb64ab21633c6120ee993a12b5a",
+       "bytes": 73778,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_4a503a2c8d6dcb6ee7aede7239290b5f9e36965166e23c8dadc602433c8b812b",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "09dca6a1005d91ab023ef9cd23be87a49aec81f68a86db9943b1d51e3b537cb7",
+     "length": 34,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "unmatched",
+      "reason": "no_exact_sanitized_url"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "09dca6a1005d91ab023ef9cd23be87a49aec81f68a86db9943b1d51e3b537cb7",
+       "bytes": 34,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_5be744a6cae389b075502dfa308aa63618bc810cb33f309ec945083a32d75c02",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/3318-86e391bb505053c5.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "96d0821498d0b0605818a7309f25a385e62e4e52d552663cedd908e18a00c31c",
+     "length": 630043,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_7f091dd8cac5a9c1210b9841110aa567a97b4a809f6c87792b3de6dea38fc553"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "96d0821498d0b0605818a7309f25a385e62e4e52d552663cedd908e18a00c31c",
+       "bytes": 633061,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_6475f2d43cc0597ed5f62a73188f1d5e30338806d2663836f23829584a0bf926",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/49409d0d-3aa6b3c0791dc51d.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "abb3e1dbc671d56fcca10c5d4196f96104346e657f4332b30e1814c73d7d1984",
+     "length": 187823,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_7d93d8f383a0d0e8d2075d79cd3b3bf40db70c7fdd998b52290acc031efbf29f"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "abb3e1dbc671d56fcca10c5d4196f96104346e657f4332b30e1814c73d7d1984",
+       "bytes": 187823,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_6506cca2828a8e62b8101492b80113a77db1dfb03196e8d05e67cac644a3f075",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/5738-c1d1a191ed3b083a.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "9b4209f95a3003cf7a85c7949f993e00fbf82c31550d3c92d269756d7e4fa9ff",
+     "length": 15729,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_57b3e096fd2cee94f507ef11e98b9ae59b33d6186df0249755bce9a286abfe31"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "9b4209f95a3003cf7a85c7949f993e00fbf82c31550d3c92d269756d7e4fa9ff",
+       "bytes": 15729,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_704175052ee172cfe4a0f30a9251e392c7c2a420d2b407c3e1a9fb6d9fdd7813",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "87d88cf19508923bfde7c693daa4837689a37380058b5cfb12b355247d1e1d26",
+     "length": 2502,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "unmatched",
+      "reason": "no_exact_sanitized_url"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "87d88cf19508923bfde7c693daa4837689a37380058b5cfb12b355247d1e1d26",
+       "bytes": 2508,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_855cb4e03d3b90d24e9c024cf10a90ab7636d1d12a0fbc562ecd00a9420321b9",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/1122-7cc2014f451f858a.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "3655df531a36910f5b3b482a464c8c5561d3b543ef1d445b8c37eb75a2bf6ca1",
+     "length": 18219,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_27f3c3cce810d1281952939fa30e17a8d35858a7f3605479f721e9ba564c04a8"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "3655df531a36910f5b3b482a464c8c5561d3b543ef1d445b8c37eb75a2bf6ca1",
+       "bytes": 18623,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_8f2fb2424d6269a46a0833d07356a9435a969720181ae3b5745e3a2ca1e39d87",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/app/layout-380c48d612a72cfb.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "d26b7050c05736546cf30d2add608a3fa9003defbc0ce5dff2a3abcd6620b542",
+     "length": 4599,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_f199a1ad1c0d15470145c4ddacc9f7036817147fa465fa76390693d677bc713c"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "d26b7050c05736546cf30d2add608a3fa9003defbc0ce5dff2a3abcd6620b542",
+       "bytes": 4599,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_8f54bbc6753cefe026a5d53a8454d6bea71dc4d3ff6f5f55029697fea8ef2a6a",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/3480-6dd829c545eacbe9.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "ec1cc72dc83396da024426c6708f87cca9197ed74272e6b082daa5786849fa44",
+     "length": 24451,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_d704c05a7520312621adf0eb2e71967c50bf694f5c969f747c0c97e93d35dcc8"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "ec1cc72dc83396da024426c6708f87cca9197ed74272e6b082daa5786849fa44",
+       "bytes": 24451,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_90f678d5161382c86c348dd4a184b5078bae63bd64bbc6025992f3b3a957ad3a",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "8d7a3ee0ab05029f99253f887a9e38b8d309cefd1be3c3a2d51f68f581313129",
+     "length": 446,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "unmatched",
+      "reason": "no_exact_sanitized_url"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "8d7a3ee0ab05029f99253f887a9e38b8d309cefd1be3c3a2d51f68f581313129",
+       "bytes": 446,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_a7420361d8e3fd733ed8ecd41a1ad864e0df2f806c291f06d77b3833c614102b",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/249-da09f6cdb09cb347.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "a222f9b5c69ff9088152e4475b5899680ae0401646a5a0eb1ab396affac3de97",
+     "length": 142737,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_5373bce4c3ece4b07b1af9e7e501d98495b22fbe72373d26e0f6439b11b088d3"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "a222f9b5c69ff9088152e4475b5899680ae0401646a5a0eb1ab396affac3de97",
+       "bytes": 142737,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_acef8e77c32addff6919f3877753796d6da2d4ac75eb5ca00892ce0b3f25050a",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/493ff4cd-969b642fdf80cd37.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "9f022b4ffbe47e86c84c38adf3c202b0f60ebf3b9e95586cc8683fa282f54fa2",
+     "length": 6113,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_8b301d99f8d673e1e9848abf94373a33dbd1c82d7e4eff0bd3addb0cea6fc4b0"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "9f022b4ffbe47e86c84c38adf3c202b0f60ebf3b9e95586cc8683fa282f54fa2",
+       "bytes": 6113,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_d184ead2bed757fe077e2015da879069fc7d93c240f929855f392a702c32a451",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/6934-b25a57c67ce364e2.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "c95b105e040d668c879f83b4760fefe3ae2c3e12e3b5cf553277e599a0542b60",
+     "length": 20686,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_cedaaab1260e760a716edb7c75b4edf5f37289374af510c4741da2316c788ca0"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "c95b105e040d668c879f83b4760fefe3ae2c3e12e3b5cf553277e599a0542b60",
+       "bytes": 20686,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_df79e3e9fbb2c178c4d399482d8db25a5f3f5d53a12df1ea52ec614a3ce725f8",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/be0aa090-733f8398f81a6147.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "e6babf8c3fe27dc556e2b3c9107c8fffa2035ac101189ff7c32cc453286c5940",
+     "length": 172835,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_977e00bd4309ac916d0da399922faba4ce5317f50135d43265ef47dc3a346660"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "e6babf8c3fe27dc556e2b3c9107c8fffa2035ac101189ff7c32cc453286c5940",
+       "bytes": 172835,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_e6fee7e57a035c90a792b54f94339c05435d111d9337fab2b561b3b4703ff456",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/1447-d2ed99c4d7fedc99.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "c0126c7af98efeb4bb266ee493ffddbd3640b5a9ec288d0facd94e179305a72b",
+     "length": 16235,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_0565f49a1e8a1774cc881e8a732347f4ff9c1f7c4b0a46b8abfab83ba4164576"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "c0126c7af98efeb4bb266ee493ffddbd3640b5a9ec288d0facd94e179305a72b",
+       "bytes": 16235,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_ea45041582ad6654e2b16b7a62d30733605e532bcaa5a3e0f2827408884a243f",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/332-d1240bc5b682bb39.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "30eb23eea774de7b25cc7ca1bf74c59ed081db9af29c83e9a5be196db0c36638",
+     "length": 8347,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_6031c69c758c96f189a09ae8e8cad87fce7d518a01eea21519cd30e9446fcfec"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "30eb23eea774de7b25cc7ca1bf74c59ed081db9af29c83e9a5be196db0c36638",
+       "bytes": 8347,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_ea7131d0523adca565620a9401e710e8b297511b148d0736aa7d2d4215aaf897",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "43ef2d3ec8d5b620ec8c5fc2bfc14c3a9836620f75a0a14a0c025ab753cf6f68",
+     "length": 72,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "unmatched",
+      "reason": "no_exact_sanitized_url"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "43ef2d3ec8d5b620ec8c5fc2bfc14c3a9836620f75a0a14a0c025ab753cf6f68",
+       "bytes": 72,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_ee879d901b7134b65b826e09a8e85f6c91878dbf6fa5233f26e94bb5aa0b82d2",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/360-520b4ea9b5b53d93.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "ccb9d4f19ee25e470cce28e43b3d5e1b1aca9e76cb70cdf3cc37165a9bcf22fa",
+     "length": 6658,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_0b53983e810821b364cfa874c53e847a3ea1d76eeb13c1d242f4b87a533cb2bf"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "ccb9d4f19ee25e470cce28e43b3d5e1b1aca9e76cb70cdf3cc37165a9bcf22fa",
+       "bytes": 6658,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    },
+    {
+     "script_key": "scr_f55793d73b37390d502bd63f990ab1858a89f0d6c17fef41b9a6a0601a2df8b5",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "url": "https://www.bolna.ai/_next/static/chunks/9921-f2130cfbc3b41f52.js?<query-redacted>",
+     "origin": "https://www.bolna.ai",
+     "cdp_hash": "58e25c037e2ffb12406d706584f186eb159914f99335edef8c549c4e8de78a25",
+     "length": 104503,
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null,
+     "resource_reconciliation": {
+      "status": "exact",
+      "resource_key": "res_e25b362507a38ec8b4cef8b00916986d580e4dcb1ddd53debfacc2359e351d62"
+     },
+     "source": {
+      "included": true,
+      "artifact": {
+       "sha256": "58e25c037e2ffb12406d706584f186eb159914f99335edef8c549c4e8de78a25",
+       "bytes": 104505,
+       "media_type": "text/javascript",
+       "charset": "utf-8"
+      }
+     }
+    }
+   ]
+  },
+  "resources": [
+   {
+    "resource_key": "res_0565f49a1e8a1774cc881e8a732347f4ff9c1f7c4b0a46b8abfab83ba4164576",
+    "url": "https://www.bolna.ai/_next/static/chunks/1447-d2ed99c4d7fedc99.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 16235
+   },
+   {
+    "resource_key": "res_0b53983e810821b364cfa874c53e847a3ea1d76eeb13c1d242f4b87a533cb2bf",
+    "url": "https://www.bolna.ai/_next/static/chunks/360-520b4ea9b5b53d93.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 6658
+   },
+   {
+    "resource_key": "res_0c45864ba7107c5b12f0281a06b8814602630247abddef84b7473b23a0ac9681",
+    "url": "https://www.bolna.ai/logo-cloud/gokwik.png",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/png",
+    "content_size": 17904
+   },
+   {
+    "resource_key": "res_0e764b0e9b414a08fabf40161855884d5977e9f152d0ca451c6ed2e6d8dad080",
+    "url": "https://www.bolna.ai/images/pixels.svg",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 673
+   },
+   {
+    "resource_key": "res_1359cf8e13dad7d31826f1ab7ee6aa90454f2e8ef212cfc2609384a366d49068",
+    "url": "https://www.bolna.ai/logo-cloud/futwork.svg",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 3426
+   },
+   {
+    "resource_key": "res_198af73f738a3a7f06d8122697b6d06c579432a063613731c4ae9f83e47958fe",
+    "url": "https://www.bolna.ai/logo-cloud/new/hyreo.png",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/png",
+    "content_size": 6883
+   },
+   {
+    "resource_key": "res_1ae6080c719a6a5c31130763adad7497f8d637e1756fa75418f8578b7a30edb9",
+    "url": "https://www.bolna.ai/logo-timeline/deepgram.jpeg",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/jpeg",
+    "content_size": 6872
+   },
+   {
+    "resource_key": "res_27f3c3cce810d1281952939fa30e17a8d35858a7f3605479f721e9ba564c04a8",
+    "url": "https://www.bolna.ai/_next/static/chunks/1122-7cc2014f451f858a.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 18623
+   },
+   {
+    "resource_key": "res_2b5769eea363c040d9cbc18aecd7e69fc88d61d9dae27fd900ba27b761b7a4a5",
+    "url": "https://www.bolna.ai/images/right-down-arrow.svg",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 1199
+   },
+   {
+    "resource_key": "res_2e602f53afe4e102450c0132dbb25b609456b04845308e70d850aace4a0ca53d",
+    "url": "https://www.bolna.ai/logo-cloud/awign.svg",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 15925
+   },
+   {
+    "resource_key": "res_35ca9d08370a23f958478da798e73ab70d16c7e121026b87723e8a983eeb3a21",
+    "url": "https://www.bolna.ai/_next/static/chunks/app/book-demo/page-6133ad346bf2caa3.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 8579
+   },
+   {
+    "resource_key": "res_44310b489df21e985059cd78b6b61ea02b277a4ed942366bc5e9217f5cae1a6e",
+    "url": "https://www.bolna.ai/_next/static/chunks/app/page-c972f1578b4dadd8.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 73778
+   },
+   {
+    "resource_key": "res_453a9974e70ee1ddef27659df9b37e6b0ef46f20ba320b93a09159513058409a",
+    "url": "https://www.bolna.ai/logo-cloud/physics-wallah.svg",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 7372
+   },
+   {
+    "resource_key": "res_45f40ba9f280b4d379eaa9cb59647a4db5fef83aa0fa61812bd557f89f8b2f94",
+    "url": "https://www.bolna.ai/logo-cloud/new/gokwik.png",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/png",
+    "content_size": 8533
+   },
+   {
+    "resource_key": "res_51e02b503a7b397ed31370897fcb8b9ce03840accfd5e7f5efbca117a373d26e",
+    "url": "https://www.bolna.ai/images/blue-gradient-5.png",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/png",
+    "content_size": 25475
+   },
+   {
+    "resource_key": "res_535750418154408766de22e6b307dd24d5d89c9cbd2f655cb30b3505e80754c5",
+    "url": "https://www.bolna.ai/_next/static/chunks/main-app-4006fb8530a0b191.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 473
+   },
+   {
+    "resource_key": "res_5373bce4c3ece4b07b1af9e7e501d98495b22fbe72373d26e0f6439b11b088d3",
+    "url": "https://www.bolna.ai/_next/static/chunks/249-da09f6cdb09cb347.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 142737
+   },
+   {
+    "resource_key": "res_53e1d4818574cc0e986d119caf899860d3484415ad69e7b64ac2ee33d2967998",
+    "url": "https://www.bolna.ai/_next/static/chunks/9379-07e92386518ce454.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 3583
+   },
+   {
+    "resource_key": "res_57b3e096fd2cee94f507ef11e98b9ae59b33d6186df0249755bce9a286abfe31",
+    "url": "https://www.bolna.ai/_next/static/chunks/5738-c1d1a191ed3b083a.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 15729
+   },
+   {
+    "resource_key": "res_5faeaccde99204896809fdb9a96f84be015a3f69b0973e7a306474bcf0dfad24",
+    "url": "https://www.bolna.ai/logo-timeline/cartesia.png",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/png",
+    "content_size": 135903
+   },
+   {
+    "resource_key": "res_6031c69c758c96f189a09ae8e8cad87fce7d518a01eea21519cd30e9446fcfec",
+    "url": "https://www.bolna.ai/_next/static/chunks/332-d1240bc5b682bb39.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 8347
+   },
+   {
+    "resource_key": "res_6034a29213742d4849b7d3b490c7ed477023e33959c7bd96d358f53152a79fc6",
+    "url": "https://www.bolna.ai/logo-cloud/new/hypothesis.png",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/png",
+    "content_size": 2161
+   },
+   {
+    "resource_key": "res_61037bd51e5b6a76c3e1636ba53f5dac7e89cb6b2b88d926b051f3bd90f20c92",
+    "url": "https://www.bolna.ai/_next/static/media/27834908180db20f-s.p.woff2",
+    "origin": "https://www.bolna.ai",
+    "type": "Font",
+    "mime_type": "font/woff2",
+    "content_size": 69436
+   },
+   {
+    "resource_key": "res_619d88cc5b5d5e645efaa314a980130c0f55c441e31e6f2b1d392142afc8ed7e",
+    "url": "https://www.bolna.ai/_next/static/css/e907c44d880173d6.css?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Stylesheet",
+    "mime_type": "text/css",
+    "content_size": 160665
+   },
+   {
+    "resource_key": "res_672e23da6d0edc0f2a2e7dc39a43849cff3db5b22794572d7c1cf1e1fe347d0d",
+    "url": "https://www.bolna.ai/_next/static/chunks/8685-7647b909375d7005.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 124248
+   },
+   {
+    "resource_key": "res_67c86047d667f3a46577c833e716fbfb1df794caad5633b703d2d2cc2ef03355",
+    "url": "https://www.bolna.ai/images/wave-forms.png",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/png",
+    "content_size": 65301
+   },
+   {
+    "resource_key": "res_79f900e2ff56d2e1e91c628818faee5983603e39eddadbadbff2355a91cfa41b",
+    "url": "https://www.bolna.ai/images/blue-gradient-2.png",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/png",
+    "content_size": 25475
+   },
+   {
+    "resource_key": "res_7d93d8f383a0d0e8d2075d79cd3b3bf40db70c7fdd998b52290acc031efbf29f",
+    "url": "https://www.bolna.ai/_next/static/chunks/49409d0d-3aa6b3c0791dc51d.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 187823
+   },
+   {
+    "resource_key": "res_7dedc0d83fa65d011bf1f9c2e9edefec391274e0e9271f0a17a41cab4c90dc4d",
+    "url": "https://www.bolna.ai/logo-cloud/knotdating.svg",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 5320
+   },
+   {
+    "resource_key": "res_7f091dd8cac5a9c1210b9841110aa567a97b4a809f6c87792b3de6dea38fc553",
+    "url": "https://www.bolna.ai/_next/static/chunks/3318-86e391bb505053c5.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 633061
+   },
+   {
+    "resource_key": "res_87cccc51aff26e6170eb20a43d7ed7d58f7d014c834fa817b0d13a20dea7dd45",
+    "url": "https://www.bolna.ai/logo-timeline/openai.png",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/png",
+    "content_size": 1510
+   },
+   {
+    "resource_key": "res_89eeae4a76dcc56ee8f42028c3819bd86a5c77e357049efb7c51fb23185137fe",
+    "url": "https://www.bolna.ai/images/blue-gradient-3.png",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/png",
+    "content_size": 25475
+   },
+   {
+    "resource_key": "res_8b301d99f8d673e1e9848abf94373a33dbd1c82d7e4eff0bd3addb0cea6fc4b0",
+    "url": "https://www.bolna.ai/_next/static/chunks/493ff4cd-969b642fdf80cd37.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 6113
+   },
+   {
+    "resource_key": "res_8e1e6ca34abcb886091d0aec052b89d8752bab4932dc14726564279a27254d67",
+    "url": "https://www.bolna.ai/images/left-down-arrow.svg",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 1203
+   },
+   {
+    "resource_key": "res_8e6083ce09a1af98294d50344c93039ee9797b958c9aa588c15874ace4d41e21",
+    "url": "https://www.bolna.ai/_next/static/media/78fec81b34c4a365.p.woff2",
+    "origin": "https://www.bolna.ai",
+    "type": "Font",
+    "mime_type": "font/woff2",
+    "content_size": 71004
+   },
+   {
+    "resource_key": "res_8ef7bd12e70e3ff4786952c0f5b4ed1bac34b422c3410f73bf0c290f37d6b61e",
+    "url": "https://www.bolna.ai/logo-cloud/awign-white.svg",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 15169
+   },
+   {
+    "resource_key": "res_977e00bd4309ac916d0da399922faba4ce5317f50135d43265ef47dc3a346660",
+    "url": "https://www.bolna.ai/_next/static/chunks/be0aa090-733f8398f81a6147.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 172835
+   },
+   {
+    "resource_key": "res_97883e1b3d1b32d861411ae75f03b616f3a35419b0ff5a4361510041449ef99d",
+    "url": "https://www.bolna.ai/logo-cloud/new/shoplabs.png",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/png",
+    "content_size": 10162
+   },
+   {
+    "resource_key": "res_9ebf6e0765349975b7e27eac396622f5b407572ea381002d4a3c0c76a1d59d8a",
+    "url": "https://www.bolna.ai/logo-timeline/elevenlabs.svg",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 255
+   },
+   {
+    "resource_key": "res_aa24d9b0e6574b6c3954246ae043dcc4f9931723d6ff79ce498fbef8a8b85568",
+    "url": "https://www.bolna.ai/images/yc.svg",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 6854
+   },
+   {
+    "resource_key": "res_ab8f45a0c52f670686a3f9fdee90bb076b9a502f3a07fccfdbc5ba9a3cfbc9aa",
+    "url": "https://www.bolna.ai/images/gradient-bg-up.png",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/png",
+    "content_size": 69091
+   },
+   {
+    "resource_key": "res_b236d6d1f1512e9a319695fe1aafe94b81f1be3065707c655b48b394fd93f1a0",
+    "url": "https://www.bolna.ai/images/blue-gradient-4.png",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/png",
+    "content_size": 25475
+   },
+   {
+    "resource_key": "res_bc609ba03ea7a5a5ef05917bd18ada4a62ca8a3a5e434f8263c8ee32bcd603e4",
+    "url": "https://www.bolna.ai/logos/logo-white.svg",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 9224
+   },
+   {
+    "resource_key": "res_c3beef0ac03f5dbc95bbc569c5ea208ed0331373ac3f79dcc405e1439141f309",
+    "url": "https://www.bolna.ai/images/blue-rays.svg",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 7867
+   },
+   {
+    "resource_key": "res_c3cecc1b99812a6b76f6708752e0b2694c0d9ac9f840834813271f26474834ac",
+    "url": "https://www.bolna.ai/logo-timeline/plivo.svg",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 2251
+   },
+   {
+    "resource_key": "res_c69d53eed3f0d825c87ccc2907de9232a312023e0d0048ae237586ebd16086a6",
+    "url": "https://www.bolna.ai/logo-cloud/new/spinny.svg",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 7023
+   },
+   {
+    "resource_key": "res_ca3dd6276af3a2c381171265a8ba075190ed4182fb60ffd572f5c2eaff09cea8",
+    "url": "https://www.bolna.ai/_next/static/chunks/webpack-a38e5b57671528e2.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 4258
+   },
+   {
+    "resource_key": "res_cedaaab1260e760a716edb7c75b4edf5f37289374af510c4741da2316c788ca0",
+    "url": "https://www.bolna.ai/_next/static/chunks/6934-b25a57c67ce364e2.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 20686
+   },
+   {
+    "resource_key": "res_cf183c687adeb1467bf3bf9ff484dbf0ed50eeca4de32d34fc9431179c502367",
+    "url": "https://www.bolna.ai/logo-timeline/perplexity.png",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/png",
+    "content_size": 15121
+   },
+   {
+    "resource_key": "res_d5ef7dba6200849c0d80373a7ffdfca3de4ca912111b181750fadefe182f9189",
+    "url": "https://www.bolna.ai/logo-timeline/openrouter.png",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/png",
+    "content_size": 21348
+   },
+   {
+    "resource_key": "res_d704c05a7520312621adf0eb2e71967c50bf694f5c969f747c0c97e93d35dcc8",
+    "url": "https://www.bolna.ai/_next/static/chunks/3480-6dd829c545eacbe9.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 24451
+   },
+   {
+    "resource_key": "res_dc0977f26b71d3b6cce77672f194b4d0597812a6aef2c4bddda6efca2dbf3292",
+    "url": "https://www.bolna.ai/logo-cloud/hyreo-white.png",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/png",
+    "content_size": 6883
+   },
+   {
+    "resource_key": "res_e167b41064f8d65f8cf1c6d2b73c4ae8df40e3fb58f27da78536555f984064db",
+    "url": "https://www.bolna.ai/logo-timeline/azure.svg",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/svg+xml",
+    "content_size": 2134
+   },
+   {
+    "resource_key": "res_e25b362507a38ec8b4cef8b00916986d580e4dcb1ddd53debfacc2359e351d62",
+    "url": "https://www.bolna.ai/_next/static/chunks/9921-f2130cfbc3b41f52.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 104505
+   },
+   {
+    "resource_key": "res_e8e12cb3a5f3499f9643dc51ff3a31fb13f52bbf85c0599dca0c8a7253eec04c",
+    "url": "https://www.bolna.ai/_next/static/chunks/2934-f7805a9d4241b072.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 10226
+   },
+   {
+    "resource_key": "res_f199a1ad1c0d15470145c4ddacc9f7036817147fa465fa76390693d677bc713c",
+    "url": "https://www.bolna.ai/_next/static/chunks/app/layout-380c48d612a72cfb.js?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Script",
+    "mime_type": "application/javascript",
+    "content_size": 4599
+   },
+   {
+    "resource_key": "res_f25ae12e8ac91b6fa1d006abbf4fd16df44482fe1c302ffb6f0741c3ffd79685",
+    "url": "https://www.bolna.ai/images/blue-gradient-1.png",
+    "origin": "https://www.bolna.ai",
+    "type": "Image",
+    "mime_type": "image/png",
+    "content_size": 42135
+   },
+   {
+    "resource_key": "res_fd208569a6578f66acd980d0d427604adc4e25d7d1a5f53c64ebc8857b313ee0",
+    "url": "https://www.bolna.ai/_next/static/css/b1959b11e1f88b90.css?<query-redacted>",
+    "origin": "https://www.bolna.ai",
+    "type": "Stylesheet",
+    "mime_type": "text/css",
+    "content_size": 955
+   }
+  ],
+  "network": {
+   "requests": [],
+   "websocket_connections": [],
+   "coverage_started_at": "2026-10-22T15:23:59.193Z",
+   "prior_activity_available": false
+  },
+  "console": {
+   "events": [],
+   "coverage_started_at": "2026-10-22T15:23:59.193Z",
+   "prior_activity_available": false
+  },
+  "workers": [],
+  "metadata": {
+   "responses": [],
+   "dom_urls": "<trimmed 197 entries>",
+   "agent_hints": [],
+   "excluded_dom_urls": 30,
+   "headers_allowlisted": true
+  },
+  "storage": {
+   "origin": "https://www.bolna.ai",
+   "usage_bytes": 0,
+   "quota_bytes": 613794444902,
+   "local_storage_keys": [],
+   "session_storage_keys": [],
+   "indexed_db_names": [],
+   "cache_names": [],
+   "content_fingerprints": [],
+   "fingerprint_algorithm": "sha256",
+   "fingerprints_complete": false,
+   "values_redacted": true
+  },
+  "limitations": [
+   "Observation starts when REA attaches; prior network and console activity is unavailable.",
+   "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+   "Source maps are reported only as declarative URLs and are not fetched.",
+   "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+   "CDP discovery omitted the target attachment state; attached is reported as unknown."
+  ]
+ },
+ "confidence": "observed",
+ "authority": "external-service",
+ "environment": {
+  "id": "Chrome/155.0.8059.85@537.36 (@0e66b94549a8bd85f03fbdf189b752d6e7b63c32)",
+  "platform": "unknown",
+  "architecture": "unknown",
+  "isolation": "none"
+ },
+ "limitations": [
+  "Artifact identity is unavailable for this observation.",
+  "Observation starts when REA attaches; prior network and console activity is unavailable.",
+  "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+  "Source maps are reported only as declarative URLs and are not fetched.",
+  "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+  "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+  "Browser host platform and architecture were not observed."
+ ],
+ "relationship_coverage": null,
+ "locations": [],
+ "evidence_links": []
+}

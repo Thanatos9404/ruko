@@ -1,0 +1,735 @@
+{
+ "evidence_id": "ev_ce577d9f6aaf907f269fb57b5334f126a922b399d24df9869737417650285c23",
+ "subject": {
+  "name": "inspect2.json",
+  "digest": {
+   "sha256": "601ddc6fe49de4bb62f5af685499764ab7eed08838e058833987929c9c48beff"
+  },
+  "local_path": "<scratch>\\out\\obliqq\\inspect2.json",
+  "format": "file",
+  "architecture": null
+ },
+ "provider": {
+  "id": "rea-web-script-export",
+  "name": "REA captured script export",
+  "version": "1"
+ },
+ "analysis_profile": null,
+ "predicate_type": "rea.web-script-export",
+ "operation": "export_web_scripts",
+ "parameters": {
+  "capture_path": "<scratch>\\out\\obliqq\\inspect2.json",
+  "output_directory": "<scratch>\\cache\\obliqq-scripts"
+ },
+ "raw_result": null,
+ "normalized_result": {
+  "capture_path": "<scratch>\\out\\obliqq\\inspect2.json",
+  "capture_sha256": "601ddc6fe49de4bb62f5af685499764ab7eed08838e058833987929c9c48beff",
+  "capture_kind": "page-inspection",
+  "source_evidence_id": "ev_dd1984814081b39d24792478ecde04d291e837a2d44ff58f00d7e8795b6dfe8b",
+  "capture_completeness": {
+   "status": "policy_filtered",
+   "conditions": [
+    "attach_limited",
+    "policy_filtered"
+   ],
+   "policy_filtered_sections": [
+    "accessibility",
+    "console_text",
+    "json_body_shapes",
+    "metadata",
+    "resources",
+    "scripts",
+    "storage_keys",
+    "websocket_shapes"
+   ],
+   "attach_limited_sections": [
+    "console_events",
+    "metadata",
+    "network_requests",
+    "websocket_connections",
+    "websocket_frames"
+   ],
+   "truncated_sections": [],
+   "unavailable_sections": [],
+   "excluded": [
+    {
+     "section": "accessibility",
+     "reason": "not_approved",
+     "count": 1214
+    },
+    {
+     "section": "console_text",
+     "reason": "not_approved",
+     "count": null
+    },
+    {
+     "section": "json_body_shapes",
+     "reason": "not_approved",
+     "count": null
+    },
+    {
+     "section": "metadata",
+     "reason": "disallowed_origin",
+     "count": 10
+    },
+    {
+     "section": "resources",
+     "reason": "disallowed_origin",
+     "count": 3
+    },
+    {
+     "section": "resources",
+     "reason": "unsupported_url",
+     "count": 3
+    },
+    {
+     "section": "scripts",
+     "reason": "disallowed_origin",
+     "count": 3
+    },
+    {
+     "section": "storage_keys",
+     "reason": "not_approved",
+     "count": null
+    },
+    {
+     "section": "websocket_shapes",
+     "reason": "not_approved",
+     "count": null
+    }
+   ],
+   "dropped_events": {
+    "scripts": 0,
+    "network_requests": 0,
+    "console_events": 0,
+    "websocket_connections": 0,
+    "websocket_frames": 0,
+    "webmcp_tools": 0,
+    "timeline_events": 0,
+    "total": 0
+   }
+  },
+  "output_directory": "<scratch>\\cache\\obliqq-scripts",
+  "analysis_input": {
+   "input_path": "<scratch>\\cache\\obliqq-scripts\\files",
+   "format": "directory"
+  },
+  "scripts": [
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_009f68342dde083f172230e9271ab76e4e9aa87125641c596990974ebaed20f1",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/e2TB71JKK.DBUDPYfa.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/e2TB71JKK.DBUDPYfa.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/e2TB71JKK.DBUDPYfa.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "2c4418888b992b1d7c5d35892cb3e7627ce07442cda4c97275c1f8bbe083e5a9",
+     "bytes": 12292,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_016fdc01ddf30955c06d2a4517f05c98859429f516176f4bbe3c5619ad71de4f",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/script_main.0dfisnd8.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/script_main.0dfisnd8.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/script_main.0dfisnd8.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "a7bb99a7869e661a833d61f9767a05258fe1b0720f4534d712835dd7b765fba4",
+     "bytes": 94940,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_037db05a8ca10447aa593e2caa937547cecf436e52691f30a6bcbd770f710c5c",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/Ep2r8kEta.BoCIhx_n.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/Ep2r8kEta.BoCIhx_n.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/Ep2r8kEta.BoCIhx_n.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "3d75250e6458903af322fd9d21a3c0c3e514efe280662040a7803ab59dd8ea8f",
+     "bytes": 33646,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_049704be4c75ca59da8ef1c6b1e5ed2b10070a790722b7bc3355df7f1f053817",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/ceNjEn0pZ.CyG-Je93.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/ceNjEn0pZ.CyG-Je93.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/ceNjEn0pZ.CyG-Je93.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "d48ed6adf4647471dce876b8a7a7500ec325a35a9adb3b350c401f399b7a0ddd",
+     "bytes": 26065,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_118ed59794c58c87eebfce7fe0a3fda22f48462efc2b7cec75d3aaf5a53818f2",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/motion.CU2VUewv.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/motion.CU2VUewv.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/motion.CU2VUewv.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "42faf2a6e9a5af5a4438de9dd6764bf00dc7d248fdcbe3b6ff9deaf531261ade",
+     "bytes": 150891,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_253834a2242b121ffe3f12bde842709bddfe9cb0f6c8bc2f97f0dedf1ab9256d",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/gB-PdzFQIYYyudOD90PdxPT5SfDpeOCa35w3TwZLBeY.BhZzfFEd.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/gB-PdzFQIYYyudOD90PdxPT5SfDpeOCa35w3TwZLBeY.BhZzfFEd.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/gB-PdzFQIYYyudOD90PdxPT5SfDpeOCa35w3TwZLBeY.BhZzfFEd.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "a56bc0fd20afe1663a5b51190aae5c8b46ae309cf13186ba6284917668b465c0",
+     "bytes": 22763,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_2d0eb000aafac81051b09e27b31da440ae6515408f413338021974b631c221fa",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/h4JcoWJSF.CF0Oofg0.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/h4JcoWJSF.CF0Oofg0.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/h4JcoWJSF.CF0Oofg0.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "5c471b503257360aad7846382eaff6de87f790ecd777951bd201c9a8745d790c",
+     "bytes": 12407,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_33a7e284cf179235ddb780357e170c2c2a4fdb55c459b37c6e8e8dcd407cfc4f",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/w6f14WWdd1fWd5O6MtJApkcdw7kG4io2gdw8TjQ8vkg.CDI1AnrR.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/w6f14WWdd1fWd5O6MtJApkcdw7kG4io2gdw8TjQ8vkg.CDI1AnrR.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/w6f14WWdd1fWd5O6MtJApkcdw7kG4io2gdw8TjQ8vkg.CDI1AnrR.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "5475f5c1a3d1a20804978907dde670a37c8e7c181546d6d03d0bd8e3a849088c",
+     "bytes": 997,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_34bc3e5a5a52be05cda0514963ebc207f0b05c181676d0395ae25c41d787561b",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/6dpVZms3lHzVd6JP2UTG8YfgT7Kuwxx91rFmSBwJ4qI.B_4URQWx.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/6dpVZms3lHzVd6JP2UTG8YfgT7Kuwxx91rFmSBwJ4qI.B_4URQWx.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/6dpVZms3lHzVd6JP2UTG8YfgT7Kuwxx91rFmSBwJ4qI.B_4URQWx.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "de1f666a79a504ece54a360145287efaeface530c01a8e2cfd13ad7f46495f96",
+     "bytes": 286090,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_3606c577e073b1f27115be727a410bfb4a1eb7d803f79f6c96494b7c5f2c9032",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/lpN9RaA0p.x_El2dSS.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/lpN9RaA0p.x_El2dSS.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/lpN9RaA0p.x_El2dSS.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "603ae95543029a06c9de0a122ab1dc339fa40ffd6407e169b253d30978eae9e6",
+     "bytes": 1167,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_376a5aacede328946a964b6ede707ddefd03b442004e52a8beeb3c10ad74f88b",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/q2-CwetE4_7Tf5h02907IjL-rfJBcbnbFN4ubOiXgfM.DOAkcOm4.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/q2-CwetE4_7Tf5h02907IjL-rfJBcbnbFN4ubOiXgfM.DOAkcOm4.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/q2-CwetE4_7Tf5h02907IjL-rfJBcbnbFN4ubOiXgfM.DOAkcOm4.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "15a74632a4eeec324de252307da74646a2c5f1d80461bd8550798de7eb885345",
+     "bytes": 1115,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_503779caec01d2e42dd22d61ca0b311f0750b8907d9ccd36f50bcd6a791be47a",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/oM4DrnKwh.Bf3kikQ_.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/oM4DrnKwh.Bf3kikQ_.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/oM4DrnKwh.Bf3kikQ_.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "5da4c3ed93e463475e69c93c5c7c61e4d7af7d351580aa64ff95753062d96aff",
+     "bytes": 5050,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_6d7a2d75ad503328336ad931ddeb7340ee9ec17f58ba32a617761f76f519ec84",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/PX9hIOIVM.Dx-rXCtM.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/PX9hIOIVM.Dx-rXCtM.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/PX9hIOIVM.Dx-rXCtM.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "dd7457e8d62d1280f0ab386a3773bdec3cf51cb5e1f80a266ae62178963aefdd",
+     "bytes": 19658,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_8e4826681b477c27a8137595ea68b720925325db1499487d90b467cb40ec1834",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/XrWQqo06r.BBRPfyNv.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/XrWQqo06r.BBRPfyNv.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/XrWQqo06r.BBRPfyNv.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "43e5d6f6c9f3d6fc8b17e8b5ace830c87e7cb0d2db4a26aa16f2940cb8166757",
+     "bytes": 12583,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_a1f36aa0757ee37fe7f31c28f21bf0a7f567fdc14b1915a4e1a446a00e6a02fb",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/rolldown-runtime.Dh6celcD.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/rolldown-runtime.Dh6celcD.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "4cf74e844dce3bc61a15b3687b05aceff75f4da99181156d04f8ef181283f429",
+     "bytes": 629,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_b849b65cc6ee4ba8969137c84c31ba6179917bcdeba3d6ceb8c447f8aee357ba",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/WiH3d3HBs.Dkuk7KLM.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/WiH3d3HBs.Dkuk7KLM.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/WiH3d3HBs.Dkuk7KLM.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "ed5b10b0c83a713f1ebb866fbe5e39455bcb55c5efca71908ac8b3ff51ac6510",
+     "bytes": 78037,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_bc1daace92b520279b8b0e1c34a858680df6c0a73ced754bf5ced969ac32eac8",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/shared-lib.DX81oTQ0.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/shared-lib.DX81oTQ0.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/shared-lib.DX81oTQ0.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "9ccd92890e6b6f47699e91c33e1ad1284754ddc06ca970d5c067f9e73acfb8c5",
+     "bytes": 18708,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_cce1538310824889676163bee1f9187b9ca8c6de49d7ec120ceb2a7548c1ce10",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/2VdbrlvJr8ajn2yEOlsj3FtoNV47nlDa7FS6RjwM6Vc.VIkmRWqN.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/2VdbrlvJr8ajn2yEOlsj3FtoNV47nlDa7FS6RjwM6Vc.VIkmRWqN.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/2VdbrlvJr8ajn2yEOlsj3FtoNV47nlDa7FS6RjwM6Vc.VIkmRWqN.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "a402501aaaa23bdc58dc36c54122da330e936c24b124181a0502005e5f3eeb14",
+     "bytes": 1060,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_d333217ff0111705352c5ade0f0f4179cc5219614868e787ce864d874b6ff63e",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/RzrSMAJJvXq-bWcKPZGbg8zzalb9BkM-4xoP50p7sv0.CwX5gJP4.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/RzrSMAJJvXq-bWcKPZGbg8zzalb9BkM-4xoP50p7sv0.CwX5gJP4.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/RzrSMAJJvXq-bWcKPZGbg8zzalb9BkM-4xoP50p7sv0.CwX5gJP4.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "050cc5a7746b3f3146c6eabc3fc096e3b7f2f09f703471254ca4ba7b2c47992a",
+     "bytes": 72072,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_d8408192b9be291e2dcb7b8102649732c6e24d796728fa550fbedb729455169b",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/XPGja3vc1.DrfAayr7.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/XPGja3vc1.DrfAayr7.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/XPGja3vc1.DrfAayr7.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "425be98ceeff5ffc35cc5b2a6b57a63b410dcf88daf884dcc3e88cc2a0c27ea4",
+     "bytes": 2852,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_ed6629e4f6c720c694b07637dfcee696b5cf431e9d22ce171951d9a358dcabc1",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/shOHdvsZO.C-m1NRX4.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/shOHdvsZO.C-m1NRX4.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/shOHdvsZO.C-m1NRX4.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "bc594d2af5a535119d16f77aebc5f028565c2a344aa2c974e280a1e054a2a22c",
+     "bytes": 2711,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_f135a0b38929ee7e56c2d69cc9441dbce20c3fd0c8460bf98f7049d3f23cd88f",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/uwmmbeA4Q.B5FYZ6eH.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/uwmmbeA4Q.B5FYZ6eH.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/uwmmbeA4Q.B5FYZ6eH.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "a4c45ab5ce7bad2ec193cb77f9e062bf5c9d5051e4f2e0199d958248548924f7",
+     "bytes": 5050,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_f362b2eddce4a0f6e5b82e323f7dfda6510a9b0542ad53fbded246fe61d17944",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/react.DS6-5m9n.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/react.DS6-5m9n.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/react.DS6-5m9n.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "d561ca0d04e530d5e9f16d03e5d94e3bb8e80df741a52ef073578a15dddb4a38",
+     "bytes": 144666,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_f7b0345c797d04351fd2b1bae01736653ed9aef477f09388bb10de325f71fd2a",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/DrbjvzOzc.jF17kxAJ.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/DrbjvzOzc.jF17kxAJ.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/DrbjvzOzc.jF17kxAJ.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "a0ca025afd085fd0dd3b01cfc0fd7aee1b06d1d909018341eb855451790370ef",
+     "bytes": 5992,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_f840b39c7f3a57c49fafc30c31bca35dac9becf5157cb3d6bb5ef5c7f893933e",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://obliqq.framer.ai/",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-25-a6fafc545ed43a22e1d907cad5d6037d0cab4856fa489e6403eafc9f124ac03d.js",
+     "layout": "isolated",
+     "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+     "sha256": "d13309b7f74434a23c3ec0d8f44b1ef5c5e5448c2dbc8cc1d2eff640a4e9dbe3",
+     "bytes": 10888,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_fbd2599f2c61f0a2ad28d3640d58bfd6a5b815f8772bcf8f25a671371f7c53c6",
+     "frame_id": "C81F3EA45C13D162F117D90A68B28797",
+     "is_module": true,
+     "language": "JavaScript",
+     "source_map_url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/framer.Cs62vUZB.mjs.map"
+    },
+    "url": "https://framerusercontent.com/sites/7sNbz5t5SUAfrusxz3diQN/framer.Cs62vUZB.mjs",
+    "content": {
+     "state": "exported",
+     "relative_path": "origins/58eba275e1b509cff4339ac0b361a2c8121888e30fef17db301373949ab9b069/sites/7sNbz5t5SUAfrusxz3diQN/framer.Cs62vUZB.mjs",
+     "layout": "url-path",
+     "layout_reason": null,
+     "sha256": "70d45627e0039e80f7892d420866c8f0ce3cab694debc0c9a1bcd951ddccabda",
+     "bytes": 473377,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   }
+  ],
+  "limitations": [
+   "Observation starts when REA attaches; prior network and console activity is unavailable.",
+   "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+   "Source maps are reported only as declarative URLs and are not fetched.",
+   "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+   "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+   "Only script bytes retained in this capture are exported. Sources are not refetched or executed, and a response or Debugger source does not prove execution.",
+   "Ordinary unambiguous URL paths preserve relative module layouts by origin, including case-distinct spellings. Query variants, exact path collisions, file/directory prefixes, inline sources, and unrepresentable paths are isolated. A case-distinct pair is isolated only when the destination filesystem cannot store both spellings; the record names that pair. Browser module relationships of isolated paths remain unknown.",
+   "Local JavaScript analysis does not implement browser import maps, root-relative URL resolution, remote URL loading, or browser runtime behavior. It may strip import queries and fragments; isolated variants are not canonical targets.",
+   "Source-map declarations are retained as metadata. No source maps or missing dependencies are fetched or reconstructed.",
+   "Scenario response bytes preserve the output of Playwright's Response.body() API; any source-body provenance caveat from the capture is retained in this manifest. Debugger sources are the exposed text encoded as UTF-8. Redacted bytes are exported exactly as retained, and may no longer parse as JavaScript."
+  ],
+  "manifest": {
+   "path": "<scratch>\\cache\\obliqq-scripts\\manifest.json",
+   "sha256": "421315aa01fa88d4fb5c4824847095259320713851c27e8236682903419b0483",
+   "bytes": 30715
+  }
+ },
+ "confidence": "derived",
+ "authority": "historical-reference",
+ "environment": null,
+ "limitations": [
+  "Observation starts when REA attaches; prior network and console activity is unavailable.",
+  "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+  "Source maps are reported only as declarative URLs and are not fetched.",
+  "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+  "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+  "Only script bytes retained in this capture are exported. Sources are not refetched or executed, and a response or Debugger source does not prove execution.",
+  "Ordinary unambiguous URL paths preserve relative module layouts by origin, including case-distinct spellings. Query variants, exact path collisions, file/directory prefixes, inline sources, and unrepresentable paths are isolated. A case-distinct pair is isolated only when the destination filesystem cannot store both spellings; the record names that pair. Browser module relationships of isolated paths remain unknown.",
+  "Local JavaScript analysis does not implement browser import maps, root-relative URL resolution, remote URL loading, or browser runtime behavior. It may strip import queries and fragments; isolated variants are not canonical targets.",
+  "Source-map declarations are retained as metadata. No source maps or missing dependencies are fetched or reconstructed.",
+  "Scenario response bytes preserve the output of Playwright's Response.body() API; any source-body provenance caveat from the capture is retained in this manifest. Debugger sources are the exposed text encoded as UTF-8. Redacted bytes are exported exactly as retained, and may no longer parse as JavaScript."
+ ],
+ "relationship_coverage": null,
+ "locations": [
+  {
+   "kind": "artifact-path",
+   "path": "<scratch>\\cache\\obliqq-scripts\\manifest.json"
+  }
+ ],
+ "evidence_links": [
+  "ev_dd1984814081b39d24792478ecde04d291e837a2d44ff58f00d7e8795b6dfe8b"
+ ]
+}

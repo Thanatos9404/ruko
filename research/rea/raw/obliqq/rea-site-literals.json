@@ -1,0 +1,27 @@
+{
+ "parent_evidence_id": "ev_35e9ec577ff68078fb911f3b46ca4fb9188bde01d2fe635aa73b1d95f0146fb3",
+ "semantic_coverage": "partial",
+ "note": "Literal nodes REA retained in the exported obliqq page module, script_main and shared-lib (values and locations only, no source text).",
+ "literals": {
+  "'left'": {
+   "count": 1,
+   "first_locations": [
+    [
+     "6dpVZms3lHzVd6JP2UTG8YfgT7Kuwxx91rFmSBwJ4qI.B_4URQWx.mjs",
+     2,
+     19380
+    ]
+   ]
+  },
+  "100": {
+   "count": 1,
+   "first_locations": [
+    [
+     "6dpVZms3lHzVd6JP2UTG8YfgT7Kuwxx91rFmSBwJ4qI.B_4URQWx.mjs",
+     2,
+     16773
+    ]
+   ]
+  }
+ }
+}

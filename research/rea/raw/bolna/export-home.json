@@ -1,0 +1,762 @@
+{
+ "evidence_id": "ev_31d5896ef0c8e1b9bbc2aebe03e914719c082151a3a5173a241351c1cb709e34",
+ "subject": {
+  "name": "inspect-home.json",
+  "digest": {
+   "sha256": "e8f5444673566085c6f8cc989c741babab20f48598b86655fe0897408398efde"
+  },
+  "local_path": "<scratch>\\out\\bolna\\inspect-home.json",
+  "format": "file",
+  "architecture": null
+ },
+ "provider": {
+  "id": "rea-web-script-export",
+  "name": "REA captured script export",
+  "version": "1"
+ },
+ "analysis_profile": null,
+ "predicate_type": "rea.web-script-export",
+ "operation": "export_web_scripts",
+ "parameters": {
+  "capture_path": "<scratch>\\out\\bolna\\inspect-home.json",
+  "output_directory": "<scratch>\\cache\\bolna-home-scripts"
+ },
+ "raw_result": null,
+ "normalized_result": {
+  "capture_path": "<scratch>\\out\\bolna\\inspect-home.json",
+  "capture_sha256": "e8f5444673566085c6f8cc989c741babab20f48598b86655fe0897408398efde",
+  "capture_kind": "page-inspection",
+  "source_evidence_id": "ev_c6c21c398b97b40b3e586e1585fb227a950249af025212b1bfdfd3e204a06500",
+  "capture_completeness": {
+   "status": "policy_filtered",
+   "conditions": [
+    "attach_limited",
+    "policy_filtered"
+   ],
+   "policy_filtered_sections": [
+    "accessibility",
+    "console_text",
+    "json_body_shapes",
+    "metadata",
+    "resources",
+    "scripts",
+    "storage_keys",
+    "websocket_shapes"
+   ],
+   "attach_limited_sections": [
+    "console_events",
+    "metadata",
+    "network_requests",
+    "websocket_connections",
+    "websocket_frames"
+   ],
+   "truncated_sections": [],
+   "unavailable_sections": [],
+   "excluded": [
+    {
+     "section": "accessibility",
+     "reason": "not_approved",
+     "count": 1237
+    },
+    {
+     "section": "console_text",
+     "reason": "not_approved",
+     "count": null
+    },
+    {
+     "section": "json_body_shapes",
+     "reason": "not_approved",
+     "count": null
+    },
+    {
+     "section": "metadata",
+     "reason": "disallowed_origin",
+     "count": 25
+    },
+    {
+     "section": "metadata",
+     "reason": "unsupported_url",
+     "count": 5
+    },
+    {
+     "section": "resources",
+     "reason": "disallowed_origin",
+     "count": 9
+    },
+    {
+     "section": "scripts",
+     "reason": "disallowed_origin",
+     "count": 10
+    },
+    {
+     "section": "scripts",
+     "reason": "unattributed_origin",
+     "count": 3
+    },
+    {
+     "section": "storage_keys",
+     "reason": "not_approved",
+     "count": null
+    },
+    {
+     "section": "websocket_shapes",
+     "reason": "not_approved",
+     "count": null
+    }
+   ],
+   "dropped_events": {
+    "scripts": 0,
+    "network_requests": 0,
+    "console_events": 0,
+    "websocket_connections": 0,
+    "websocket_frames": 0,
+    "webmcp_tools": 0,
+    "timeline_events": 0,
+    "total": 0
+   }
+  },
+  "output_directory": "<scratch>\\cache\\bolna-home-scripts",
+  "analysis_input": {
+   "input_path": "<scratch>\\cache\\bolna-home-scripts\\files",
+   "format": "directory"
+  },
+  "scripts": [
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_116edb528aacd8269d9f24953c978fa768314251cb803f641d3c37888bf233fe",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/app/book-demo/page-6133ad346bf2caa3.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-1-3dceeed9f67c09394e1728ad1740c3d77110afe4bf662ebc66ce43b8f3ba5544.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "87aeaa1cd1a2432f201a1650990d8588f78c061206fc99cd1f9b60efc75fb11f",
+     "bytes": 8579,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_14a494eb52e44661f82bf22482d61b6eac3c937e37a2c557f05f423bf4abed31",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/main-app-4006fb8530a0b191.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-2-89f5dfac03bb94836deb40f3dae0cbdac1ce422f1d33c5d23ecefbbe687936d0.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "4f023ea01ef22e6d891abc114e61d278424c0b344d9b4510b13e220f736d9bca",
+     "bytes": 473,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_21ea27d83813ce058e15ee6770a86aa3e01337de8cf527dab066fca896413fc4",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-3-cede4d8ce2093178c75cd5220303c17a2d9800accc7fd95a7e639c7478185450.js",
+     "layout": "isolated",
+     "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+     "sha256": "1f66802031178c482a6d0027983cf68904d8ecee9ceeba1a4e74c243bd2c7987",
+     "bytes": 2058,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_243f04d3b4d388101adebb3eb2bc67640546ae264f02ce91a404ef984a3e4dcc",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/8685-7647b909375d7005.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-4-0f3b3002120df1267497eda845a830629a86a06b70cd4ea236ae5a5e367435b4.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "3609a996883b30f5b22a3b021e41323429f526054e7fedbd4aff4b3d3b5c21c1",
+     "bytes": 124248,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_26f25d70b7709f181eaa3febe92ffda3e6560775e3776e0034ac9e2e007d17e6",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/webpack-a38e5b57671528e2.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-5-041b8134c3cdcb5fe0c929bc2b7e0e299438fab26615ae8666d14b1c60ba1108.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "32e1983756ab2496d49e77389ccaa1785f318fe0ed3994fa1b3aa48f7adda7fd",
+     "bytes": 4258,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_2b9dedd563aa2db8aaa8e2f05a666caad1326f0276b8558ccfcaf50047f6975a",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-6-58bf379bca5803ff98011f979db29ed69e359de30d7f38471d4e4b67e62d3115.js",
+     "layout": "isolated",
+     "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+     "sha256": "3d911981e68786fc955ff99649e86a93e7ef8804df6aa893172afebc29f6efc8",
+     "bytes": 4271,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_2f7124ad876f835b66cc2ba17f85837dd3f7003ec5005caef5d5403669c89a0f",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/2934-f7805a9d4241b072.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-7-43be3941b1680972ddb5d73016766922b3a80df11af2a037b5ca882a53a2d13c.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "b00859cd3c896d420f0cae01e4bd7d0550ac61ee28423ffdaad1fe96bf774463",
+     "bytes": 10226,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_40b22675b30426b3276045940d5f1aa2c076ca4311bfe2b47ab2b555f759653d",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/9379-07e92386518ce454.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-8-c986378f5ab5d820e29d05094200e3a819f8723209fa96868790294e912cf963.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "23a60cd8a9d0b610d40f2ed560900a35a29e68e5b4898e2edd8cc6eba7468c95",
+     "bytes": 3583,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_43cda3eb817bee445c6f4c942257d6c501c044d0dcb83fbff90119d42f43c315",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/app/page-c972f1578b4dadd8.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-9-4fd71a392e3ca0a56f8f0bd9f4e959c50a61d88ac40fc30b6f74da4644a5dbd9.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "7df349a17782de02f6bf7e95fb4f8bfc474edbb64ab21633c6120ee993a12b5a",
+     "bytes": 73778,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_4a503a2c8d6dcb6ee7aede7239290b5f9e36965166e23c8dadc602433c8b812b",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-10-0664592108eaed22414fae88bdc15028d2d973607bf087ff5d4cce670e36f322.js",
+     "layout": "isolated",
+     "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+     "sha256": "09dca6a1005d91ab023ef9cd23be87a49aec81f68a86db9943b1d51e3b537cb7",
+     "bytes": 34,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_5be744a6cae389b075502dfa308aa63618bc810cb33f309ec945083a32d75c02",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/3318-86e391bb505053c5.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-11-6dd10d8b799a8f0f145e49786d1127135839ce742232436791e6e3dd60c7e351.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "96d0821498d0b0605818a7309f25a385e62e4e52d552663cedd908e18a00c31c",
+     "bytes": 633061,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_6475f2d43cc0597ed5f62a73188f1d5e30338806d2663836f23829584a0bf926",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/49409d0d-3aa6b3c0791dc51d.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-12-c7f28abbe3e3d678ed5239349a402f932380263ebcb7c7ca2007b8f72f05e0b7.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "abb3e1dbc671d56fcca10c5d4196f96104346e657f4332b30e1814c73d7d1984",
+     "bytes": 187823,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_6506cca2828a8e62b8101492b80113a77db1dfb03196e8d05e67cac644a3f075",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/5738-c1d1a191ed3b083a.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-13-c505877f1d4a41a57e576384aff8a784cf8b53c5e7c9e9a19ad9208c68ce91a0.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "9b4209f95a3003cf7a85c7949f993e00fbf82c31550d3c92d269756d7e4fa9ff",
+     "bytes": 15729,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_704175052ee172cfe4a0f30a9251e392c7c2a420d2b407c3e1a9fb6d9fdd7813",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-14-edc57ece2e2e6d897095d899ad4e1d5232d2f126f17c99a6f855e70c953b00ff.js",
+     "layout": "isolated",
+     "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+     "sha256": "87d88cf19508923bfde7c693daa4837689a37380058b5cfb12b355247d1e1d26",
+     "bytes": 2508,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_855cb4e03d3b90d24e9c024cf10a90ab7636d1d12a0fbc562ecd00a9420321b9",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/1122-7cc2014f451f858a.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-15-85656e3aedd565bc4c227880cc27b48e1e98adcea96ae1f584f4ff693b318993.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "3655df531a36910f5b3b482a464c8c5561d3b543ef1d445b8c37eb75a2bf6ca1",
+     "bytes": 18623,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_8f2fb2424d6269a46a0833d07356a9435a969720181ae3b5745e3a2ca1e39d87",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/app/layout-380c48d612a72cfb.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-16-da693e9d62922c6314fa1896fa805c6dbdb1edd1d8512ee7290cba6a9ada2554.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "d26b7050c05736546cf30d2add608a3fa9003defbc0ce5dff2a3abcd6620b542",
+     "bytes": 4599,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_8f54bbc6753cefe026a5d53a8454d6bea71dc4d3ff6f5f55029697fea8ef2a6a",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/3480-6dd829c545eacbe9.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-17-f16246b1de58226344839000a78c79418aa2d892b7a3b3fd0a9d6490cf24c32e.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "ec1cc72dc83396da024426c6708f87cca9197ed74272e6b082daa5786849fa44",
+     "bytes": 24451,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_90f678d5161382c86c348dd4a184b5078bae63bd64bbc6025992f3b3a957ad3a",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-18-11ce6dba367bd0d723b35f9bf2d13aced591aea86f30fbca0c82f3de797379e6.js",
+     "layout": "isolated",
+     "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+     "sha256": "8d7a3ee0ab05029f99253f887a9e38b8d309cefd1be3c3a2d51f68f581313129",
+     "bytes": 446,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_a7420361d8e3fd733ed8ecd41a1ad864e0df2f806c291f06d77b3833c614102b",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/249-da09f6cdb09cb347.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-19-adcd580215d43a7654547c5e2aa040d51a78993e42c373b5dd986f786a68d96c.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "a222f9b5c69ff9088152e4475b5899680ae0401646a5a0eb1ab396affac3de97",
+     "bytes": 142737,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_acef8e77c32addff6919f3877753796d6da2d4ac75eb5ca00892ce0b3f25050a",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/493ff4cd-969b642fdf80cd37.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-20-384a9ab8fd9baaf84c8efac1580b40f312ef8c784e0ea77acd658ad2a51f57db.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "9f022b4ffbe47e86c84c38adf3c202b0f60ebf3b9e95586cc8683fa282f54fa2",
+     "bytes": 6113,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_d184ead2bed757fe077e2015da879069fc7d93c240f929855f392a702c32a451",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/6934-b25a57c67ce364e2.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-21-690c6dad9fd9b588d9f4b178507ae44842f65e7b9a16549f34415422399d9e6a.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "c95b105e040d668c879f83b4760fefe3ae2c3e12e3b5cf553277e599a0542b60",
+     "bytes": 20686,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_df79e3e9fbb2c178c4d399482d8db25a5f3f5d53a12df1ea52ec614a3ce725f8",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/be0aa090-733f8398f81a6147.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-22-a0afb059319c4acbfdc33c8734faf3302c07d81cd20c10be2f898219aeeb7519.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "e6babf8c3fe27dc556e2b3c9107c8fffa2035ac101189ff7c32cc453286c5940",
+     "bytes": 172835,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_e6fee7e57a035c90a792b54f94339c05435d111d9337fab2b561b3b4703ff456",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/1447-d2ed99c4d7fedc99.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-23-285625d381a73d901f6635409c3b2c7e0134ff4d7eb9559f73750f6269cf81c2.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "c0126c7af98efeb4bb266ee493ffddbd3640b5a9ec288d0facd94e179305a72b",
+     "bytes": 16235,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_ea45041582ad6654e2b16b7a62d30733605e532bcaa5a3e0f2827408884a243f",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/332-d1240bc5b682bb39.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-24-5cf273c7a39be7d97532a35609758023a4c5c1163475e9d4e0bd8eaa2e286f59.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "30eb23eea774de7b25cc7ca1bf74c59ed081db9af29c83e9a5be196db0c36638",
+     "bytes": 8347,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_ea7131d0523adca565620a9401e710e8b297511b148d0736aa7d2d4215aaf897",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-25-d8281d9c21c9d841f6df24c71bfb558d71cd5ec80c937e3114a56227d09a5766.js",
+     "layout": "isolated",
+     "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+     "sha256": "43ef2d3ec8d5b620ec8c5fc2bfc14c3a9836620f75a0a14a0c025ab753cf6f68",
+     "bytes": 72,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_ee879d901b7134b65b826e09a8e85f6c91878dbf6fa5233f26e94bb5aa0b82d2",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/360-520b4ea9b5b53d93.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-26-fdc84f5ec907a2e05658cf5883f29ac3a672f478a61e7f384a84354f74a3e0c7.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "ccb9d4f19ee25e470cce28e43b3d5e1b1aca9e76cb70cdf3cc37165a9bcf22fa",
+     "bytes": 6658,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   },
+   {
+    "source": {
+     "kind": "page-script",
+     "script_key": "scr_f55793d73b37390d502bd63f990ab1858a89f0d6c17fef41b9a6a0601a2df8b5",
+     "frame_id": "E339A168F736C725B39F46A30714FBAC",
+     "is_module": false,
+     "language": "JavaScript",
+     "source_map_url": null
+    },
+    "url": "https://www.bolna.ai/_next/static/chunks/9921-f2130cfbc3b41f52.js?<query-redacted>",
+    "content": {
+     "state": "exported",
+     "relative_path": "isolated/source-27-acc9fc2c8474103b0ed5f5d1f827aa755c63e4cc7f669d58869d55c6e40ef757.js",
+     "layout": "isolated",
+     "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+     "sha256": "58e25c037e2ffb12406d706584f186eb159914f99335edef8c549c4e8de78a25",
+     "bytes": 104505,
+     "media_type": "text/javascript",
+     "redacted": null,
+     "representation": "debugger-source-utf8"
+    }
+   }
+  ],
+  "limitations": [
+   "Observation starts when REA attaches; prior network and console activity is unavailable.",
+   "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+   "Source maps are reported only as declarative URLs and are not fetched.",
+   "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+   "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+   "Only script bytes retained in this capture are exported. Sources are not refetched or executed, and a response or Debugger source does not prove execution.",
+   "Ordinary unambiguous URL paths preserve relative module layouts by origin, including case-distinct spellings. Query variants, exact path collisions, file/directory prefixes, inline sources, and unrepresentable paths are isolated. A case-distinct pair is isolated only when the destination filesystem cannot store both spellings; the record names that pair. Browser module relationships of isolated paths remain unknown.",
+   "Local JavaScript analysis does not implement browser import maps, root-relative URL resolution, remote URL loading, or browser runtime behavior. It may strip import queries and fragments; isolated variants are not canonical targets.",
+   "Source-map declarations are retained as metadata. No source maps or missing dependencies are fetched or reconstructed.",
+   "Scenario response bytes preserve the output of Playwright's Response.body() API; any source-body provenance caveat from the capture is retained in this manifest. Debugger sources are the exposed text encoded as UTF-8. Redacted bytes are exported exactly as retained, and may no longer parse as JavaScript."
+  ],
+  "manifest": {
+   "path": "<scratch>\\cache\\bolna-home-scripts\\manifest.json",
+   "sha256": "71a1d1bd2251f0519a99b293f1c6b8863ddc85f5d171073e7683dd756acc5f01",
+   "bytes": 30166
+  }
+ },
+ "confidence": "derived",
+ "authority": "historical-reference",
+ "environment": null,
+ "limitations": [
+  "Observation starts when REA attaches; prior network and console activity is unavailable.",
+  "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+  "Source maps are reported only as declarative URLs and are not fetched.",
+  "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+  "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+  "Only script bytes retained in this capture are exported. Sources are not refetched or executed, and a response or Debugger source does not prove execution.",
+  "Ordinary unambiguous URL paths preserve relative module layouts by origin, including case-distinct spellings. Query variants, exact path collisions, file/directory prefixes, inline sources, and unrepresentable paths are isolated. A case-distinct pair is isolated only when the destination filesystem cannot store both spellings; the record names that pair. Browser module relationships of isolated paths remain unknown.",
+  "Local JavaScript analysis does not implement browser import maps, root-relative URL resolution, remote URL loading, or browser runtime behavior. It may strip import queries and fragments; isolated variants are not canonical targets.",
+  "Source-map declarations are retained as metadata. No source maps or missing dependencies are fetched or reconstructed.",
+  "Scenario response bytes preserve the output of Playwright's Response.body() API; any source-body provenance caveat from the capture is retained in this manifest. Debugger sources are the exposed text encoded as UTF-8. Redacted bytes are exported exactly as retained, and may no longer parse as JavaScript."
+ ],
+ "relationship_coverage": null,
+ "locations": [
+  {
+   "kind": "artifact-path",
+   "path": "<scratch>\\cache\\bolna-home-scripts\\manifest.json"
+  }
+ ],
+ "evidence_links": [
+  "ev_c6c21c398b97b40b3e586e1585fb227a950249af025212b1bfdfd3e204a06500"
+ ]
+}

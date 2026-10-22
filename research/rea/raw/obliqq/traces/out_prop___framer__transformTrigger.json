@@ -1,0 +1,93 @@
+{
+ "evidence_id": "ev_ea9c9a5fe6c8bf3a76d8c49db87e8cf2ca4e70e5f29ca418c8474814155fc994",
+ "subject": null,
+ "provider": {
+  "id": "rea-javascript-application-workflows",
+  "name": "REA JavaScript application workflows",
+  "version": "1"
+ },
+ "analysis_profile": null,
+ "predicate_type": "rea.javascript-semantic-trace",
+ "operation": "trace_javascript_semantics",
+ "parameters": {
+  "application_evidence_id": "ev_35e9ec577ff68078fb911f3b46ca4fb9188bde01d2fe635aa73b1d95f0146fb3",
+  "query": {
+   "seed": {
+    "kind": "property",
+    "name": "__framer__transformTrigger"
+   },
+   "direction": "backward-provenance",
+   "include_ambiguous_dynamic_edges": false,
+   "expected": null
+  }
+ },
+ "raw_result": null,
+ "normalized_result": {
+  "query_id": "jsrq_1906f2be0a499ef82f683a1fe639ecfbdb66bf090047c313a70d00e3c584f025",
+  "source_graph_id": "jsrg_621b8f026b32e6e7f79d6f35aa4648235c396c814e4c400f7b70b923d121d205",
+  "seed": {
+   "kind": "property",
+   "name": "__framer__transformTrigger"
+  },
+  "direction": "backward-provenance",
+  "status": "partial",
+  "seed_node_ids": [],
+  "evidence_contexts": [],
+  "nodes": [],
+  "relations": [],
+  "unknowns": [],
+  "expected_match_node_ids": [],
+  "summary": {
+   "total_seed_matches": 0,
+   "traversed_nodes": 0,
+   "traversed_relations": 0,
+   "traversed_functions": 0,
+   "traversed_modules": 0,
+   "relevant_unknowns": 0
+  },
+  "coverage": {
+   "status": "partial"
+  },
+  "limitations": [
+   "Boundary extraction covers unshadowed JSON/global coercions plus parse and validation method candidates.",
+   "Child-process extraction covers asynchronous node:child_process creation, literal argv/env/stdio options, exit/error listeners, and kill signals.",
+   "Configuration extraction covers process.env, process.argv, node:fs reads, and direct logical defaults.",
+   "Event extraction covers EventEmitter-style literal registrations, removals, and dispatch candidates; dynamic names remain unknown.",
+   "Function fingerprints are static candidates; equal digests can remain ambiguous and do not prove behavioral equivalence.",
+   "Local data flow does not claim control-flow-sensitive reaching definitions or arbitrary dynamic property resolution.",
+   "Promise ownership covers explicit unshadowed Promise construction, static factories, aggregation, chaining, and await syntax only.",
+   "Request extraction covers fetch, WebSocket, node:http/node:https construction, direct option fields, and exact local response consumers.",
+   "Resource extraction covers built-in filesystem/network acquisition and exact local close/destroy/end handles.",
+   "Semantic graph reachability is a static inference and does not prove runtime execution.",
+   "The semantic graph contains static syntax observations and conservative relationship candidates; it does not claim runtime execution.",
+   "Timer extraction covers global or node:timers scheduling and exact local-handle cancellation."
+  ],
+  "source_evidence_id": "ev_35e9ec577ff68078fb911f3b46ca4fb9188bde01d2fe635aa73b1d95f0146fb3",
+  "evidence_links": [
+   "ev_35e9ec577ff68078fb911f3b46ca4fb9188bde01d2fe635aa73b1d95f0146fb3"
+  ]
+ },
+ "confidence": "inferred",
+ "authority": "analyst-inference",
+ "environment": null,
+ "limitations": [
+  "Artifact identity is unavailable for this observation.",
+  "Boundary extraction covers unshadowed JSON/global coercions plus parse and validation method candidates.",
+  "Child-process extraction covers asynchronous node:child_process creation, literal argv/env/stdio options, exit/error listeners, and kill signals.",
+  "Configuration extraction covers process.env, process.argv, node:fs reads, and direct logical defaults.",
+  "Event extraction covers EventEmitter-style literal registrations, removals, and dispatch candidates; dynamic names remain unknown.",
+  "Function fingerprints are static candidates; equal digests can remain ambiguous and do not prove behavioral equivalence.",
+  "Local data flow does not claim control-flow-sensitive reaching definitions or arbitrary dynamic property resolution.",
+  "Promise ownership covers explicit unshadowed Promise construction, static factories, aggregation, chaining, and await syntax only.",
+  "Request extraction covers fetch, WebSocket, node:http/node:https construction, direct option fields, and exact local response consumers.",
+  "Resource extraction covers built-in filesystem/network acquisition and exact local close/destroy/end handles.",
+  "Semantic graph reachability is a static inference and does not prove runtime execution.",
+  "The semantic graph contains static syntax observations and conservative relationship candidates; it does not claim runtime execution.",
+  "Timer extraction covers global or node:timers scheduling and exact local-handle cancellation."
+ ],
+ "relationship_coverage": null,
+ "locations": [],
+ "evidence_links": [
+  "ev_35e9ec577ff68078fb911f3b46ca4fb9188bde01d2fe635aa73b1d95f0146fb3"
+ ]
+}
