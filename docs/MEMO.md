@@ -1,8 +1,8 @@
 # Ruko: one-page memo
 
-**Ruko** (Hindi for "wait") is a 60-second voice check, built on Bolna, that stops payment scams before the money leaves.
+**Ruko** (Hindi for "wait") is a voice check of about a minute, built on Bolna, that stops payment scams before the money leaves.
 
-**Problem.** Indians reported losing ₹22,931 crore to cyber fraud in 2025, and payments above ₹10,000 carried 98.5% of it ([RBI](https://rbi.org.in/Scripts/PublicationsView.aspx?id=23810)). "Digital arrest" scams took ₹1,935.51 crore in 2024, 5.7 times the 2023 figure ([MHA](https://www.mha.gov.in/MHA1/Par2017/pdfs/par2025-pdfs/RS12032025/1505.pdf)). The victim makes the payment, often while the scammer coaches them on another call.
+**Problem.** Indians reported ₹22,845 crore lost to cyber fraud in 2024 ([MHA](https://www.mha.gov.in/MHA1/Par2017/pdfs/par2025-pdfs/LS22072025/344.pdf)), and NCRP data cited by the RBI show payments above ₹10,000 carry about 98.5% of reported fraud value ([RBI](https://rbi.org.in/Scripts/PublicationsView.aspx?id=23810)). "Digital arrest" and related scams took ₹1,935.51 crore in 2024, 5.7 times the 2023 figure ([MHA](https://www.mha.gov.in/MHA1/Par2017/pdfs/par2025-pdfs/RS12032025/1505.pdf)). The victim makes the payment, often while the scammer coaches them on another call.
 
 **Insight.** The victim is the one authenticating; only a voice breaks a voice. OTPs and PINs prove who pays, not who is giving orders. Pop-ups land on the phone the scammer is directing. A fraud officer's call works, but no bank can staff one within seconds, at UPI scale, in every language.
 
@@ -17,17 +17,21 @@ The LLM can escalate, never de-escalate, and Ruko never asks for an OTP or PIN. 
 
 **Why now.**
 
-- RBI liability directions take effect on 1 January 2027. They cover coerced payments and treat ignoring a bank's clear warning as customer negligence.
-- RBI's April 2026 paper proposes a payment delay and a "trusted person". Ruko is a targeted version of both.
-- TRAI protects bank calls from 1600xx numbers and now requires AI-voice calls to be declared in advance.
-- Bolna's pay-as-you-go voice AI costs ₹5.52 a minute.
+- RBI's liability directions take effect on 1 January 2027. They cover payments made "under coercion or duress", and treat "not paying attention to specific, directed and clear warnings from the bank" as customer negligence ([RBI/2026-27/167](https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=13543&Mode=0)).
+- RBI's April 2026 discussion paper seeks views on a one-hour delay for payments above ₹10,000 and a "trusted person" who co-approves payments above ₹50,000 for vulnerable customers. Ruko is a targeted version of both.
+- Banks must make service calls from 1600xx numbers, which networks may not flag as spam. TRAI now also requires automated calls, including artificial-voice calls, to be pre-declared to the operator with their caller IDs (PR 119/2026).
+- Bolna's flat voice-AI rate is ₹5.52 ($0.06) a minute for its preferred models, before telephony and platform fees.
 
 **Wedge and model.**
 
 - **First:** co-operative banks, small finance banks and NBFCs. They have lean fraud teams.
 - **Then:** UPI apps, and the UK, where banks must reimburse push-payment scam victims.
-- **Pricing:** ₹20–30 per completed check, nothing for payments that pass. Cost is about ₹7–14 per check (estimate).
-- **Market:** India TAM of ₹630–1,575 crore a year (estimate; assumptions in BUSINESS.md).
+- **Pricing:** ₹20–30 per completed check, nothing for payments that pass. Cost is about ₹7–14 per check (estimate) = 1–1.5 min × ₹5.52/min of voice AI, plus telephony and platform fees (assumed).
+- **Market (estimates; formulas and sources in BUSINESS.md):**
+  - **India wedge:** ₹63–158 crore (about $7–17M) a year = 12.6 lakh frauds above ₹10,000 (28 lakh reported in 2025 × the ~45% NCRP share, RBI paper) × 20–50 checks per real scam (assumption) × ₹25.
+  - **UK, where banks pay:** since 7 Oct 2024 sending and receiving banks split APP-scam refunds 50:50, up to £85,000 a claim (PSR). £2.8–13.8M a year = 68,935 personal non-purchase APP cases (UK Finance 2026) × 20–50 × £2–4 (below the £6.17 average UK inbound call, ContactBabel 2026).
+  - **Australia:** A$2.18bn lost in 2025 (National Anti-Scam Centre); most Scams Prevention Framework duties start 31 Mar 2027 (ASIC). A$4.4–21.8M, assumption-based.
+  - **Then:** adjacent checks on the same engine (loan disbursal, changed payees, device recovery, trusted-contact programmes, insurance payouts). Expansion, not sized.
 
 **Results so far.** We have no customers, no pilots and no measured live calls. Results are **text mode**: a Nebius-hosted Qwen3-30B stands in for Bolna's gpt-4.1-mini, with the same prompt and tools, against the real engine. Call times are estimated.
 
@@ -43,7 +47,7 @@ The LLM can escalate, never de-escalate, and Ruko never asks for an OTP or PIN. 
 - **Weakest area:** heavily coached customers who stick to a cover story. On v2's clean held-out set we caught 4 of 8; v3 added the device-signal probe.
 - End to end, the pre-call policy lets small scams with no active call through uncalled (12 of 60 on the dev set).
 
-**Competition.** Starling, Westpac and Barclays run in-app questions for their own customers. BioCatch and MuleHunter.AI score payments but don't talk. Convin claims outbound fraud calls. As of October 2026, we found no one selling Indian banks this full combination.
+**Competition.** Starling, Westpac and Barclays run in-app questions for their own customers. BioCatch and RBIH's MuleHunter.AI flag risky sessions and mule accounts, but don't talk to the customer. Convin claims outbound fraud calls. As of October 2026, we found no one selling Indian banks this full combination.
 
 **Risks.**
 

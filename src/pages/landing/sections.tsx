@@ -312,7 +312,7 @@ export function Business() {
               Ruko is an API for banks, UPI apps and NBFCs. They pay per completed voice check, and nothing for the payments that pass. A one-minute call costs a few rupees of voice AI on Bolna's flat rate. A coached victim loses lakhs.
             </p>
             <p>
-              The rules are moving our way. RBI's 2026 directions cover payments made “under coercion or duress”, and treat “not paying attention to specific, directed and clear warnings from the bank” as customer negligence. A spoken warning that names the scam is designed to be one. In the UK, banks already reimburse push-payment scams and may delay a payment to contact the payer.
+              India is the wedge: RBI's 2026 directions cover payments made “under coercion or duress” and treat ignoring a bank's “specific, directed and clear warnings” as customer negligence from 1 January 2027. A spoken warning that names the scam is designed to be one. Then Ruko goes where banks carry scam losses: UK banks have split mandatory APP-scam refunds 50:50 since October 2024 (PSR), and Australia's Scams Prevention Framework duties start on 31 March 2027 (ASIC).
             </p>
           </div>
           <div className="mt-8 grid grid-cols-1 gap-3 text-[13.5px] sm:grid-cols-2">
