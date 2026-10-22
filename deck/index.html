@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ruko pitch deck</title>
+<meta name="description" content="Ruko: a 60-second Bolna voice check that holds a risky payment and calls the customer before the money leaves. Bolna × YC Symphony Buildathon, October 2026.">
+<link rel="icon" href="assets/brand/ruko-mark-dark.svg">
+<link rel="stylesheet" href="deck.css">
+<link rel="stylesheet" href="slides.css">
+<!--
+  Result numbers sit between "r:key" comment markers and are written by
+  deck/tools/build.mjs from the eval results (see deck/results.config.json).
+  Edit the config, not the numbers.
+-->
+</head>
+<body>
+
+<!-- 01 · Title -->
+<section class="slide dark s1" id="s1">
+  <img class="s1-lockup" src="assets/brand/ruko-lockup-horizontal-dark.svg" alt="Ruko">
+  <div class="s1-main">
+    <div class="eyebrow">Bolna × Y Combinator Symphony Buildathon <span class="tag">· October 2026</span></div>
+    <h1>A 60-second voice check that stops payment scams before the money <span class="serif">leaves.</span></h1>
+    <p class="lede">When a bank or UPI payment looks coached, Ruko holds it and a Bolna voice agent calls the customer in their language. For banks, UPI apps and NBFCs in India.</p>
+  </div>
+  <img class="phone s1-phone" src="assets/img/phone-hold.jpg" alt="The sandbox bank app holding a payment and showing the code word">
+  <div class="s1-meta">
+    <span><b>Yashvardhan Thanvi</b>, solo founder</span>
+    <span class="mono">ruko-symphony.vercel.app</span>
+    <span>Ruko (रुको) is Hindi for “wait”.</span>
+  </div>
+</section>
+
+<!-- 02 · Problem -->
+<section class="slide s2" id="s2">
+  <div class="eyebrow">02 <span class="tag">The problem</span></div>
+  <h2>The victim makes the payment. The scammer is <span class="serif">on the other line.</span></h2>
+  <div class="s2-stats">
+    <div class="stat">
+      <div class="num">₹22,845<span class="unit"> cr</span></div>
+      <p>reported lost to cyber fraud in India in 2024, across 19.2 lakh complaints to the national portal.</p>
+      <div class="src">MHA, Lok Sabha USQ 344, 22 Jul 2025</div>
+    </div>
+    <div class="stat">
+      <div class="num coral">5.7×</div>
+      <p>rise in losses to “digital arrest” and related scams in one year: ₹339 cr in 2023 to ₹1,935 cr in 2024.</p>
+      <div class="src">MHA, Rajya Sabha USQ 1505, 12 Mar 2025</div>
+    </div>
+    <div class="stat">
+      <div class="num">~98.5%</div>
+      <p>of reported fraud value is in payments above ₹10,000, which are only about 45% of cases. Those are payments a bank can afford to pause for a minute.</p>
+      <div class="src">NCRP data in the RBI discussion paper, 9 Apr 2026</div>
+    </div>
+  </div>
+  <div class="s2-band">
+    <div class="s2-band-mark"></div>
+    <p>Scammers increasingly stay on a live phone call to guide the victim through the payment.</p>
+    <div class="src">BioCatch India study, reported by Business Today, 28 Jul 2026</div>
+  </div>
+  <div class="foot">
+    <div class="brand"><img src="assets/brand/ruko-mark.svg" alt="">RUKO</div>
+    <div class="src">Figures are victim-reported to the National Cyber Crime Reporting Portal, not bank-confirmed. 2023 to 2024: ₹339.03 cr to ₹1,935.51 cr, 1,23,672 incidents in 2024. Every source and quote is checked in docs/CITATIONS.md.</div>
+    <div class="pg">02 / 12</div>
+  </div>
+</section>
+
+<!-- 03 · Insight -->
+<section class="slide dark s3" id="s3">
+  <div class="eyebrow">03 <span class="tag">The insight</span></div>
+  <h1 class="s3-title">Only a voice<br>breaks a <span class="serif coral">voice.</span></h1>
+  <div class="s3-cols">
+    <div>
+      <div class="s3-k">OTPs and PINs</div>
+      <p>prove who is paying, not who is giving the orders. The victim types them in.</p>
+    </div>
+    <div>
+      <div class="s3-k">Pop-up warnings</div>
+      <p>land on the phone the scammer is directing. “Ignore that, it’s routine.”</p>
+    </div>
+    <div>
+      <div class="s3-k">A fraud officer’s call</div>
+      <p>works. But no bank can staff one within seconds, at 2 a.m., at UPI scale, in every language.</p>
+    </div>
+  </div>
+  <div class="s3-quote">
+    <p>Ruko makes that call, in the customer’s language, and asks what a fraud officer asks:</p>
+    <p class="s3-q">“Is anyone on another call telling you what to do?”</p>
+  </div>
+  <div class="foot">
+    <div class="brand"><img src="assets/brand/ruko-mark-dark.svg" alt="">RUKO</div>
+    <div class="src"></div>
+    <div class="pg">03 / 12</div>
+  </div>
+</section>
+
+<!-- 04 · Product -->
+<section class="slide s4" id="s4">
+  <div class="eyebrow">04 <span class="tag">The product</span></div>
+  <h2>Hold. Call. Decide. <span class="serif">In about a minute.</span></h2>
+  <div class="s4-body">
+    <div class="s4-steps">
+      <figure>
+        <img class="phone" src="assets/img/phone-hold.jpg" alt="Payment paused, with the code word">
+        <figcaption><span class="n">01 Hold</span> The bank sends a risky payment to Ruko’s API. Ruko holds it and the app shows a one-time code word.</figcaption>
+      </figure>
+      <figure>
+        <img class="phone" src="assets/img/phone-truth.jpg" alt="The agent says the official truth line">
+        <figcaption><span class="n">02 Call</span> A Bolna agent calls in the customer’s language, says the code word first, asks about coaching and secrecy, and says the official truth line.</figcaption>
+      </figure>
+      <figure>
+        <img class="phone" src="assets/img/phone-outcome.jpg" alt="Payment stopped, with reasons">
+        <figcaption><span class="n">03 Decide</span> A deterministic policy releases, delays or blocks, with reasons. With consent, Ruko calls a trusted family contact.</figcaption>
+      </figure>
+    </div>
+    <div class="s4-side">
+      <h3>Rules it never breaks</h3>
+      <ul class="s4-rules">
+        <li><b>The LLM can escalate a decision, never soften it.</b> The policy decides from recorded evidence.</li>
+        <li><b>Never asks for an OTP, PIN, card or account number.</b></li>
+        <li><b>Every point of risk has a named reason</b> in plain language, for the customer and the auditor.</li>
+        <li><b>The code word is shown only in the bank’s app</b>, so the customer can check the call is real.</li>
+      </ul>
+      <div class="rule"></div>
+      <h3 class="s4-also">Also shipped</h3>
+      <ul class="s4-list">
+        <li>A free public “Is this a scam?” checker: the official-advisory library plus an on-server text classifier. No LLM, and nothing the person types is stored.</li>
+        <li>A fraud-ops console with transcripts, evidence quotes and an audit trail.</li>
+        <li>72 cited scam patterns (54 India, 18 global) from 223 sources.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><img src="assets/brand/ruko-mark.svg" alt="">RUKO</div>
+    <div class="src">Screens from the sandbox bank at ruko-symphony.vercel.app/demo, 22 Oct 2026. Library translations beyond English and Hindi are machine drafts, labelled as such until a native speaker reviews them.</div>
+    <div class="pg">04 / 12</div>
+  </div>
+</section>
+
+<!-- 05 · Demo frames -->
+<section class="slide dark s5" id="s5">
+  <div class="eyebrow">05 <span class="tag">The demo · digital arrest</span></div>
+  <h2 class="s5-title">Kamla, 68, has been on a “CBI” video call for 47 minutes. She is paying <span class="coral">₹1,90,000</span> to “Safe Custody Account RBI”.</h2>
+  <div class="s5-strip">
+    <figure><img class="phone" src="assets/img/phone-pay.jpg" alt=""><figcaption><b>Pay</b> The app sees an active call, a new payee and 15.8× her usual maximum.</figcaption></figure>
+    <figure><img class="phone" src="assets/img/phone-hold.jpg" alt=""><figcaption><b>Hold</b> Risk 100/100. A “safe account” payee always holds.</figcaption></figure>
+    <figure><img class="phone" src="assets/img/phone-greeting.jpg" alt=""><figcaption><b>Code word first</b> The agent says it is automated and the call is recorded.</figcaption></figure>
+    <figure><img class="phone" src="assets/img/phone-truth.jpg" alt=""><figcaption><b>Truth line</b> “There’s no ‘digital arrest’ in Indian law.”</figcaption></figure>
+    <figure><img class="phone" src="assets/img/phone-contact.jpg" alt=""><figcaption><b>Trusted contact</b> Ruko offers to call her son, Ravi. She says yes.</figcaption></figure>
+    <figure><img class="phone" src="assets/img/phone-outcome.jpg" alt=""><figcaption><b>Blocked</b> The money never leaves. Call 1930 if pressured.</figcaption></figure>
+  </div>
+  <div class="s5-engine">
+    <div class="s5-tl">
+      <span><i>+14.0 s</i>told they are under investigation</span>
+      <span><i>+24.6 s</i>directed on another call</span>
+      <span><i>+52.1 s</i>trusted contact requested</span>
+      <span class="hot"><i>+52.7 s</i>blocked</span>
+    </div>
+    <p class="s5-why">The assistant recommended “delay”; the recorded evidence required “block”. <b>Decided by policy, not by the LLM.</b></p>
+  </div>
+  <div class="foot">
+    <div class="brand"><img src="assets/brand/ruko-mark-dark.svg" alt="">RUKO</div>
+    <div class="src">Recorded run at ruko-symphony.vercel.app/demo, captured 22 Oct 2026: a text-mode eval conversation (no audio) whose tool calls replay into the live engine, so the decision is computed live. The trusted-contact call is simulated in the replay. Times are engine time since the hold.</div>
+    <div class="pg">05 / 12</div>
+  </div>
+</section>
+
+<!-- 06 · Built on Bolna -->
+<section class="slide s6" id="s6">
+  <div class="eyebrow">06 <span class="tag">Built on Bolna</span></div>
+  <h2>Bolna carries the voice. <span class="serif">Ruko owns the decision.</span></h2>
+  <div class="s6-body">
+    <table class="s6-table">
+      <tr><td class="f">Agent API v2</td><td>Three agents: payment check, trusted contact, public line. Kept in sync from code and saved unrestricted.</td><td><span class="chip use">In use</span></td></tr>
+      <tr><td class="f">Custom functions</td><td>Mid-call tools into Ruko: <span class="mono">get_check_context</span>, <span class="mono">record_signal</span>, <span class="mono">call_trusted_contact</span>, <span class="mono">set_decision</span>.</td><td><span class="chip use">In use</span></td></tr>
+      <tr><td class="f">Web Call SDK</td><td>Browser calls for the demo, the contact’s “phone” and the public line. Sessions minted on the server behind an access code, caps and a wallet floor.</td><td><span class="chip use">In use</span></td></tr>
+      <tr><td class="f">Webhooks</td><td>Token-protected. Every final event is re-read from Bolna’s API before it can change a decision.</td><td><span class="chip use">In use</span></td></tr>
+      <tr><td class="f">Multilingual</td><td>English and Hindi with mid-call switching; <span class="mono">agent_language</span> opens in the customer’s language.</td><td><span class="chip cfg">Configured</span></td></tr>
+      <tr><td class="f">Preferred models</td><td>gpt-4.1-mini, nova-3, saaras:v3, eleven_turbo_v2_5, bulbul:v3, all at the flat per-minute rate.</td><td><span class="chip cfg">Configured</span></td></tr>
+      <tr><td class="f">Call transfer</td><td>Hand-off to the bank’s fraud desk where a human must be reachable (UK FCA FG24/6).</td><td><span class="chip doc">Designed, not built</span></td></tr>
+      <tr><td class="f">Phone calls</td><td>Switched off to protect a $5 credit. In the demo, the trusted contact’s call rings in a browser tab.</td><td><span class="chip off">Off</span></td></tr>
+    </table>
+    <figure class="s6-shot">
+      <img class="shot" src="assets/img/console-transcript.jpg" alt="Console: Hindi transcript with evidence highlighted, and the signals heard">
+      <figcaption>The fraud team’s view: the transcript with each evidence quote highlighted where it was said, and the signals the agent recorded. Eval replay, synthetic customer.</figcaption>
+    </figure>
+  </div>
+  <div class="foot">
+    <div class="brand"><img src="assets/brand/ruko-mark.svg" alt="">RUKO</div>
+    <div class="src">Status on 22 Oct 2026. Live Bolna calls: <!--r:live.note-->No live Bolna call has been measured yet; the demo video records the first one.<!--/r--> Ruko’s engine, policy, tools and eval talk plain HTTP, so they are not tied to one voice provider.</div>
+    <div class="pg">06 / 12</div>
+  </div>
+</section>
+
+<!-- 07 · Results -->
+<section class="slide s7" id="s7">
+  <div class="eyebrow">07 <span class="tag">Results · text mode · <!--r:version-->v4<!--/r--></span></div>
+  <h2>We tuned on one set and froze another. <span class="serif">The frozen one is the number to trust.</span></h2>
+  <div class="s7-body">
+    <div class="s7-left">
+      <div class="s7-heads">
+        <div class="s7-col">
+          <div class="s7-set"><span class="dot dev"></span><!--r:dev.label-->Development set<!--/r--></div>
+          <div class="s7-note"><!--r:dev.note-->96 conversations; the prompt was tuned on it<!--/r--></div>
+          <div class="s7-big"><!--r:dev.catch-->58/60<!--/r--></div>
+          <div class="s7-cap">scams caught · <!--r:dev.catch_pct-->96.7%<!--/r-->, 95% CI <!--r:dev.catch_ci-->89–99%<!--/r--></div>
+          <div class="s7-mid"><!--r:dev.fh-->1/24<!--/r--></div>
+          <div class="s7-cap">false holds on genuine payments · CI <!--r:dev.fh_ci-->1–20%<!--/r--></div>
+        </div>
+        <div class="s7-col ho">
+          <div class="s7-set"><span class="dot ho"></span><!--r:ho.label-->Held-out set 3<!--/r--></div>
+          <div class="s7-note"><!--r:ho.note-->28 conversations, written and frozen before any run<!--/r--></div>
+          <div class="s7-big"><!--r:ho.catch-->12/16<!--/r--></div>
+          <div class="s7-cap">scams caught · <!--r:ho.catch_pct-->75%<!--/r-->, 95% CI <!--r:ho.catch_ci-->51–90%<!--/r--></div>
+          <div class="s7-mid"><!--r:ho.fh-->2/12<!--/r--></div>
+          <div class="s7-cap">false holds on genuine payments · CI <!--r:ho.fh_ci-->5–45%<!--/r--></div>
+        </div>
+      </div>
+      <div class="s7-chart"><!--r:chart--><svg class="ci" viewBox="0 0 1000 242" width="1000" height="242" role="img" aria-label="Scam catch and false-hold rates with 95% intervals, development set against the held-out set"><line class="g" x1="200.0" y1="26" x2="200.0" y2="210"/><text class="ax" x="200.0" y="230" text-anchor="middle">0%</text><line class="g" x1="357.5" y1="26" x2="357.5" y2="210"/><text class="ax" x="357.5" y="230" text-anchor="middle">25%</text><line class="g" x1="515.0" y1="26" x2="515.0" y2="210"/><text class="ax" x="515.0" y="230" text-anchor="middle">50%</text><line class="g" x1="672.5" y1="26" x2="672.5" y2="210"/><text class="ax" x="672.5" y="230" text-anchor="middle">75%</text><line class="g" x1="830.0" y1="26" x2="830.0" y2="210"/><text class="ax" x="830.0" y="230" text-anchor="middle">100%</text><text class="t" x="0" y="20">Scams caught</text><text class="lab" x="0" y="52">Development set</text><line class="w" x1="758.4" y1="47" x2="824.2" y2="47" stroke="var(--dev)"/><circle cx="809.0" cy="47" r="7.5" fill="var(--dev)" stroke="var(--paper)" stroke-width="2.5"><title>Development set: 58/60 (96.7%), 95% CI 89–99%</title></circle><text class="val" x="1000" y="52" text-anchor="end">58/60 · 96.7%</text><text class="lab" x="0" y="86">Held-out set 3</text><line class="w" x1="518.2" y1="81" x2="765.9" y2="81" stroke="var(--coral)"/><circle cx="672.5" cy="81" r="7.5" fill="var(--coral)" stroke="var(--paper)" stroke-width="2.5"><title>Held-out set 3: 12/16 (75%), 95% CI 51–90%</title></circle><text class="val" x="1000" y="86" text-anchor="end">12/16 · 75%</text><text class="t" x="0" y="128">False holds on genuine payments</text><text class="lab" x="0" y="160">Development set</text><line class="w" x1="204.7" y1="155" x2="327.5" y2="155" stroke="var(--dev)"/><circle cx="226.3" cy="155" r="7.5" fill="var(--dev)" stroke="var(--paper)" stroke-width="2.5"><title>Development set: 1/24 (4.2%), 95% CI 1–20%</title></circle><text class="val" x="1000" y="160" text-anchor="end">1/24 · 4.2%</text><text class="lab" x="0" y="194">Held-out set 3</text><line class="w" x1="229.6" y1="189" x2="482.3" y2="189" stroke="var(--coral)"/><circle cx="305.0" cy="189" r="7.5" fill="var(--coral)" stroke="var(--paper)" stroke-width="2.5"><title>Held-out set 3: 2/12 (16.7%), 95% CI 5–45%</title></circle><text class="val" x="1000" y="194" text-anchor="end">2/12 · 16.7%</text></svg><!--/r--></div>
+    </div>
+    <div class="s7-right">
+      <ul class="s7-facts">
+        <li><b>OTP and PIN.</b> Development: <!--r:dev.otp_text-->1 of 408 agent turns flagged by the judge: the flagged turn asked whether the customer had already shared an OTP with the caller; it was a question about a disclosure, not a request for the OTP<!--/r-->. Held-out: <!--r:ho.otp_text-->0 of 123 agent turns asked for an OTP, PIN, card or account number<!--/r-->.</li>
+        <li><b>Time.</b> Median decision about <!--r:dev.median_s-->55<!--/r--> s (dev) and <!--r:ho.median_s-->54<!--/r--> s (held-out), estimated from transcript length, not measured on calls. Tool endpoints: p50 <!--r:lat.p50-->74<!--/r--> ms, p95 <!--r:lat.p95-->303<!--/r--> ms on a local dev server.</li>
+        <li><b>Heavily coached customers caught:</b> <!--r:dev.heavy-->28/30<!--/r--> dev, <!--r:ho.heavy-->4/8<!--/r--> held-out. This is the hard case.</li>
+        <li><b>What failed.</b> <!--r:failure_note-->Every held-out scam that got through had the same shape: no live caller, and a customer who insisted the payment was their own idea (a landlord deposit, a tower lease, a pilgrimage booking, a 'boss' on WhatsApp). v5, now under test, delays rather than releases when the evidence is not clearly genuine.<!--/r--></li>
+        <li><b>False holds.</b> <!--r:false_hold_note-->Both held-out false holds were Hindi: a tax payment made while on a call with an accountant, and a son guiding his mother to pay a hospital.<!--/r--></li>
+      </ul>
+    </div>
+  </div>
+  <div class="s7-caveat"><b>Text mode, not calls.</b> An LLM plays the customer. A Nebius-hosted Qwen3-30B stands in for Bolna’s gpt-4.1-mini, with the same prompt and tools, against the real engine and policy. No audio. Small sets, so intervals are wide.</div>
+  <div class="foot">
+    <div class="brand"><img src="assets/brand/ruko-mark.svg" alt="">RUKO</div>
+    <div class="src"><!--r:source_line-->Source: eval/results/v4-dev-qwen3-30b and eval/results/v4-holdout3-qwen3-30b (generated 22 Oct 2026); report.md in each. 95% Wilson intervals. Tool latency: 100 calls, local dev server (Vite middleware, file store), 17 Oct 2026.<!--/r--></div>
+    <div class="pg">07 / 12</div>
+  </div>
+</section>
+
+<!-- 08 · Why now -->
+<section class="slide dark s8" id="s8">
+  <div class="eyebrow">08 <span class="tag">Why now</span></div>
+  <h2>Regulators are moving to the exact moment <span class="serif">Ruko works in.</span></h2>
+  <div class="s8-line">
+    <div class="s8-ev">
+      <div class="s8-d">7 Oct 2024 · UK</div>
+      <p>Banks must reimburse most push-payment scam victims, split 50:50 between the sending and receiving firm, up to £85,000 a claim. They may also delay a suspicious payment up to D+4.</p>
+    </div>
+    <div class="s8-ev">
+      <div class="s8-d">9 Apr 2026 · RBI</div>
+      <p>A discussion paper seeks views on a one-hour delay for payments above ₹10,000, and a “trusted person” who co-approves payments above ₹50,000 for vulnerable customers.</p>
+    </div>
+    <div class="s8-ev hot">
+      <div class="s8-d">24 Jun 2026 · RBI directions</div>
+      <p>Cover payments made “under coercion or duress”, and count ignoring “specific, directed and clear warnings from the bank” as customer negligence. In force from 1 Jan 2027.</p>
+    </div>
+    <div class="s8-ev">
+      <div class="s8-d">18 Sep 2026 · TRAI</div>
+      <p>Automated calls, artificial-voice calls included, must be pre-declared to the operator with their caller IDs. Bank calls on 1600xx may not be flagged as spam.</p>
+    </div>
+    <div class="s8-ev">
+      <div class="s8-d">31 Mar 2027 · Australia</div>
+      <p>Most Scams Prevention Framework duties start: banks must prevent, detect, disrupt and respond to scams.</p>
+    </div>
+  </div>
+  <div class="s8-cost">
+    <div class="s8-big">₹5.52<span>/min</span></div>
+    <p>Bolna’s flat voice-AI rate for its preferred models, before telephony and platform fees. A one-minute check costs rupees, not a fraud officer’s time.</p>
+  </div>
+  <div class="foot">
+    <div class="brand"><img src="assets/brand/ruko-mark-dark.svg" alt="">RUKO</div>
+    <div class="src">PSR PS25/5 (May 2025); Payment Services (Amendment) Regulations 2024 · RBI Discussion Paper, 9 Apr 2026 (options for comment, not rules) · RBI/2026-27/167, 24 Jun 2026 · TRAI PR 119/2026 · ASIC, Scams Prevention Framework · Bolna pricing, preferred models. Whether a given call counts as a bank’s warning is for the bank, its counsel and the RBI.</div>
+    <div class="pg">08 / 12</div>
+  </div>
+</section>
+
+<!-- 09 · Market -->
+<section class="slide s9" id="s9">
+  <div class="eyebrow">09 <span class="tag">Market</span></div>
+  <h2>India is the wedge. Then markets where <span class="serif">banks pay for scams.</span></h2>
+  <div class="s9-eq">
+    <div class="t"><div class="v">12.6 lakh</div><div class="l">frauds above ₹10,000 a year. 28 lakh reported in 2025 × about 45% <span class="tagx d">derived</span></div></div>
+    <div class="op">×</div>
+    <div class="t"><div class="v">20–50</div><div class="l">checks per real scam. Nobody publishes hold rates <span class="tagx a">assumption</span></div></div>
+    <div class="op">×</div>
+    <div class="t"><div class="v">₹25</div><div class="l">per completed check, the middle of ₹20–30 <span class="tagx a">our price</span></div></div>
+    <div class="op">=</div>
+    <div class="t res"><div class="v">₹63–158 cr</div><div class="l">India TAM a year, about $6.6–16.6M</div></div>
+  </div>
+  <div class="s9-body">
+    <div class="s9-left">
+      <p class="small"><b>SAM ₹19–47 cr:</b> 30% of that volume sits with institutions that would buy rather than build <span class="tagx a">assumption</span></p>
+      <p class="small"><b>Year 3, about ₹2 cr ARR:</b> 8 smaller institutions at 50,000 checks, plus one mid-size at 5 lakh, at ₹22 <span class="tagx a">assumption</span></p>
+      <p class="small s9-honest">Scam checks alone are a pool of tens of millions of dollars a year. Enough to build a company on, not a large one. The upside is pricing where banks bear the loss, and adjacent checks on the same engine: loan disbursal, payee changes, account recovery. Those are not sized.</p>
+    </div>
+    <div class="s9-chart">
+      <div class="s9-ch-title">Revenue pool a year, crore rupees (range)</div>
+      <svg viewBox="0 0 980 330" width="980" height="330" role="img" aria-label="Revenue pools by market">
+        <g class="grid">
+          <line x1="300" y1="10" x2="300" y2="262"/><line x1="455" y1="10" x2="455" y2="262"/><line x1="610" y1="10" x2="610" y2="262"/><line x1="765" y1="10" x2="765" y2="262"/><line x1="920" y1="10" x2="920" y2="262"/>
+        </g>
+        <g class="ax">
+          <text x="300" y="286">0</text><text x="455" y="286">50</text><text x="610" y="286">100</text><text x="765" y="286">150</text><text x="920" y="286">200</text>
+        </g>
+        <!-- scale: 3.1 px per crore from x=300 -->
+        <g class="row"><text class="rl" x="0" y="38">India (wedge)</text><text class="rf" x="0" y="60">12.6 lakh × 20–50 × ₹25</text>
+          <rect class="b in" x="495.3" y="26" width="294.5" height="22" rx="11"><title>India: ₹63–158 crore</title></rect><text class="rv" x="799.8" y="43">₹63–158</text></g>
+        <g class="row"><text class="rl" x="0" y="100">UK, core</text><text class="rf" x="0" y="122">68,935 cases × 20–50 × £2–4</text>
+          <rect class="b" x="408.5" y="88" width="434" height="22" rx="11"><title>UK core: £2.8–13.8M, ₹35–175 crore</title></rect><text class="rv" x="852.5" y="105">₹35–175</text></g>
+        <g class="row"><text class="rl" x="0" y="162">Australia</text><text class="rf" x="0" y="184">57,200 cases × 20–50 × A$3.8–7.6</text>
+          <rect class="b" x="389.9" y="150" width="359.6" height="22" rx="11"><title>Australia: A$4.4–21.8M, ₹29–145 crore</title></rect><text class="rv" x="759.5" y="167">₹29–145</text></g>
+        <g class="row"><text class="rl" x="0" y="224">Singapore</text><text class="rf" x="0" y="246">23,800 cases × 20–50 × S$3.4–6.8</text>
+          <rect class="b lt" x="337.2" y="212" width="148.8" height="22" rx="11"><title>Singapore: S$1.6–8.1M, ₹12–60 crore</title></rect><text class="rv" x="496" y="229">₹12–60 · later: no liability rule</text></g>
+        <text class="rf" x="0" y="320">EU: refunds for bank-impersonation fraud agreed, not yet law. Not sized.</text>
+        <text class="rt" x="980" y="320" text-anchor="end">Core total ₹139–538 cr, about $15–57M</text>
+      </svg>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><img src="assets/brand/ruko-mark.svg" alt="">RUKO</div>
+    <div class="src">RBI Discussion Paper, Apr 2026 (NCRP data; applying its undated 45% split to 2025 is our step) · UK Finance Annual Fraud Report 2026: personal APP cases minus purchase scams · NASC Targeting Scams Report 2025 (core share borrowed from the UK) · SPF Scam and Cybercrime Brief 2025 · ECB rates, 22 Oct 2026. UK, Australia and Singapore prices are assumptions. Every step: docs/BUSINESS.md §2.</div>
+    <div class="pg">09 / 12</div>
+  </div>
+</section>
+
+<!-- 10 · Business model -->
+<section class="slide s10" id="s10">
+  <div class="eyebrow">10 <span class="tag">Business model and unit economics</span></div>
+  <h2>Paid per completed check. <span class="serif">Nothing when the payment passes.</span></h2>
+  <div class="s10-body">
+    <div class="s10-price">
+      <div class="s10-big">₹20–30</div>
+      <p class="small">per completed check in India. No charge for payments that pass without a call, or for unanswered attempts. The trusted-contact call is included. Pilots run at cost.</p>
+      <div class="s10-uk"><b>UK: £2–4 a check</b> <span class="tagx a">assumption</span><br><span class="tiny muted">a third to two-thirds of a £6.17 inbound contact-centre call (ContactBabel 2026)</span></div>
+    </div>
+    <div class="s10-chart">
+      <div class="s9-ch-title">Per check, rupees (range)</div>
+      <svg viewBox="0 0 900 300" width="900" height="300" role="img" aria-label="Cost per check compared with price and a human call-back">
+        <g class="grid"><line x1="300" y1="6" x2="300" y2="246"/><line x1="412" y1="6" x2="412" y2="246"/><line x1="524" y1="6" x2="524" y2="246"/><line x1="636" y1="6" x2="636" y2="246"/><line x1="748" y1="6" x2="748" y2="246"/><line x1="860" y1="6" x2="860" y2="246"/></g>
+        <g class="ax"><text x="300" y="272">0</text><text x="412" y="272">10</text><text x="524" y="272">20</text><text x="636" y="272">30</text><text x="748" y="272">40</text><text x="860" y="272">50</text></g>
+        <!-- scale: 11.2 px per rupee from x=300 -->
+        <g class="row"><text class="rl" x="0" y="34">Human fraud call-back</text><text class="rf" x="0" y="56">4–6 min of agent time × ₹7–8/min</text>
+          <rect class="b hu" x="613.6" y="22" width="224" height="22" rx="11"><title>Human call-back: ₹28–48</title></rect><text class="rv" x="847.6" y="39">₹28–48</text></g>
+        <g class="row"><text class="rl" x="0" y="94">Ruko price</text><text class="rf" x="0" y="116">what the bank pays</text>
+          <rect class="b in" x="524" y="82" width="112" height="22" rx="11"><title>Ruko price: ₹20–30</title></rect><text class="rv" x="646" y="99">₹20–30</text></g>
+        <g class="row"><text class="rl" x="0" y="154">Ruko cost, pay-as-you-go</text><text class="rf" x="0" y="176">Bolna ₹5.52/min + telephony + fees</text>
+          <rect class="b" x="378.4" y="142" width="78.4" height="22" rx="11"><title>Cost pay-as-you-go: ₹7–14</title></rect><text class="rv" x="466.8" y="159">₹7–14</text></g>
+        <g class="row"><text class="rl" x="0" y="214">Ruko cost, enterprise rate</text><text class="rf" x="0" y="236">voice AI at ₹1.75–2/min</text>
+          <rect class="b lt" x="344.8" y="202" width="56" height="22" rx="11"><title>Cost at enterprise voice rates: ₹4–9</title></rect><text class="rv" x="410.8" y="219">₹4–9</text></g>
+      </svg>
+      <p class="tiny muted s10-margin">Gross margin at ₹25: about 45–70% pay-as-you-go, 65–85% at enterprise voice rates <span class="tagx e">estimate</span>. Cost: voice AI ₹5.5–8.3 (1–1.5 min), telephony ₹0.5–3.0 and platform fee ₹0.5–2.0 <span class="tagx a">assumed</span>, trusted-contact call about ₹0.6, hosting under ₹0.5.</p>
+    </div>
+    <div class="s10-who">
+      <h3>Who saves what</h3>
+      <p class="small"><b>India.</b> 1,00,000 checks cost ₹25 lakh. If 1 in 30 is a real scam, Ruko stops 70% and the average loss is ₹1 lakh, customers keep about <b>₹23 crore</b> <span class="tagx a">all assumptions</span>.</p>
+      <p class="small">Most of that is the customer’s money. A bank’s own payout is capped: 85% of losses up to ₹50,000, at most ₹25,000, once per customer, and the RBI bears most of it. Banks buy for the RBI duties, the warnings clause, fewer complaints and trust.</p>
+      <p class="small"><b>UK.</b> The saving is direct: about £7–18 of reimbursement avoided per check <span class="tagx d">derived</span>.</p>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><img src="assets/brand/ruko-mark.svg" alt="">RUKO</div>
+    <div class="src">Bolna pricing: $0.06 (₹5.52) a minute for preferred models; telephony and a platform fee are extra · Inc42 on voice-AI unit economics (enterprise ₹1.75–2/min; human calling ₹7–8/min) · RBI/2026-27/167 para 76T · PSR reimbursement dashboard, 30 Jul 2026 (about £1,050 per in-scope claim) · docs/BUSINESS.md §3.</div>
+    <div class="pg">10 / 12</div>
+  </div>
+</section>
+
+<!-- 11 · Competition -->
+<section class="slide s11" id="s11">
+  <div class="eyebrow">11 <span class="tag">Competition</span></div>
+  <h2>Every piece exists somewhere. <span class="serif">The combination doesn’t.</span></h2>
+  <div class="s11-body">
+    <table class="s11-m">
+      <thead><tr><th></th><th>Holds the payment</th><th>Calls by voice</th><th>Indian languages</th><th>Asks about coaching</th><th>Trusted contact</th><th>Sold to banks</th></tr></thead>
+      <tbody>
+        <tr><td class="who">Westpac SaferPay<small>Australian bank, in-app questions</small></td><td><i class="y"></i></td><td><i class="n"></i></td><td><i class="n"></i></td><td><i class="y"></i></td><td><i class="n"></i></td><td><i class="n"></i></td></tr>
+        <tr><td class="who">Revolut<small>in-app intervention flow</small></td><td><i class="y"></i></td><td><i class="n"></i></td><td><i class="n"></i></td><td><i class="y"></i></td><td><i class="n"></i></td><td><i class="n"></i></td></tr>
+        <tr><td class="who">Monzo Trusted Contacts<small>UK bank, in-app approval</small></td><td><i class="y"></i></td><td><i class="n"></i></td><td><i class="n"></i></td><td><i class="n"></i></td><td><i class="y"></i></td><td><i class="n"></i></td></tr>
+        <tr><td class="who">BioCatch, Feedzai<small>risk vendors; the bank intervenes</small></td><td><i class="p"></i></td><td><i class="n"></i></td><td><i class="n"></i></td><td><i class="p"></i></td><td><i class="n"></i></td><td><i class="y"></i></td></tr>
+        <tr><td class="who">PhonePe Protect, DoT FRI<small>declines risky numbers</small></td><td><i class="y"></i></td><td><i class="n"></i></td><td><i class="n"></i></td><td><i class="n"></i></td><td><i class="n"></i></td><td><i class="n"></i></td></tr>
+        <tr><td class="who">Convin<small>voice AI, outbound fraud alerts (vendor claim)</small></td><td><i class="n"></i></td><td><i class="y"></i></td><td><i class="y"></i></td><td><i class="n"></i></td><td><i class="n"></i></td><td><i class="y"></i></td></tr>
+        <tr><td class="who">Second Voice<small>open source, UK, in-app voice</small></td><td><i class="y"></i></td><td><i class="p"></i></td><td><i class="n"></i></td><td><i class="y"></i></td><td><i class="n"></i></td><td><i class="n"></i></td></tr>
+        <tr class="us"><td class="who">Ruko<small>English and Hindi today; no customers yet</small></td><td><i class="y"></i></td><td><i class="y"></i></td><td><i class="y"></i></td><td><i class="y"></i></td><td><i class="y"></i></td><td><i class="y"></i></td></tr>
+      </tbody>
+    </table>
+    <div class="s11-side">
+      <h3>Why we win: not the model</h3>
+      <ul class="s4-rules">
+        <li><b>Conversation design for coached customers:</b> code word first, the “another call” question, the bank’s own on-a-call signal.</li>
+        <li><b>A policy that can’t be talked down.</b></li>
+        <li><b>Official truth lines in Indian languages,</b> each one cited.</li>
+        <li><b>An eval with frozen held-out sets,</b> misses published.</li>
+        <li><b>Over time, labelled outcomes</b> from shadow-mode pilots.</li>
+      </ul>
+      <p class="tiny muted s11-ahead">Others are ahead on scale, real data, on-device privacy, mule intelligence and published results. Ruko uses their signals (FRI, mule lists, active-call flags) rather than replacing them.</p>
+    </div>
+  </div>
+  <div class="s11-key"><span><i class="y"></i> yes</span><span><i class="p"></i> partly</span><span><i class="n"></i> not described in the sources we read</span></div>
+  <div class="foot">
+    <div class="brand"><img src="assets/brand/ruko-mark.svg" alt="">RUKO</div>
+    <div class="src">research/PRIOR_ART.md: product pages, open-source repos and papers read in October 2026. Vendor claims are self-reported. As of October 2026 we found no one selling Indian banks a hold, a code-word call in the customer’s language, coaching questions, a consented trusted-contact call and a deterministic decision together.</div>
+    <div class="pg">11 / 12</div>
+  </div>
+</section>
+
+<!-- 12 · Founder, ask, next 30 days -->
+<section class="slide dark s12" id="s12">
+  <div class="eyebrow">12 <span class="tag">The ask</span></div>
+  <h2>Introductions to pilot banks. <span class="serif">Help measuring real calls.</span></h2>
+  <div class="s12-body">
+    <div class="card s12-founder">
+      <div class="s12-k">Solo founder</div>
+      <h3>Yashvardhan Thanvi</h3>
+      <p class="small muted">BCA student, BIT Mesra (Jaipur campus)</p>
+      <p class="small">Built Ruko end to end since 16 October 2026: the engine and policy, three Bolna agents, the eval harness and its held-out sets, the console, the public checker, the 72-pattern library and the text model.</p>
+      <p class="small">Previously shipped <b>LLMSlim</b>, an open-source Python library on PyPI that fits documents, chat history and tool output into an LLM’s token budget (16 releases).</p>
+      <div class="s12-status"><b>Status, plainly:</b> no customers and no pilots yet. <!--r:live.note-->No live Bolna call has been measured yet; the demo video records the first one.<!--/r--></div>
+    </div>
+    <div class="s12-ask">
+      <div class="s12-k">The ask</div>
+      <ol class="s12-list">
+        <li><b>Introductions to two or three Indian banks or NBFCs</b> (co-operative banks, small finance banks) for a shadow-mode pilot: Ruko scores and calls, the bank still decides.</li>
+        <li><b>Help running the first measured live-call study:</b> consent, scripts, and what to measure.</li>
+      </ol>
+      <div class="s12-url mono">ruko-symphony.vercel.app</div>
+    </div>
+    <div class="s12-next">
+      <div class="s12-k">Next 30 days, to 22 Nov</div>
+      <ol class="s12-list sm">
+        <li>Measure live Bolna calls in English and Hindi with consenting volunteers: time to decision, completion, false holds.</li>
+        <li>A fresh frozen held-out set for every agent version, published next to the dev set.</li>
+        <li>Approach co-operative banks, small finance banks and NBFCs. Goal: two shadow-mode agreements.</li>
+        <li>Native-speaker review of the Tamil, Bengali and Marathi truth lines.</li>
+        <li>A DPDP pack for banks: processor terms, consent and retention defaults, the trusted contact’s own notice.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><img src="assets/brand/ruko-mark-dark.svg" alt="">RUKO</div>
+    <div class="src">Logo by Yashvardhan Thanvi. Built with AI assistance (Claude). Ruko is not affiliated with Bolna, the RBI, NPCI, I4C or any bank; Demo Bank is fictional.</div>
+    <div class="pg">12 / 12</div>
+  </div>
+</section>
+
+<script>
+  // Fit 1920-px slides to the window on screen. Print uses @media print (zoom 1).
+  (function () {
+    if (location.search.indexOf("print") >= 0) return;
+    function fit() { document.body.style.zoom = Math.min(1, (window.innerWidth - 32) / 1920); }
+    window.addEventListener("resize", fit); fit();
+  })();
+</script>
+</body>
+</html>

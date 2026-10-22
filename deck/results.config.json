@@ -1,0 +1,26 @@
+{
+  "_how": "deck/tools/build.mjs reads this file, fills every <!--r:key-->...<!--/r--> marker in deck/index.html and docs/PITCH.md, then prints deck/Ruko-pitch.pdf. To switch to v5: set source to \"public\" once eval/publish.ts publishes v5 to public/eval/results.json, or keep \"runs\" and change the run ids below. Then rewrite the three *_note texts by hand from the new reports.",
+  "source": "runs",
+  "version": "v4",
+  "dev": {
+    "run": "v4-dev-qwen3-30b",
+    "set": "dev",
+    "label": "Development set",
+    "note": "96 conversations; the prompt was tuned on it"
+  },
+  "holdout": {
+    "run": "v4-holdout3-qwen3-30b",
+    "set": "holdout3",
+    "label": "Held-out set 3",
+    "note": "28 conversations, written and frozen before any run"
+  },
+  "otp_note_dev": "the flagged turn asked whether the customer had already shared an OTP with the caller; it was a question about a disclosure, not a request for the OTP",
+  "otp_note_holdout": "",
+  "failure_note": "Every held-out scam that got through had the same shape: no live caller, and a customer who insisted the payment was their own idea (a landlord deposit, a tower lease, a pilgrimage booking, a 'boss' on WhatsApp). v5, now under test, delays rather than releases when the evidence is not clearly genuine.",
+  "false_hold_note": "Both held-out false holds were Hindi: a tax payment made while on a call with an accountant, and a son guiding his mother to pay a hospital.",
+  "live_calls": {
+    "made": 0,
+    "note": "No live Bolna call has been measured yet; the demo video records the first one."
+  },
+  "latency_file": "eval/results/tool-latency.json"
+}

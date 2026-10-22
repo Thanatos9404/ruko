@@ -1,0 +1,193 @@
+# Ruko pitch and demo video (Bolna × YC Symphony Buildathon). Target 2:40, hard limit 3:00.
+# Plan, shot list and fallbacks: docs/PITCH.md, section (b).
+#
+# The video is built around ONE real Bolna web call (digital-arrest scenario), recorded separately
+# with audio (vidkit's headless screencast has no sound). Render the narrated parts with vidkit, then
+# splice the call clip in between with ffmpeg (commands in docs/PITCH.md):
+#
+#   set PY=C:\Desktop\COLLEGE\Coding\Hackathon\_videos\toolkit\.venv\Scripts\python.exe
+#   set R=C:\Desktop\COLLEGE\Coding\Hackathon\_videos\toolkit\render.py
+#   %PY% %R% deck\video\ruko-demo.yaml --tts-only
+#   %PY% %R% deck\video\ruko-demo.yaml --only cold,title,problem,hold --output ..\_videos\ruko-part-a.mp4
+#   %PY% %R% deck\video\ruko-demo.yaml --only decide,results,ask,end --output ..\_videos\ruko-part-b.mp4
+#
+# Fallback if the live call is unusable: render everything except "call-live" in one go:
+#   %PY% %R% deck\video\ruko-demo.yaml --only cold,title,problem,hold,call-recorded,decide,results,ask,end --output ..\_videos\ruko-demo.mp4
+# (Run from the repo root. Outputs go to the _videos folder beside the repo, never into git.)
+#
+# Every number spoken here is in docs/CITATIONS.md or eval/results; the results scene is written by
+# deck/tools/build.mjs from deck/results.config.json, so it always matches the deck.
+title: "Ruko: a 60-second voice check that stops payment scams"
+output: ../../../_videos/ruko-demo.mp4   # next to the other demo videos, outside the repo
+theme: carbon
+accent: "#e46157"
+sky: ["#101a2b", "#0c1320", "#0b111c"]
+base_url: https://ruko-symphony.vercel.app
+viewport: [1600, 900]
+label: "Sandbox bank · fictional customer"
+label_position: top-right
+label_margin: [28, 22]
+speedup_position: top-left
+caption_max_chars: 64
+narration_offset: 0.4
+pad_after: 0.45
+length_scale: 1.0
+bed: true
+bed_gain_db: -26
+max_mb: 90
+pronounce:
+  Ruko: "Roo-ko"
+  "Ruko's": "Roo-ko's"
+  Bolna: "Bole-nah"
+  CBI: "C B I"
+  OTPs: "O T Pees"
+  OTP: "O T P"
+  UPI: "U P I"
+  NBFCs: "N B F Cs"
+  LLM: "L L M"
+  "₹1,90,000": "one lakh ninety thousand rupees"
+  "₹22,845 crore": "twenty-two thousand, eight hundred and forty-five crore rupees"
+  "₹20 to ₹30": "twenty to thirty rupees"
+  "2024": "twenty twenty-four"
+cards:
+  title:
+    eyebrow: "Bolna × Y Combinator Symphony Buildathon"
+    title: "Ruko"
+    tagline: "Stop the scam before the money *leaves.*"
+    subtitle: "A 60-second voice check for risky bank and UPI payments, built on Bolna."
+    footer: ["Yashvardhan Thanvi", "ruko-symphony.vercel.app"]
+  end:
+    eyebrow: "Built on Bolna"
+    title: "Only a voice breaks a *voice.*"
+    repo: "ruko-symphony.vercel.app"
+    lines:
+      - "Kamla, Ravi and Demo Bank are fictional. The trusted contact's phone rings in a browser tab."
+      - "Results are text mode: an LLM plays the customer. No customers or pilots yet."
+    disclosures:
+      - "Live call: a real Bolna web call; the customer is played by a person."
+
+scenes:
+  - id: cold
+    url: /demo
+    chapter: "Kamla's payment"
+    fade_in: 0.5
+    actions:
+      - click: "text=CBI officer"
+      - scroll: {to: "[aria-label='Sandbox bank app']", align: center, duration: 1.2}
+      - point: {selector: "text=Safe Custody Account RBI", seconds: 2.4}
+      - point: {selector: "text=On a phone call", seconds: 2.4}
+    narration: >-
+      Kamla is sixty-eight. A man calling himself a CBI officer has kept her on a video call for forty-seven minutes.
+      Now she is sending ₹1,90,000 to a safe custody account.
+
+  - id: title
+    card: title
+    narration: "This is Ruko. It's Hindi for wait."
+    min_duration: 4.5
+
+  - id: problem
+    card:
+      template: section
+      eyebrow: "The problem"
+      title: "The victim pays. The scammer is *on the other line.*"
+      bullets:
+        - "₹22,845 crore reported lost to cyber fraud in India in 2024 (MHA)"
+        - "'Digital arrest' and related scams: 5.7× in one year (MHA)"
+        - "OTPs and pop-ups don't help: the victim is the one paying"
+    chapter: "The problem"
+    narration: >-
+      Indians reported ₹22,845 crore lost to cyber fraud in 2024. The victim makes the payment, often coached on another call,
+      so OTPs and pop-up warnings don't help. Only a voice breaks a voice.
+
+  - id: hold
+    url: /demo
+    chapter: "Hold"
+    actions:
+      - click: "text=CBI officer"
+      - scroll: {to: "[aria-label='Sandbox bank app']", align: center, duration: 0.8}
+      - click: "text=Pay ₹1,90,000"
+      - wait: 1.2
+      - scroll: {to: "section[aria-label='Ruko engine']", align: top, offset: 104, duration: 1.0}
+      - point: {selector: "text=Pre-payment risk", seconds: 3.0}
+      - point: {selector: "text=Code word", seconds: 3.0}
+    narration: >-
+      Her bank sends the payment to Ruko's API. It is held, with a plain reason for every point of risk,
+      and her app shows a one-time code word. Then a Bolna voice agent calls her.
+
+  # Placeholder for the real call. Replace this segment with the recorded clip (docs/PITCH.md, splice).
+  - id: call-live
+    card:
+      template: section
+      eyebrow: "Live Bolna web call"
+      title: "Call clip goes *here.*"
+      subtitle: "Splice the recorded call (screen and audio) in place of this card."
+    min_duration: 70
+    chapter: "The call"
+
+  # Fallback for the call: the recorded run, narrated. Used only if the live call is unusable.
+  - id: call-recorded
+    url: /demo
+    label: "Recorded run: text mode, no audio"
+    chapter: "The call (recorded run)"
+    actions:
+      - click: "text=CBI officer"
+      - scroll: {to: "[aria-label='Sandbox bank app']", align: center, duration: 0.6}
+      - click: "text=Pay ₹1,90,000"
+      - wait: 1.0
+      - scroll: {to: "section[aria-label='Ruko engine']", align: top, offset: 104, duration: 0.8}
+      - click: "text=Watch the recorded run"
+      - wait_for: {selector: "text=decided by policy, not by the LLM", timeout: 120, dead: false}
+      - point: {selector: "text=decided by policy, not by the LLM", seconds: 2.5}
+    narration: >-
+      This is a recorded run: a text-mode conversation replayed through the live engine. The agent says the code word first,
+      and that it is an automated assistant. Kamla says a CBI officer is on the other phone. The agent says the official line:
+      there is no digital arrest in Indian law. With her yes, it asks to call her son, Ravi. The money never leaves.
+
+  - id: decide
+    url: /console/checks/chk_98SC6WF89W
+    label: "Eval replay · synthetic customer"
+    chapter: "Decide"
+    actions:
+      - wait: 0.8
+      - point: {selector: "text=Deterministic policy", seconds: 2.6}
+      - scroll: {to: "text=Transcript", offset: 140, duration: 1.6}
+      - point: {selector: "text=Signals heard", seconds: 2.4}
+    narration: >-
+      A deterministic policy decides from the recorded evidence. The agent can make the outcome stricter, never softer,
+      and it never asks for an OTP. The fraud team sees every quote, signal and reason.
+
+  # >>> results: written by deck/tools/build.mjs from deck/results.config.json; edit the template there
+  - id: results
+    card:
+      template: section
+      eyebrow: "Results · text mode · v4"
+      title: "Tuned on one set. *Frozen* the other."
+      bullets:
+        - "Development set: 58/60 scams caught, 1/24 false holds"
+        - "Held-out set 3, frozen before any run: 12/16 caught, 2/12 false holds"
+        - "An LLM plays the customer; no live calls measured yet"
+    chapter: "Results"
+    narration: >-
+      In text-mode tests, Ruko caught 58 of 60 scams on the set we tuned on, and 12 of 16 on a held-out set
+      we froze before any run, with 2 false holds in 12 genuine payments. The held-out number is the one we are improving.
+  # <<< results
+
+  - id: ask
+    card:
+      template: section
+      eyebrow: "Business and the ask"
+      title: "Paid per completed check. *Nothing* when it passes."
+      bullets:
+        - "₹20–30 per completed check in India"
+        - "No customers or pilots yet"
+        - "Ask: introductions to Indian banks for shadow-mode pilots"
+    chapter: "The ask"
+    narration: >-
+      Banks pay ₹20 to ₹30 per completed check, and nothing when the payment passes. We have no customers or pilots yet.
+      We are asking for introductions to Indian banks for shadow-mode pilots.
+
+  - id: end
+    card: end
+    narration: "Ruko. Built on Bolna."
+    min_duration: 6
+    fade_out: 0.8
