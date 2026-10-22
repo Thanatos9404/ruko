@@ -1,7 +1,7 @@
 import type { Confidence, ContactStatus, Lang, Outcome } from "../../shared/types.js";
 import { signalDef } from "../../shared/signals.js";
 import { matchText, patternById, truthFor } from "../../shared/patterns.js";
-import { amountForSpeech, formatINR, relationFor } from "../../shared/format.js";
+import { amountForSpeech, formatINR, relationFor, yourRelationHi } from "../../shared/format.js";
 import { CheckService, NotFoundError, ValidationError, scrubEvidence, type StoredCheck } from "./checks.js";
 import { criticalRisk } from "./decision.js";
 import { codeWordHi, newReportId } from "./ids.js";
@@ -122,7 +122,7 @@ function contactOffer(c: StoredCheck): string | null {
   const warned = c.signals.some((s) => s.confidence !== "low" && ["critical", "high", "medium"].includes(s.severity));
   if (!warned) return null;
   return lang(c) === "hi"
-    ? `क्या मैं आपके ${relationFor(tc.relation, "hi")} ${tc.name} जी को कॉल करवाऊँ, ताकि आप उनसे बात कर लें?`
+    ? `क्या मैं ${yourRelationHi(tc.relation)} ${tc.name} जी को कॉल करवाऊँ, ताकि आप उनसे बात कर लें?`
     : `Shall I call ${tc.name}, your ${tc.relation}, so you can talk it over?`;
 }
 

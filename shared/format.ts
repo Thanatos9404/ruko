@@ -75,3 +75,31 @@ export function relationFor(relation: string, lang: Lang): string {
   if (lang !== "hi") return relation;
   return RELATION_HI[relation.trim().toLowerCase()] ?? relation;
 }
+
+const YOUR_RELATION_HI: Record<string, string> = {
+  son: "आपके बेटे",
+  daughter: "आपकी बेटी",
+  brother: "आपके भाई",
+  sister: "आपकी बहन",
+  husband: "आपके पति",
+  wife: "आपकी पत्नी",
+  father: "आपके पिता",
+  mother: "आपकी माँ",
+  friend: "आपके दोस्त",
+  nephew: "आपके भतीजे",
+  niece: "आपकी भतीजी",
+  cousin: "आपके कज़िन",
+  uncle: "आपके चाचा",
+  aunt: "आपकी चाची",
+  grandson: "आपके पोते",
+  granddaughter: "आपकी पोती",
+  "son-in-law": "आपके दामाद",
+  "daughter-in-law": "आपकी बहू",
+  neighbour: "आपके पड़ोसी",
+  neighbor: "आपके पड़ोसी",
+};
+
+/** "your son" in Hindi, in the oblique form a sentence like "… को कॉल करूँ" needs ("आपके बेटे"). */
+export function yourRelationHi(relation: string): string {
+  return YOUR_RELATION_HI[relation.trim().toLowerCase()] ?? `आपके ${relation}`;
+}
