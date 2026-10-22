@@ -1,5 +1,5 @@
-import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useSpring } from "motion/react";
-import type { ReactNode } from "react";
+import { motion, useAnimationFrame, useMotionTemplate, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, useVelocity } from "motion/react";
+import { useRef, type ReactNode } from "react";
 import { cn } from "../lib/cn";
 import { Reveal, Stagger, StaggerItem } from "./Reveal";
 import { SkyBackdrop } from "./SkyBackdrop";
@@ -148,6 +148,21 @@ export function BentoCard({
 /** Infinite horizontal strip for the honest "built with" row (tech, datasets, APIs). */
 export function Marquee({ items, speed = 40 }: { items: ReactNode[]; speed?: number }) {
   const reduce = useReducedMotion();
+  const track = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const hover = useRef(1);
+  const { scrollY } = useScroll();
+  const velocity = useVelocity(scrollY);
+  const boost = useSpring(useTransform(velocity, [-3000, 0, 3000], [2, 0, 2]), { damping: 50, stiffness: 300 });
+  useAnimationFrame((_, delta) => {
+    if (reduce || !track.current) return;
+    const half = track.current.scrollWidth / 2;
+    if (!half) return;
+    // `speed` is seconds per loop; scrolling the page adds a little extra drift.
+    const base = half / speed;
+    const next = x.get() - ((base * hover.current * (1 + Math.abs(boost.get()))) * delta) / 1000;
+    x.set(next <= -half ? next + half : next);
+  });
   const row = (
     <div className="flex shrink-0 items-center gap-14 pr-14">
       {items.map((it, i) => (
@@ -158,14 +173,16 @@ export function Marquee({ items, speed = 40 }: { items: ReactNode[]; speed?: num
     </div>
   );
   return (
-    <div className="fade-x overflow-hidden">
-      <motion.div
-        className="flex w-max"
-        animate={reduce ? undefined : { x: ["0%", "-50%"] }}
-        transition={{ duration: speed, ease: "linear", repeat: Infinity }}
-      >
+    <div
+      className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_22%,black_78%,transparent)]"
+      onMouseEnter={() => (hover.current = 0.5)}
+      onMouseLeave={() => (hover.current = 1)}
+    >
+      <motion.div ref={track} className="flex w-max" style={{ x }}>
         {row}
-        {row}
+        <div aria-hidden className="flex">
+          {row}
+        </div>
       </motion.div>
     </div>
   );

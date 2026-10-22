@@ -292,7 +292,7 @@ function EnginePanel({ d, elapsed, compact, liveAvailable }: { d: DemoState; ela
 
       {d.check && <RiskCard d={d} />}
 
-      <div className="mt-4 min-h-0 flex-1 overflow-y-auto pr-1 scrollbar-none">
+      <div data-lenis-prevent className="mt-4 min-h-0 flex-1 overflow-y-auto pr-1 scrollbar-none">
         <Timeline status={s} hideCreated={Boolean(d.check)} />
       </div>
 

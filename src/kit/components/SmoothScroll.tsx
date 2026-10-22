@@ -5,7 +5,8 @@ import Lenis from "lenis";
 export function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const lenis = new Lenis({ duration: 1.1, easing: (t) => 1 - Math.pow(1 - t, 4), smoothWheel: true });
+    // 1 s with an exponential ease-out; any element marked data-lenis-prevent scrolls natively.
+    const lenis = new Lenis({ duration: 1.0, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
     let raf = 0;
     const loop = (time: number) => {
       lenis.raf(time);

@@ -1,5 +1,4 @@
 import { motion, useReducedMotion } from "motion/react";
-import { EASE } from "../lib/motion";
 import { cn } from "../lib/cn";
 
 type Props = {
@@ -13,7 +12,7 @@ type Props = {
 };
 
 /** The obliqq hero headline: each word sharpens out of a blur, left to right. */
-export function WordReveal({ text, as = "h1", className, delay = 0.15, gap = 0.07 }: Props) {
+export function WordReveal({ text, as = "h1", className, delay = 0.15, gap = 0.05 }: Props) {
   const reduce = useReducedMotion();
   const Tag = motion[as];
   const words = text.split(" ");
@@ -26,9 +25,9 @@ export function WordReveal({ text, as = "h1", className, delay = 0.15, gap = 0.0
           <span key={i} aria-hidden className="inline-block whitespace-pre">
             <motion.span
               className={cn("inline-block", serif && "t-serif pr-[0.04em]")}
-              initial={reduce ? { opacity: 0 } : { opacity: 0, filter: "blur(14px)", y: "0.18em" }}
-              animate={reduce ? { opacity: 1 } : { opacity: 1, filter: "blur(0px)", y: "0em" }}
-              transition={{ duration: 1, ease: EASE, delay: delay + i * gap }}
+              initial={reduce ? { opacity: 0 } : { opacity: 0.001, filter: "blur(10px)", y: 10 }}
+              animate={reduce ? { opacity: 1 } : { opacity: 1, filter: "blur(0px)", y: 0 }}
+              transition={reduce ? { duration: 0.2, delay } : { type: "spring", stiffness: 163, damping: 40, mass: 1, delay: delay + i * gap }}
             >
               {word}
             </motion.span>
