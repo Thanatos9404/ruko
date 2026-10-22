@@ -313,7 +313,6 @@ export default function CheckPage() {
 const MODEL_BAND: Record<string, Record<Lang, string>> = {
   likely_scam: { en: "looks like a known scam", hi: "जाना-पहचाना धोखा लगता है" },
   possible_scam: { en: "some warning signs", hi: "कुछ चेतावनी संकेत" },
-  unlikely_scam: { en: "no known pattern found", hi: "कोई जाना-पहचाना पैटर्न नहीं मिला" },
 };
 
 function Answer({ data, lang }: { data: Reply; lang: Lang }) {
@@ -356,7 +355,8 @@ function Answer({ data, lang }: { data: Reply; lang: Lang }) {
       )}
       <p className="mt-2 text-[11px] text-muted">
         {data.method === "llm+library" ? "AI reading + official wording from Ruko's library" : "Rule-based match against Ruko's library"}
-        {data.model && data.model.scam_probability !== null && (
+        {/* Shown only when the model sees warning signs: its "no pattern" score is weak evidence and must never read as "safe". */}
+        {data.model && data.model.scam_probability !== null && data.model.band !== "unlikely_scam" && (
           <>
             {" · "}
             {lang === "hi" ? "टेक्स्ट मॉडल (सलाह भर)" : "Text model (advisory)"}: {MODEL_BAND[data.model.band]?.[lang] ?? data.model.band}, {Math.round(data.model.scam_probability * 100)}%

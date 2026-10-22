@@ -4,7 +4,7 @@ import reactHooks from "eslint-plugin-react-hooks";
 import globals from "globals";
 
 export default tseslint.config(
-  { ignores: ["dist", "node_modules", ".vercel", "eval/results", "deck/vendor", "coverage"] },
+  { ignores: ["dist", "node_modules", ".vercel", ".data", "eval/results", "deck/vendor", "coverage", "ml/.venv", "ml/work", "ml/.cache"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
@@ -18,6 +18,11 @@ export default tseslint.config(
   {
     files: ["server/**/*.ts", "api/**/*.ts", "eval/**/*.ts", "scripts/**/*.{ts,mjs}", "tests/**/*.ts", "*.config.{js,ts}"],
     languageOptions: { globals: globals.node },
+  },
+  {
+    // Browser-driving scripts run some functions inside the page (page.evaluate).
+    files: ["scripts/**/*.mjs"],
+    languageOptions: { globals: { ...globals.node, ...globals.browser } },
   },
   {
     rules: {

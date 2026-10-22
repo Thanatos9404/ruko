@@ -56,7 +56,7 @@ describe("public text checker", () => {
     };
     const ask = (content: string, v: string) =>
       publicChat(kv, { language: "en", messages: [{ role: "user", content }] }, { visitorKey: v, dailyCap: 10, perHour: 10, llm: broken as never });
-    const scam = await ask("A man on video call says he is from CBI, I am under digital arrest and must move my savings to a safe account and tell no one", "m1");
+    const scam = await ask("A man from CBI called on video and said I am under digital arrest, I must transfer money to RBI safe account and not tell anyone", "m1");
     expect(scam.model?.band).toBe("likely_scam");
     expect(scam.risk).toBe("likely_scam");
     expect(scam.pattern?.id).toBe("digital_arrest");

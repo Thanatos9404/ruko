@@ -15,7 +15,8 @@ import type { ModelOpinion } from "../../shared/types.js";
 export function modelOpinion(text: string, source: ModelOpinion["source"], now = new Date()): { opinion: ModelOpinion; corePattern: string | null } | null {
   if (!text.trim()) return null;
   try {
-    const a = analyzeText(text, { topK: 3 });
+    // Calls are with Indian bank customers, so rank only the library's Indian patterns.
+    const a = analyzeText(text, { topK: 3, region: "india" });
     if (a.engine.mode === "none") return null;
     const top = a.patterns[0];
     const lp = top ? libraryPattern(top.id) : undefined;
