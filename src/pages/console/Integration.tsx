@@ -309,6 +309,21 @@ export function Integration() {
           <CodeBlock code={DECISION_EXCERPT} lang="json" title={<span>Decision, excerpt</span>} meta={<span className="font-mono text-[11.5px] text-go">200 OK</span>} className="min-w-0" />
         </Reveal>
         <Reveal>
+          <Panel title="Decision policy, in order" description="Deterministic and explained. The voice agent labels what it hears; this policy decides. The agent can make an outcome stricter, never more lenient.">
+            <ol className="mt-1 list-decimal space-y-2 pl-5 text-[13.5px] leading-relaxed text-ink-2">
+              <li>Nobody answered: retry once, then <b className="text-ink">delay</b> with an in-app confirm; high-risk holds go to the fraud desk. Never block someone we couldn't talk to.</li>
+              <li>The customer asks to cancel: <b className="text-ink">block</b>.</li>
+              <li>A critical warning sign (coached on a call, authority threat, secrecy, remote access) plus another strong sign: <b className="text-ink">block</b>.</li>
+              <li>One critical sign: <b className="text-ink">delay 24 h</b>. Two high signs, or one with nothing to offset it: <b className="text-ink">delay 4 h</b>.</li>
+              <li>The assistant matched a known scam pattern but heard no confirming sign: <b className="text-ink">delay</b> (PATTERN_SUSPECTED).</li>
+              <li>
+                <b className="text-ink">Safe default.</b> Critical pre-call risk (a hard rule such as a "safe account" payee, the customer on a call while paying, or a very large payment to a first-time payee) releases only on positive evidence: the customer checked the payee themselves, or knows the payee personally and the purpose fits. Otherwise <b className="text-ink">delay</b> with an in-app confirm, a call-back and the fraud desk (SAFE_DEFAULT_CRITICAL_RISK). A cover story alone never releases.
+              </li>
+              <li>The trusted contact raising a concern escalates; their confirmation can lift a delay that had no critical sign.</li>
+            </ol>
+          </Panel>
+        </Reveal>
+        <Reveal>
           <Panel title="Endpoints" className="!p-0 [&>div:first-child]:px-5 [&>div:first-child]:pt-5 md:[&>div:first-child]:px-6 md:[&>div:first-child]:pt-6">
             <div className="rk-scroll-x relative hidden overflow-x-auto lg:block">
               <table className="w-full border-collapse text-left">
