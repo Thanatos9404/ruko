@@ -16,7 +16,7 @@ None of the files listed here is edited by the research + ML owner. Every change
 | `data/patterns/sources.json` | Every source cited by the library: URL, publisher, date, access date, whether it was fetched, and a paraphrased note. |
 | `data/patterns/signal_cues.json` | Cue phrases in en, hi and Hinglish for each call signal in `shared/signals.ts`, plus negators. |
 | `server/ml/index.ts` | Public API: `analyzeText()`, `mlStatus()`, `libraryPattern()`, `pick()`, `configureModel()`, `configureLibrary()`. |
-| `server/ml/model/ruko-text-v1.json` (+ `.sha256`) | The model file: JSON, about 2 MB, checked against its SHA-256 at load. |
+| `server/ml/model/ruko-text-v1.json` (+ `.sha256`) | The model file: JSON, about 3 MB (ruko-text-1.0.0, SHA-256 `8a85ef11…`), checked against its SHA-256 at load. Metrics are in `ml/MODEL_CARD.md`. |
 | `server/ml/__tests__/` and `server/ml/vitest.config.ts` | Tests: parity with the Python reference, golden cases in en, hi and Hinglish, fallbacks, PII and latency. |
 
 The runtime is plain TypeScript with no new npm dependencies. It uses only `node:fs`, `node:crypto`, `node:path` and `node:url`.
@@ -83,7 +83,10 @@ const a = analyzeText(text, { region: "india" });   // sync, ~1 ms; never throws
 // 54 Indian patterns (probabilities renormalised), so a UK/US pattern with a foreign "truth" sentence is never
 // named. The scam probability and band are unaffected.
 // a.scam_probability  0..1 calibrated (null in lexicon_only mode)
-// a.band              "likely_scam" | "possible_scam" | "unlikely_scam" | "unknown"
+// a.band              "likely_scam" | "possible_scam" | "unlikely_scam" | "unknown"  (model band; lexicon band in fallback mode)
+// a.lexicon_band      the same scale from cue phrases alone. Show it beside the model band ("cue phrases matched").
+//                     Do NOT merge it into band: raising the model band on strong cues was tested and added 2–4 points
+//                     of false alarms for 0.1–2.4 points of recall (ml/MODEL_CARD.md, "Fallback").
 // a.patterns[]        { id, name, category, p_given_scam, lexicon_score, cues[] (spans) }
 // a.signals[]         { type (shared/signals.ts), hits[] (spans, negated flag) }
 // a.evidence[] / counter_evidence[] / pattern_evidence[]   token spans with weights
