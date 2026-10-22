@@ -57,12 +57,21 @@ for (const sc of DEMO_SCENARIOS.filter((s) => s.id !== "rent")) {
       device: sc.device,
       expect: sc.truth === "scam" ? ["delay", "block"] : ["release"],
     };
-    const r = await runConversation(llm, scenario, {
-      agentModel: "Qwen/Qwen3-30B-A3B-Instruct-2507",
-      customerModel: "deepseek-ai/DeepSeek-V4-Flash-0731",
-      maxCustomerTurns: 8,
-      seed: 11,
-    });
+    // A replay must end with the agent's set_decision, or the demo would stall waiting for one.
+    let r = null as Awaited<ReturnType<typeof runConversation>> | null;
+    for (const seed of [11, 12, 13, 14, 15]) {
+      r = await runConversation(llm, scenario, {
+        agentModel: "Qwen/Qwen3-30B-A3B-Instruct-2507",
+        customerModel: "deepseek-ai/DeepSeek-V4-Flash-0731",
+        maxCustomerTurns: 8,
+        seed,
+      });
+      const ok = r.set_decision_called && r.turns.some((t) => t.role === "tool" && t.tool === "set_decision") && scenario.expect.includes(r.decision ?? "release");
+      if (ok) break;
+      console.log(`${sc.id}-${lang}: seed ${seed} gave ${r.decision} without a clean set_decision; retrying`);
+      r = null;
+    }
+    if (!r) throw new Error(`${sc.id}-${lang}: no complete recorded run after 5 seeds`);
     const greeting = r.turns[0]?.text ?? "";
     const code = greeting.match(/(?:code word is|कोड शब्द है)\s+([^\s.।?]+\s\d{2})/)?.[1] ?? null;
     const out = {

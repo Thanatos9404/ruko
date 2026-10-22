@@ -201,6 +201,10 @@ export function useDemo() {
         await sleep(Math.min(5000, Math.max(1200, (words / 3.6) * 1000)));
       }
     }
+    // Never leave the phone hanging: a recorded run must end in a decision.
+    if (runToken.current === token && !file.turns.some((t) => t.role === "tool" && t.tool === "set_decision")) {
+      setError("This recorded run ended before a decision. Try the other language, or press Reset.");
+    }
   }, [scenario, lang]);
 
   const startLive = useCallback(async () => {

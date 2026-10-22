@@ -1,5 +1,5 @@
 import type { Check, Lang } from "../../shared/types.js";
-import { amountForSpeech } from "../../shared/format.js";
+import { relationFor, amountForSpeech } from "../../shared/format.js";
 import { codeWordHi } from "../engine/ids.js";
 import {
   CHECK_HANGUP,
@@ -190,7 +190,7 @@ export function checkUserData(c: Check, bankName: string): Record<string, string
     payee_name: c.payment.payee.name,
     code_word: code,
     hold_reasons: c.risk.reasons.filter((r) => r.weight > 0).slice(0, 3).map((r) => r.title.toLowerCase()).join("; "),
-    trusted_contact: tc ? `${tc.name}, ${tc.relation}` : "none",
+    trusted_contact: tc ? `${tc.name}, ${relationFor(tc.relation, lang)}` : lang === "hi" ? "कोई नहीं" : "none",
     greeting: checkGreeting(lang, { customer_name: c.customer.name, bank_name: bankName, code_word: code }),
     agent_language: lang,
   };

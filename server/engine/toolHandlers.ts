@@ -1,7 +1,7 @@
 import type { Confidence, ContactStatus, Lang, Outcome } from "../../shared/types.js";
 import { signalDef } from "../../shared/signals.js";
 import { matchText, patternById, truthFor } from "../../shared/patterns.js";
-import { amountForSpeech, formatINR } from "../../shared/format.js";
+import { amountForSpeech, formatINR, relationFor } from "../../shared/format.js";
 import { CheckService, NotFoundError, ValidationError, scrubEvidence, type StoredCheck } from "./checks.js";
 import { criticalRisk } from "./decision.js";
 import { codeWordHi, newReportId } from "./ids.js";
@@ -90,7 +90,7 @@ export async function getCheckContext(deps: ToolDeps, args: Args): Promise<ToolR
     first_payment_to_payee: c.payment.payee.is_new,
     code_word: l === "hi" && c.code_word ? codeWordHi(c.code_word) : c.code_word,
     why_paused: c.risk.reasons.filter((r) => r.weight > 0).slice(0, 3).map((r) => r.title),
-    trusted_contact_on_file: tc ? `${tc.name} (${tc.relation})` : "none",
+    trusted_contact_on_file: tc ? `${tc.name} (${relationFor(tc.relation, l)})` : "none",
     pre_call_risk: criticalRisk(c) ? "critical" : c.risk.band,
     release_needs: criticalRisk(c)
       ? "positive evidence: they checked the payee themselves, or know the payee personally and the purpose fits"
@@ -122,7 +122,7 @@ function contactOffer(c: StoredCheck): string | null {
   const warned = c.signals.some((s) => s.confidence !== "low" && ["critical", "high", "medium"].includes(s.severity));
   if (!warned) return null;
   return lang(c) === "hi"
-    ? `क्या मैं ${tc.name} जी को कॉल करवाऊँ, ताकि आप उनसे बात कर लें?`
+    ? `क्या मैं आपके ${relationFor(tc.relation, "hi")} ${tc.name} जी को कॉल करवाऊँ, ताकि आप उनसे बात कर लें?`
     : `Shall I call ${tc.name}, your ${tc.relation}, so you can talk it over?`;
 }
 

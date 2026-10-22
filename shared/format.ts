@@ -46,3 +46,32 @@ export function minutesLabel(min?: number): string {
   const h = Math.round(min / 60);
   return h === 1 ? "1 hour" : `${h} hours`;
 }
+
+const RELATION_HI: Record<string, string> = {
+  son: "बेटा",
+  daughter: "बेटी",
+  brother: "भाई",
+  sister: "बहन",
+  husband: "पति",
+  wife: "पत्नी",
+  father: "पिता",
+  mother: "माँ",
+  friend: "दोस्त",
+  nephew: "भतीजा",
+  niece: "भतीजी",
+  cousin: "कज़िन",
+  uncle: "चाचा",
+  aunt: "चाची",
+  grandson: "पोता",
+  granddaughter: "पोती",
+  "son-in-law": "दामाद",
+  "daughter-in-law": "बहू",
+  neighbour: "पड़ोसी",
+  neighbor: "पड़ोसी",
+};
+
+/** A trusted contact's relation in the call language ("son" → "बेटा"); unknown ones pass through. */
+export function relationFor(relation: string, lang: Lang): string {
+  if (lang !== "hi") return relation;
+  return RELATION_HI[relation.trim().toLowerCase()] ?? relation;
+}

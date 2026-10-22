@@ -83,6 +83,50 @@ for (const sc of scenarios.data) {
   await ctx.close();
 }
 
+// Every held scenario, in both languages, plays its recorded run to the final screen.
+{
+  const FINAL = /Payment stopped|Payment on hold|Payment sent|भुगतान रोका गया|भुगतान होल्ड पर|भुगतान भेजा गया/;
+  for (const sc of scenarios.data) {
+    for (const lang of ["en", "hi"]) {
+      const ctx = await browser.createBrowserContext();
+      const page = await ctx.newPage();
+      await page.setViewport({ width: 1280, height: 900 });
+      await page.goto(`${base}/demo`, { waitUntil: "load", timeout: 60000 });
+      await page.waitForSelector("[role=radio]");
+      await sleep(500);
+      await clickText(page, sc.title);
+      if (lang === "hi") await clickText(page, "हिंदी");
+      await sleep(400);
+      const amount = new Intl.NumberFormat("en-IN").format(sc.payment.amount_inr);
+      await page.evaluate((amt) => {
+        const el = [...document.querySelectorAll("button")].find((e) => e.textContent?.includes(`₹${amt}`));
+        el?.click();
+      }, amount);
+      let text = "";
+      for (let i = 0; i < 20; i++) {
+        await sleep(500);
+        text = await phoneText(page);
+        if (/Payment paused|भुगतान रुका है|Payment sent|भुगतान भेजा गया/.test(text)) break;
+      }
+      let outcome = /Payment sent|भुगतान भेजा गया/.test(text) && !/paused|रुका/.test(text) ? "allowed (no call)" : "";
+      if (!outcome) {
+        await clickText(page, lang === "hi" ? "रिकॉर्डेड रन देखें" : "Watch the recorded run");
+        for (let i = 0; i < 75 && !outcome; i++) {
+          await sleep(2000);
+          const t = await phoneText(page);
+          const m = t.match(FINAL);
+          if (m) outcome = m[0];
+          if (/ended before a decision/.test(t)) outcome = "STALLED";
+        }
+      }
+      const ok = Boolean(outcome) && outcome !== "STALLED";
+      console.log(`${ok ? "PASS" : "FAIL"} replay ${`${sc.id}-${lang}`.padEnd(20)} → ${outcome || "no final screen in 150 s"}`);
+      if (!ok) failures++;
+      await ctx.close();
+    }
+  }
+}
+
 // The landing page's embedded demo: chips and a ready Pay screen, with no waiting on the API.
 {
   const ctx = await browser.createBrowserContext();
