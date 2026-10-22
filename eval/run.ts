@@ -11,7 +11,8 @@
  * Never calls Bolna. LLM calls go to Nebius Token Factory and are cached in
  * eval/.cache, so re-running with the same settings is free and reproducible.
  */
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { execSync } from "node:child_process";
 import { join } from "node:path";
 import { Nebius } from "./nebius.js";
 import { buildScenarios, type EvalScenario } from "./scenarios.js";
@@ -90,5 +91,14 @@ await mkdir(outDir, { recursive: true });
 await writeFile(join(outDir, "transcripts.jsonl"), ordered.map((r) => JSON.stringify(r)).join("\n") + "\n");
 const summary = await scoreRun(llm, scenarios, ordered, { ...opts, runId });
 await writeReports(outDir, summary, scenarios, ordered);
+// What the agent ran with, so a result can be tied to the exact text model and code.
+const sha = (await readFile(join("server", "ml", "model", "ruko-text-v1.json.sha256"), "utf8").catch(() => "")).trim().split(/\s+/)[0] || null;
+let commit: string | null = null;
+try {
+  commit = execSync("git rev-parse --short HEAD", { encoding: "utf8" }).trim();
+} catch {
+  commit = null;
+}
+await writeFile(join(outDir, "environment.json"), JSON.stringify({ set, text_model_sha256: sha, git_commit: commit, finished_at: new Date().toISOString() }, null, 2));
 console.log(JSON.stringify(summary.headline, null, 2));
 console.log(`Wrote ${outDir}`);
