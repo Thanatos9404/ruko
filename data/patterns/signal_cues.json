@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "note": "Cross-pattern cue phrases for Ruko's call signals (shared/signals.ts). Matched on normalised tokens by server/ml/lexicon.ts with negation handling. English is reviewed; Hindi and Hinglish phrases were written by the Ruko team and await native-speaker review (status: draft). These cues explain and suggest; they never decide a payment on their own.",
   "translation_status": {
     "en": "reviewed",
@@ -125,7 +125,13 @@
         "secret investigation",
         "national secret",
         "nobody should know",
-        "tell no one"
+        "tell no one",
+        "not tell anyone",
+        "not to tell anyone",
+        "not to tell",
+        "must not tell",
+        "not tell my family",
+        "not to inform the bank"
       ],
       "hi": [
         "किसी को मत बताना",
@@ -146,7 +152,9 @@
         "bank ko mat batana",
         "secret rakhna",
         "confidential hai",
-        "kisi ko pata nahi chalna chahiye"
+        "kisi ko pata nahi chalna chahiye",
+        "kisi ko bhi mat batao",
+        "bank ko kuch mat batao"
       ]
     },
     "remote_access": {

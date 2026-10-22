@@ -1,44 +1,432 @@
 {
   "version": 1,
-  "note": "Genuine-payment and hard-negative scenarios for synthetic data generation. Written by the Ruko team; every generated sample is labelled synthetic. 'hard_negative' scenarios deliberately contain scam-like words (OTP, police, hospital, urgent, fraud) in a genuine context.",
+  "note": "Genuine-payment and hard-negative scenarios for synthetic data generation. Written by the Ruko team; every generated sample is labelled synthetic. 'hard_negative' scenarios deliberately contain scam-like words (OTP, police, hospital, urgent, fraud) in a genuine context. Scenarios with 'formats': ['message'] are genuine look-alike messages (bank alerts, OTPs, bills, deliveries, promotions) added after round-1 evaluation showed false positives on genuine transactional SMS.",
   "scenarios": [
-    {"id": "g_rent", "kind": "genuine", "purpose": "Monthly house rent to a landlord the customer has paid for over a year", "payee": "landlord (individual)", "details": "Knows the landlord personally, lives in the flat, same amount every month, maybe a little higher this month because of maintenance."},
-    {"id": "g_family_support", "kind": "genuine", "purpose": "Sending monthly support to parents or a sibling in their home town", "payee": "own mother/father/brother", "details": "Payee is saved in contacts, paid many times before, talked to them on their usual number yesterday."},
-    {"id": "g_school_fees", "kind": "genuine", "purpose": "Child's school or college fees", "payee": "the school or college's official account", "details": "Has the fee receipt or the school's circular, paying through the school's portal or the account printed on the fee slip."},
-    {"id": "g_hospital_bill", "kind": "genuine", "purpose": "Paying a hospital for a family member's treatment", "payee": "the hospital's billing account", "details": "Customer is physically at the hospital, the billing desk gave the QR/account, the patient is their father/mother/spouse; may sound stressed and in a hurry but answers consistently."},
-    {"id": "g_vendor", "kind": "genuine", "purpose": "Paying a supplier or vendor for a small business", "payee": "regular supplier", "details": "Shop owner pays the wholesale supplier against an invoice, has worked with them for years."},
-    {"id": "g_emi", "kind": "genuine", "purpose": "Loan EMI or credit card bill", "payee": "the customer's own bank / NBFC", "details": "Paying from the lender's official app or website, same EMI every month."},
-    {"id": "g_house_deposit", "kind": "genuine", "purpose": "Token or booking amount for buying a flat", "payee": "builder's registered company account", "details": "Has visited the site, signed a booking form, the builder's office gave the account details on letterhead; large amount."},
-    {"id": "g_car_purchase", "kind": "genuine", "purpose": "Down payment for a new car or bike", "payee": "authorised dealership", "details": "Visited the showroom, has a proforma invoice, payee name matches the dealership."},
-    {"id": "g_wedding_vendor", "kind": "genuine", "purpose": "Advance to a caterer, tent house or banquet hall for a family wedding", "payee": "caterer/banquet hall the family met in person", "details": "Met the vendor, has a written quote, family members involved."},
-    {"id": "g_jeweller", "kind": "genuine", "purpose": "Buying gold jewellery", "payee": "jewellery shop", "details": "Customer is in the shop, paying at the counter, has the bill."},
-    {"id": "g_travel_agent", "kind": "genuine", "purpose": "Booking a family holiday or pilgrimage through a known travel agent or official website", "payee": "IRCTC / airline / known local travel agent", "details": "Booked on the official site or with an agent the family has used before; has PNR or booking reference."},
-    {"id": "g_tuition", "kind": "genuine", "purpose": "Coaching or tuition fees", "payee": "local coaching centre or tutor", "details": "Child attends classes there, pays every quarter."},
-    {"id": "g_domestic_help", "kind": "genuine", "purpose": "Salary to a domestic helper, driver or cook", "payee": "the helper (individual)", "details": "Helper works at home daily, paid monthly by UPI."},
-    {"id": "g_contractor", "kind": "genuine", "purpose": "Paying a plumber, electrician, painter or carpenter after work at home", "payee": "local contractor", "details": "Work is done and visible, contractor is standing there or known from the society."},
-    {"id": "g_friend_repay", "kind": "genuine", "purpose": "Returning money borrowed from a friend, or splitting a trip bill", "payee": "close friend", "details": "Friend is in contacts, they spoke in person or on the friend's usual number."},
-    {"id": "g_charity_known", "kind": "genuine", "purpose": "Donation to a temple, gurudwara, mosque, church or a registered NGO the customer knows", "payee": "the organisation's official account", "details": "Donates every year, got the account from the organisation's office or official website, gets an 80G receipt."},
-    {"id": "g_sip_broker", "kind": "genuine", "purpose": "Investing in mutual funds or shares through a SEBI-registered broker app in their own demat account", "payee": "registered broker / clearing account", "details": "Uses Zerodha, Groww, a bank's demat, or an AMC site; money goes to their own trading account; no tips group; no guaranteed returns."},
-    {"id": "g_tax_official", "kind": "genuine", "purpose": "Advance tax, property tax or GST paid on the official government portal", "payee": "government portal / bank gateway", "details": "Logged in to the official portal themselves, has a challan number."},
-    {"id": "g_insurance_premium", "kind": "genuine", "purpose": "Insurance premium renewal", "payee": "insurer's official site or agent the family has used for years", "details": "Renewal notice came from the insurer, paying on the insurer's site."},
-    {"id": "g_child_abroad", "kind": "genuine", "purpose": "Sending money to a son or daughter studying abroad for fees or living costs", "payee": "university account or the child's own account", "details": "Talks to the child daily on video, the university invoice is in the child's student portal."},
-    {"id": "g_utility_official", "kind": "genuine", "purpose": "Electricity, water, gas or mobile bill", "payee": "the utility via its official app or the bank's bill-pay", "details": "Paying the bill amount shown in the official app before the due date; no one called them."},
-    {"id": "g_second_hand_inperson", "kind": "genuine", "purpose": "Buying a second-hand item (fridge, bike, phone) after seeing it in person", "payee": "the seller (individual)", "details": "Customer has inspected the item, seller is a neighbour or met at their home, paying on handover."},
-    {"id": "g_medical_pharmacy", "kind": "genuine", "purpose": "Medicines or diagnostic tests", "payee": "pharmacy or lab", "details": "Paying at the pharmacy counter or lab reception."},
-    {"id": "g_lawyer_ca", "kind": "genuine", "purpose": "Fees to the customer's own lawyer or chartered accountant", "payee": "lawyer/CA the customer hired and met", "details": "Has an engagement letter or invoice, ongoing matter."},
-    {"id": "g_business_salary", "kind": "genuine", "purpose": "Paying staff salaries or a festival bonus from a small business account", "payee": "employees", "details": "Regular monthly payroll."},
-    {"id": "g_gift_family_event", "kind": "genuine", "purpose": "Shagun or gift money for a relative's wedding or birthday", "payee": "relative", "details": "Relative is in contacts, family event is known to everyone."},
-    {"id": "g_loan_repay_known", "kind": "genuine", "purpose": "Repaying a loan to a relative or a registered lender", "payee": "relative or the bank", "details": "Known arrangement, agreed earlier, no pressure."},
-    {"id": "g_crowdfund_friend", "kind": "genuine", "purpose": "Contributing to a close friend's medical crowdfunding on a known platform", "payee": "crowdfunding platform", "details": "Spoke to the friend's family directly, saw the hospital documents, platform is Ketto/Milaap or similar."},
-    {"id": "hn_real_bank_fraud_call", "kind": "hard_negative", "purpose": "A payment the customer really intends to make, after their real bank called to confirm a suspicious transaction", "payee": "the customer's regular payee", "details": "The real bank only asked them to confirm yes/no, said the bank never asks for OTP or PIN, and did not ask to move money anywhere. The customer mentions OTP, fraud, bank call, blocked card — all in a genuine context."},
-    {"id": "hn_relative_really_hospital", "kind": "hard_negative", "purpose": "Urgent money for a relative who really is in hospital", "payee": "the hospital's account or the relative's own account", "details": "Customer verified by calling the relative and a family member on their usual numbers, or is at the hospital; urgent and emotional, but nobody asked for secrecy and the payee matches the hospital or the relative."},
-    {"id": "hn_ignored_scam_paying_rent", "kind": "hard_negative", "purpose": "A routine payment (rent, fees) made by someone who recently received a scam call and ignored it", "payee": "regular payee", "details": "Customer mentions they got a 'digital arrest' / KYC / courier scam call earlier but hung up and reported it; this payment is unrelated and routine."},
-    {"id": "hn_official_challan", "kind": "hard_negative", "purpose": "Paying a genuine traffic challan or court fine on the official Parivahan / e-court website", "payee": "government portal", "details": "Customer looked up the challan number themselves on the official site; mentions police, fine, challan."},
-    {"id": "hn_official_customs", "kind": "hard_negative", "purpose": "Paying genuine import duty for an item the customer ordered from abroad", "payee": "courier company's official portal (customs duty)", "details": "Customer placed the order, tracks it on the courier's official website, duty amount shown there; mentions customs, parcel, courier."},
-    {"id": "hn_genuine_investment_big", "kind": "hard_negative", "purpose": "A large first-time investment in a fixed deposit, government bond or mutual fund", "payee": "the customer's own bank / RBI Retail Direct / AMC", "details": "Customer researched it, no tips group, no guaranteed huge returns, investing in their own name; mentions returns, investment, interest."},
-    {"id": "hn_real_job_joining", "kind": "hard_negative", "purpose": "Paying for something job-related that is legitimate (own travel ticket to join a new job, a government exam fee on the official portal)", "payee": "IRCTC / official exam portal", "details": "Customer applied themselves on the official portal; mentions job, fee, exam — but the fee is the official application fee, not a 'security deposit' to a recruiter."},
-    {"id": "hn_family_secret_surprise", "kind": "hard_negative", "purpose": "A surprise gift for a spouse's anniversary — customer wants to keep it secret from family for a good reason", "payee": "a known shop or travel site", "details": "Customer says 'please don't tell my wife', it's a surprise; nobody else told them to keep it secret."},
-    {"id": "hn_kyc_at_branch", "kind": "hard_negative", "purpose": "Customer updated KYC at the branch and is now paying a normal bill", "payee": "regular payee", "details": "Mentions KYC, PAN, Aadhaar, account freeze — all handled in person at the branch."},
-    {"id": "hn_wrong_transfer_genuine", "kind": "hard_negative", "purpose": "Returning money that the customer's bank confirmed was credited by mistake, through the bank's own reversal process", "payee": "the original sender, as instructed by the bank branch", "details": "Customer checked the actual account statement in the bank app (not an SMS), spoke to the branch, and is returning the exact amount through the bank."}
+    {
+      "id": "g_rent",
+      "kind": "genuine",
+      "purpose": "Monthly house rent to a landlord the customer has paid for over a year",
+      "payee": "landlord (individual)",
+      "details": "Knows the landlord personally, lives in the flat, same amount every month, maybe a little higher this month because of maintenance."
+    },
+    {
+      "id": "g_family_support",
+      "kind": "genuine",
+      "purpose": "Sending monthly support to parents or a sibling in their home town",
+      "payee": "own mother/father/brother",
+      "details": "Payee is saved in contacts, paid many times before, talked to them on their usual number yesterday."
+    },
+    {
+      "id": "g_school_fees",
+      "kind": "genuine",
+      "purpose": "Child's school or college fees",
+      "payee": "the school or college's official account",
+      "details": "Has the fee receipt or the school's circular, paying through the school's portal or the account printed on the fee slip."
+    },
+    {
+      "id": "g_hospital_bill",
+      "kind": "genuine",
+      "purpose": "Paying a hospital for a family member's treatment",
+      "payee": "the hospital's billing account",
+      "details": "Customer is physically at the hospital, the billing desk gave the QR/account, the patient is their father/mother/spouse; may sound stressed and in a hurry but answers consistently."
+    },
+    {
+      "id": "g_vendor",
+      "kind": "genuine",
+      "purpose": "Paying a supplier or vendor for a small business",
+      "payee": "regular supplier",
+      "details": "Shop owner pays the wholesale supplier against an invoice, has worked with them for years."
+    },
+    {
+      "id": "g_emi",
+      "kind": "genuine",
+      "purpose": "Loan EMI or credit card bill",
+      "payee": "the customer's own bank / NBFC",
+      "details": "Paying from the lender's official app or website, same EMI every month."
+    },
+    {
+      "id": "g_house_deposit",
+      "kind": "genuine",
+      "purpose": "Token or booking amount for buying a flat",
+      "payee": "builder's registered company account",
+      "details": "Has visited the site, signed a booking form, the builder's office gave the account details on letterhead; large amount."
+    },
+    {
+      "id": "g_car_purchase",
+      "kind": "genuine",
+      "purpose": "Down payment for a new car or bike",
+      "payee": "authorised dealership",
+      "details": "Visited the showroom, has a proforma invoice, payee name matches the dealership."
+    },
+    {
+      "id": "g_wedding_vendor",
+      "kind": "genuine",
+      "purpose": "Advance to a caterer, tent house or banquet hall for a family wedding",
+      "payee": "caterer/banquet hall the family met in person",
+      "details": "Met the vendor, has a written quote, family members involved."
+    },
+    {
+      "id": "g_jeweller",
+      "kind": "genuine",
+      "purpose": "Buying gold jewellery",
+      "payee": "jewellery shop",
+      "details": "Customer is in the shop, paying at the counter, has the bill."
+    },
+    {
+      "id": "g_travel_agent",
+      "kind": "genuine",
+      "purpose": "Booking a family holiday or pilgrimage through a known travel agent or official website",
+      "payee": "IRCTC / airline / known local travel agent",
+      "details": "Booked on the official site or with an agent the family has used before; has PNR or booking reference."
+    },
+    {
+      "id": "g_tuition",
+      "kind": "genuine",
+      "purpose": "Coaching or tuition fees",
+      "payee": "local coaching centre or tutor",
+      "details": "Child attends classes there, pays every quarter."
+    },
+    {
+      "id": "g_domestic_help",
+      "kind": "genuine",
+      "purpose": "Salary to a domestic helper, driver or cook",
+      "payee": "the helper (individual)",
+      "details": "Helper works at home daily, paid monthly by UPI."
+    },
+    {
+      "id": "g_contractor",
+      "kind": "genuine",
+      "purpose": "Paying a plumber, electrician, painter or carpenter after work at home",
+      "payee": "local contractor",
+      "details": "Work is done and visible, contractor is standing there or known from the society."
+    },
+    {
+      "id": "g_friend_repay",
+      "kind": "genuine",
+      "purpose": "Returning money borrowed from a friend, or splitting a trip bill",
+      "payee": "close friend",
+      "details": "Friend is in contacts, they spoke in person or on the friend's usual number."
+    },
+    {
+      "id": "g_charity_known",
+      "kind": "genuine",
+      "purpose": "Donation to a temple, gurudwara, mosque, church or a registered NGO the customer knows",
+      "payee": "the organisation's official account",
+      "details": "Donates every year, got the account from the organisation's office or official website, gets an 80G receipt."
+    },
+    {
+      "id": "g_sip_broker",
+      "kind": "genuine",
+      "purpose": "Investing in mutual funds or shares through a SEBI-registered broker app in their own demat account",
+      "payee": "registered broker / clearing account",
+      "details": "Uses Zerodha, Groww, a bank's demat, or an AMC site; money goes to their own trading account; no tips group; no guaranteed returns."
+    },
+    {
+      "id": "g_tax_official",
+      "kind": "genuine",
+      "purpose": "Advance tax, property tax or GST paid on the official government portal",
+      "payee": "government portal / bank gateway",
+      "details": "Logged in to the official portal themselves, has a challan number."
+    },
+    {
+      "id": "g_insurance_premium",
+      "kind": "genuine",
+      "purpose": "Insurance premium renewal",
+      "payee": "insurer's official site or agent the family has used for years",
+      "details": "Renewal notice came from the insurer, paying on the insurer's site."
+    },
+    {
+      "id": "g_child_abroad",
+      "kind": "genuine",
+      "purpose": "Sending money to a son or daughter studying abroad for fees or living costs",
+      "payee": "university account or the child's own account",
+      "details": "Talks to the child daily on video, the university invoice is in the child's student portal."
+    },
+    {
+      "id": "g_utility_official",
+      "kind": "genuine",
+      "purpose": "Electricity, water, gas or mobile bill",
+      "payee": "the utility via its official app or the bank's bill-pay",
+      "details": "Paying the bill amount shown in the official app before the due date; no one called them."
+    },
+    {
+      "id": "g_second_hand_inperson",
+      "kind": "genuine",
+      "purpose": "Buying a second-hand item (fridge, bike, phone) after seeing it in person",
+      "payee": "the seller (individual)",
+      "details": "Customer has inspected the item, seller is a neighbour or met at their home, paying on handover."
+    },
+    {
+      "id": "g_medical_pharmacy",
+      "kind": "genuine",
+      "purpose": "Medicines or diagnostic tests",
+      "payee": "pharmacy or lab",
+      "details": "Paying at the pharmacy counter or lab reception."
+    },
+    {
+      "id": "g_lawyer_ca",
+      "kind": "genuine",
+      "purpose": "Fees to the customer's own lawyer or chartered accountant",
+      "payee": "lawyer/CA the customer hired and met",
+      "details": "Has an engagement letter or invoice, ongoing matter."
+    },
+    {
+      "id": "g_business_salary",
+      "kind": "genuine",
+      "purpose": "Paying staff salaries or a festival bonus from a small business account",
+      "payee": "employees",
+      "details": "Regular monthly payroll."
+    },
+    {
+      "id": "g_gift_family_event",
+      "kind": "genuine",
+      "purpose": "Shagun or gift money for a relative's wedding or birthday",
+      "payee": "relative",
+      "details": "Relative is in contacts, family event is known to everyone."
+    },
+    {
+      "id": "g_loan_repay_known",
+      "kind": "genuine",
+      "purpose": "Repaying a loan to a relative or a registered lender",
+      "payee": "relative or the bank",
+      "details": "Known arrangement, agreed earlier, no pressure."
+    },
+    {
+      "id": "g_crowdfund_friend",
+      "kind": "genuine",
+      "purpose": "Contributing to a close friend's medical crowdfunding on a known platform",
+      "payee": "crowdfunding platform",
+      "details": "Spoke to the friend's family directly, saw the hospital documents, platform is Ketto/Milaap or similar."
+    },
+    {
+      "id": "hn_real_bank_fraud_call",
+      "kind": "hard_negative",
+      "purpose": "A payment the customer really intends to make, after their real bank called to confirm a suspicious transaction",
+      "payee": "the customer's regular payee",
+      "details": "The real bank only asked them to confirm yes/no, said the bank never asks for OTP or PIN, and did not ask to move money anywhere. The customer mentions OTP, fraud, bank call, blocked card — all in a genuine context."
+    },
+    {
+      "id": "hn_relative_really_hospital",
+      "kind": "hard_negative",
+      "purpose": "Urgent money for a relative who really is in hospital",
+      "payee": "the hospital's account or the relative's own account",
+      "details": "Customer verified by calling the relative and a family member on their usual numbers, or is at the hospital; urgent and emotional, but nobody asked for secrecy and the payee matches the hospital or the relative."
+    },
+    {
+      "id": "hn_ignored_scam_paying_rent",
+      "kind": "hard_negative",
+      "purpose": "A routine payment (rent, fees) made by someone who recently received a scam call and ignored it",
+      "payee": "regular payee",
+      "details": "Customer mentions they got a 'digital arrest' / KYC / courier scam call earlier but hung up and reported it; this payment is unrelated and routine."
+    },
+    {
+      "id": "hn_official_challan",
+      "kind": "hard_negative",
+      "purpose": "Paying a genuine traffic challan or court fine on the official Parivahan / e-court website",
+      "payee": "government portal",
+      "details": "Customer looked up the challan number themselves on the official site; mentions police, fine, challan."
+    },
+    {
+      "id": "hn_official_customs",
+      "kind": "hard_negative",
+      "purpose": "Paying genuine import duty for an item the customer ordered from abroad",
+      "payee": "courier company's official portal (customs duty)",
+      "details": "Customer placed the order, tracks it on the courier's official website, duty amount shown there; mentions customs, parcel, courier."
+    },
+    {
+      "id": "hn_genuine_investment_big",
+      "kind": "hard_negative",
+      "purpose": "A large first-time investment in a fixed deposit, government bond or mutual fund",
+      "payee": "the customer's own bank / RBI Retail Direct / AMC",
+      "details": "Customer researched it, no tips group, no guaranteed huge returns, investing in their own name; mentions returns, investment, interest."
+    },
+    {
+      "id": "hn_real_job_joining",
+      "kind": "hard_negative",
+      "purpose": "Paying for something job-related that is legitimate (own travel ticket to join a new job, a government exam fee on the official portal)",
+      "payee": "IRCTC / official exam portal",
+      "details": "Customer applied themselves on the official portal; mentions job, fee, exam — but the fee is the official application fee, not a 'security deposit' to a recruiter."
+    },
+    {
+      "id": "hn_family_secret_surprise",
+      "kind": "hard_negative",
+      "purpose": "A surprise gift for a spouse's anniversary — customer wants to keep it secret from family for a good reason",
+      "payee": "a known shop or travel site",
+      "details": "Customer says 'please don't tell my wife', it's a surprise; nobody else told them to keep it secret."
+    },
+    {
+      "id": "hn_kyc_at_branch",
+      "kind": "hard_negative",
+      "purpose": "Customer updated KYC at the branch and is now paying a normal bill",
+      "payee": "regular payee",
+      "details": "Mentions KYC, PAN, Aadhaar, account freeze — all handled in person at the branch."
+    },
+    {
+      "id": "hn_wrong_transfer_genuine",
+      "kind": "hard_negative",
+      "purpose": "Returning money that the customer's bank confirmed was credited by mistake, through the bank's own reversal process",
+      "payee": "the original sender, as instructed by the bank branch",
+      "details": "Customer checked the actual account statement in the bank app (not an SMS), spoke to the branch, and is returning the exact amount through the bank."
+    },
+    {
+      "id": "gm_bank_debit_credit_alert",
+      "kind": "hard_negative",
+      "formats": [
+        "message"
+      ],
+      "purpose": "Bank transaction alerts: UPI/IMPS/NEFT/card debit and credit SMS from the bank's sender ID, with masked account numbers, amount, balance, and a line like 'Not you? Call the bank's official helpline or report in the app'.",
+      "payee": "n/a (a message the customer receives or sends)",
+      "details": "The message is genuine and routine. It may mention OTP, KYC, refund, bill, challan, account or payment because that is normal for this kind of message, but it never asks the reader to pay a stranger, share an OTP or PIN, call a personal number or install an app from a link."
+    },
+    {
+      "id": "gm_otp_message",
+      "kind": "hard_negative",
+      "formats": [
+        "message"
+      ],
+      "purpose": "Genuine OTP messages from banks, e-commerce, government portals and apps, which say the OTP is valid for a few minutes and must not be shared with anyone, including bank staff.",
+      "payee": "n/a (a message the customer receives or sends)",
+      "details": "The message is genuine and routine. It may mention OTP, KYC, refund, bill, challan, account or payment because that is normal for this kind of message, but it never asks the reader to pay a stranger, share an OTP or PIN, call a personal number or install an app from a link."
+    },
+    {
+      "id": "gm_bank_awareness",
+      "kind": "hard_negative",
+      "formats": [
+        "message"
+      ],
+      "purpose": "Genuine fraud-awareness messages from banks, RBI ('RBI Kehta Hai'), NPCI or the police: never share OTP/PIN, report fraud on 1930, the bank never asks for KYC over the phone.",
+      "payee": "n/a (a message the customer receives or sends)",
+      "details": "The message is genuine and routine. It may mention OTP, KYC, refund, bill, challan, account or payment because that is normal for this kind of message, but it never asks the reader to pay a stranger, share an OTP or PIN, call a personal number or install an app from a link."
+    },
+    {
+      "id": "gm_kyc_reminder_official",
+      "kind": "hard_negative",
+      "formats": [
+        "message"
+      ],
+      "purpose": "Genuine KYC re-verification reminders from a bank that ask the customer to visit the branch or use the official app or net banking, with no link to click and no phone number to call.",
+      "payee": "n/a (a message the customer receives or sends)",
+      "details": "The message is genuine and routine. It may mention OTP, KYC, refund, bill, challan, account or payment because that is normal for this kind of message, but it never asks the reader to pay a stranger, share an OTP or PIN, call a personal number or install an app from a link."
+    },
+    {
+      "id": "gm_card_emi_due",
+      "kind": "hard_negative",
+      "formats": [
+        "message"
+      ],
+      "purpose": "Credit card statement, minimum-due and EMI auto-debit reminders, and loan EMI debit confirmations from banks and NBFCs.",
+      "payee": "n/a (a message the customer receives or sends)",
+      "details": "The message is genuine and routine. It may mention OTP, KYC, refund, bill, challan, account or payment because that is normal for this kind of message, but it never asks the reader to pay a stranger, share an OTP or PIN, call a personal number or install an app from a link."
+    },
+    {
+      "id": "gm_delivery_update",
+      "kind": "hard_negative",
+      "formats": [
+        "message"
+      ],
+      "purpose": "Delivery notifications from Amazon, Flipkart, India Post, Blue Dart, Delhivery: shipped, out for delivery, delivered, with an order number and the official app.",
+      "payee": "n/a (a message the customer receives or sends)",
+      "details": "The message is genuine and routine. It may mention OTP, KYC, refund, bill, challan, account or payment because that is normal for this kind of message, but it never asks the reader to pay a stranger, share an OTP or PIN, call a personal number or install an app from a link."
+    },
+    {
+      "id": "gm_utility_bill",
+      "kind": "hard_negative",
+      "formats": [
+        "message"
+      ],
+      "purpose": "Electricity, water, gas and broadband bill reminders and payment receipts from official providers (e.g. BESCOM, Tata Power, Mahanagar Gas), pointing to the official app or website.",
+      "payee": "n/a (a message the customer receives or sends)",
+      "details": "The message is genuine and routine. It may mention OTP, KYC, refund, bill, challan, account or payment because that is normal for this kind of message, but it never asks the reader to pay a stranger, share an OTP or PIN, call a personal number or install an app from a link."
+    },
+    {
+      "id": "gm_telecom_plan",
+      "kind": "hard_negative",
+      "formats": [
+        "message"
+      ],
+      "purpose": "Jio, Airtel, Vi and BSNL recharge confirmations and plan-expiry reminders that point to the official app.",
+      "payee": "n/a (a message the customer receives or sends)",
+      "details": "The message is genuine and routine. It may mention OTP, KYC, refund, bill, challan, account or payment because that is normal for this kind of message, but it never asks the reader to pay a stranger, share an OTP or PIN, call a personal number or install an app from a link."
+    },
+    {
+      "id": "gm_govt_benefit_credit",
+      "kind": "hard_negative",
+      "formats": [
+        "message"
+      ],
+      "purpose": "Genuine government notifications: PM-Kisan instalment credited, LPG subsidy credited (DBT), EPFO contribution credited, income tax refund processed to the validated bank account, Aadhaar update reminders asking people to visit an Aadhaar centre.",
+      "payee": "n/a (a message the customer receives or sends)",
+      "details": "The message is genuine and routine. It may mention OTP, KYC, refund, bill, challan, account or payment because that is normal for this kind of message, but it never asks the reader to pay a stranger, share an OTP or PIN, call a personal number or install an app from a link."
+    },
+    {
+      "id": "gm_travel_booking",
+      "kind": "hard_negative",
+      "formats": [
+        "message"
+      ],
+      "purpose": "IRCTC train ticket and PNR confirmations, airline booking and web check-in reminders, hotel booking confirmations from booking apps.",
+      "payee": "n/a (a message the customer receives or sends)",
+      "details": "The message is genuine and routine. It may mention OTP, KYC, refund, bill, challan, account or payment because that is normal for this kind of message, but it never asks the reader to pay a stranger, share an OTP or PIN, call a personal number or install an app from a link."
+    },
+    {
+      "id": "gm_appointment_school",
+      "kind": "hard_negative",
+      "formats": [
+        "message"
+      ],
+      "purpose": "Hospital and lab appointment reminders, school fee reminders from the school office, coaching class timetable messages, exam result notifications from boards.",
+      "payee": "n/a (a message the customer receives or sends)",
+      "details": "The message is genuine and routine. It may mention OTP, KYC, refund, bill, challan, account or payment because that is normal for this kind of message, but it never asks the reader to pay a stranger, share an OTP or PIN, call a personal number or install an app from a link."
+    },
+    {
+      "id": "gm_salary_investment",
+      "kind": "hard_negative",
+      "formats": [
+        "message"
+      ],
+      "purpose": "Salary credited messages, SIP debit confirmations from mutual funds, demat contract notes from registered brokers, fixed deposit maturity notices.",
+      "payee": "n/a (a message the customer receives or sends)",
+      "details": "The message is genuine and routine. It may mention OTP, KYC, refund, bill, challan, account or payment because that is normal for this kind of message, but it never asks the reader to pay a stranger, share an OTP or PIN, call a personal number or install an app from a link."
+    },
+    {
+      "id": "gm_refund_cashback_genuine",
+      "kind": "hard_negative",
+      "formats": [
+        "message"
+      ],
+      "purpose": "Genuine refund and cashback confirmations: e-commerce refund processed to original payment method, UPI cashback credited, failed transaction auto-reversed by the bank.",
+      "payee": "n/a (a message the customer receives or sends)",
+      "details": "The message is genuine and routine. It may mention OTP, KYC, refund, bill, challan, account or payment because that is normal for this kind of message, but it never asks the reader to pay a stranger, share an OTP or PIN, call a personal number or install an app from a link."
+    },
+    {
+      "id": "gm_brand_promotions",
+      "kind": "hard_negative",
+      "formats": [
+        "message"
+      ],
+      "purpose": "Legitimate marketing promotions from real brands and shops (festival sale, discount coupon, new store opening, loyalty points) that do not ask for any payment to a person, OTP or app install.",
+      "payee": "n/a (a message the customer receives or sends)",
+      "details": "The message is genuine and routine. It may mention OTP, KYC, refund, bill, challan, account or payment because that is normal for this kind of message, but it never asks the reader to pay a stranger, share an OTP or PIN, call a personal number or install an app from a link."
+    },
+    {
+      "id": "gm_family_friends_money",
+      "kind": "hard_negative",
+      "formats": [
+        "message"
+      ],
+      "purpose": "Everyday WhatsApp messages between family and friends about money: splitting a dinner bill, sending rent to a flatmate, a parent sending pocket money, a sibling asking to repay a small loan they agreed earlier.",
+      "payee": "n/a (a message the customer receives or sends)",
+      "details": "The message is genuine and routine. It may mention OTP, KYC, refund, bill, challan, account or payment because that is normal for this kind of message, but it never asks the reader to pay a stranger, share an OTP or PIN, call a personal number or install an app from a link."
+    },
+    {
+      "id": "gm_fastag_challan_official",
+      "kind": "hard_negative",
+      "formats": [
+        "message"
+      ],
+      "purpose": "Genuine FASTag toll deduction and recharge messages, and official e-challan intimation SMS from Parivahan/VAHAN that ask the owner to check and pay on the official echallan.parivahan.gov.in portal (no app file, no personal number).",
+      "payee": "n/a (a message the customer receives or sends)",
+      "details": "The message is genuine and routine. It may mention OTP, KYC, refund, bill, challan, account or payment because that is normal for this kind of message, but it never asks the reader to pay a stranger, share an OTP or PIN, call a personal number or install an app from a link."
+    }
   ]
 }

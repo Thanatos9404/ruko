@@ -1,7 +1,8 @@
 import type { Lang } from "../shared/types.js";
 import { PATTERNS, patternById, patternSources, matchText, truthFor } from "../shared/patterns.js";
 import { DEMO_SCENARIO_VIEWS, scenarioById } from "../shared/scenarios.js";
-import { analyzeText, mlStatus } from "./ml/index.js";
+import { analyzeText, getLibrary, getSources, mlStatus } from "./ml/index.js";
+import { readModelResults } from "./ml-results.js";
 import { SIGNALS } from "../shared/signals.js";
 import { loadConfig, BOLNA_IPS, type Config } from "./config.js";
 import { Router, json, readJson, HttpError, clientIp, bearer } from "./http.js";
@@ -380,6 +381,45 @@ export function createApp(deps: AppDeps) {
     if (!c || (c.tenant !== cfg.demoTenant && c.tenant !== cfg.sandboxTenant)) throw new HttpError(404, "Check not found.", "not_found");
     return json(publicCheck(c));
   });
+
+  // The research pattern library (72 patterns, India and global), compacted for the console.
+  r.on("GET", "/api/console/library", async () => {
+    const lib = getLibrary();
+    if (!lib) throw new HttpError(503, "The pattern library isn't bundled with this deployment.", "unavailable");
+    const src = getSources();
+    const used = new Set<string>();
+    const patterns = lib.patterns.map((p) => {
+      p.sources.forEach((id) => used.add(id));
+      return {
+        id: p.id,
+        aliases: p.aliases ?? [],
+        name: { en: p.name.en, hi: p.name.hi },
+        category: p.category,
+        region: p.region,
+        summary: p.summary,
+        channel: p.channel,
+        payment_rails: p.payment_rails,
+        victim_profile: p.victim_profile,
+        red_flag_questions: { en: p.red_flag_questions.en, hi: p.red_flag_questions.hi ?? [] },
+        coaching_phrases: { en: p.coaching_phrases.en, hi: p.coaching_phrases.hi ?? [] },
+        truth: { en: p.truth.en, hi: p.truth.hi },
+        advice: { en: p.advice.en, hi: p.advice.hi },
+        first_seen: p.first_seen?.value ?? null,
+        trend: p.trend ? { status: p.trend.status, note: p.trend.note } : null,
+        ruko_applicability: p.ruko_applicability,
+        translation_status: p.translation_status,
+        core: Boolean(patternById(p.id)),
+        sources: p.sources,
+      };
+    });
+    const sources = Object.fromEntries(
+      [...used].map((id) => src.get(id)).filter((x): x is NonNullable<typeof x> => Boolean(x)).map((x) => [x.id, { title: x.title, publisher: x.publisher, date: x.date, url: x.url, accessed: x.accessed, kind: x.kind }]),
+    );
+    return json({ version: lib.version, generated: lib.generated, categories: lib.categories, patterns, sources }, 200, { "Cache-Control": "public, max-age=300" });
+  });
+
+  // The text model's status and its published evaluation (ml/results/summary.json).
+  r.on("GET", "/api/console/model", async () => json({ status: mlStatus(), results: readModelResults() }));
 
   r.on("GET", "/api/console/reports", async () => {
     const ids = (await kv.get<string[]>("index:reports")) ?? [];

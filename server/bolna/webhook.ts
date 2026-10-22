@@ -138,8 +138,7 @@ async function process(
     }
     // The text model reads the customer's own turns for the console. Advisory: it can flag a
     // release for human review, never change a decision.
-    const said = (call.transcript ?? []).filter((t) => t.role === "customer").map((t) => t.text).join("
-");
+    const said = (call.transcript ?? []).filter((t) => t.role === "customer").map((t) => t.text).join("\n");
     const ml = modelOpinion(said, "transcript");
     if (ml) await deps.checks.setModelOpinion(checkId, ml.opinion);
   }

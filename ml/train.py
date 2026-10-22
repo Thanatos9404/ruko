@@ -55,8 +55,8 @@ SCALE = 10000
 SEED = 20261017
 MIN_CLASS = 5
 
-HP = {"Cb": 8.0, "Cp": 16.0, "Nb": 24000, "Np": 700, "M": 900}
-GRID = {"Cb": [2.0, 8.0, 32.0], "Cp": [4.0, 16.0, 64.0]}  # tuned on validation for the shipped model only
+HP = {"Cb": 32.0, "Cp": 64.0, "Nb": 24000, "Np": 700, "M": 1200}
+GRID = {"Cb": [8.0, 32.0, 128.0], "Cp": [16.0, 64.0, 256.0]}  # tuned on validation for the shipped model only
 
 COUNTS = ROOT / "ml" / "work" / "counts.pkl"
 
@@ -265,20 +265,10 @@ def calibrate(art: dict, corpus: Corpus, val: list[dict]) -> None:
             if nll < best[0]:
                 best = (nll, float(T))
         art["patterns"]["temperature"] = round(best[1], 4)
-    # operating thresholds, chosen on validation:
-    #   likely_scam   = 98th percentile of genuine scores (about 2% false alarms on val), at least 0.5
-    #   possible_scam = 5th percentile of scam scores (about 95% recall on val), at least 0.2
-    a, b = art["binary"]["calibration"]["a"], art["binary"]["calibration"]["b"]
-    p = 1 / (1 + np.exp(-(a * z + b)))
-    gen = np.sort(p[y == 0])
-    scm = np.sort(p[y == 1])
-    likely = 0.85
-    possible = 0.5
-    if len(gen):
-        likely = float(max(0.5, min(0.97, gen[int(math.ceil(0.98 * len(gen))) - 1] + 1e-6)))
-    if len(scm):
-        possible = float(min(likely, max(0.2, scm[int(math.floor(0.05 * len(scm)))])))
-    art["binary"]["thresholds"] = {"likely_scam": round(likely, 4), "possible_scam": round(possible, 4)}
+    # Band thresholds are FIXED on the calibrated probability: possible_scam >= 0.5, likely_scam >= 0.85.
+    # (Percentile rules on the in-distribution validation set collapsed both to 0.5, because val is
+    # nearly separable; fixed cut-offs keep the bands meaningful. Metrics are reported at both.)
+    art["binary"]["thresholds"] = {"likely_scam": 0.85, "possible_scam": 0.5}
 
 
 # --- metrics -------------------------------------------------------------------------
@@ -450,11 +440,12 @@ BOTH = ("bothbosu_scam_dialogue", "bothbosu_multi_agent", "bothbosu_single_agent
 
 def experiments(rows):
     syn = ("synthetic",)
-    main_src = syn + BOTH + ("mendeley_sms",)
+    real = ("mendeley_sms", "imc25_smishing_train")
+    main_src = syn + BOTH + real
     return {
         "main": (pick(rows, "train", main_src), pick(rows, "val", main_src)),
         "synthetic_only": (pick(rows, "train", syn), pick(rows, "val", syn)),
-        "real_sms_only": (pick(rows, "train", ("mendeley_sms",)), pick(rows, "val", ("mendeley_sms",))),
+        "real_sms_only": (pick(rows, "train", real), pick(rows, "val", real)),
         "bothbosu_only": (pick(rows, "train", BOTH), pick(rows, "val", BOTH)),
         "lang_holdout_ta_bn_mr": (pick(rows, "train", main_src, ("ta", "bn", "mr")), pick(rows, "val", main_src, ("ta", "bn", "mr"))),
     }

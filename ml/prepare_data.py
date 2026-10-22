@@ -245,8 +245,16 @@ def load_imc25() -> list[dict]:
                 text = text.replace(k, v)
             text = IMC_OTHER.sub(" ", text)
             india = row["original_network_country"] == "IND" or row["language"] in ("Hindi", "Urdu")
-            if not india and (row["language"] != "English" or h(f"imc:{i}") % 100 >= 12):
-                continue  # deterministic ~12% sample of the non-Indian English reports
+            bucket = h(f"imc:{i}") % 100
+            if not india and (row["language"] != "English" or bucket >= 24):
+                continue  # two deterministic ~12% slices of the non-Indian English reports
+            if not india and bucket >= 12:
+                # real smishing used for TRAINING (scam class); Indian rows and the other slice stay held out
+                out.append(rec(
+                    text=IMC_OTHER.sub(" ", text), label="scam", source="imc25_smishing_train", synthetic=False, lang="en",
+                    format="sms", group=f"imc{i}", split="train", weight=0.5, subtype=row["scam_type"],
+                ))
+                continue
             lang = {"Hindi": "hi", "Urdu": "ur"}.get(row["language"], "en")
             out.append(rec(
                 text=text, label="scam", source="imc25_smishing", synthetic=False, lang=lang, format="sms", group=f"imc{i}",

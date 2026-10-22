@@ -4,20 +4,20 @@
     "A": "Qwen/Qwen3-235B-A22B-Instruct-2507",
     "B": "google/gemma-3-27b-it"
   },
-  "jobs": 1206,
-  "samples": 5302,
+  "jobs": 660,
+  "samples": 6002,
   "failures": [],
   "n_failures": 0,
   "usage_this_run": {
-    "requests": 0,
-    "cached": 1207,
-    "prompt_tokens": 0,
-    "completion_tokens": 0,
+    "requests": 128,
+    "cached": 533,
+    "prompt_tokens": 50268,
+    "completion_tokens": 70279,
     "errors": 0
   },
   "usage_cumulative": {
-    "requests": 2175,
-    "prompt_tokens": 1419039,
-    "completion_tokens": 2350509
+    "requests": 2303,
+    "prompt_tokens": 1469307,
+    "completion_tokens": 2420788
   }
 }

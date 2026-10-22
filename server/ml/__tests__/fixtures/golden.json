@@ -1,0 +1,1425 @@
+{
+ "model_version": "ruko-text-1.0.0",
+ "cases": [
+  {
+   "id": "en_digital_arrest",
+   "lang": "en",
+   "expect": "scam",
+   "expect_pattern": [
+    "digital_arrest"
+   ],
+   "text": "A CBI officer called me on video and said my Aadhaar was used for money laundering and I am under digital arrest. He told me not to tell my family and to transfer my savings to a verification account.",
+   "tokens": [
+    "a",
+    "cbi",
+    "officer",
+    "called",
+    "me",
+    "on",
+    "video",
+    "and",
+    "said",
+    "my",
+    "aadhaar",
+    "was",
+    "used",
+    "for",
+    "money",
+    "laundering",
+    "and",
+    "i",
+    "am",
+    "under",
+    "digital",
+    "arrest",
+    "he",
+    "told",
+    "me",
+    "not",
+    "to",
+    "tell",
+    "my",
+    "family",
+    "and",
+    "to",
+    "transfer",
+    "my",
+    "savings",
+    "to",
+    "a",
+    "verification",
+    "account"
+   ],
+   "features_sha256": "089bef7887eb0447aa8471d3549b3f46c3e57158687dac0058f74ea3d24d9cdb",
+   "p_scam": 0.9779437688527683,
+   "top_patterns": [
+    [
+     "digital_arrest",
+     0.9931991163866302
+    ],
+    [
+     "video_call_blackmail",
+     0.0036626430221479507
+    ],
+    [
+     "aeps_biometric_misuse",
+     0.00099501747630454
+    ]
+   ]
+  },
+  {
+   "id": "hi_digital_arrest",
+   "lang": "hi",
+   "expect": "scam",
+   "expect_pattern": [
+    "digital_arrest"
+   ],
+   "text": "मुझे एक पुलिस अधिकारी ने वीडियो कॉल पर रखा है, कह रहे हैं मेरे आधार से मनी लॉन्ड्रिंग हुई है और मैं डिजिटल अरेस्ट में हूँ। बोले किसी को मत बताना और सारे पैसे जाँच वाले खाते में भेज दो।",
+   "tokens": [
+    "मुझे",
+    "एक",
+    "पुलिस",
+    "अधिकारी",
+    "ने",
+    "वीडियो",
+    "कॉल",
+    "पर",
+    "रखा",
+    "है",
+    "कह",
+    "रहे",
+    "हैं",
+    "मेरे",
+    "आधार",
+    "से",
+    "मनी",
+    "लॉन्ड्रिंग",
+    "हुई",
+    "है",
+    "और",
+    "मैं",
+    "डिजिटल",
+    "अरेस्ट",
+    "में",
+    "हूं",
+    "बोले",
+    "किसी",
+    "को",
+    "मत",
+    "बताना",
+    "और",
+    "सारे",
+    "पैसे",
+    "जांच",
+    "वाले",
+    "खाते",
+    "में",
+    "भेज",
+    "दो"
+   ],
+   "features_sha256": "66f94aa9df9a0c6b4f61b614d37ec4cc936f379c2a6fbf99942019464937dd59",
+   "p_scam": 0.998022760571881,
+   "top_patterns": [
+    [
+     "digital_arrest",
+     0.8301937261338133
+    ],
+    [
+     "video_call_blackmail",
+     0.08620060828047282
+    ],
+    [
+     "relative_emergency",
+     0.02766301605635358
+    ]
+   ]
+  },
+  {
+   "id": "hinglish_courier",
+   "lang": "hinglish",
+   "expect": "scam",
+   "expect_pattern": [
+    "courier_parcel",
+    "digital_arrest"
+   ],
+   "text": "sir mere paas courier wale ka call aaya, bole mere naam ke parcel mein drugs aur passport mile hain, phir mumbai police wale video call pe aa gaye aur bol rahe hain paise bhejo warna giraftar kar lenge",
+   "tokens": [
+    "sir",
+    "mere",
+    "paas",
+    "courier",
+    "wale",
+    "ka",
+    "call",
+    "aaya",
+    "bole",
+    "mere",
+    "naam",
+    "ke",
+    "parcel",
+    "mein",
+    "drugs",
+    "aur",
+    "passport",
+    "mile",
+    "hain",
+    "phir",
+    "mumbai",
+    "police",
+    "wale",
+    "video",
+    "call",
+    "pe",
+    "aa",
+    "gaye",
+    "aur",
+    "bol",
+    "rahe",
+    "hain",
+    "paise",
+    "bhejo",
+    "warna",
+    "giraftar",
+    "kar",
+    "lenge"
+   ],
+   "features_sha256": "09d024d4583091f9f25ffa452b85c0867f7c65e476b2785c6de1ce4e74825433",
+   "p_scam": 0.9986277348333114,
+   "top_patterns": [
+    [
+     "courier_parcel",
+     0.9773471824727432
+    ],
+    [
+     "digital_arrest",
+     0.00838574169106292
+    ],
+    [
+     "video_call_blackmail",
+     0.007519560175743482
+    ]
+   ]
+  },
+  {
+   "id": "en_kyc_sms",
+   "lang": "en",
+   "expect": "scam",
+   "expect_pattern": [
+    "kyc_block"
+   ],
+   "text": "Dear Customer, your SBI account will be blocked today. Update your PAN KYC immediately at http://sbi-kyc-update.xyz/login or call 9000012345.",
+   "tokens": [
+    "dear",
+    "customer",
+    "your",
+    "sbi",
+    "account",
+    "will",
+    "be",
+    "blocked",
+    "today",
+    "update",
+    "your",
+    "pan",
+    "kyc",
+    "immediately",
+    "at",
+    "xurl",
+    "or",
+    "call",
+    "xphone"
+   ],
+   "features_sha256": "301dc236d5669642b37002092960789d587d3eb187af919d5346fbe9eb501775",
+   "p_scam": 0.9972089153658545,
+   "top_patterns": [
+    [
+     "kyc_block",
+     0.9997857709172863
+    ],
+    [
+     "apk_malware_invite",
+     0.00011273817989053516
+    ],
+    [
+     "lpg_gas_connection",
+     1.9634188267259694e-05
+    ]
+   ]
+  },
+  {
+   "id": "hinglish_task_job",
+   "lang": "hinglish",
+   "expect": "scam",
+   "expect_pattern": [
+    "task_job"
+   ],
+   "text": "telegram pe part time job mila tha, youtube videos like karne ke 150 rupaye mile, ab prepaid task ke liye 10000 dalne bol rahe hain, commission ke saath wapas milega",
+   "tokens": [
+    "telegram",
+    "pe",
+    "part",
+    "time",
+    "job",
+    "mila",
+    "tha",
+    "youtube",
+    "videos",
+    "like",
+    "karne",
+    "ke",
+    "000",
+    "rupaye",
+    "mile",
+    "ab",
+    "prepaid",
+    "task",
+    "ke",
+    "liye",
+    "00000",
+    "dalne",
+    "bol",
+    "rahe",
+    "hain",
+    "commission",
+    "ke",
+    "saath",
+    "wapas",
+    "milega"
+   ],
+   "features_sha256": "a44c11c2ae955ddf4eac99b712204b26a772010d319ec2a61d72761d868d5181",
+   "p_scam": 0.9824573144191828,
+   "top_patterns": [
+    [
+     "task_job",
+     0.9968695559461856
+    ],
+    [
+     "video_call_blackmail",
+     0.0009821238719902139
+    ],
+    [
+     "job_task_scam_global",
+     0.0007809159901701643
+    ]
+   ]
+  },
+  {
+   "id": "en_investment_group",
+   "lang": "en",
+   "expect": "scam",
+   "expect_pattern": [
+    "investment_trading",
+    "crypto_investment"
+   ],
+   "text": "I joined a WhatsApp stock tips group run by a professor, their app shows 300% profit on my IPO allotment, but now they say I must pay 20% tax before I can withdraw anything.",
+   "tokens": [
+    "i",
+    "joined",
+    "a",
+    "whatsapp",
+    "stock",
+    "tips",
+    "group",
+    "run",
+    "by",
+    "a",
+    "professor",
+    "their",
+    "app",
+    "shows",
+    "000",
+    "profit",
+    "on",
+    "my",
+    "ipo",
+    "allotment",
+    "but",
+    "now",
+    "they",
+    "say",
+    "i",
+    "must",
+    "pay",
+    "00",
+    "tax",
+    "before",
+    "i",
+    "can",
+    "withdraw",
+    "anything"
+   ],
+   "features_sha256": "01931190ed85ef3d29d7d19cff168ab10ee2aa16fe8f34c945fe607379a68be9",
+   "p_scam": 0.9949651280432374,
+   "top_patterns": [
+    [
+     "investment_trading",
+     0.9999753334612197
+    ],
+    [
+     "crypto_investment",
+     1.0217971308034802e-05
+    ],
+    [
+     "betting_gaming_app",
+     7.435386798422253e-06
+    ]
+   ]
+  },
+  {
+   "id": "hi_relative_police",
+   "lang": "hi",
+   "expect": "scam",
+   "expect_pattern": [
+    "relative_emergency",
+    "ai_voice_clone_emergency"
+   ],
+   "text": "किसी ने फ़ोन करके कहा कि आपका बेटा पुलिस थाने में है, अभी के अभी पैसे भेजो वरना केस दर्ज हो जाएगा, और किसी को मत बताना।",
+   "tokens": [
+    "किसी",
+    "ने",
+    "फोन",
+    "करके",
+    "कहा",
+    "कि",
+    "आपका",
+    "बेटा",
+    "पुलिस",
+    "थाने",
+    "में",
+    "है",
+    "अभी",
+    "के",
+    "अभी",
+    "पैसे",
+    "भेजो",
+    "वरना",
+    "केस",
+    "दर्ज",
+    "हो",
+    "जाएगा",
+    "और",
+    "किसी",
+    "को",
+    "मत",
+    "बताना"
+   ],
+   "features_sha256": "7882bd80f57a6bccf52cec7c166ab6a4146ce1498156f201f2dfdca4a7ef74c8",
+   "p_scam": 0.9978984460420584,
+   "top_patterns": [
+    [
+     "relative_emergency",
+     0.8419691642028221
+    ],
+    [
+     "ai_voice_clone_emergency",
+     0.12640740024183897
+    ],
+    [
+     "courier_parcel",
+     0.00285922622126766
+    ]
+   ]
+  },
+  {
+   "id": "en_olx_army_qr",
+   "lang": "en",
+   "expect": "scam",
+   "expect_pattern": [
+    "army_buyer_seller_olx",
+    "qr_code_receive",
+    "upi_collect_request"
+   ],
+   "text": "A buyer on OLX said he is in the army and will pay for my sofa. He sent a QR code and said scan it and enter my UPI PIN to receive the money.",
+   "tokens": [
+    "a",
+    "buyer",
+    "on",
+    "olx",
+    "said",
+    "he",
+    "is",
+    "in",
+    "the",
+    "army",
+    "and",
+    "will",
+    "pay",
+    "for",
+    "my",
+    "sofa",
+    "he",
+    "sent",
+    "a",
+    "qr",
+    "code",
+    "and",
+    "said",
+    "scan",
+    "it",
+    "and",
+    "enter",
+    "my",
+    "upi",
+    "pin",
+    "to",
+    "receive",
+    "the",
+    "money"
+   ],
+   "features_sha256": "e070564a5de99b9030f23012e009d165657e48775b85555952054f107b00a202",
+   "p_scam": 0.9997539902007736,
+   "top_patterns": [
+    [
+     "qr_code_receive",
+     0.9944251362464513
+    ],
+    [
+     "army_buyer_seller_olx",
+     0.005252231633644703
+    ],
+    [
+     "upi_collect_request",
+     0.00011975917879028557
+    ]
+   ]
+  },
+  {
+   "id": "en_support_anydesk",
+   "lang": "en",
+   "expect": "scam",
+   "expect_pattern": [
+    "remote_access",
+    "fake_support_refund",
+    "refund_cashback"
+   ],
+   "text": "I searched the customer care number on Google, the person asked me to install AnyDesk so he can process my refund and told me to enter my PIN when the screen asks.",
+   "tokens": [
+    "i",
+    "searched",
+    "the",
+    "customer",
+    "care",
+    "number",
+    "on",
+    "google",
+    "the",
+    "person",
+    "asked",
+    "me",
+    "to",
+    "install",
+    "anydesk",
+    "so",
+    "he",
+    "can",
+    "process",
+    "my",
+    "refund",
+    "and",
+    "told",
+    "me",
+    "to",
+    "enter",
+    "my",
+    "pin",
+    "when",
+    "the",
+    "screen",
+    "asks"
+   ],
+   "features_sha256": "9d6fe2ad6aa38b8a1346d8b05924fd1df48840a927a59ad7f6cd47701c4dadd8",
+   "p_scam": 0.7998764927373304,
+   "top_patterns": [
+    [
+     "fake_support_refund",
+     0.5535982529689487
+    ],
+    [
+     "remote_access",
+     0.40748558015338127
+    ],
+    [
+     "refund_cashback",
+     0.028098314582309426
+    ]
+   ]
+  },
+  {
+   "id": "en_electricity",
+   "lang": "en",
+   "expect": "scam",
+   "expect_pattern": [
+    "electricity_disconnection"
+   ],
+   "text": "Dear consumer your electricity power will be disconnected tonight at 9.30 pm because previous month bill was not updated. Please immediately contact electricity officer 9000012345.",
+   "tokens": [
+    "dear",
+    "consumer",
+    "your",
+    "electricity",
+    "power",
+    "will",
+    "be",
+    "disconnected",
+    "tonight",
+    "at",
+    "0",
+    "00",
+    "pm",
+    "because",
+    "previous",
+    "month",
+    "bill",
+    "was",
+    "not",
+    "updated",
+    "please",
+    "immediately",
+    "contact",
+    "electricity",
+    "officer",
+    "xphone"
+   ],
+   "features_sha256": "ee8e345fa2f5841d28e202ad6bbec439bc69ed4e3872ab83b83687594dc2ae60",
+   "p_scam": 0.9933921294611834,
+   "top_patterns": [
+    [
+     "electricity_disconnection",
+     0.9999995068236752
+    ],
+    [
+     "sim_disconnection",
+     1.131872234791602e-07
+    ],
+    [
+     "lpg_gas_connection",
+     6.455212017161897e-08
+    ]
+   ]
+  },
+  {
+   "id": "hinglish_coached",
+   "lang": "hinglish",
+   "expect": "scam",
+   "text": "bank wale puchenge to bolna hai family emergency hai, aur kisi ko mat batana, wo log abhi bhi line pe hain",
+   "tokens": [
+    "bank",
+    "wale",
+    "puchenge",
+    "to",
+    "bolna",
+    "hai",
+    "family",
+    "emergency",
+    "hai",
+    "aur",
+    "kisi",
+    "ko",
+    "mat",
+    "batana",
+    "wo",
+    "log",
+    "abhi",
+    "bhi",
+    "line",
+    "pe",
+    "hain"
+   ],
+   "features_sha256": "1bb37eba0f4ff10a95dfa9cc2fe026115ad513b9ffe2575669c3f84f43604957",
+   "p_scam": 0.7494674066275221,
+   "top_patterns": [
+    [
+     "loan_app_harassment",
+     0.1458072890581535
+    ],
+    [
+     "call_merging_otp",
+     0.13135342592097218
+    ],
+    [
+     "ai_voice_clone_emergency",
+     0.11194034616936845
+    ]
+   ]
+  },
+  {
+   "id": "en_sextortion",
+   "lang": "en",
+   "expect": "scam",
+   "expect_pattern": [
+    "video_call_blackmail"
+   ],
+   "text": "After a video call with a girl on WhatsApp, someone sent me a recording of the call and says pay 50,000 or it will go to all my contacts and YouTube.",
+   "tokens": [
+    "after",
+    "a",
+    "video",
+    "call",
+    "with",
+    "a",
+    "girl",
+    "on",
+    "whatsapp",
+    "someone",
+    "sent",
+    "me",
+    "a",
+    "recording",
+    "of",
+    "the",
+    "call",
+    "and",
+    "says",
+    "pay",
+    "00",
+    "000",
+    "or",
+    "it",
+    "will",
+    "go",
+    "to",
+    "all",
+    "my",
+    "contacts",
+    "and",
+    "youtube"
+   ],
+   "features_sha256": "6b41b292408b75cc0a06ed5110eff93cf7e9612fdbf9b43642fa84ec079fa2ab",
+   "p_scam": 0.9699385451870904,
+   "top_patterns": [
+    [
+     "video_call_blackmail",
+     0.9993910698734005
+    ],
+    [
+     "loan_app_harassment",
+     7.439243431915536e-05
+    ],
+    [
+     "betting_gaming_app",
+     5.486547224453729e-05
+    ]
+   ]
+  },
+  {
+   "id": "en_voice_clone",
+   "lang": "en",
+   "expect": "scam",
+   "expect_pattern": [
+    "ai_voice_clone_emergency",
+    "relative_emergency"
+   ],
+   "text": "My nephew called crying from an unknown number, said he had an accident abroad and needs money urgently, his voice sounded exactly like him and he begged me not to tell his parents.",
+   "tokens": [
+    "my",
+    "nephew",
+    "called",
+    "crying",
+    "from",
+    "an",
+    "unknown",
+    "number",
+    "said",
+    "he",
+    "had",
+    "an",
+    "accident",
+    "abroad",
+    "and",
+    "needs",
+    "money",
+    "urgently",
+    "his",
+    "voice",
+    "sounded",
+    "exactly",
+    "like",
+    "him",
+    "and",
+    "he",
+    "begged",
+    "me",
+    "not",
+    "to",
+    "tell",
+    "his",
+    "parents"
+   ],
+   "features_sha256": "20d2d273b28165db573014c55e2c3f0553892de3e32ecf0eec1b201013e7d95e",
+   "p_scam": 0.9907896978507258,
+   "top_patterns": [
+    [
+     "ai_voice_clone_emergency",
+     0.40440174022432196
+    ],
+    [
+     "relative_emergency",
+     0.2684146485611676
+    ],
+    [
+     "fake_friend_call_sg",
+     0.060021174087165244
+    ]
+   ]
+  },
+  {
+   "id": "ta_parcel",
+   "lang": "ta",
+   "expect": "scam",
+   "text": "உங்கள் பெயரில் வந்த பார்சலில் போதைப்பொருள் இருக்கிறது, மும்பை போலீஸ் வீடியோ அழைப்பில் பேசுவார்கள், உடனே பணம் அனுப்பவும், யாரிடமும் சொல்லக்கூடாது",
+   "tokens": [
+    "உங்கள்",
+    "பெயரில்",
+    "வந்த",
+    "பார்சலில்",
+    "போதைப்பொருள்",
+    "இருக்கிறது",
+    "மும்பை",
+    "போலீஸ்",
+    "வீடியோ",
+    "அழைப்பில்",
+    "பேசுவார்கள்",
+    "உடனே",
+    "பணம்",
+    "அனுப்பவும்",
+    "யாரிடமும்",
+    "சொல்லக்கூடாது"
+   ],
+   "features_sha256": "56f94d40aed695bef7f7472451de9fe413e827669f26dff84e82b6a7e6039c13",
+   "p_scam": 0.6419112850529368,
+   "top_patterns": [
+    [
+     "aeps_biometric_misuse",
+     0.34453801659060784
+    ],
+    [
+     "video_call_blackmail",
+     0.20408378635368987
+    ],
+    [
+     "romance_social_media",
+     0.0864550423470774
+    ]
+   ]
+  },
+  {
+   "id": "en_rent_negation",
+   "lang": "en",
+   "expect": "genuine",
+   "adversarial": "negation",
+   "text": "I am paying my monthly rent to my landlord. Nobody called me and nobody asked me for any OTP.",
+   "tokens": [
+    "i",
+    "am",
+    "paying",
+    "my",
+    "monthly",
+    "rent",
+    "to",
+    "my",
+    "landlord",
+    "nobody",
+    "called",
+    "me",
+    "and",
+    "nobody",
+    "asked",
+    "me",
+    "for",
+    "any",
+    "otp"
+   ],
+   "features_sha256": "8710817f913321a6750d026ebec27184c8e8b0b9c9f40b4d6976879ae348df9a",
+   "p_scam": 3.447125398534434e-05,
+   "top_patterns": [
+    [
+     "ponzi_deposit_scheme",
+     0.16006248774347753
+    ],
+    [
+     "sim_swap_esim",
+     0.07149774863107347
+    ],
+    [
+     "call_merging_otp",
+     0.06879929964871041
+    ]
+   ]
+  },
+  {
+   "id": "en_real_bank_call",
+   "lang": "en",
+   "expect": "genuine",
+   "adversarial": "genuine bank fraud call",
+   "text": "My bank called to check if I made a card payment last night. I said no, so they blocked the card. They said the bank never asks for OTP or PIN. Now I am just paying my electricity bill on the official app.",
+   "tokens": [
+    "my",
+    "bank",
+    "called",
+    "to",
+    "check",
+    "if",
+    "i",
+    "made",
+    "a",
+    "card",
+    "payment",
+    "last",
+    "night",
+    "i",
+    "said",
+    "no",
+    "so",
+    "they",
+    "blocked",
+    "the",
+    "card",
+    "they",
+    "said",
+    "the",
+    "bank",
+    "never",
+    "asks",
+    "for",
+    "otp",
+    "or",
+    "pin",
+    "now",
+    "i",
+    "am",
+    "just",
+    "paying",
+    "my",
+    "electricity",
+    "bill",
+    "on",
+    "the",
+    "official",
+    "app"
+   ],
+   "features_sha256": "4b3b5569f09a07a49abf4d03077c1a06175042442c00f317a3b15ed19db5d3f0",
+   "p_scam": 0.0077352851784460355,
+   "top_patterns": [
+    [
+     "electricity_disconnection",
+     0.973309174979073
+    ],
+    [
+     "credit_card_limit_or_fee",
+     0.008114907688271653
+    ],
+    [
+     "bank_fraud_dept_impersonation",
+     0.001946308622948619
+    ]
+   ]
+  },
+  {
+   "id": "en_relative_really_hospital",
+   "lang": "en",
+   "expect": "genuine",
+   "adversarial": "relative really in hospital",
+   "text": "My father is admitted in Apollo hospital. I am standing at the billing counter and paying the hospital's own account for his surgery. My brother is here with me.",
+   "tokens": [
+    "my",
+    "father",
+    "is",
+    "admitted",
+    "in",
+    "apollo",
+    "hospital",
+    "i",
+    "am",
+    "standing",
+    "at",
+    "the",
+    "billing",
+    "counter",
+    "and",
+    "paying",
+    "the",
+    "hospital",
+    "s",
+    "own",
+    "account",
+    "for",
+    "his",
+    "surgery",
+    "my",
+    "brother",
+    "is",
+    "here",
+    "with",
+    "me"
+   ],
+   "features_sha256": "804d0b9c3dee88d1685be785b6caa1fab871c3f898ceecc4cc7fc68c95738c98",
+   "p_scam": 4.787835599007796e-07,
+   "top_patterns": [
+    [
+     "hacked_account_friend_request",
+     0.3836574012571415
+    ],
+    [
+     "ai_voice_clone_emergency",
+     0.23493142648979445
+    ],
+    [
+     "romance_social_media",
+     0.11994212523619831
+    ]
+   ]
+  },
+  {
+   "id": "hi_relative_really_hospital",
+   "lang": "hi",
+   "expect": "genuine",
+   "adversarial": "relative really in hospital",
+   "text": "मेरी माँ अस्पताल में भर्ती हैं। मैं खुद अस्पताल में हूँ और बिलिंग काउंटर पर अस्पताल के खाते में पैसे जमा कर रहा हूँ।",
+   "tokens": [
+    "मेरी",
+    "मां",
+    "अस्पताल",
+    "में",
+    "भर्ती",
+    "हैं",
+    "मैं",
+    "खुद",
+    "अस्पताल",
+    "में",
+    "हूं",
+    "और",
+    "बिलिंग",
+    "काउंटर",
+    "पर",
+    "अस्पताल",
+    "के",
+    "खाते",
+    "में",
+    "पैसे",
+    "जमा",
+    "कर",
+    "रहा",
+    "हूं"
+   ],
+   "features_sha256": "5f830902c56d236d6ddf423bf8dfa1f872af9f8367b4ea30182934388d7fa5d3",
+   "p_scam": 0.07106121289152023,
+   "top_patterns": [
+    [
+     "romance_social_media",
+     0.21729297578268544
+    ],
+    [
+     "hacked_account_friend_request",
+     0.11878573743293114
+    ],
+    [
+     "mule_account_recruitment",
+     0.11568851779956639
+    ]
+   ]
+  },
+  {
+   "id": "hinglish_college_fees",
+   "lang": "hinglish",
+   "expect": "genuine",
+   "text": "haan ji ye mere bete ki college fees hai, college ki official website se hi pay kar raha hoon, receipt bhi hai mere paas",
+   "tokens": [
+    "haan",
+    "ji",
+    "ye",
+    "mere",
+    "bete",
+    "ki",
+    "college",
+    "fees",
+    "hai",
+    "college",
+    "ki",
+    "official",
+    "website",
+    "se",
+    "hi",
+    "pay",
+    "kar",
+    "raha",
+    "hoon",
+    "receipt",
+    "bhi",
+    "hai",
+    "mere",
+    "paas"
+   ],
+   "features_sha256": "fabce9e50df7c7655443c379258570f1899b253853f1d6fb355d88f95f2b900b",
+   "p_scam": 0.02049561850543539,
+   "top_patterns": [
+    [
+     "sim_swap_esim",
+     0.1927909086190086
+    ],
+    [
+     "electricity_disconnection",
+     0.0725932718849496
+    ],
+    [
+     "aeps_biometric_misuse",
+     0.05625155658552877
+    ]
+   ]
+  },
+  {
+   "id": "en_bank_otp_sms",
+   "lang": "en",
+   "expect": "genuine",
+   "adversarial": "genuine OTP message",
+   "text": "482913 is your OTP for a transaction of Rs 2,500 at Amazon. Do not share it with anyone. Bank never asks for your OTP.",
+   "tokens": [
+    "000000",
+    "is",
+    "your",
+    "otp",
+    "for",
+    "a",
+    "transaction",
+    "of",
+    "rs",
+    "0",
+    "000",
+    "at",
+    "amazon",
+    "do",
+    "not",
+    "share",
+    "it",
+    "with",
+    "anyone",
+    "bank",
+    "never",
+    "asks",
+    "for",
+    "your",
+    "otp"
+   ],
+   "features_sha256": "81d02b77c97969528ff5632907f0da2c8b4c59cf02c65563b9646adf9e2d65fd",
+   "p_scam": 0.0016296205300260738,
+   "top_patterns": [
+    [
+     "bank_fraud_dept_impersonation",
+     0.5733699783053273
+    ],
+    [
+     "betting_gaming_app",
+     0.06836151656166396
+    ],
+    [
+     "boss_impersonation_whatsapp",
+     0.048651139802340274
+    ]
+   ]
+  },
+  {
+   "id": "en_ignored_scam",
+   "lang": "en",
+   "expect": "genuine",
+   "adversarial": "mentions a scam it ignored",
+   "text": "Someone called this morning saying digital arrest, but I hung up and reported it on 1930. This payment is just my son's school fees to the school account.",
+   "tokens": [
+    "someone",
+    "called",
+    "this",
+    "morning",
+    "saying",
+    "digital",
+    "arrest",
+    "but",
+    "i",
+    "hung",
+    "up",
+    "and",
+    "reported",
+    "it",
+    "on",
+    "0000",
+    "this",
+    "payment",
+    "is",
+    "just",
+    "my",
+    "son",
+    "s",
+    "school",
+    "fees",
+    "to",
+    "the",
+    "school",
+    "account"
+   ],
+   "features_sha256": "3d1aaea8c9422dc7979110f161f42e5ff49e78cb9dcd0ef1fe10c9f6766a9e7e",
+   "p_scam": 0.08002738125411318,
+   "top_patterns": [
+    [
+     "digital_arrest",
+     0.24233712767742588
+    ],
+    [
+     "courier_parcel",
+     0.08490972326862462
+    ],
+    [
+     "gift_card_payment_demand",
+     0.08410082882386642
+    ]
+   ]
+  },
+  {
+   "id": "hi_negation_rent",
+   "lang": "hi",
+   "expect": "genuine",
+   "adversarial": "negation",
+   "text": "किसी ने मुझसे ओटीपी नहीं माँगा, किसी ने फ़ोन नहीं किया। यह मेरे मकान मालिक का हर महीने का किराया है।",
+   "tokens": [
+    "किसी",
+    "ने",
+    "मुझसे",
+    "ओटीपी",
+    "नहीं",
+    "मांगा",
+    "किसी",
+    "ने",
+    "फोन",
+    "नहीं",
+    "किया",
+    "यह",
+    "मेरे",
+    "मकान",
+    "मालिक",
+    "का",
+    "हर",
+    "महीने",
+    "का",
+    "किराया",
+    "है"
+   ],
+   "features_sha256": "edf4a10fe8b07bcb0cd03ad41cb727826168435ba8aca7972b73d4288222ff8e",
+   "p_scam": 7.244442189948105e-05,
+   "top_patterns": [
+    [
+     "mule_account_recruitment",
+     0.15420679616494593
+    ],
+    [
+     "ponzi_deposit_scheme",
+     0.09640445664703569
+    ],
+    [
+     "relative_emergency",
+     0.07957424390713136
+    ]
+   ]
+  },
+  {
+   "id": "en_surprise_secret",
+   "lang": "en",
+   "expect": "genuine",
+   "adversarial": "benign secrecy",
+   "text": "Please don't tell my wife, it's a surprise anniversary trip. I'm booking the hotel on MakeMyTrip myself.",
+   "tokens": [
+    "please",
+    "don",
+    "t",
+    "tell",
+    "my",
+    "wife",
+    "it",
+    "s",
+    "a",
+    "surprise",
+    "anniversary",
+    "trip",
+    "i",
+    "m",
+    "booking",
+    "the",
+    "hotel",
+    "on",
+    "makemytrip",
+    "myself"
+   ],
+   "features_sha256": "5609ab8106c7d041e34cbc10cc5019f32aea25c200b9bb143483c9e48746bfc4",
+   "p_scam": 5.2683628135736394e-06,
+   "top_patterns": [
+    [
+     "travel_pilgrimage_booking",
+     0.12738905606783432
+    ],
+    [
+     "aeps_biometric_misuse",
+     0.07879028238528127
+    ],
+    [
+     "boss_impersonation_whatsapp",
+     0.04343858045908714
+    ]
+   ]
+  },
+  {
+   "id": "en_sip_zerodha",
+   "lang": "en",
+   "expect": "genuine",
+   "adversarial": "genuine investment",
+   "text": "I'm starting a monthly SIP in an index fund through Zerodha Coin in my own demat account.",
+   "tokens": [
+    "i",
+    "m",
+    "starting",
+    "a",
+    "monthly",
+    "sip",
+    "in",
+    "an",
+    "index",
+    "fund",
+    "through",
+    "zerodha",
+    "coin",
+    "in",
+    "my",
+    "own",
+    "demat",
+    "account"
+   ],
+   "features_sha256": "200fb3dcccbef94ab76e1eed5e4819acd8d318db45615486938c3e7d8240a982",
+   "p_scam": 1.45667519087329e-05,
+   "top_patterns": [
+    [
+     "ponzi_deposit_scheme",
+     0.18633318034354093
+    ],
+    [
+     "bank_fraud_dept_impersonation",
+     0.07943381349102023
+    ],
+    [
+     "mule_account_recruitment",
+     0.04586721412118806
+    ]
+   ]
+  },
+  {
+   "id": "bn_rent",
+   "lang": "bn",
+   "expect": "genuine",
+   "text": "আমি আমার বাড়িওয়ালাকে প্রতি মাসের মতো ভাড়া পাঠাচ্ছি, ওনাকে দুই বছর ধরে চিনি।",
+   "tokens": [
+    "আমি",
+    "আমার",
+    "বাডিওযালাকে",
+    "প্রতি",
+    "মাসের",
+    "মতো",
+    "ভাডা",
+    "পাঠাচ্ছি",
+    "ওনাকে",
+    "দুই",
+    "বছর",
+    "ধরে",
+    "চিনি"
+   ],
+   "features_sha256": "e82c8c2f9f595e0813fda3c4631c5e787bf7b8a149241bd4fe1b2fdf853120c0",
+   "p_scam": 9.245562349994403e-05,
+   "top_patterns": [
+    [
+     "fake_charity_disaster",
+     0.2246253935090264
+    ],
+    [
+     "prize_lottery",
+     0.1180209363128453
+    ],
+    [
+     "sim_swap_esim",
+     0.06915695128043396
+    ]
+   ]
+  },
+  {
+   "id": "pii_redaction",
+   "lang": "en",
+   "text": "send 5000 to testuser@okicici, account 123456789012, call +91 90000 12345 or visit www.example-pay.in/now",
+   "tokens": [
+    "send",
+    "0000",
+    "to",
+    "xhandle",
+    "account",
+    "xnum",
+    "call",
+    "xphone",
+    "or",
+    "visit",
+    "xurl"
+   ],
+   "features_sha256": "7edffd536da4054b4d58a4091c59af92ec3f9fa0e83cf8ab11baf311644e67e0",
+   "p_scam": 0.9999998924107176,
+   "top_patterns": [
+    [
+     "invoice_mandate_redirection",
+     0.24798864909889215
+    ],
+    [
+     "boss_impersonation_whatsapp",
+     0.11789925051340883
+    ],
+    [
+     "wrong_transfer_return",
+     0.09266728837189982
+    ]
+   ]
+  },
+  {
+   "id": "short_ok",
+   "lang": "en",
+   "text": "ok",
+   "tokens": [
+    "ok"
+   ],
+   "features_sha256": "669803feffb104ce616d249d04eee4a6dcf2f977bf9123c24284b5b518f92a6f",
+   "p_scam": 5.380450852508748e-07,
+   "top_patterns": [
+    [
+     "aeps_biometric_misuse",
+     0.06635103779090194
+    ],
+    [
+     "boss_impersonation_whatsapp",
+     0.05066413690835581
+    ],
+    [
+     "fake_charity_disaster",
+     0.04650069701553692
+    ]
+   ]
+  },
+  {
+   "id": "empty",
+   "lang": "en",
+   "text": "",
+   "tokens": [],
+   "features_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "p_scam": 0.0006052845164070993,
+   "top_patterns": [
+    [
+     "aeps_biometric_misuse",
+     0.06851760459215127
+    ],
+    [
+     "boss_impersonation_whatsapp",
+     0.05231847783043021
+    ],
+    [
+     "fake_charity_disaster",
+     0.048019088735442014
+    ]
+   ]
+  }
+ ]
+}

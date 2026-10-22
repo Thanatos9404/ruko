@@ -158,12 +158,28 @@ function lexiconBand(topScore: number, signals: { type: string; hits: CueHit[] }
   return pts >= 4 ? "likely_scam" : pts >= 2 ? "possible_scam" : "unlikely_scam";
 }
 
-export function analyzeText(input: string, opts: { topK?: number; explain?: boolean } = {}): TextAnalysis {
+export interface AnalyzeOptions {
+  /** How many pattern candidates to return (default 3). */
+  topK?: number;
+  /** Token-level explanations (default true). Turn off for bulk scoring. */
+  explain?: boolean;
+  /**
+   * Restrict pattern candidates to one region of the library (default "all").
+   * Indian deployments should pass "india" so a UK/US pattern (with a foreign
+   * "truth" sentence) is never named on an Indian call. The scam probability is
+   * not affected.
+   */
+  region?: "india" | "global" | "all";
+}
+
+export function analyzeText(input: string, opts: AnalyzeOptions = {}): TextAnalysis {
   const t0 = performance.now();
   const s = init();
   const truncated = input.length > MAX_CHARS;
   const text = truncated ? input.slice(0, MAX_CHARS) : input;
   const topK = opts.topK ?? 3;
+  const region = opts.region ?? "all";
+  const inRegion = (id: string) => region === "all" || libraryPattern(id)?.region === region;
   const toks = tokenize(text);
 
   const lexPatterns = s.lexicon ? s.lexicon.scorePatterns(text, toks) : [];
@@ -195,9 +211,20 @@ export function analyzeText(input: string, opts: { topK?: number; explain?: bool
   };
 
   if (s.model) {
-    const pred = s.model.predict(text, { topK: Math.max(topK, 5), explain: opts.explain, tokens: toks });
+    const pred = s.model.predict(text, {
+      topK: region === "all" ? Math.max(topK, 5) : s.model.patternClasses.length,
+      explain: opts.explain,
+      tokens: toks,
+    });
+    let cands = pred.patterns;
+    if (region !== "all") {
+      // keep only this region's patterns and renormalise P(pattern | scam) over them
+      cands = cands.filter((c) => inRegion(c.id));
+      const z = cands.reduce((a, c) => a + c.p_given_scam, 0) || 1;
+      cands = cands.slice(0, Math.max(topK, 5)).map((c) => ({ ...c, p_given_scam: c.p_given_scam / z }));
+    }
     // Light fusion: strong cue matches can reorder near-ties, never outweigh the model.
-    const fused = pred.patterns
+    const fused = cands
       .map((c) => ({ c, score: c.p_given_scam + 0.05 * Math.min(4, lexById.get(c.id)?.score ?? 0) }))
       .sort((a, b) => b.score - a.score)
       .slice(0, topK)
@@ -219,7 +246,7 @@ export function analyzeText(input: string, opts: { topK?: number; explain?: bool
     ...base,
     scam_probability: null,
     band: s.lexicon ? lexiconBand(lexPatterns[0]?.score ?? 0, signals) : "unknown",
-    patterns: lexPatterns.slice(0, topK).map((r) => describe(r.id, null)),
+    patterns: lexPatterns.filter((r) => inRegion(r.id)).slice(0, topK).map((r) => describe(r.id, null)),
     evidence: [],
     counter_evidence: [],
     pattern_evidence: [],

@@ -1,0 +1,137 @@
+{
+ "experiments": {
+  "main": {
+   "test_synthetic_A": {
+    "auroc": 0.9979,
+    "auprc": 0.9991,
+    "ece": 0.0094,
+    "fpr_at_possible": 0.0412,
+    "recall_at_possible": 0.9902,
+    "top1": 0.6541,
+    "top3": 0.7869,
+    "n": 877
+   },
+   "test_genB_cross_generator": {
+    "auroc": 0.99,
+    "auprc": 0.9943,
+    "ece": 0.0249,
+    "fpr_at_possible": 0.0497,
+    "recall_at_possible": 0.9682,
+    "top1": 0.7124,
+    "top3": 0.8679,
+    "n": 940
+   },
+   "test_mendeley_real_sms": {
+    "auroc": 0.9987,
+    "auprc": 0.9756,
+    "ece": 0.0024,
+    "fpr_at_possible": 0.0035,
+    "recall_at_possible": 0.9859,
+    "top1": null,
+    "top3": null,
+    "n": 1579
+   },
+   "test_bothbosu": {
+    "auroc": 1.0,
+    "auprc": 1.0,
+    "ece": 0.0015,
+    "fpr_at_possible": 0.0,
+    "recall_at_possible": 1.0,
+    "top1": null,
+    "top3": null,
+    "n": 895
+   },
+   "ood_ridham115_indian_sms": {
+    "auroc": 0.8657,
+    "auprc": 0.8664,
+    "ece": 0.1496,
+    "fpr_at_possible": 0.2822,
+    "recall_at_possible": 0.8394,
+    "top1": null,
+    "top3": null,
+    "n": 1580
+   },
+   "ood_flowxai_en": {
+    "auroc": 0.958,
+    "auprc": 0.9552,
+    "ece": 0.2259,
+    "fpr_at_possible": 0.4238,
+    "recall_at_possible": 0.9821,
+    "top1": null,
+    "top3": null,
+    "n": 378
+   },
+   "ood_realworld_curated": {
+    "auroc": 0.9099,
+    "auprc": 0.9682,
+    "ece": 0.1261,
+    "fpr_at_possible": 0.1463,
+    "recall_at_possible": 0.832,
+    "top1": 0.584,
+    "top3": 0.736,
+    "n": 166
+   },
+   "ood_icfd31k_calls": {
+    "auroc": 0.6037,
+    "auprc": 0.9927,
+    "ece": 0.1501,
+    "fpr_at_possible": 0.8226,
+    "recall_at_possible": 0.8647,
+    "top1": null,
+    "top3": null,
+    "n": 5500
+   },
+   "ood_imc25_real_smishing_india": {
+    "auroc": null,
+    "auprc": null,
+    "ece": 0.3426,
+    "fpr_at_possible": null,
+    "recall_at_possible": 0.6807,
+    "top1": null,
+    "top3": null,
+    "n": 3862
+   },
+   "ood_imc25_real_smishing_global": {
+    "auroc": null,
+    "auprc": null,
+    "ece": 0.4098,
+    "fpr_at_possible": null,
+    "recall_at_possible": 0.6028,
+    "top1": null,
+    "top3": null,
+    "n": 2067
+   },
+   "ood_skyaara_genuine_payment_sms": {
+    "auroc": null,
+    "auprc": null,
+    "ece": 0.2501,
+    "fpr_at_possible": 0.2424,
+    "recall_at_possible": null,
+    "top1": null,
+    "top3": null,
+    "n": 33
+   },
+   "ood_marketing_spam_flag_rate": {
+    "auroc": null,
+    "auprc": null,
+    "ece": 0.6426,
+    "fpr_at_possible": 0.6475,
+    "recall_at_possible": null,
+    "top1": null,
+    "top3": null,
+    "n": 451
+   },
+   "val": {
+    "auroc": 0.9996,
+    "auprc": 0.9994,
+    "ece": 0.0047,
+    "fpr_at_possible": 0.0065,
+    "recall_at_possible": 0.9876,
+    "top1": 0.6038,
+    "top3": 0.75,
+    "n": 1487
+   }
+  }
+ },
+ "dataset_sha256": "ce55eb26eff19cde5510fff29367018adde94bd515c29c90cc6d8f399bcbd2a5"
+}

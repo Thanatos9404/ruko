@@ -314,6 +314,14 @@ def plan_jobs(library: dict, genuine: dict) -> list[dict]:
             add(generator="B", label="scam", ref=p["id"], format="report", lang="hinglish", coaching=None, n=3, rep=0)
 
     for idx, s in enumerate(genuine["scenarios"]):
+        if s.get("formats") == ["message"]:
+            # genuine look-alike messages only (bank alerts, OTPs, bills...): two batches per language
+            for lang in ("en", "hi", "hinglish"):
+                for rep in (0, 1):
+                    add(generator="A", label="genuine", ref=s["id"], format="message", lang=lang, coaching=None, n=6, rep=rep)
+            add(generator="B", label="genuine", ref=s["id"], format="message", lang="en", coaching=None, n=4, rep=0)
+            add(generator="B", label="genuine", ref=s["id"], format="message", lang="hinglish", coaching=None, n=4, rep=0)
+            continue
         for lang in ("en", "hi", "hinglish"):
             add(generator="A", label="genuine", ref=s["id"], format="call_check", lang=lang, coaching=None, n=3, rep=0)
             add(generator="A", label="genuine", ref=s["id"], format="message", lang=lang, coaching=None, n=5, rep=0)

@@ -27,7 +27,7 @@ export function modelOpinion(text: string, source: ModelOpinion["source"], now =
         band: a.band,
         scam_probability: a.scam_probability,
         patterns: a.patterns.map((m) => ({ id: m.id, name: m.name, p_given_scam: m.p_given_scam })),
-        cues: [...new Set(a.patterns.flatMap((m) => m.cues.filter((c) => !c.negated).map((c) => c.text)))].slice(0, 8),
+        cues: [...new Set(a.patterns.flatMap((m) => m.cues.filter((c) => !c.negated).map((c) => c.phrase)))].slice(0, 8),
         model_version: a.engine.model_version,
         at: now.toISOString(),
       },
@@ -80,7 +80,6 @@ export async function getCheckContext(deps: ToolDeps, args: Args): Promise<ToolR
   const c = await deps.checks.require(id);
   const l = lang(c);
   const tc = c.customer.trusted_contact;
-  const g = deps.checks.guidance(c);
   return {
     customer_name: c.customer.name,
     amount: amountForSpeech(c.payment.amount_inr, l),
