@@ -35,16 +35,15 @@ The LLM can escalate, never de-escalate, and Ruko never asks for an OTP or PIN. 
 
 **Results so far.** We have no customers, no pilots and no measured live calls. Results are **text mode**: a Nebius-hosted Qwen3-30B stands in for Bolna's gpt-4.1-mini, with the same prompt and tools, against the real engine. Call times are estimated.
 
-| v3 eval set | Scams caught | False holds |
+| v5 eval set | Scams caught | False holds |
 |---|---|---|
-| Dev | 58/60 | 0/24 |
-| Fresh held-out, never tuned on | 16/16 | 0/12 |
-| Held-out 1, seen while tuning | 15/16 | 1/12 |
-| **Combined** | **89/92 (96.7%, 95% CI 91–99%)** | **1/48 (2.1%)** |
+| **Fresh held-out 4** (frozen before v5 ran; mostly heavy coaching in Hindi/Hinglish) | **15/18** | **2/10** (delays) |
+| Held-out 1–3 (previously seen) | 43/48 | 4/36 |
+| Dev (tuned on) | 60/60 | 2/24 |
 
-- 0 OTP or PIN requests across 372 conversations (1,752 agent turns).
-- Tool latency (local dev): p50 74 ms, p95 303 ms.
-- **Weakest area:** heavily coached customers who stick to a cover story. On v2's clean held-out set we caught 4 of 8; v3 added the device-signal probe.
+- 0 OTP or PIN requests in v5 (208 conversations, 959 agent turns).
+- About a minute to a decision (median 51–59 s by set, estimated from transcripts); tool latency p50 74 ms locally.
+- **Weakest area:** heavily coached customers who stick to a cover story: 13 of 16 caught on the fresh set. On critical-risk payments Ruko never releases on a cover story alone; it delays with a call-back and the fraud desk. That safe default costs a few delayed genuine payments, which we chose deliberately.
 - End to end, the pre-call policy lets small scams with no active call through uncalled (12 of 60 on the dev set).
 
 **Competition.** Starling, Westpac and Barclays run in-app questions for their own customers. BioCatch and RBIH's MuleHunter.AI flag risky sessions and mule accounts, but don't talk to the customer. Convin claims outbound fraud calls. As of October 2026, we found no one selling Indian banks this full combination.
@@ -52,7 +51,7 @@ The LLM can escalate, never de-escalate, and Ruko never asks for an OTP or PIN. 
 **Risks.**
 
 - False holds: the policy needs evidence, and pilots start in shadow mode.
-- Coached customers: the device signal and the trusted contact help.
+- Coached customers: the device signal, cover-story probes, the safe default and the trusted contact help.
 - Bolna dependence: our engine is provider-neutral; concurrency and content rules are Bolna's.
 - Data protection: DPDP consent covers recordings and trusted contacts.
 - Scammer adaptation: the public line collects new scripts.

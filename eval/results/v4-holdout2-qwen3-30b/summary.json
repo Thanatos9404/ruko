@@ -1,0 +1,407 @@
+{
+  "run_id": "v4-holdout2-qwen3-30b",
+  "generated_at": "2026-10-22T15:05:24.534Z",
+  "models": {
+    "agent": "Qwen/Qwen3-30B-A3B-Instruct-2507",
+    "customer": "deepseek-ai/DeepSeek-V4-Flash-0731",
+    "judge": "openai/gpt-oss-120b"
+  },
+  "settings": {
+    "max_customer_turns": 10,
+    "seed": 7
+  },
+  "counts": {
+    "scenarios": 28,
+    "scam": 16,
+    "genuine": 12,
+    "ambiguous": 0
+  },
+  "headline": {
+    "scam_catch_rate": {
+      "n": 16,
+      "k": 14,
+      "rate": 0.875,
+      "ci95": [
+        0.6397666856325173,
+        0.9650232506629428
+      ]
+    },
+    "scam_block_rate": {
+      "n": 16,
+      "k": 13,
+      "rate": 0.8125,
+      "ci95": [
+        0.5699064013154177,
+        0.9340852122641324
+      ]
+    },
+    "false_hold_rate_genuine": {
+      "n": 12,
+      "k": 0,
+      "rate": 0,
+      "ci95": [
+        0,
+        0.2425007574992425
+      ]
+    },
+    "ambiguous_acceptable": {
+      "n": 0,
+      "k": 0,
+      "rate": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "otp_pin_requests": {
+      "confirmed": 0,
+      "candidates": 1,
+      "agent_turns": 120
+    },
+    "median_customer_turns_to_decision": 3,
+    "median_est_seconds_to_decision": 54,
+    "median_est_seconds_call": 62.5,
+    "set_decision_called": {
+      "n": 28,
+      "k": 27,
+      "rate": 0.9642857142857143,
+      "ci95": [
+        0.8228742388150135,
+        0.9936676435024582
+      ]
+    }
+  },
+  "end_to_end": {
+    "note": "With the pre-call risk policy in front: a payment the policy allows gets no call, so a scam it allows is missed and a genuine payment it allows has no friction.",
+    "scam_caught": {
+      "n": 16,
+      "k": 10,
+      "rate": 0.625,
+      "ci95": [
+        0.3864064709793481,
+        0.815190174452472
+      ]
+    },
+    "scam_missed_by_precall": 4,
+    "genuine_called": {
+      "n": 12,
+      "k": 8,
+      "rate": 0.6666666666666666,
+      "ci95": [
+        0.3906175873976139,
+        0.8618821601026385
+      ]
+    },
+    "genuine_ended_held": {
+      "n": 12,
+      "k": 0,
+      "rate": 0,
+      "ci95": [
+        0,
+        0.2425007574992425
+      ]
+    }
+  },
+  "detail": {
+    "by_style": {
+      "en": {
+        "catch": {
+          "n": 8,
+          "k": 8,
+          "rate": 1,
+          "ci95": [
+            0.6755843804891231,
+            1
+          ]
+        },
+        "false_hold": {
+          "n": 6,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.3903430336530645
+          ]
+        }
+      },
+      "hi": {
+        "catch": {
+          "n": 0,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "false_hold": {
+          "n": 6,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.3903430336530645
+          ]
+        }
+      },
+      "hinglish": {
+        "catch": {
+          "n": 8,
+          "k": 6,
+          "rate": 0.75,
+          "ci95": [
+            0.40926987910258916,
+            0.9285223111419724
+          ]
+        },
+        "false_hold": {
+          "n": 0,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "by_coaching": {
+      "light": {
+        "n": 8,
+        "k": 8,
+        "rate": 1,
+        "ci95": [
+          0.6755843804891231,
+          1
+        ]
+      },
+      "heavy": {
+        "n": 8,
+        "k": 6,
+        "rate": 0.75,
+        "ci95": [
+          0.40926987910258916,
+          0.9285223111419724
+        ]
+      }
+    },
+    "by_pattern": {
+      "ed_money_laundering_video": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "cousin_whatsapp_new_number": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "fake_rbi_refund_officer": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "gst_raid_threat_shopkeeper": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "olx_buyer_advance": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "matrimony_investment": {
+        "catch": {
+          "n": 2,
+          "k": 1,
+          "rate": 0.5,
+          "ci95": [
+            0.09452865480086614,
+            0.9054713451991339
+          ]
+        },
+        "named_correctly": {
+          "n": 1,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.7934567085261071
+          ]
+        }
+      },
+      "power_cut_apk": {
+        "catch": {
+          "n": 2,
+          "k": 1,
+          "rate": 0.5,
+          "ci95": [
+            0.09452865480086614,
+            0.9054713451991339
+          ]
+        },
+        "named_correctly": {
+          "n": 1,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.7934567085261071
+          ]
+        }
+      },
+      "police_daughter_arrested_voice": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      }
+    },
+    "pattern_named_correctly": {
+      "n": 0,
+      "k": 0,
+      "rate": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "truth_said_when_caught": {
+      "n": 14,
+      "k": 12,
+      "rate": 0.8571428571428571,
+      "ci95": [
+        0.600580922361363,
+        0.9599069262620787
+      ]
+    },
+    "contact_requested_in_scams_with_contact": {
+      "n": 11,
+      "k": 8,
+      "rate": 0.7272727272727273,
+      "ci95": [
+        0.4343497069897537,
+        0.9025411942607853
+      ]
+    },
+    "policy_stricter_than_agent": 0,
+    "agent_said_release_on_caught_scam": 0,
+    "otp_offer_scenarios": [],
+    "errors": 0,
+    "llm_calls": 305,
+    "tokens": {
+      "prompt": 874562,
+      "completion": 36384
+    }
+  },
+  "failures": [
+    {
+      "scenario": "holdout2-scam-matrimony_investment-hinglish",
+      "expected": [
+        "delay",
+        "block"
+      ],
+      "got": "release",
+      "why": "signals: own_initiative(high), knows_payee(high); agent recommended release"
+    },
+    {
+      "scenario": "holdout2-scam-power_cut_apk-hinglish",
+      "expected": [
+        "delay",
+        "block"
+      ],
+      "got": "release",
+      "why": "signals: own_initiative(high), purpose_consistent(high); agent recommended release"
+    }
+  ]
+}

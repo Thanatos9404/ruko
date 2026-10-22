@@ -5,7 +5,7 @@
   </picture>
 </p>
 
-<h3 align="center">A 60-second voice check that stops a payment scam before the money leaves.</h3>
+<h3 align="center">A one-minute voice check that stops a payment scam before the money leaves.</h3>
 
 <p align="center">
 Built on <a href="https://www.bolna.ai">Bolna</a> for the Bolna × Y Combinator Symphony Buildathon (Oct 2026). MIT licence.
@@ -83,27 +83,29 @@ Agent definitions: [server/bolna/agents.ts](server/bolna/agents.ts) · prompts: 
 
 Text-mode evaluation ([eval/](eval/)): an LLM plays the customer (coached victims across ten scam types at two coaching levels, genuine payers, ambiguous cases; English, Hindi, Hinglish). Ruko's agent runs with **the same prompt, greeting and tool schemas** as the Bolna agent, and the tools run against the real engine and decision policy. The agent model is a Nebius-hosted stand-in (`Qwen/Qwen3-30B-A3B-Instruct-2507`) for Bolna's gpt-4.1-mini; the customers are played by `deepseek-ai/DeepSeek-V4-Flash`; a separate judge (`openai/gpt-oss-120b`) audits every mention of OTP/PIN.
 
-Current version (v3):
+Current version (**v5**, text model `ruko-text-1.0.0`, sha256 `8a85ef11…`):
 
-| Set | Scams caught | False holds on genuine payments |
-|---|---|---|
-| Development set (96 scenarios) | 58/60 | 0/24 |
-| **Fresh held-out set** (28, written after tuning, never used for tuning) | **16/16** | **0/12** |
-| Held-out set 1 (28, seen when tuning v3) | 15/16 | 1/12 |
-| Combined | 89/92 (96.7%, 95% CI 91–99%) | 1/48 (2.1%, 95% CI 0.4–11%) |
+| Set | Scams caught | False holds on genuine payments | Median time to decision (est.) |
+|---|---|---|---|
+| **Fresh held-out set 4** (28, written and frozen before v5 ran; 16 of 18 scam calls heavily coached in Hindi/Hinglish) | **15/18** (83%) | **2/10** (both delays) | 58 s |
+| Held-out set 3 (28, previously seen by v4) | 13/16 | 1/12 | 58 s |
+| Held-out set 2 (28, previously seen by v3/v4) | 15/16 | 2/12 | 51 s |
+| Held-out set 1 (28, previously seen) | 15/16 | 1/12 | 54 s |
+| Development set (96, used for tuning) | 60/60 | 2/24 | 59 s |
 
-- **The agent asked for an OTP, PIN, card or account number 0 times** across 372 eval conversations (1,752 agent turns).
-- Median 3 customer turns to a decision; about 74 s estimated from transcript length (not measured on calls).
-- Tool endpoint latency on the local dev server: p50 74 ms, p95 303 ms (`npm run latency`).
-- **Weakest spot:** heavily coached customers who stick to a cover story. In v2's clean held-out run, 4 of 8 got through; v3 added a probe using the bank's own "on a call while paying" signal.
+- **The agent asked for an OTP, PIN, card or account number 0 times** in v5 (208 conversations, 959 agent turns; every mention judged by a separate model). Across all versions there was 1 flag in 3,487 turns: v4 asked whether a code had *already* been shared with the caller; v5 never says OTP or PIN in a question.
+- **Speed:** a median of about 1 minute to a decision on every set (estimated from transcript length at speaking pace, not measured on calls); the whole call, with the goodbye and the trusted-contact offer, is about 70–80 s.
+- **Hardest case:** heavily coached customers who stick to a cover story. On the fresh set 13 of 16 were caught. When pre-call risk is critical, Ruko never releases on a cover story alone (the safe default): it delays, with an in-app confirm, a call-back and the fraud desk.
+- **The trade-off we chose:** v5's safe default delays a few more genuine payments than v3 did (v3: 1/48 on its held-out sets), in exchange for not releasing coached victims. Every false hold on the fresh set is a delay, not a block.
+- **Version history** (every run is published, including the worse ones): v3 caught 16/16 on its clean held-out set in about 74 s; v4 cut the time to about 55 s but caught only 12/16 on its fresh set 3; v5 restores recall with adaptive probes and the safe default while keeping the call around a minute.
 - **End to end**, the pre-call policy alone lets small scams with no active call through without a call (12/60 on the dev set). In production the bank's own fraud signals (FRI, mule lists) would feed it.
-- History: v1 dev 59/60 caught, 3/24 false holds; v2 dev 57/60, 0/24; v2 held-out 12/16, 1/12. Every run, transcript and miss is in [eval/results/](eval/results/) and the console's Evaluation page.
+- Tool endpoint latency on the local dev server: p50 74 ms, p95 303 ms (`npm run latency`). Every run, transcript and miss is in [eval/results/](eval/results/) and the console's Evaluation page; each run records the text-model hash and git commit in `environment.json`.
 
 Reproduce (uses Nebius; cached, so a re-run with the same settings is free):
 
 ```bash
 npm run eval                                   # 96-scenario dev set
-npm run eval -- --set holdout2                 # fresh held-out set
+npm run eval -- --set holdout4                 # fresh held-out set for v5
 npx tsx eval/publish.ts                        # publish to public/eval/results.json
 ```
 

@@ -1,0 +1,414 @@
+{
+  "run_id": "v5-holdout2-qwen3-30b",
+  "generated_at": "2026-10-22T16:04:39.207Z",
+  "models": {
+    "agent": "Qwen/Qwen3-30B-A3B-Instruct-2507",
+    "customer": "deepseek-ai/DeepSeek-V4-Flash-0731",
+    "judge": "openai/gpt-oss-120b"
+  },
+  "settings": {
+    "max_customer_turns": 10,
+    "seed": 7
+  },
+  "counts": {
+    "scenarios": 28,
+    "scam": 16,
+    "genuine": 12,
+    "ambiguous": 0
+  },
+  "headline": {
+    "scam_catch_rate": {
+      "n": 16,
+      "k": 15,
+      "rate": 0.9375,
+      "ci95": [
+        0.7167073163197013,
+        0.9888809426916687
+      ]
+    },
+    "scam_block_rate": {
+      "n": 16,
+      "k": 13,
+      "rate": 0.8125,
+      "ci95": [
+        0.5699064013154177,
+        0.9340852122641324
+      ]
+    },
+    "false_hold_rate_genuine": {
+      "n": 12,
+      "k": 2,
+      "rate": 0.16666666666666666,
+      "ci95": [
+        0.04696414761482223,
+        0.44803635738467273
+      ]
+    },
+    "ambiguous_acceptable": {
+      "n": 0,
+      "k": 0,
+      "rate": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "otp_pin_requests": {
+      "confirmed": 0,
+      "candidates": 0,
+      "agent_turns": 121
+    },
+    "median_customer_turns_to_decision": 3,
+    "median_est_seconds_to_decision": 50.5,
+    "median_est_seconds_call": 68.5,
+    "set_decision_called": {
+      "n": 28,
+      "k": 28,
+      "rate": 1,
+      "ci95": [
+        0.8793527963418923,
+        1
+      ]
+    }
+  },
+  "end_to_end": {
+    "note": "With the pre-call risk policy in front: a payment the policy allows gets no call, so a scam it allows is missed and a genuine payment it allows has no friction.",
+    "scam_caught": {
+      "n": 16,
+      "k": 12,
+      "rate": 0.75,
+      "ci95": [
+        0.5050123107060135,
+        0.8981809801576265
+      ]
+    },
+    "scam_missed_by_precall": 4,
+    "genuine_called": {
+      "n": 12,
+      "k": 8,
+      "rate": 0.6666666666666666,
+      "ci95": [
+        0.3906175873976139,
+        0.8618821601026385
+      ]
+    },
+    "genuine_ended_held": {
+      "n": 12,
+      "k": 2,
+      "rate": 0.16666666666666666,
+      "ci95": [
+        0.04696414761482223,
+        0.44803635738467273
+      ]
+    }
+  },
+  "detail": {
+    "by_style": {
+      "en": {
+        "catch": {
+          "n": 8,
+          "k": 8,
+          "rate": 1,
+          "ci95": [
+            0.6755843804891231,
+            1
+          ]
+        },
+        "false_hold": {
+          "n": 6,
+          "k": 1,
+          "rate": 0.16666666666666666,
+          "ci95": [
+            0.03005258587173032,
+            0.563509436563646
+          ]
+        }
+      },
+      "hi": {
+        "catch": {
+          "n": 0,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "false_hold": {
+          "n": 6,
+          "k": 1,
+          "rate": 0.16666666666666666,
+          "ci95": [
+            0.03005258587173032,
+            0.563509436563646
+          ]
+        }
+      },
+      "hinglish": {
+        "catch": {
+          "n": 8,
+          "k": 7,
+          "rate": 0.875,
+          "ci95": [
+            0.5291051942301386,
+            0.9775830911367038
+          ]
+        },
+        "false_hold": {
+          "n": 0,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "by_coaching": {
+      "light": {
+        "n": 8,
+        "k": 8,
+        "rate": 1,
+        "ci95": [
+          0.6755843804891231,
+          1
+        ]
+      },
+      "heavy": {
+        "n": 8,
+        "k": 7,
+        "rate": 0.875,
+        "ci95": [
+          0.5291051942301386,
+          0.9775830911367038
+        ]
+      }
+    },
+    "by_pattern": {
+      "ed_money_laundering_video": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "cousin_whatsapp_new_number": {
+        "catch": {
+          "n": 2,
+          "k": 1,
+          "rate": 0.5,
+          "ci95": [
+            0.09452865480086614,
+            0.9054713451991339
+          ]
+        },
+        "named_correctly": {
+          "n": 1,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.7934567085261071
+          ]
+        }
+      },
+      "fake_rbi_refund_officer": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "gst_raid_threat_shopkeeper": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "olx_buyer_advance": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "matrimony_investment": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "power_cut_apk": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "police_daughter_arrested_voice": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      }
+    },
+    "pattern_named_correctly": {
+      "n": 0,
+      "k": 0,
+      "rate": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "truth_said_when_caught": {
+      "n": 15,
+      "k": 9,
+      "rate": 0.6,
+      "ci95": [
+        0.357464427565077,
+        0.8017577191740534
+      ]
+    },
+    "contact_requested_in_scams_with_contact": {
+      "n": 11,
+      "k": 6,
+      "rate": 0.5454545454545454,
+      "ci95": [
+        0.28008775568998817,
+        0.7872904245601196
+      ]
+    },
+    "policy_stricter_than_agent": 2,
+    "agent_said_release_on_caught_scam": 0,
+    "otp_offer_scenarios": [],
+    "errors": 0,
+    "llm_calls": 308,
+    "tokens": {
+      "prompt": 1041499,
+      "completion": 39316
+    }
+  },
+  "failures": [
+    {
+      "scenario": "holdout2-scam-cousin_whatsapp_new_number-hinglish",
+      "expected": [
+        "delay",
+        "block"
+      ],
+      "got": "release",
+      "why": "signals: family_helping(high), verified_independently(medium); agent recommended release"
+    },
+    {
+      "scenario": "holdout2-genuine-daughter_hostel-en",
+      "expected": [
+        "release"
+      ],
+      "got": "delay",
+      "why": "signals: family_helping(high), own_initiative(high); agent recommended delay; contact requested: false"
+    },
+    {
+      "scenario": "holdout2-genuine-tractor_down_payment-hi",
+      "expected": [
+        "release"
+      ],
+      "got": "delay",
+      "why": "signals: family_helping(high), own_initiative(high), urgency_pressure(high); agent recommended delay; contact requested: false"
+    }
+  ]
+}

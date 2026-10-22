@@ -1,76 +1,92 @@
 {
  "scenario": "digital-arrest",
  "lang": "en",
- "recorded_code_word": "ANAR 21",
+ "recorded_code_word": "PATANG 27",
  "recorded_decision": "block",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "Hello Kamla, this is Ruko, Demo Bank's automated payment safety assistant. This call is recorded for your safety. Your code word is ANAR 21. Does it match your app?"
+   "text": "Hi Kamla, Ruko here, Demo Bank's automated safety line, on a recorded call. Your code word is PATANG 27. Does it match your app?"
   },
   {
    "role": "customer",
-   "text": "Yes, that's my code word. But there is a CBI officer on the other phone, he says I must move my money to a safe account, please help me."
+   "text": "Yes, PATANG 27, that's right."
+  },
+  {
+   "role": "tool",
+   "tool": "get_check_context",
+   "args": {
+    "check_id": "chk_QGHUHB8899",
+    "execution_id": "eval-demo-digital-arrest-en"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "Your app shows you were on a call while paying. What's this payment for, and who were you speaking with?"
+  },
+  {
+   "role": "customer",
+   "text": "It's for some verification, they said... but there's a CBI officer on the other call right now."
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_WFHQBCMT76",
+    "check_id": "chk_QGHUHB8899",
     "signal": "authority_threat",
-    "evidence": "CBI officer on the other phone says I must move money",
+    "evidence": "A CBI officer is on the other call",
     "confidence": "high",
     "pattern_hint": "digital_arrest"
    }
   },
   {
    "role": "agent",
-   "text": "There's no 'digital arrest' in Indian law; it's a fraud. Police, CBI or courts never arrest or question anyone on a video call. Did the person say they were from the police, CBI, customs or a court, or ask you to stay on a video call?"
+   "text": "There's no 'digital arrest' in Indian law. Police or CBI never question anyone on a video call. Did they say they're police, CBI, customs or a court, or keep you on video?"
   },
   {
    "role": "customer",
-   "text": "Yes, he said he was CBI and told me to stay on the video call. Oh, thank God, please stop the payment and call my son Ravi."
+   "text": "Oh god, yes, he said CBI and kept me on video for so long! Please stop the payment and call my son Ravi."
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_WFHQBCMT76",
+    "check_id": "chk_QGHUHB8899",
     "signal": "coached_on_call",
-    "evidence": "CBI officer on video call directing me",
+    "evidence": "A stranger on video is guiding the payment",
     "confidence": "high",
     "pattern_hint": "digital_arrest"
-   }
-  },
-  {
-   "role": "agent",
-   "text": "Would you like me to call Ravi, your son, so you can talk it over before any money moves?"
-  },
-  {
-   "role": "customer",
-   "text": "Yes, please call Ravi right away. I don't want to pay anything now."
-  },
-  {
-   "role": "tool",
-   "tool": "call_trusted_contact",
-   "args": {
-    "check_id": "chk_WFHQBCMT76",
-    "customer_consent": "yes"
    }
   },
   {
    "role": "tool",
    "tool": "set_decision",
    "args": {
-    "check_id": "chk_WFHQBCMT76",
-    "recommendation": "delay",
-    "reason": "Multiple warning signs: fake CBI officer, video call direction, secrecy. Trusted contact being called."
+    "check_id": "chk_QGHUHB8899",
+    "recommendation": "block",
+    "reason": "The payment was guided by a stranger claiming to be CBI, which is a fraud pattern. The money is safe in your account."
    }
   },
   {
    "role": "agent",
-   "text": "I've asked Ravi to be called now. The money stays in your account until you've talked."
+   "text": "For your safety, this payment is stopped. Your money is safe in your account. If someone has been pressuring you, call 1930. Shall I call Ravi, your son, so you can talk it over?"
+  },
+  {
+   "role": "customer",
+   "text": "Yes, please call Ravi. Thank you, thank you so much. I was so scared."
+  },
+  {
+   "role": "tool",
+   "tool": "call_trusted_contact",
+   "args": {
+    "check_id": "chk_QGHUHB8899",
+    "customer_consent": "yes"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "I've asked Ravi to be called now. The money stays in your account until you've talked. Thank you for your patience. Goodbye."
   }
  ]
 }

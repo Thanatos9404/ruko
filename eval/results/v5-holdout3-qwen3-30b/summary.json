@@ -1,0 +1,424 @@
+{
+  "run_id": "v5-holdout3-qwen3-30b",
+  "generated_at": "2026-10-22T16:03:40.832Z",
+  "models": {
+    "agent": "Qwen/Qwen3-30B-A3B-Instruct-2507",
+    "customer": "deepseek-ai/DeepSeek-V4-Flash-0731",
+    "judge": "openai/gpt-oss-120b"
+  },
+  "settings": {
+    "max_customer_turns": 10,
+    "seed": 7
+  },
+  "counts": {
+    "scenarios": 28,
+    "scam": 16,
+    "genuine": 12,
+    "ambiguous": 0
+  },
+  "headline": {
+    "scam_catch_rate": {
+      "n": 16,
+      "k": 13,
+      "rate": 0.8125,
+      "ci95": [
+        0.5699064013154177,
+        0.9340852122641324
+      ]
+    },
+    "scam_block_rate": {
+      "n": 16,
+      "k": 9,
+      "rate": 0.5625,
+      "ci95": [
+        0.33178195606776517,
+        0.7690163666481448
+      ]
+    },
+    "false_hold_rate_genuine": {
+      "n": 12,
+      "k": 1,
+      "rate": 0.08333333333333333,
+      "ci95": [
+        0.014864709450773478,
+        0.35388592179859524
+      ]
+    },
+    "ambiguous_acceptable": {
+      "n": 0,
+      "k": 0,
+      "rate": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "otp_pin_requests": {
+      "confirmed": 0,
+      "candidates": 0,
+      "agent_turns": 142
+    },
+    "median_customer_turns_to_decision": 4,
+    "median_est_seconds_to_decision": 57.5,
+    "median_est_seconds_call": 74,
+    "set_decision_called": {
+      "n": 28,
+      "k": 28,
+      "rate": 1,
+      "ci95": [
+        0.8793527963418923,
+        1
+      ]
+    }
+  },
+  "end_to_end": {
+    "note": "With the pre-call risk policy in front: a payment the policy allows gets no call, so a scam it allows is missed and a genuine payment it allows has no friction.",
+    "scam_caught": {
+      "n": 16,
+      "k": 11,
+      "rate": 0.6875,
+      "ci95": [
+        0.4440393186673406,
+        0.8583556494803894
+      ]
+    },
+    "scam_missed_by_precall": 4,
+    "genuine_called": {
+      "n": 12,
+      "k": 10,
+      "rate": 0.8333333333333334,
+      "ci95": [
+        0.5519636426153274,
+        0.9530358523851776
+      ]
+    },
+    "genuine_ended_held": {
+      "n": 12,
+      "k": 1,
+      "rate": 0.08333333333333333,
+      "ci95": [
+        0.014864709450773478,
+        0.35388592179859524
+      ]
+    }
+  },
+  "detail": {
+    "by_style": {
+      "en": {
+        "catch": {
+          "n": 8,
+          "k": 8,
+          "rate": 1,
+          "ci95": [
+            0.6755843804891231,
+            1
+          ]
+        },
+        "false_hold": {
+          "n": 6,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.3903430336530645
+          ]
+        }
+      },
+      "hi": {
+        "catch": {
+          "n": 4,
+          "k": 3,
+          "rate": 0.75,
+          "ci95": [
+            0.3006360524426366,
+            0.9544139373553637
+          ]
+        },
+        "false_hold": {
+          "n": 6,
+          "k": 1,
+          "rate": 0.16666666666666666,
+          "ci95": [
+            0.03005258587173032,
+            0.563509436563646
+          ]
+        }
+      },
+      "hinglish": {
+        "catch": {
+          "n": 4,
+          "k": 2,
+          "rate": 0.5,
+          "ci95": [
+            0.15003570882017148,
+            0.8499642911798285
+          ]
+        },
+        "false_hold": {
+          "n": 0,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "by_coaching": {
+      "light": {
+        "n": 8,
+        "k": 8,
+        "rate": 1,
+        "ci95": [
+          0.6755843804891231,
+          1
+        ]
+      },
+      "heavy": {
+        "n": 8,
+        "k": 5,
+        "rate": 0.625,
+        "ci95": [
+          0.30573785458380187,
+          0.863158240538479
+        ]
+      }
+    },
+    "by_pattern": {
+      "overseas_job_visa_fee": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "sextortion_video_call": {
+        "catch": {
+          "n": 2,
+          "k": 1,
+          "rate": 0.5,
+          "ci95": [
+            0.09452865480086614,
+            0.9054713451991339
+          ]
+        },
+        "named_correctly": {
+          "n": 1,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.7934567085261071
+          ]
+        }
+      },
+      "card_upgrade_screen_share": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "fake_landlord_deposit": {
+        "catch": {
+          "n": 2,
+          "k": 1,
+          "rate": 0.5,
+          "ci95": [
+            0.09452865480086614,
+            0.9054713451991339
+          ]
+        },
+        "named_correctly": {
+          "n": 1,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.7934567085261071
+          ]
+        }
+      },
+      "mobile_tower_lease": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "pilgrimage_helicopter_booking": {
+        "catch": {
+          "n": 2,
+          "k": 1,
+          "rate": 0.5,
+          "ci95": [
+            0.09452865480086614,
+            0.9054713451991339
+          ]
+        },
+        "named_correctly": {
+          "n": 1,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.7934567085261071
+          ]
+        }
+      },
+      "medical_seat_quota": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "boss_whatsapp_vendor_advance": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      }
+    },
+    "pattern_named_correctly": {
+      "n": 0,
+      "k": 0,
+      "rate": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "truth_said_when_caught": {
+      "n": 13,
+      "k": 5,
+      "rate": 0.38461538461538464,
+      "ci95": [
+        0.17709446581236818,
+        0.6447751902773146
+      ]
+    },
+    "contact_requested_in_scams_with_contact": {
+      "n": 10,
+      "k": 5,
+      "rate": 0.5,
+      "ci95": [
+        0.23658959361548731,
+        0.7634104063845126
+      ]
+    },
+    "policy_stricter_than_agent": 3,
+    "agent_said_release_on_caught_scam": 0,
+    "otp_offer_scenarios": [],
+    "errors": 0,
+    "llm_calls": 362,
+    "tokens": {
+      "prompt": 1262843,
+      "completion": 44218
+    }
+  },
+  "failures": [
+    {
+      "scenario": "holdout3-scam-sextortion_video_call-hinglish",
+      "expected": [
+        "delay",
+        "block"
+      ],
+      "got": "release",
+      "why": "signals: own_initiative(high), knows_payee(high); agent recommended release"
+    },
+    {
+      "scenario": "holdout3-scam-fake_landlord_deposit-hinglish",
+      "expected": [
+        "delay",
+        "block"
+      ],
+      "got": "release",
+      "why": "signals: knows_payee(high), own_initiative(high); agent recommended release"
+    },
+    {
+      "scenario": "holdout3-scam-pilgrimage_helicopter_booking-hi",
+      "expected": [
+        "delay",
+        "block"
+      ],
+      "got": "release",
+      "why": "signals: own_initiative(high), purpose_consistent(high); agent recommended release"
+    },
+    {
+      "scenario": "holdout3-genuine-advance_tax_ca_on_call-hi",
+      "expected": [
+        "release"
+      ],
+      "got": "block",
+      "why": "signals: coached_on_call(high), own_initiative(high), knows_payee(high), purpose_consistent(high), urgency_pressure(medium); agent recommended delay; contact requested: false"
+    }
+  ]
+}

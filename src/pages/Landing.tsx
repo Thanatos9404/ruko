@@ -51,7 +51,7 @@ function Hero() {
           {[
             [fresh ? `${fresh.scam_catch.k}/${fresh.scam_catch.n}` : "–", "scams caught (held-out)"],
             [fresh ? `${fresh.false_hold.k}/${fresh.false_hold.n}` : "–", "genuine payments held"],
-            [ev ? String(ev.totals.otp_requests) : "–", "OTPs ever asked for"],
+            [ev ? String((ev.totals_current ?? ev.totals).otp_requests) : "–", `OTP asks in ${ev?.version ?? "current"} evals`],
           ].map(([n, l]) => (
             <span key={l} className="px-3">
               <span className="t-num block text-[24px] text-ink">{n}</span>

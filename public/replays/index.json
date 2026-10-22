@@ -3,31 +3,31 @@
   "id": "digital-arrest",
   "lang": "en",
   "decision": "block",
-  "turns": 3
+  "turns": 4
  },
  {
   "id": "digital-arrest",
   "lang": "hi",
   "decision": "block",
-  "turns": 3
+  "turns": 4
  },
  {
   "id": "investment-group",
   "lang": "en",
-  "decision": "delay",
-  "turns": 5
+  "decision": "block",
+  "turns": 4
  },
  {
   "id": "investment-group",
   "lang": "hi",
   "decision": "block",
-  "turns": 3
+  "turns": 4
  },
  {
   "id": "flat-deposit",
   "lang": "en",
   "decision": "release",
-  "turns": 3
+  "turns": 4
  },
  {
   "id": "flat-deposit",
@@ -39,24 +39,24 @@
   "id": "task-job",
   "lang": "en",
   "decision": "block",
-  "turns": 2
+  "turns": 3
  },
  {
   "id": "task-job",
   "lang": "hi",
   "decision": "block",
-  "turns": 3
+  "turns": 1
  },
  {
   "id": "hospital-bill",
   "lang": "en",
   "decision": "release",
-  "turns": 3
+  "turns": 4
  },
  {
   "id": "hospital-bill",
   "lang": "hi",
   "decision": "release",
-  "turns": 3
+  "turns": 4
  }
 ]

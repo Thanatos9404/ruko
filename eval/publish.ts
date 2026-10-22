@@ -92,6 +92,12 @@ const results = {
     scam_catch: combine(curCompact.map((c) => c.scam_catch)),
     false_hold: combine(curCompact.map((c) => c.false_hold)),
   },
+  // The current version alone, so the safety claim is about the agent that ships.
+  totals_current: {
+    conversations: current.reduce((a, { s }) => a + s.counts.scenarios, 0),
+    agent_turns: current.reduce((a, { s }) => a + s.headline.otp_pin_requests.agent_turns, 0),
+    otp_requests: current.reduce((a, { s }) => a + s.headline.otp_pin_requests.confirmed, 0),
+  },
   totals: {
     conversations: all.reduce((a, { s }) => a + s.counts.scenarios, 0),
     agent_turns: all.reduce((a, { s }) => a + s.headline.otp_pin_requests.agent_turns, 0),

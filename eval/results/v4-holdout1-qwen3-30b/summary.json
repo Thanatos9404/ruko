@@ -1,0 +1,388 @@
+{
+  "run_id": "v4-holdout1-qwen3-30b",
+  "generated_at": "2026-10-22T15:06:43.954Z",
+  "models": {
+    "agent": "Qwen/Qwen3-30B-A3B-Instruct-2507",
+    "customer": "deepseek-ai/DeepSeek-V4-Flash-0731",
+    "judge": "openai/gpt-oss-120b"
+  },
+  "settings": {
+    "max_customer_turns": 10,
+    "seed": 7
+  },
+  "counts": {
+    "scenarios": 28,
+    "scam": 16,
+    "genuine": 12,
+    "ambiguous": 0
+  },
+  "headline": {
+    "scam_catch_rate": {
+      "n": 16,
+      "k": 16,
+      "rate": 1,
+      "ci95": [
+        0.8063865817272802,
+        1
+      ]
+    },
+    "scam_block_rate": {
+      "n": 16,
+      "k": 15,
+      "rate": 0.9375,
+      "ci95": [
+        0.7167073163197013,
+        0.9888809426916687
+      ]
+    },
+    "false_hold_rate_genuine": {
+      "n": 12,
+      "k": 0,
+      "rate": 0,
+      "ci95": [
+        0,
+        0.2425007574992425
+      ]
+    },
+    "ambiguous_acceptable": {
+      "n": 0,
+      "k": 0,
+      "rate": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "otp_pin_requests": {
+      "confirmed": 0,
+      "candidates": 6,
+      "agent_turns": 125
+    },
+    "median_customer_turns_to_decision": 3,
+    "median_est_seconds_to_decision": 53,
+    "median_est_seconds_call": 71.5,
+    "set_decision_called": {
+      "n": 28,
+      "k": 28,
+      "rate": 1,
+      "ci95": [
+        0.8793527963418923,
+        1
+      ]
+    }
+  },
+  "end_to_end": {
+    "note": "With the pre-call risk policy in front: a payment the policy allows gets no call, so a scam it allows is missed and a genuine payment it allows has no friction.",
+    "scam_caught": {
+      "n": 16,
+      "k": 12,
+      "rate": 0.75,
+      "ci95": [
+        0.5050123107060135,
+        0.8981809801576265
+      ]
+    },
+    "scam_missed_by_precall": 4,
+    "genuine_called": {
+      "n": 12,
+      "k": 8,
+      "rate": 0.6666666666666666,
+      "ci95": [
+        0.3906175873976139,
+        0.8618821601026385
+      ]
+    },
+    "genuine_ended_held": {
+      "n": 12,
+      "k": 0,
+      "rate": 0,
+      "ci95": [
+        0,
+        0.2425007574992425
+      ]
+    }
+  },
+  "detail": {
+    "by_style": {
+      "en": {
+        "catch": {
+          "n": 8,
+          "k": 8,
+          "rate": 1,
+          "ci95": [
+            0.6755843804891231,
+            1
+          ]
+        },
+        "false_hold": {
+          "n": 6,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.3903430336530645
+          ]
+        }
+      },
+      "hi": {
+        "catch": {
+          "n": 0,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "false_hold": {
+          "n": 6,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.3903430336530645
+          ]
+        }
+      },
+      "hinglish": {
+        "catch": {
+          "n": 8,
+          "k": 8,
+          "rate": 1,
+          "ci95": [
+            0.6755843804891231,
+            1
+          ]
+        },
+        "false_hold": {
+          "n": 0,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "by_coaching": {
+      "light": {
+        "n": 8,
+        "k": 8,
+        "rate": 1,
+        "ci95": [
+          0.6755843804891231,
+          1
+        ]
+      },
+      "heavy": {
+        "n": 8,
+        "k": 8,
+        "rate": 1,
+        "ci95": [
+          0.6755843804891231,
+          1
+        ]
+      }
+    },
+    "by_pattern": {
+      "fake_bank_safe_account": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "wrong_transfer_refund": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "loan_processing_fee": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "crypto_recovery": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "army_buyer_qr": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "romance_customs_gift": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "fake_traffic_challan": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      },
+      "insurance_lapse_bonus": {
+        "catch": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        "named_correctly": {
+          "n": 2,
+          "k": 0,
+          "rate": 0,
+          "ci95": [
+            0,
+            0.6576280471103807
+          ]
+        }
+      }
+    },
+    "pattern_named_correctly": {
+      "n": 0,
+      "k": 0,
+      "rate": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "truth_said_when_caught": {
+      "n": 16,
+      "k": 14,
+      "rate": 0.875,
+      "ci95": [
+        0.6397666856325173,
+        0.9650232506629428
+      ]
+    },
+    "contact_requested_in_scams_with_contact": {
+      "n": 11,
+      "k": 11,
+      "rate": 1,
+      "ci95": [
+        0.7411599827511859,
+        1
+      ]
+    },
+    "policy_stricter_than_agent": 0,
+    "agent_said_release_on_caught_scam": 0,
+    "otp_offer_scenarios": [],
+    "errors": 0,
+    "llm_calls": 322,
+    "tokens": {
+      "prompt": 951177,
+      "completion": 39438
+    }
+  },
+  "failures": []
+}

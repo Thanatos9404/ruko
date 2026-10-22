@@ -1,60 +1,36 @@
 {
  "scenario": "task-job",
  "lang": "hi",
- "recorded_code_word": "कमल 35",
+ "recorded_code_word": "दीया 56",
  "recorded_decision": "block",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "नमस्ते Neha जी, मैं रुको, Demo Bank की ऑटोमेटेड भुगतान सुरक्षा सहायक। आपकी सुरक्षा के लिए यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है कमल 35। क्या यह आपके ऐप से मिलता है?"
+   "text": "नमस्ते Neha जी, मैं रुको, Demo Bank की ऑटोमेटेड सुरक्षा लाइन; यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है दीया 56। क्या यह ऐप से मिलता है?"
   },
   {
    "role": "customer",
-   "text": "नमस्ते, हाँ, कोड शब्द मेरे ऐप में दिख रहा है। लेकिन मैं अभी किसी टास्क के लिए पैसे भेजने वाली नहीं हूँ।"
+   "text": "नमस्ते, मुझे ऐप से कोई कोड शब्द नहीं मिला। यह कॉल किस बारे में है?"
   },
   {
    "role": "tool",
-   "tool": "get_check_context",
+   "tool": "codeword_mismatch",
    "args": {
-    "check_id": "chk_YCMQ3LBX4C",
-    "execution_id": "eval-demo-task-job-hi"
-   }
-  },
-  {
-   "role": "agent",
-   "text": "तो आपके ऐप में कोड शब्द कमल 35 दिख रहा है, ठीक है। अब बताइए, यह भुगतान किस लिए है? आप TaskPay Rewards को कैसे जानती हैं?"
-  },
-  {
-   "role": "customer",
-   "text": "मुझे TaskPay Rewards टेलीग्राम पर मिला था, लेकिन अब मुझे यह ठीक नहीं लग रहा। मैं कोई पैसा नहीं भेजूँगी।"
-  },
-  {
-   "role": "tool",
-   "tool": "record_signal",
-   "args": {
-    "check_id": "chk_YCMQ3LBX4C",
-    "signal": "pay_to_earn",
-    "evidence": "मुझे TaskPay Rewards टेलीग्राम पर मिला था",
+    "check_id": "chk_LQDVTHGN9W",
+    "signal": "codeword_mismatch",
+    "evidence": "कोड शब्द ऐप में नहीं मिला",
     "confidence": "high",
-    "pattern_hint": "task_job"
+    "pattern_hint": "none"
    }
-  },
-  {
-   "role": "agent",
-   "text": "नौकरी देने वाली कोई भी असली कंपनी आपसे पैसे नहीं माँगती। क्या काम या टास्क की कमाई पाने के लिए यह भुगतान करना ज़रूरी बताया गया है?"
-  },
-  {
-   "role": "customer",
-   "text": "हाँ, वे कह रहे हैं कि कमीशन खुलवाने के लिए पहले ₹12,000 भरने होंगे। लेकिन मैं यह नहीं करूँगी, मुझे अब समझ आ गया है कि यह धोखा है।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_YCMQ3LBX4C",
-    "signal": "wants_to_cancel",
-    "evidence": "मैं यह नहीं करूँगी, मुझे अब समझ आ गया है कि यह धोखा है",
+    "check_id": "chk_LQDVTHGN9W",
+    "signal": "codeword_mismatch",
+    "evidence": "कोड शब्द ऐप में नहीं मिला",
     "confidence": "high",
     "pattern_hint": "none"
    }
@@ -63,14 +39,14 @@
    "role": "tool",
    "tool": "set_decision",
    "args": {
-    "check_id": "chk_YCMQ3LBX4C",
+    "check_id": "chk_LQDVTHGN9W",
     "recommendation": "block",
-    "reason": "ग्राहक ने भुगतान रद्द करने की इच्छा जताई है और धोखाधड़ी का शक है।"
+    "reason": "कोड शब्द में मिसमैच हुआ है, इसलिए भुगतान रोक दिया गया है।"
    }
   },
   {
    "role": "agent",
-   "text": "आपकी सुरक्षा के लिए यह भुगतान रोक दिया गया है। पैसा आपके खाते में सुरक्षित है। अगर किसी ने दबाव डाला है, तो 1930 पर कॉल करें। धन्यवाद, आपका दिन अच्छा रहे।"
+   "text": "आपकी सुरक्षा के लिए यह भुगतान रोक दिया गया है। पैसा आपके खाते में सुरक्षित है। अगर किसी ने दबाव डाला है, तो 1930 पर कॉल करें। धन्यवाद, आपका दिन शुभ हो।"
   }
  ]
 }

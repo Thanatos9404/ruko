@@ -1,44 +1,60 @@
 {
  "scenario": "task-job",
  "lang": "en",
- "recorded_code_word": "HIRAN 85",
+ "recorded_code_word": "MOR 41",
  "recorded_decision": "block",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "Hello Neha, this is Ruko, Demo Bank's automated payment safety assistant. This call is recorded for your safety. Your code word is HIRAN 85. Does it match your app?"
+   "text": "Hi Neha, Ruko here, Demo Bank's automated safety line, on a recorded call. Your code word is MOR 41. Does it match your app?"
   },
   {
    "role": "customer",
-   "text": "Sorry, I don't have any code word in my app. I think this is some scam, I'm not going to pay ₹12,000."
+   "text": "Haan, MOR 41 matches. But I'm a bit worried, I just got a message asking for ₹12,000 to get my commission, is that normal?"
   },
   {
    "role": "tool",
-   "tool": "record_signal",
+   "tool": "get_check_context",
    "args": {
-    "check_id": "chk_U7A5LQZM48",
-    "signal": "codeword_mismatch",
-    "evidence": "No code word in app",
-    "confidence": "high",
-    "pattern_hint": "none"
+    "check_id": "chk_XXAWTMFQL8",
+    "execution_id": "eval-demo-task-job-en"
    }
   },
   {
    "role": "agent",
-   "text": "Your app shows no code word. That’s a red flag. Is anyone on another call or video call with you right now, telling you what to do?"
+   "text": "What's this payment for, and is anyone on another call telling you what to do?"
   },
   {
    "role": "customer",
-   "text": "No, there's no one on call with me. I think you're right, this is a fraud, I'm not paying anything."
+   "text": "It's for a prepaid task on Telegram, they want me to send ₹12,000 to get my ₹38,000 commission. No, nobody is on a call, it's just chat messages."
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_U7A5LQZM48",
+    "check_id": "chk_XXAWTMFQL8",
+    "signal": "pay_to_earn",
+    "evidence": "Must pay ₹12,000 to get ₹38,000 commission",
+    "confidence": "high",
+    "pattern_hint": "task_job"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "A genuine company offering a job will never ask you for money. Do you need to make this payment to get paid for work or tasks?"
+  },
+  {
+   "role": "customer",
+   "text": "Arre, that makes sense, I don’t have to pay anything to earn. I’ll stop this right now, thanks for warning me."
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_XXAWTMFQL8",
     "signal": "wants_to_cancel",
-    "evidence": "Not paying, thinks it's a scam",
+    "evidence": "I’ll stop this right now",
     "confidence": "high",
     "pattern_hint": "none"
    }
@@ -47,9 +63,9 @@
    "role": "tool",
    "tool": "set_decision",
    "args": {
-    "check_id": "chk_U7A5LQZM48",
+    "check_id": "chk_XXAWTMFQL8",
     "recommendation": "block",
-    "reason": "Customer suspects fraud and wants to cancel the payment."
+    "reason": "Payment is for a task job that requires upfront payment, which is a scam pattern."
    }
   },
   {

@@ -1,6 +1,6 @@
 {
   "run_id": "v4-dev-qwen3-30b",
-  "generated_at": "2026-10-17T18:21:44.053Z",
+  "generated_at": "2026-10-22T15:00:52.157Z",
   "models": {
     "agent": "Qwen/Qwen3-30B-A3B-Instruct-2507",
     "customer": "deepseek-ai/DeepSeek-V4-Flash-0731",
@@ -19,20 +19,20 @@
   "headline": {
     "scam_catch_rate": {
       "n": 60,
-      "k": 60,
-      "rate": 1,
-      "ci95": [
-        0.9398260695220669,
-        0.9999999999999999
-      ]
-    },
-    "scam_block_rate": {
-      "n": 60,
       "k": 58,
       "rate": 0.9666666666666667,
       "ci95": [
         0.8863601247107462,
         0.9908108735098498
+      ]
+    },
+    "scam_block_rate": {
+      "n": 60,
+      "k": 57,
+      "rate": 0.95,
+      "ci95": [
+        0.8629926537490016,
+        0.9828508088208587
       ]
     },
     "false_hold_rate_genuine": {
@@ -46,21 +46,21 @@
     },
     "ambiguous_acceptable": {
       "n": 12,
-      "k": 8,
-      "rate": 0.6666666666666666,
+      "k": 10,
+      "rate": 0.8333333333333334,
       "ci95": [
-        0.3906175873976139,
-        0.8618821601026385
+        0.5519636426153274,
+        0.9530358523851776
       ]
     },
     "otp_pin_requests": {
-      "confirmed": 0,
-      "candidates": 5,
-      "agent_turns": 418
+      "confirmed": 1,
+      "candidates": 4,
+      "agent_turns": 408
     },
     "median_customer_turns_to_decision": 3,
-    "median_est_seconds_to_decision": 57,
-    "median_est_seconds_call": 79.5,
+    "median_est_seconds_to_decision": 55,
+    "median_est_seconds_call": 77.5,
     "set_decision_called": {
       "n": 96,
       "k": 95,
@@ -75,11 +75,11 @@
     "note": "With the pre-call risk policy in front: a payment the policy allows gets no call, so a scam it allows is missed and a genuine payment it allows has no friction.",
     "scam_caught": {
       "n": 60,
-      "k": 48,
-      "rate": 0.8,
+      "k": 47,
+      "rate": 0.7833333333333333,
       "ci95": [
-        0.6821795390818299,
-        0.8817161026314104
+        0.6637973165265748,
+        0.8687707895359299
       ]
     },
     "scam_missed_by_precall": 12,
@@ -116,22 +116,22 @@
         },
         "false_hold": {
           "n": 8,
-          "k": 1,
-          "rate": 0.125,
+          "k": 0,
+          "rate": 0,
           "ci95": [
-            0.02241690886329617,
-            0.4708948057698615
+            0,
+            0.3244156195108769
           ]
         }
       },
       "hi": {
         "catch": {
           "n": 20,
-          "k": 20,
-          "rate": 1,
+          "k": 19,
+          "rate": 0.95,
           "ci95": [
-            0.8388698745050667,
-            1
+            0.7638641064874331,
+            0.9911187805671268
           ]
         },
         "false_hold": {
@@ -147,20 +147,20 @@
       "hinglish": {
         "catch": {
           "n": 20,
-          "k": 20,
-          "rate": 1,
+          "k": 19,
+          "rate": 0.95,
           "ci95": [
-            0.8388698745050667,
-            1
+            0.7638641064874331,
+            0.9911187805671268
           ]
         },
         "false_hold": {
           "n": 8,
-          "k": 0,
-          "rate": 0,
+          "k": 1,
+          "rate": 0.125,
           "ci95": [
-            0,
-            0.3244156195108769
+            0.02241690886329617,
+            0.4708948057698615
           ]
         }
       }
@@ -177,11 +177,11 @@
       },
       "heavy": {
         "n": 30,
-        "k": 30,
-        "rate": 1,
+        "k": 28,
+        "rate": 0.9333333333333333,
         "ci95": [
-          0.8864829086095221,
-          1
+          0.7867618227892791,
+          0.9815233646723066
         ]
       }
     },
@@ -238,26 +238,6 @@
         },
         "named_correctly": {
           "n": 6,
-          "k": 4,
-          "rate": 0.6666666666666666,
-          "ci95": [
-            0.29998832134152864,
-            0.9032306674407831
-          ]
-        }
-      },
-      "investment_trading": {
-        "catch": {
-          "n": 6,
-          "k": 6,
-          "rate": 1,
-          "ci95": [
-            0.6096569663469354,
-            0.9999999999999999
-          ]
-        },
-        "named_correctly": {
-          "n": 6,
           "k": 3,
           "rate": 0.5,
           "ci95": [
@@ -266,23 +246,43 @@
           ]
         }
       },
-      "task_job": {
+      "investment_trading": {
         "catch": {
           "n": 6,
-          "k": 6,
-          "rate": 1,
+          "k": 5,
+          "rate": 0.8333333333333334,
           "ci95": [
-            0.6096569663469354,
-            0.9999999999999999
+            0.43649056343635395,
+            0.9699474141282697
           ]
         },
         "named_correctly": {
+          "n": 5,
+          "k": 4,
+          "rate": 0.8,
+          "ci95": [
+            0.3755282641185388,
+            0.9637768390302125
+          ]
+        }
+      },
+      "task_job": {
+        "catch": {
           "n": 6,
-          "k": 6,
+          "k": 5,
+          "rate": 0.8333333333333334,
+          "ci95": [
+            0.43649056343635395,
+            0.9699474141282697
+          ]
+        },
+        "named_correctly": {
+          "n": 5,
+          "k": 5,
           "rate": 1,
           "ci95": [
-            0.6096569663469354,
-            0.9999999999999999
+            0.5655085052479191,
+            1
           ]
         }
       },
@@ -298,11 +298,11 @@
         },
         "named_correctly": {
           "n": 6,
-          "k": 6,
-          "rate": 1,
+          "k": 5,
+          "rate": 0.8333333333333334,
           "ci95": [
-            0.6096569663469354,
-            0.9999999999999999
+            0.43649056343635395,
+            0.9699474141282697
           ]
         }
       },
@@ -358,11 +358,11 @@
         },
         "named_correctly": {
           "n": 6,
-          "k": 5,
-          "rate": 0.8333333333333334,
+          "k": 6,
+          "rate": 1,
           "ci95": [
-            0.43649056343635395,
-            0.9699474141282697
+            0.6096569663469354,
+            0.9999999999999999
           ]
         }
       },
@@ -378,69 +378,78 @@
         },
         "named_correctly": {
           "n": 6,
-          "k": 5,
-          "rate": 0.8333333333333334,
+          "k": 6,
+          "rate": 1,
           "ci95": [
-            0.43649056343635395,
-            0.9699474141282697
+            0.6096569663469354,
+            0.9999999999999999
           ]
         }
       }
     },
     "pattern_named_correctly": {
-      "n": 60,
+      "n": 58,
       "k": 53,
-      "rate": 0.8833333333333333,
+      "rate": 0.9137931034482759,
       "ci95": [
-        0.7782097940014187,
-        0.9423235259654995
+        0.8135613862273433,
+        0.9626151680662066
       ]
     },
     "truth_said_when_caught": {
-      "n": 60,
-      "k": 44,
-      "rate": 0.7333333333333333,
+      "n": 58,
+      "k": 45,
+      "rate": 0.7758620689655172,
       "ci95": [
-        0.6099104639810865,
-        0.8286750351292115
+        0.6533863695244156,
+        0.8640646666712842
       ]
     },
     "contact_requested_in_scams_with_contact": {
       "n": 40,
-      "k": 32,
-      "rate": 0.8,
+      "k": 34,
+      "rate": 0.85,
       "ci95": [
-        0.6524239261814333,
-        0.8950013502683314
+        0.7092737396097997,
+        0.9293890829149256
       ]
     },
     "policy_stricter_than_agent": 1,
     "agent_said_release_on_caught_scam": 0,
     "otp_offer_scenarios": [],
     "errors": 0,
-    "llm_calls": 1053,
+    "llm_calls": 1042,
     "tokens": {
-      "prompt": 3216370,
-      "completion": 148076
+      "prompt": 3205232,
+      "completion": 145730
     }
   },
   "failures": [
     {
-      "scenario": "genuine-hospital-en",
+      "scenario": "scam-investment_trading-hi-heavy",
+      "expected": [
+        "delay",
+        "block"
+      ],
+      "got": "release",
+      "why": "signals: own_initiative(high), family_helping(high); agent recommended release"
+    },
+    {
+      "scenario": "scam-task_job-hinglish-heavy",
+      "expected": [
+        "delay",
+        "block"
+      ],
+      "got": "release",
+      "why": "signals: own_initiative(high), purpose_consistent(high); agent recommended release"
+    },
+    {
+      "scenario": "genuine-hospital-hinglish",
       "expected": [
         "release"
       ],
       "got": "delay",
-      "why": "signals: coached_on_call(high), family_helping(high), own_initiative(high), purpose_consistent(high); agent recommended delay; contact requested: true"
-    },
-    {
-      "scenario": "ambiguous-family_helping_on_call-hinglish",
-      "expected": [
-        "release",
-        "delay"
-      ],
-      "got": "block",
-      "why": "signals: codeword_mismatch(high); agent recommended block; contact requested: false"
+      "why": "signals: coached_on_call(high), knows_payee(high); agent recommended delay; contact requested: false"
     },
     {
       "scenario": "ambiguous-friend_urgent_whatsapp-hinglish",
@@ -449,7 +458,7 @@
         "block"
       ],
       "got": "release",
-      "why": "signals: own_initiative(high), knows_payee(high); agent recommended release; contact requested: false"
+      "why": "signals: knows_payee(high), own_initiative(high); agent recommended release; contact requested: false"
     },
     {
       "scenario": "ambiguous-real_son_emergency_verified-en",
@@ -459,15 +468,6 @@
       ],
       "got": "block",
       "why": "signals: relative_emergency(high), coached_on_call(high); agent recommended delay; contact requested: true"
-    },
-    {
-      "scenario": "ambiguous-real_son_emergency_verified-hinglish",
-      "expected": [
-        "release",
-        "delay"
-      ],
-      "got": "block",
-      "why": "signals: relative_emergency(high), urgency_pressure(high); agent recommended block; contact requested: false"
     }
   ]
 }

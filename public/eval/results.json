@@ -1,40 +1,40 @@
 {
- "generated_at": "2026-10-17T16:56:33.494Z",
- "version": "v3",
+ "generated_at": "2026-10-22T16:06:53.016Z",
+ "version": "v5",
  "agent_model": "Qwen/Qwen3-30B-A3B-Instruct-2507",
  "customer_model": "deepseek-ai/DeepSeek-V4-Flash-0731",
  "current": [
   {
-   "run_id": "v3-dev-qwen3-30b",
+   "run_id": "v5-dev-qwen3-30b",
    "label": "Development set (96)",
    "set": "dev",
    "clean_holdout": false,
    "scenarios": 96,
    "scam_catch": {
     "n": 60,
-    "k": 58,
-    "rate": 0.9666666666666667,
+    "k": 60,
+    "rate": 1,
     "ci95": [
-     0.8863601247107462,
-     0.9908108735098498
+     0.9398260695220669,
+     0.9999999999999999
     ]
    },
    "scam_block": {
     "n": 60,
-    "k": 53,
-    "rate": 0.8833333333333333,
+    "k": 55,
+    "rate": 0.9166666666666666,
     "ci95": [
-     0.7782097940014187,
-     0.9423235259654995
+     0.8193083153188752,
+     0.9638800759495141
     ]
    },
    "false_hold": {
     "n": 24,
-    "k": 0,
-    "rate": 0,
+    "k": 2,
+    "rate": 0.08333333333333333,
     "ci95": [
-     0,
-     0.13798057582897535
+     0.023158327842973503,
+     0.258492152014506
     ]
    },
    "ambiguous_ok": {
@@ -47,16 +47,17 @@
     ]
    },
    "otp_requests": 0,
-   "agent_turns": 459,
+   "agent_turns": 442,
    "median_turns": 3,
-   "median_seconds": 74,
+   "median_seconds": 59,
+   "median_call_seconds": 82.5,
    "heavy_catch": {
     "n": 30,
-    "k": 28,
-    "rate": 0.9333333333333333,
+    "k": 30,
+    "rate": 1,
     "ci95": [
-     0.7867618227892791,
-     0.9815233646723066
+     0.8864829086095221,
+     1
     ]
    },
    "light_catch": {
@@ -69,21 +70,21 @@
     ]
    },
    "truth_said": {
-    "n": 58,
-    "k": 49,
-    "rate": 0.8448275862068966,
+    "n": 60,
+    "k": 35,
+    "rate": 0.5833333333333334,
     "ci95": [
-     0.730657769412127,
-     0.9161560258324979
+     0.45727854313239624,
+     0.6993591351212818
     ]
    },
    "e2e_scam_caught": {
     "n": 60,
-    "k": 46,
-    "rate": 0.7666666666666667,
+    "k": 48,
+    "rate": 0.8,
     "ci95": [
-     0.6456348865960799,
-     0.8556056838156894
+     0.6821795390818299,
+     0.8817161026314104
     ]
    },
    "e2e_genuine_called": {
@@ -97,50 +98,136 @@
    }
   },
   {
-   "run_id": "v3-holdout2-qwen3-30b",
-   "label": "Fresh held-out set (28), never used for tuning",
-   "set": "holdout2",
+   "run_id": "v5-holdout4-qwen3-30b",
+   "label": "Fresh held-out set 4 (28), frozen before any v5 run, heavy coaching in Hindi/Hinglish",
+   "set": "holdout4",
    "clean_holdout": true,
    "scenarios": 28,
    "scam_catch": {
-    "n": 16,
-    "k": 16,
-    "rate": 1,
+    "n": 18,
+    "k": 15,
+    "rate": 0.8333333333333334,
     "ci95": [
-     0.8063865817272802,
-     1
+     0.6077750036164076,
+     0.9416352959953425
     ]
    },
    "scam_block": {
-    "n": 16,
+    "n": 18,
     "k": 11,
-    "rate": 0.6875,
+    "rate": 0.6111111111111112,
     "ci95": [
-     0.4440393186673406,
-     0.8583556494803894
+     0.3861866858065617,
+     0.7969500807306884
     ]
    },
    "false_hold": {
-    "n": 12,
-    "k": 0,
-    "rate": 0,
+    "n": 10,
+    "k": 2,
+    "rate": 0.2,
     "ci95": [
-     0,
-     0.2425007574992425
+     0.056680947980693314,
+     0.5098431532792765
     ]
    },
    "ambiguous_ok": null,
    "otp_requests": 0,
-   "agent_turns": 135,
-   "median_turns": 3.5,
-   "median_seconds": 76,
+   "agent_turns": 128,
+   "median_turns": 3,
+   "median_seconds": 58,
+   "median_call_seconds": 67,
    "heavy_catch": {
-    "n": 8,
-    "k": 8,
+    "n": 16,
+    "k": 13,
+    "rate": 0.8125,
+    "ci95": [
+     0.5699064013154177,
+     0.9340852122641324
+    ]
+   },
+   "light_catch": {
+    "n": 2,
+    "k": 2,
     "rate": 1,
     "ci95": [
-     0.6755843804891231,
+     0.34237195288961925,
      1
+    ]
+   },
+   "truth_said": {
+    "n": 15,
+    "k": 5,
+    "rate": 0.3333333333333333,
+    "ci95": [
+     0.15176100694691236,
+     0.5828687484878701
+    ]
+   },
+   "e2e_scam_caught": {
+    "n": 18,
+    "k": 14,
+    "rate": 0.7777777777777778,
+    "ci95": [
+     0.5478497354769452,
+     0.90999218086618
+    ]
+   },
+   "e2e_genuine_called": {
+    "n": 10,
+    "k": 8,
+    "rate": 0.8,
+    "ci95": [
+     0.49015684672072335,
+     0.9433190520193067
+    ]
+   }
+  },
+  {
+   "run_id": "v5-holdout3-qwen3-30b",
+   "label": "Held-out set 3 (28), previously seen (v4)",
+   "set": "holdout3",
+   "clean_holdout": false,
+   "scenarios": 28,
+   "scam_catch": {
+    "n": 16,
+    "k": 13,
+    "rate": 0.8125,
+    "ci95": [
+     0.5699064013154177,
+     0.9340852122641324
+    ]
+   },
+   "scam_block": {
+    "n": 16,
+    "k": 9,
+    "rate": 0.5625,
+    "ci95": [
+     0.33178195606776517,
+     0.7690163666481448
+    ]
+   },
+   "false_hold": {
+    "n": 12,
+    "k": 1,
+    "rate": 0.08333333333333333,
+    "ci95": [
+     0.014864709450773478,
+     0.35388592179859524
+    ]
+   },
+   "ambiguous_ok": null,
+   "otp_requests": 0,
+   "agent_turns": 142,
+   "median_turns": 4,
+   "median_seconds": 57.5,
+   "median_call_seconds": 74,
+   "heavy_catch": {
+    "n": 8,
+    "k": 5,
+    "rate": 0.625,
+    "ci95": [
+     0.30573785458380187,
+     0.863158240538479
     ]
    },
    "light_catch": {
@@ -153,12 +240,97 @@
     ]
    },
    "truth_said": {
+    "n": 13,
+    "k": 5,
+    "rate": 0.38461538461538464,
+    "ci95": [
+     0.17709446581236818,
+     0.6447751902773146
+    ]
+   },
+   "e2e_scam_caught": {
+    "n": 16,
+    "k": 11,
+    "rate": 0.6875,
+    "ci95": [
+     0.4440393186673406,
+     0.8583556494803894
+    ]
+   },
+   "e2e_genuine_called": {
+    "n": 12,
+    "k": 10,
+    "rate": 0.8333333333333334,
+    "ci95": [
+     0.5519636426153274,
+     0.9530358523851776
+    ]
+   }
+  },
+  {
+   "run_id": "v5-holdout2-qwen3-30b",
+   "label": "Held-out set 2 (28), previously seen (v3, v4)",
+   "set": "holdout2",
+   "clean_holdout": false,
+   "scenarios": 28,
+   "scam_catch": {
     "n": 16,
     "k": 15,
     "rate": 0.9375,
     "ci95": [
      0.7167073163197013,
      0.9888809426916687
+    ]
+   },
+   "scam_block": {
+    "n": 16,
+    "k": 13,
+    "rate": 0.8125,
+    "ci95": [
+     0.5699064013154177,
+     0.9340852122641324
+    ]
+   },
+   "false_hold": {
+    "n": 12,
+    "k": 2,
+    "rate": 0.16666666666666666,
+    "ci95": [
+     0.04696414761482223,
+     0.44803635738467273
+    ]
+   },
+   "ambiguous_ok": null,
+   "otp_requests": 0,
+   "agent_turns": 121,
+   "median_turns": 3,
+   "median_seconds": 50.5,
+   "median_call_seconds": 68.5,
+   "heavy_catch": {
+    "n": 8,
+    "k": 7,
+    "rate": 0.875,
+    "ci95": [
+     0.5291051942301386,
+     0.9775830911367038
+    ]
+   },
+   "light_catch": {
+    "n": 8,
+    "k": 8,
+    "rate": 1,
+    "ci95": [
+     0.6755843804891231,
+     1
+    ]
+   },
+   "truth_said": {
+    "n": 15,
+    "k": 9,
+    "rate": 0.6,
+    "ci95": [
+     0.357464427565077,
+     0.8017577191740534
     ]
    },
    "e2e_scam_caught": {
@@ -181,8 +353,8 @@
    }
   },
   {
-   "run_id": "v3-holdout1-qwen3-30b",
-   "label": "Held-out set 1 (28), seen when tuning v3",
+   "run_id": "v5-holdout1-qwen3-30b",
+   "label": "Held-out set 1 (28), previously seen",
    "set": "holdout",
    "clean_holdout": false,
    "scenarios": 28,
@@ -197,11 +369,11 @@
    },
    "scam_block": {
     "n": 16,
-    "k": 11,
-    "rate": 0.6875,
+    "k": 13,
+    "rate": 0.8125,
     "ci95": [
-     0.4440393186673406,
-     0.8583556494803894
+     0.5699064013154177,
+     0.9340852122641324
     ]
    },
    "false_hold": {
@@ -215,9 +387,10 @@
    },
    "ambiguous_ok": null,
    "otp_requests": 0,
-   "agent_turns": 129,
-   "median_turns": 3,
-   "median_seconds": 66,
+   "agent_turns": 126,
+   "median_turns": 3.5,
+   "median_seconds": 54,
+   "median_call_seconds": 68,
    "heavy_catch": {
     "n": 8,
     "k": 7,
@@ -238,11 +411,11 @@
    },
    "truth_said": {
     "n": 15,
-    "k": 13,
-    "rate": 0.8666666666666667,
+    "k": 10,
+    "rate": 0.6666666666666666,
     "ci95": [
-     0.6211750079348376,
-     0.9626395301086407
+     0.41713125151212976,
+     0.8482389930530876
     ]
    },
    "e2e_scam_caught": {
@@ -312,6 +485,7 @@
    "agent_turns": 455,
    "median_turns": 4,
    "median_seconds": 79,
+   "median_call_seconds": null,
    "heavy_catch": {
     "n": 30,
     "k": 29,
@@ -404,6 +578,7 @@
    "agent_turns": 451,
    "median_turns": 3,
    "median_seconds": 75,
+   "median_call_seconds": null,
    "heavy_catch": {
     "n": 30,
     "k": 27,
@@ -488,6 +663,7 @@
    "agent_turns": 123,
    "median_turns": 3,
    "median_seconds": 60,
+   "median_call_seconds": null,
    "heavy_catch": {
     "n": 8,
     "k": 4,
@@ -533,32 +709,648 @@
      0.8618821601026385
     ]
    }
+  },
+  {
+   "run_id": "v3-dev-qwen3-30b",
+   "label": "v3 · development set",
+   "set": "dev",
+   "clean_holdout": false,
+   "scenarios": 96,
+   "scam_catch": {
+    "n": 60,
+    "k": 58,
+    "rate": 0.9666666666666667,
+    "ci95": [
+     0.8863601247107462,
+     0.9908108735098498
+    ]
+   },
+   "scam_block": {
+    "n": 60,
+    "k": 53,
+    "rate": 0.8833333333333333,
+    "ci95": [
+     0.7782097940014187,
+     0.9423235259654995
+    ]
+   },
+   "false_hold": {
+    "n": 24,
+    "k": 0,
+    "rate": 0,
+    "ci95": [
+     0,
+     0.13798057582897535
+    ]
+   },
+   "ambiguous_ok": {
+    "n": 12,
+    "k": 10,
+    "rate": 0.8333333333333334,
+    "ci95": [
+     0.5519636426153274,
+     0.9530358523851776
+    ]
+   },
+   "otp_requests": 0,
+   "agent_turns": 459,
+   "median_turns": 3,
+   "median_seconds": 74,
+   "median_call_seconds": null,
+   "heavy_catch": {
+    "n": 30,
+    "k": 28,
+    "rate": 0.9333333333333333,
+    "ci95": [
+     0.7867618227892791,
+     0.9815233646723066
+    ]
+   },
+   "light_catch": {
+    "n": 30,
+    "k": 30,
+    "rate": 1,
+    "ci95": [
+     0.8864829086095221,
+     1
+    ]
+   },
+   "truth_said": {
+    "n": 58,
+    "k": 49,
+    "rate": 0.8448275862068966,
+    "ci95": [
+     0.730657769412127,
+     0.9161560258324979
+    ]
+   },
+   "e2e_scam_caught": {
+    "n": 60,
+    "k": 46,
+    "rate": 0.7666666666666667,
+    "ci95": [
+     0.6456348865960799,
+     0.8556056838156894
+    ]
+   },
+   "e2e_genuine_called": {
+    "n": 24,
+    "k": 18,
+    "rate": 0.75,
+    "ci95": [
+     0.5510017468789357,
+     0.8800079652065766
+    ]
+   }
+  },
+  {
+   "run_id": "v3-holdout2-qwen3-30b",
+   "label": "v3 · held-out set 2 (clean for v3)",
+   "set": "holdout2",
+   "clean_holdout": true,
+   "scenarios": 28,
+   "scam_catch": {
+    "n": 16,
+    "k": 16,
+    "rate": 1,
+    "ci95": [
+     0.8063865817272802,
+     1
+    ]
+   },
+   "scam_block": {
+    "n": 16,
+    "k": 11,
+    "rate": 0.6875,
+    "ci95": [
+     0.4440393186673406,
+     0.8583556494803894
+    ]
+   },
+   "false_hold": {
+    "n": 12,
+    "k": 0,
+    "rate": 0,
+    "ci95": [
+     0,
+     0.2425007574992425
+    ]
+   },
+   "ambiguous_ok": null,
+   "otp_requests": 0,
+   "agent_turns": 135,
+   "median_turns": 3.5,
+   "median_seconds": 76,
+   "median_call_seconds": null,
+   "heavy_catch": {
+    "n": 8,
+    "k": 8,
+    "rate": 1,
+    "ci95": [
+     0.6755843804891231,
+     1
+    ]
+   },
+   "light_catch": {
+    "n": 8,
+    "k": 8,
+    "rate": 1,
+    "ci95": [
+     0.6755843804891231,
+     1
+    ]
+   },
+   "truth_said": {
+    "n": 16,
+    "k": 15,
+    "rate": 0.9375,
+    "ci95": [
+     0.7167073163197013,
+     0.9888809426916687
+    ]
+   },
+   "e2e_scam_caught": {
+    "n": 16,
+    "k": 12,
+    "rate": 0.75,
+    "ci95": [
+     0.5050123107060135,
+     0.8981809801576265
+    ]
+   },
+   "e2e_genuine_called": {
+    "n": 12,
+    "k": 8,
+    "rate": 0.6666666666666666,
+    "ci95": [
+     0.3906175873976139,
+     0.8618821601026385
+    ]
+   }
+  },
+  {
+   "run_id": "v3-holdout1-qwen3-30b",
+   "label": "v3 · held-out set 1 (seen while tuning)",
+   "set": "holdout",
+   "clean_holdout": false,
+   "scenarios": 28,
+   "scam_catch": {
+    "n": 16,
+    "k": 15,
+    "rate": 0.9375,
+    "ci95": [
+     0.7167073163197013,
+     0.9888809426916687
+    ]
+   },
+   "scam_block": {
+    "n": 16,
+    "k": 11,
+    "rate": 0.6875,
+    "ci95": [
+     0.4440393186673406,
+     0.8583556494803894
+    ]
+   },
+   "false_hold": {
+    "n": 12,
+    "k": 1,
+    "rate": 0.08333333333333333,
+    "ci95": [
+     0.014864709450773478,
+     0.35388592179859524
+    ]
+   },
+   "ambiguous_ok": null,
+   "otp_requests": 0,
+   "agent_turns": 129,
+   "median_turns": 3,
+   "median_seconds": 66,
+   "median_call_seconds": null,
+   "heavy_catch": {
+    "n": 8,
+    "k": 7,
+    "rate": 0.875,
+    "ci95": [
+     0.5291051942301386,
+     0.9775830911367038
+    ]
+   },
+   "light_catch": {
+    "n": 8,
+    "k": 8,
+    "rate": 1,
+    "ci95": [
+     0.6755843804891231,
+     1
+    ]
+   },
+   "truth_said": {
+    "n": 15,
+    "k": 13,
+    "rate": 0.8666666666666667,
+    "ci95": [
+     0.6211750079348376,
+     0.9626395301086407
+    ]
+   },
+   "e2e_scam_caught": {
+    "n": 16,
+    "k": 11,
+    "rate": 0.6875,
+    "ci95": [
+     0.4440393186673406,
+     0.8583556494803894
+    ]
+   },
+   "e2e_genuine_called": {
+    "n": 12,
+    "k": 8,
+    "rate": 0.6666666666666666,
+    "ci95": [
+     0.3906175873976139,
+     0.8618821601026385
+    ]
+   }
+  },
+  {
+   "run_id": "v4-dev-qwen3-30b",
+   "label": "v4 · development set (faster; text model changed during the run)",
+   "set": "dev",
+   "clean_holdout": false,
+   "scenarios": 96,
+   "scam_catch": {
+    "n": 60,
+    "k": 58,
+    "rate": 0.9666666666666667,
+    "ci95": [
+     0.8863601247107462,
+     0.9908108735098498
+    ]
+   },
+   "scam_block": {
+    "n": 60,
+    "k": 57,
+    "rate": 0.95,
+    "ci95": [
+     0.8629926537490016,
+     0.9828508088208587
+    ]
+   },
+   "false_hold": {
+    "n": 24,
+    "k": 1,
+    "rate": 0.041666666666666664,
+    "ci95": [
+     0.007393265354805126,
+     0.20242226248842232
+    ]
+   },
+   "ambiguous_ok": {
+    "n": 12,
+    "k": 10,
+    "rate": 0.8333333333333334,
+    "ci95": [
+     0.5519636426153274,
+     0.9530358523851776
+    ]
+   },
+   "otp_requests": 1,
+   "agent_turns": 408,
+   "median_turns": 3,
+   "median_seconds": 55,
+   "median_call_seconds": 77.5,
+   "heavy_catch": {
+    "n": 30,
+    "k": 28,
+    "rate": 0.9333333333333333,
+    "ci95": [
+     0.7867618227892791,
+     0.9815233646723066
+    ]
+   },
+   "light_catch": {
+    "n": 30,
+    "k": 30,
+    "rate": 1,
+    "ci95": [
+     0.8864829086095221,
+     1
+    ]
+   },
+   "truth_said": {
+    "n": 58,
+    "k": 45,
+    "rate": 0.7758620689655172,
+    "ci95": [
+     0.6533863695244156,
+     0.8640646666712842
+    ]
+   },
+   "e2e_scam_caught": {
+    "n": 60,
+    "k": 47,
+    "rate": 0.7833333333333333,
+    "ci95": [
+     0.6637973165265748,
+     0.8687707895359299
+    ]
+   },
+   "e2e_genuine_called": {
+    "n": 24,
+    "k": 18,
+    "rate": 0.75,
+    "ci95": [
+     0.5510017468789357,
+     0.8800079652065766
+    ]
+   }
+  },
+  {
+   "run_id": "v4-holdout3-qwen3-30b",
+   "label": "v4 · held-out set 3 (clean for v4)",
+   "set": "holdout3",
+   "clean_holdout": true,
+   "scenarios": 28,
+   "scam_catch": {
+    "n": 16,
+    "k": 12,
+    "rate": 0.75,
+    "ci95": [
+     0.5050123107060135,
+     0.8981809801576265
+    ]
+   },
+   "scam_block": {
+    "n": 16,
+    "k": 11,
+    "rate": 0.6875,
+    "ci95": [
+     0.4440393186673406,
+     0.8583556494803894
+    ]
+   },
+   "false_hold": {
+    "n": 12,
+    "k": 2,
+    "rate": 0.16666666666666666,
+    "ci95": [
+     0.04696414761482223,
+     0.44803635738467273
+    ]
+   },
+   "ambiguous_ok": null,
+   "otp_requests": 0,
+   "agent_turns": 123,
+   "median_turns": 3,
+   "median_seconds": 53.5,
+   "median_call_seconds": 65,
+   "heavy_catch": {
+    "n": 8,
+    "k": 4,
+    "rate": 0.5,
+    "ci95": [
+     0.21521252682444186,
+     0.7847874731755582
+    ]
+   },
+   "light_catch": {
+    "n": 8,
+    "k": 8,
+    "rate": 1,
+    "ci95": [
+     0.6755843804891231,
+     1
+    ]
+   },
+   "truth_said": {
+    "n": 12,
+    "k": 9,
+    "rate": 0.75,
+    "ci95": [
+     0.46768966087934005,
+     0.9110599603710386
+    ]
+   },
+   "e2e_scam_caught": {
+    "n": 16,
+    "k": 9,
+    "rate": 0.5625,
+    "ci95": [
+     0.33178195606776517,
+     0.7690163666481448
+    ]
+   },
+   "e2e_genuine_called": {
+    "n": 12,
+    "k": 10,
+    "rate": 0.8333333333333334,
+    "ci95": [
+     0.5519636426153274,
+     0.9530358523851776
+    ]
+   }
+  },
+  {
+   "run_id": "v4-holdout2-qwen3-30b",
+   "label": "v4 · held-out set 2",
+   "set": "holdout2",
+   "clean_holdout": false,
+   "scenarios": 28,
+   "scam_catch": {
+    "n": 16,
+    "k": 14,
+    "rate": 0.875,
+    "ci95": [
+     0.6397666856325173,
+     0.9650232506629428
+    ]
+   },
+   "scam_block": {
+    "n": 16,
+    "k": 13,
+    "rate": 0.8125,
+    "ci95": [
+     0.5699064013154177,
+     0.9340852122641324
+    ]
+   },
+   "false_hold": {
+    "n": 12,
+    "k": 0,
+    "rate": 0,
+    "ci95": [
+     0,
+     0.2425007574992425
+    ]
+   },
+   "ambiguous_ok": null,
+   "otp_requests": 0,
+   "agent_turns": 120,
+   "median_turns": 3,
+   "median_seconds": 54,
+   "median_call_seconds": 62.5,
+   "heavy_catch": {
+    "n": 8,
+    "k": 6,
+    "rate": 0.75,
+    "ci95": [
+     0.40926987910258916,
+     0.9285223111419724
+    ]
+   },
+   "light_catch": {
+    "n": 8,
+    "k": 8,
+    "rate": 1,
+    "ci95": [
+     0.6755843804891231,
+     1
+    ]
+   },
+   "truth_said": {
+    "n": 14,
+    "k": 12,
+    "rate": 0.8571428571428571,
+    "ci95": [
+     0.600580922361363,
+     0.9599069262620787
+    ]
+   },
+   "e2e_scam_caught": {
+    "n": 16,
+    "k": 10,
+    "rate": 0.625,
+    "ci95": [
+     0.3864064709793481,
+     0.815190174452472
+    ]
+   },
+   "e2e_genuine_called": {
+    "n": 12,
+    "k": 8,
+    "rate": 0.6666666666666666,
+    "ci95": [
+     0.3906175873976139,
+     0.8618821601026385
+    ]
+   }
+  },
+  {
+   "run_id": "v4-holdout1-qwen3-30b",
+   "label": "v4 · held-out set 1",
+   "set": "holdout",
+   "clean_holdout": false,
+   "scenarios": 28,
+   "scam_catch": {
+    "n": 16,
+    "k": 16,
+    "rate": 1,
+    "ci95": [
+     0.8063865817272802,
+     1
+    ]
+   },
+   "scam_block": {
+    "n": 16,
+    "k": 15,
+    "rate": 0.9375,
+    "ci95": [
+     0.7167073163197013,
+     0.9888809426916687
+    ]
+   },
+   "false_hold": {
+    "n": 12,
+    "k": 0,
+    "rate": 0,
+    "ci95": [
+     0,
+     0.2425007574992425
+    ]
+   },
+   "ambiguous_ok": null,
+   "otp_requests": 0,
+   "agent_turns": 125,
+   "median_turns": 3,
+   "median_seconds": 53,
+   "median_call_seconds": 71.5,
+   "heavy_catch": {
+    "n": 8,
+    "k": 8,
+    "rate": 1,
+    "ci95": [
+     0.6755843804891231,
+     1
+    ]
+   },
+   "light_catch": {
+    "n": 8,
+    "k": 8,
+    "rate": 1,
+    "ci95": [
+     0.6755843804891231,
+     1
+    ]
+   },
+   "truth_said": {
+    "n": 16,
+    "k": 14,
+    "rate": 0.875,
+    "ci95": [
+     0.6397666856325173,
+     0.9650232506629428
+    ]
+   },
+   "e2e_scam_caught": {
+    "n": 16,
+    "k": 12,
+    "rate": 0.75,
+    "ci95": [
+     0.5050123107060135,
+     0.8981809801576265
+    ]
+   },
+   "e2e_genuine_called": {
+    "n": 12,
+    "k": 8,
+    "rate": 0.6666666666666666,
+    "ci95": [
+     0.3906175873976139,
+     0.8618821601026385
+    ]
+   }
   }
  ],
  "combined_current": {
   "scam_catch": {
-   "n": 92,
-   "k": 89,
-   "rate": 0.967391304347826,
+   "n": 126,
+   "k": 118,
+   "rate": 0.9365079365079365,
    "ci95": [
-    0.9084648766130528,
-    0.9888490246573767
+    0.879706260059649,
+    0.9674798497849617
    ]
   },
   "false_hold": {
-   "n": 48,
-   "k": 1,
-   "rate": 0.020833333333333332,
+   "n": 70,
+   "k": 8,
+   "rate": 0.11428571428571428,
    "ci95": [
-    0.003687015979399688,
-    0.10899469137531158
+    0.05906058386702606,
+    0.20964431960202118
    ]
   }
  },
- "totals": {
-  "conversations": 372,
-  "agent_turns": 1752,
+ "totals_current": {
+  "conversations": 208,
+  "agent_turns": 959,
   "otp_requests": 0
+ },
+ "totals": {
+  "conversations": 760,
+  "agent_turns": 3487,
+  "otp_requests": 1
  },
  "tool_latency_ms": {
   "where": "local dev server (Vite middleware, file store)",

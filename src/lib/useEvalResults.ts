@@ -36,6 +36,8 @@ export interface EvalResults {
   current: PublishedRun[];
   history: PublishedRun[];
   totals: { conversations: number; agent_turns: number; otp_requests: number };
+  /** The current version only. */
+  totals_current?: { conversations: number; agent_turns: number; otp_requests: number };
   tool_latency_ms?: { p50: number; p95: number; n: number; where: string } | null;
 }
 

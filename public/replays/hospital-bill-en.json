@@ -1,60 +1,79 @@
 {
  "scenario": "hospital-bill",
  "lang": "en",
- "recorded_code_word": "JAMUN 77",
+ "recorded_code_word": "HAVA 81",
  "recorded_decision": "release",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "Hello Mohan, this is Ruko, Demo Bank's automated payment safety assistant. This call is recorded for your safety. Your code word is JAMUN 77. Does it match your app?"
+   "text": "Hi Mohan, Ruko here, Demo Bank's automated safety line, on a recorded call. Your code word is HAVA 81. Does it match your app?"
   },
   {
    "role": "customer",
-   "text": "Yes, yes, it matches. Just let me finish this payment quickly, please."
+   "text": "Haan, HAVA 81, matches. Kya hua? Main hospital mein hoon, jaldi batao."
   },
   {
    "role": "tool",
    "tool": "get_check_context",
    "args": {
-    "check_id": "chk_MHF2JVHSGQ",
+    "check_id": "chk_KGQF2G5Y33",
     "execution_id": "eval-demo-hospital-bill-en"
    }
   },
   {
    "role": "agent",
-   "text": "Your app shows you were on a phone call while making this payment. Was someone on another call with you, telling you what to do?"
+   "text": "Your app shows you were on a call while paying. What's this payment for, and who were you speaking with?"
   },
   {
    "role": "customer",
-   "text": "Yes, my brother called from the ward to tell me which counter to go to, but it's just that. Let me finish this."
+   "text": "It's for my father's surgery deposit at City Care Hospital, ₹85,000. I was on call with my brother, he was just telling me which counter to go to."
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_MHF2JVHSGQ",
+    "check_id": "chk_KGQF2G5Y33",
     "signal": "family_helping",
-    "evidence": "Brother called from ward to guide payment",
+    "evidence": "Speaking with brother, helping with payment",
     "confidence": "high",
     "pattern_hint": "none"
    }
   },
   {
    "role": "agent",
-   "text": "Thank you, Mohan. I understand you're trying to help your brother. Is this payment for a hospital bill? How do you know City Care Hospital?"
+   "text": "Has anyone told you what to say to the bank about this payment?"
   },
   {
    "role": "customer",
-   "text": "Yes, it's for my father's surgery. He was admitted here this morning, and I'm standing at the billing counter right now. Can I just pay and go?"
+   "text": "No, nobody told me anything. Just my brother on the phone, and the hospital staff. Why, is there a problem?"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_MHF2JVHSGQ",
-    "signal": "knows_payee",
-    "evidence": "Paying for father's surgery at City Care Hospital",
+    "check_id": "chk_KGQF2G5Y33",
+    "signal": "own_initiative",
+    "evidence": "No one told him what to say",
+    "confidence": "high",
+    "pattern_hint": "none"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "If someone is still on the other call, could you hang up? I'll wait."
+  },
+  {
+   "role": "customer",
+   "text": "Okay, one second... done, he's off. Now what's the issue?"
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_KGQF2G5Y33",
+    "signal": "purpose_consistent",
+    "evidence": "Payment for father's surgery deposit at hospital",
     "confidence": "high",
     "pattern_hint": "none"
    }
@@ -63,14 +82,14 @@
    "role": "tool",
    "tool": "set_decision",
    "args": {
-    "check_id": "chk_MHF2JVHSGQ",
+    "check_id": "chk_KGQF2G5Y33",
     "recommendation": "release",
-    "reason": "Customer knows the payee, it's for a family emergency, and no fraud signs were found."
+    "reason": "The payment is for a hospital surgery deposit, matches the payee, and Mohan acted on his own initiative with help from his brother."
    }
   },
   {
    "role": "agent",
-   "text": "Thank you. Your payment of 85 thousand rupees is going through now. The money is safe with us. Have a good day, Mohan. Goodbye."
+   "text": "Thank you. Your payment of 85 thousand rupees is going through now. Have a safe day."
   }
  ]
 }

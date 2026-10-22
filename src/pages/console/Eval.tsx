@@ -222,7 +222,7 @@ function Method({ r }: { r: Results }) {
         <dl className="grid shrink-0 grid-cols-3 gap-x-6 gap-y-1 lg:grid-cols-1 lg:gap-y-3 lg:text-right">
           <Stat label="Conversations" value={int(r.totals.conversations)} />
           <Stat label="Agent turns" value={int(r.totals.agent_turns)} />
-          <Stat label="OTP or PIN asked" value={int(r.totals.otp_requests)} />
+          <Stat label="OTP or PIN asked (all versions)" value={int(r.totals.otp_requests)} />
         </dl>
       </div>
       <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 border-t border-hair pt-4 text-[12.5px] text-muted">

@@ -1,60 +1,60 @@
 {
  "scenario": "flat-deposit",
  "lang": "hi",
- "recorded_code_word": "गुलाब 15",
+ "recorded_code_word": "मोगरा 82",
  "recorded_decision": "release",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "नमस्ते Priya जी, मैं रुको, Demo Bank की ऑटोमेटेड भुगतान सुरक्षा सहायक। आपकी सुरक्षा के लिए यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है गुलाब 15। क्या यह आपके ऐप से मिलता है?"
+   "text": "नमस्ते Priya जी, मैं रुको, Demo Bank की ऑटोमेटेड सुरक्षा लाइन; यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है मोगरा 82। क्या यह ऐप से मिलता है?"
   },
   {
    "role": "customer",
-   "text": "हाँ, गुलाब 15 मेरे ऐप से मेल खाता है।"
+   "text": "जी, हाँ। मोगरा 82 ही मेरा कोड शब्द है।"
   },
   {
    "role": "tool",
    "tool": "get_check_context",
    "args": {
-    "check_id": "chk_4QQFTHE4N5",
+    "check_id": "chk_5SZCWNP4H3",
     "execution_id": "eval-demo-flat-deposit-hi"
    }
   },
   {
    "role": "agent",
-   "text": "क्या इस समय कोई और फ़ोन या वीडियो कॉल पर आपको बता रहा है कि क्या करना है?"
+   "text": "आपके ऐप के अनुसार भुगतान करते समय आप एक कॉल पर थीं। यह भुगतान किस लिए है, और आप किससे बात कर रही थीं?"
   },
   {
    "role": "customer",
-   "text": "नहीं, मेरे पति अनिल फ़ोन पर हैं, वे बस खाता नंबर पढ़ रहे हैं। कोई दबाव नहीं है।"
+   "text": "यह फ्लैट B-1204 की बुकिंग राशि है, मैं श्री गणेश बिल्डर्स को दे रही हूँ।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_4QQFTHE4N5",
-    "signal": "family_helping",
-    "evidence": "पति अनिल फ़ोन पर हैं और खाता नंबर पढ़ रहे हैं",
+    "check_id": "chk_5SZCWNP4H3",
+    "signal": "purpose_consistent",
+    "evidence": "भुगतान फ्लैट बुकिंग के लिए है",
     "confidence": "high",
     "pattern_hint": "none"
    }
   },
   {
    "role": "agent",
-   "text": "क्या आप इस भुगतान के लिए Shree Ganesh Builders को जानती हैं? और यह पैसा किस लिए है?"
+   "text": "क्या किसी ने आपको बताया है कि इस भुगतान के बारे में बैंक को क्या कहना है?"
   },
   {
    "role": "customer",
-   "text": "हाँ, मैं उन्हें जानती हूँ। यह फ्लैट बुकिंग के लिए है, मैंने उनके साइट ऑफिस दो बार जाकर अलॉटमेंट लेटर देखा है।"
+   "text": "नहीं, किसी ने नहीं बताया। मैं अपने पति अनिल से फोन पर हूँ, वे लेटर से खाता नंबर पढ़ रहे हैं।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_4QQFTHE4N5",
-    "signal": "knows_payee",
-    "evidence": "जानती हैं, साइट ऑफिस गई हैं, अलॉटमेंट लेटर देखा है",
+    "check_id": "chk_5SZCWNP4H3",
+    "signal": "family_helping",
+    "evidence": "पति अनिल लेटर से खाता नंबर पढ़ रहे हैं",
     "confidence": "high",
     "pattern_hint": "none"
    }
@@ -63,14 +63,14 @@
    "role": "tool",
    "tool": "set_decision",
    "args": {
-    "check_id": "chk_4QQFTHE4N5",
+    "check_id": "chk_5SZCWNP4H3",
     "recommendation": "release",
-    "reason": "ग्राहक भुगतान के लिए भुगतान देने वाले को जानती हैं और उनके साइट ऑफिस गई हैं।"
+    "reason": "भुगतान फ्लैट बुकिंग के लिए है, पति अनिल इसमें मदद कर रहे हैं, और कोई चेतावनी नहीं है।"
    }
   },
   {
    "role": "agent",
-   "text": "धन्यवाद। आपका 1 लाख 50 हज़ार रुपये का भुगतान अब जा रहा है। आपका पैसा सुरक्षित है। आपके लिए बहुत खुशी हुई। अलविदा।"
+   "text": "धन्यवाद। आपका 1 लाख 50 हज़ार रुपये का भुगतान अब जा रहा है।"
   }
  ]
 }

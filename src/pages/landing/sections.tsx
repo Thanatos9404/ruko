@@ -172,14 +172,21 @@ export function Results() {
           lead="We ran Ruko's agent and policy against LLM-played customers: coached victims of ten scam types, genuine payers and ambiguous cases, in English, Hindi and Hinglish."
         />
         <Reveal className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <RateTile label="Scams caught, fresh held-out set" rate={fresh?.scam_catch} hint="Stories written after tuning and never used to tune anything." />
-          <RateTile label="False holds on genuine payments, held-out" rate={fresh?.false_hold} good="low" hint="Society maintenance, a garage bill, a clinic fee, a wedding photographer: genuine payments delayed or blocked in error." />
+          <RateTile label="Scams caught, fresh held-out set" rate={fresh?.scam_catch} hint="New stories, most with victims coached in Hindi or Hinglish, written and frozen before this version ran." />
+          <RateTile label="False holds on genuine payments, held-out" rate={fresh?.false_hold} good="low" hint="A builder's booking, a lawyer's retainer, a gold-loan repayment, tractor parts at night: genuine payments delayed or blocked in error." />
           <RateTile label="Scams caught, development set" rate={dev?.scam_catch} hint="60 coached-victim calls across ten patterns, two coaching levels." />
           <div className="card p-5">
-            <p className="text-[13px] font-medium text-ink-2">Times the agent asked for an OTP or PIN</p>
-            <p className="t-num mt-3 text-[40px] leading-none text-go">{ev ? ev.totals.otp_requests : "–"}</p>
-            <p className="mt-2 font-mono text-[12px] text-muted">{ev ? `${ev.totals.agent_turns.toLocaleString("en-IN")} agent turns · ${ev.totals.conversations} calls` : ""}</p>
-            <p className="mt-3 text-[12.5px] leading-snug text-muted">Every mention was checked by a separate judge model.</p>
+            <p className="text-[13px] font-medium text-ink-2">Times the agent asked for an OTP or PIN ({ev?.version ?? "current"})</p>
+            <p className="t-num mt-3 text-[40px] leading-none text-go">{ev ? (ev.totals_current ?? ev.totals).otp_requests : "–"}</p>
+            <p className="mt-2 font-mono text-[12px] text-muted">
+              {ev ? `${(ev.totals_current ?? ev.totals).agent_turns.toLocaleString("en-IN")} agent turns · ${(ev.totals_current ?? ev.totals).conversations} calls` : ""}
+            </p>
+            <p className="mt-3 text-[12.5px] leading-snug text-muted">
+              Every mention was checked by a separate judge model.{" "}
+              {ev && ev.totals.otp_requests > 0
+                ? `Across all versions: ${ev.totals.otp_requests} flag in ${ev.totals.agent_turns.toLocaleString("en-IN")} turns (v4 asked whether a code had already been shared with the caller; reworded in v5).`
+                : ""}
+            </p>
           </div>
         </Reveal>
         <Reveal className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -199,7 +206,7 @@ export function Results() {
           </div>
         </Reveal>
         <Reveal className="mt-6 rounded-2xl border border-hair bg-paper-2 p-5 text-[13.5px] leading-relaxed text-ink-2">
-          <strong className="text-ink">How to read this.</strong> Text mode: an LLM plays the customer, and the agent is a Nebius-hosted stand-in ({ev?.agent_model ?? "Qwen3-30B-A3B"}) for Bolna's gpt-4.1-mini, running the same prompt, greeting and tools against the real engine. No audio. The weakest spot is the heavily coached customer who sticks to a cover story; in the earlier clean held-out run, half of them got through. Full reports, misses and transcripts are in the <a className="underline underline-offset-2 hover:text-ink" href="/console/eval">evaluation console</a>.
+          <strong className="text-ink">How to read this.</strong> Text mode: an LLM plays the customer, and the agent is a Nebius-hosted stand-in ({ev?.agent_model ?? "Qwen3-30B-A3B"}) for Bolna's gpt-4.1-mini, running the same prompt, greeting and tools against the real engine. No audio. The hardest case is the heavily coached customer who sticks to a cover story{fresh?.heavy_catch ? `: on the fresh held-out set, ${fresh.heavy_catch.k} of ${fresh.heavy_catch.n} were caught` : ""}. When pre-payment risk is critical, Ruko never releases on a cover story alone. Full reports, misses and transcripts are in the <a className="underline underline-offset-2 hover:text-ink" href="/console/eval">evaluation console</a>.
         </Reveal>
       </div>
     </section>

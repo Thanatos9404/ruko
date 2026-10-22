@@ -1,60 +1,79 @@
 {
  "scenario": "hospital-bill",
  "lang": "hi",
- "recorded_code_word": "पतंग 53",
+ "recorded_code_word": "मोती 33",
  "recorded_decision": "release",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "नमस्ते Mohan जी, मैं रुको, Demo Bank की ऑटोमेटेड भुगतान सुरक्षा सहायक। आपकी सुरक्षा के लिए यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है पतंग 53। क्या यह आपके ऐप से मिलता है?"
+   "text": "नमस्ते Mohan जी, मैं रुको, Demo Bank की ऑटोमेटेड सुरक्षा लाइन; यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है मोती 33। क्या यह ऐप से मिलता है?"
   },
   {
    "role": "customer",
-   "text": "हाँ, कोड शब्द पतंग 53 मेरे ऐप में दिख रहा है। कृपया जल्दी बताइए, मुझे अस्पताल में पैसे जमा करने हैं।"
+   "text": "हाँ, यह ऐप से मिलता है। पर मैं अभी अस्पताल में हूँ, जल्दी में हूँ। यह कौन सी लाइन है? मुझे अपने भाई से बात करनी है।"
   },
   {
    "role": "tool",
    "tool": "get_check_context",
    "args": {
-    "check_id": "chk_CP9NB7EZDP",
+    "check_id": "chk_9W8955MCM7",
     "execution_id": "eval-demo-hospital-bill-hi"
    }
   },
   {
    "role": "agent",
-   "text": "क्या इस समय कोई और फ़ोन या वीडियो कॉल पर आपको बता रहा है कि क्या करना है?"
+   "text": "आपके ऐप के अनुसार भुगतान करते समय आप एक कॉल पर थे। यह भुगतान किस लिए है, और आप किससे बात कर रहे थे?"
   },
   {
    "role": "customer",
-   "text": "हाँ, मेरा भाई वार्ड से फ़ोन पर बता रहा है कि किस काउंटर पर जाना है। बस यही है।"
+   "text": "यह मेरे पिता के इलाज का भुगतान है, सर्जरी के लिए। मैं अपने भाई से बात कर रहा था, वह वार्ड में है। कृपया जल्दी बताइए, क्या कोई दिक्कत है?"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_CP9NB7EZDP",
+    "check_id": "chk_9W8955MCM7",
     "signal": "family_helping",
-    "evidence": "भाई वार्ड से फ़ोन पर बता रहा है",
+    "evidence": "मेरा भाई वार्ड में है",
     "confidence": "high",
     "pattern_hint": "none"
    }
   },
   {
    "role": "agent",
-   "text": "क्या आपने अपने भाई से उसके पुराने नंबर पर खुद बात की है, या वह आपको बता रहा है कि क्या करना है?"
+   "text": "क्या किसी ने आपको बताया है कि इस भुगतान के बारे में बैंक को क्या कहना है?"
   },
   {
    "role": "customer",
-   "text": "हाँ, उसी नंबर पर बात हो रही है, और वही बता रहा है। अब मुझे जल्दी से पेमेंट करना है।"
+   "text": "नहीं, किसी ने नहीं बताया। मैं सिर्फ भुगतान कर रहा हूँ, बस। अब मुझे अपने भाई से बात करनी है, कृपया लाइन दीजिए।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_CP9NB7EZDP",
-    "signal": "knows_payee",
-    "evidence": "भाई ने बताया कि अस्पताल में भुगतान करना है",
+    "check_id": "chk_9W8955MCM7",
+    "signal": "own_initiative",
+    "evidence": "मैं सिर्फ भुगतान कर रहा हूँ, बस",
+    "confidence": "high",
+    "pattern_hint": "none"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "अगर कोई अब भी दूसरी कॉल पर है, तो क्या आप वह कॉल काट सकते हैं? मैं इंतज़ार करूँगी।"
+  },
+  {
+   "role": "customer",
+   "text": "नहीं, मैं किसी और कॉल पर नहीं हूँ। मेरा भाई वार्ड से फ़ोन पर है, बस वही। क्या आप असली बैंक लाइन हैं? मैं भुगतान करने की जल्दी में हूँ, कृपया मुझे काउंटर पर जाने दीजिए।"
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_9W8955MCM7",
+    "signal": "purpose_consistent",
+    "evidence": "पिता के इलाज के लिए सर्जरी का भुगतान",
     "confidence": "high",
     "pattern_hint": "none"
    }
@@ -63,9 +82,9 @@
    "role": "tool",
    "tool": "set_decision",
    "args": {
-    "check_id": "chk_CP9NB7EZDP",
+    "check_id": "chk_9W8955MCM7",
     "recommendation": "release",
-    "reason": "भाई ने बताया है और आप उनसे खुद बात कर रहे हैं, इसलिए भुगतान सुरक्षित है।"
+    "reason": "भुगतान का कारण अस्पताल के इलाज से मेल खाता है, और ग्राहक ने खुद की योजना बताई है।"
    }
   },
   {
