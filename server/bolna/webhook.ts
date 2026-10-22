@@ -3,6 +3,7 @@ import type { KV } from "../store/store.js";
 import type { CheckService } from "../engine/checks.js";
 import { BolnaClient, TERMINAL_STATUSES, parseTranscript, type BolnaExecution } from "./client.js";
 import { modelOpinion } from "../engine/toolHandlers.js";
+import { confirmSlot, refundSlot } from "../engine/gate.js";
 
 /**
  * Handles Bolna's execution webhooks. Bolna POSTs the execution record several
@@ -81,6 +82,14 @@ async function process(
     } catch (e) {
       return { handled: false, reason: `could not verify execution with Bolna: ${(e as Error).message}` };
     }
+  }
+
+  // Live-call budget: a call that connected spends its slot; one that never connected gets it back.
+  if (!TERMINAL_STATUSES.has(status) && /progress|ongoing/i.test(status)) await confirmSlot(deps.kv, id);
+  if (TERMINAL_STATUSES.has(status)) {
+    const talked = (exec.conversation_duration ?? 0) > 0 || Boolean(exec.transcript && String(exec.transcript).trim());
+    if (talked) await confirmSlot(deps.kv, id);
+    else await refundSlot(deps.kv, id);
   }
 
   // Which check? From our execution map, else from the user_data echoed back.

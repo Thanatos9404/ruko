@@ -1,0 +1,23 @@
+# Never upload secrets or local state
+.env
+.env.*
+!.env.example
+.data/
+.claude/
+
+# Large research and training material the deployment doesn't need
+ml/*
+!ml/results/
+ml/results/*
+!ml/results/summary.json
+research/
+eval/.cache/
+eval/results/
+docs/
+deck/
+brand/source/
+*.pdf
+*.log
+coverage/
+node_modules/
+dist/

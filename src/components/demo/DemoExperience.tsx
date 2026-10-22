@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion, useTransform, type MotionValue } from "motion/react";
 import { Languages, PhoneIncoming, RotateCcw } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Lang } from "../../../shared/types";
@@ -11,6 +11,7 @@ import { AllowedScreen, CallScreen, HoldScreen, OutcomeScreen, PayScreen } from 
 import { Timeline } from "./Timeline";
 import { AccessDialog } from "./AccessDialog";
 import { readAccessCode, useDemo, type DemoState } from "./useDemo";
+import { prefetchBolnaSdk } from "../../lib/useBolnaCall";
 
 const LANG_LABEL: Record<Lang, string> = { en: "English", hi: "हिंदी" };
 
@@ -27,7 +28,13 @@ export function DemoExperience({ compact = false, scenarios: only }: { compact?:
 
   useEffect(() => {
     api.liveStatus().then(setLive).catch(() => setLive(null));
+    // Warm the API function so a live call's mint doesn't pay for a cold start.
+    void fetch("/v1/health").catch(() => undefined);
   }, []);
+  useEffect(() => {
+    // Fetch the Web Call SDK while the visitor reads the hold screen.
+    if (live?.live && d.phase === "hold") prefetchBolnaSdk();
+  }, [live?.live, d.phase]);
   useEffect(() => {
     const t = setInterval(() => setNow(Date.now()), 250);
     return () => clearInterval(t);
@@ -79,11 +86,18 @@ export function DemoExperience({ compact = false, scenarios: only }: { compact?:
                     captions={d.captions}
                     level={d.call.level}
                     state={d.call.state}
+                    step={d.call.step}
                     elapsed={elapsed}
                     muted={d.call.muted}
                     onMute={d.call.toggleMute}
                     onEnd={() => void d.call.stop()}
                     error={d.error ?? d.call.error?.message ?? null}
+                    needsTap={d.call.needsTap}
+                    onTapToHear={d.call.tapToHear}
+                    onFallback={d.mode === "live" && !d.status?.decision && (d.call.error || d.call.state === "ended") ? () => void d.startReplay() : undefined}
+                    onReconnect={
+                      d.mode === "live" && !d.status?.decision && d.call.endReason === "remote-hangup" && !d.call.error?.fallback ? () => void d.startLive() : undefined
+                    }
                   />
                 )}
                 {d.phase === "outcome" && d.status?.decision && <OutcomeScreen status={d.status} lang={d.lang} onAgain={d.reset} />}
@@ -248,7 +262,7 @@ function EnginePanel({ d, elapsed, compact, liveAvailable }: { d: DemoState; ela
         >
           {d.mode === "live" && (
             <div className="h-1.5 overflow-hidden rounded-full bg-[var(--hair)]" aria-hidden>
-              <div className="h-full rounded-full bg-go transition-[width] duration-100" style={{ width: `${Math.min(100, d.call.level * 140)}%` }} />
+              <LevelBar level={d.call.level} />
             </div>
           )}
           {d.mode === "replay" && d.captions.length > 0 && (
@@ -265,7 +279,7 @@ function EnginePanel({ d, elapsed, compact, liveAvailable }: { d: DemoState; ela
         >
           {contact === "ringing_web" && d.mode === "live" && d.contactCall.state !== "active" && d.contactCall.state !== "ended" && (
             <button
-              onClick={() => void d.contactCall.start()}
+              onClick={() => void d.answerContact()}
               className="ring-focus inline-flex items-center gap-1.5 rounded-full bg-ink px-3 py-1.5 text-[12.5px] font-semibold text-paper hover:-translate-y-px"
             >
               <PhoneIncoming size={14} /> Answer as {tc?.name}
@@ -366,4 +380,10 @@ function RiskCard({ d }: { d: DemoState }) {
       </ul>
     </motion.div>
   );
+}
+
+/** The agent's audio level, driven by a MotionValue (no React re-render per update). */
+function LevelBar({ level }: { level: MotionValue<number> }) {
+  const width = useTransform(level, (v) => `${Math.min(100, v * 140)}%`);
+  return <motion.div className="h-full rounded-full bg-go" style={{ width }} />;
 }

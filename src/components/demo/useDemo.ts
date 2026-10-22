@@ -64,28 +64,27 @@ export function useDemo() {
   const checkRef = useRef<DemoCheck | null>(null);
   checkRef.current = check;
 
-  const mint = useCallback(async () => {
+  // Each mint carries Ruko's own error code (and Bolna's capacity scope) so the UI can explain it.
+  const mintFrom = useCallback(async (path: string, body: unknown, fallbackMsg: string, signal: AbortSignal) => {
     const c = checkRef.current!;
-    const res = await fetch(`/api/demo/checks/${c.id}/session`, {
+    const res = await fetch(path.replace(":id", c.id), {
       method: "POST",
       headers: { "Content-Type": "application/json", "X-Client-Secret": c.client_secret ?? "" },
-      body: JSON.stringify({ access_code: readAccessCode() }),
+      body: JSON.stringify(body),
+      signal,
     });
-    const j = await res.json();
-    if (!res.ok) throw Object.assign(new Error(j?.error?.message ?? "Could not start the call"), { code: j?.error?.code ?? "mint_failed" });
+    const j = await res.json().catch(() => null);
+    if (!res.ok) throw Object.assign(new Error(j?.error?.message ?? fallbackMsg), { code: j?.error?.code ?? "mint_failed", scope: j?.error?.scope });
     return j;
   }, []);
-  const mintContact = useCallback(async () => {
-    const c = checkRef.current!;
-    const res = await fetch(`/api/demo/checks/${c.id}/contact-session`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Client-Secret": c.client_secret ?? "" },
-      body: "{}",
-    });
-    const j = await res.json();
-    if (!res.ok) throw Object.assign(new Error(j?.error?.message ?? "Could not ring the contact"), { code: j?.error?.code ?? "mint_failed" });
-    return j;
-  }, []);
+  const mint = useCallback(
+    (signal: AbortSignal) => mintFrom("/api/demo/checks/:id/session", { access_code: readAccessCode() }, "Could not start the call", signal),
+    [mintFrom],
+  );
+  const mintContact = useCallback(
+    (signal: AbortSignal) => mintFrom("/api/demo/checks/:id/contact-session", {}, "Could not ring the contact", signal),
+    [mintFrom],
+  );
   const call = useBolnaCall(mint);
   const contactCall = useBolnaCall(mintContact);
 
@@ -211,6 +210,12 @@ export function useDemo() {
     await call.start();
   }, [call]);
 
+  /** One microphone, one call: hang up the customer's call before answering as the contact. */
+  const answerContact = useCallback(async () => {
+    if (call.state !== "idle" && call.state !== "ended") await call.stop();
+    await contactCall.start();
+  }, [call, contactCall]);
+
   return {
     scenario,
     setScenario,
@@ -229,6 +234,7 @@ export function useDemo() {
     reset,
     startReplay,
     startLive,
+    answerContact,
   };
 }
 

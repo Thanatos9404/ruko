@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from "motion/react";
+import type { CallStep } from "../../lib/useBolnaCall";
+import { type MotionValue, motion, useReducedMotion } from "motion/react";
 import { Check, Loader2, Mic, MicOff, PhoneOff, ShieldAlert, ShieldCheck, ShieldX, Smartphone } from "lucide-react";
 import type { AppStatus, Lang } from "../../../shared/types";
 import { formatINR, minutesLabel } from "../../../shared/format";
@@ -217,22 +218,34 @@ export function CallScreen({
   captions,
   level,
   state,
+  step,
   elapsed,
   muted,
   onMute,
   onEnd,
   error,
+  onFallback,
+  onReconnect,
+  needsTap,
+  onTapToHear,
 }: {
   mode: Mode;
   lang: Lang;
   captions: Caption[];
-  level: number;
+  level: number | MotionValue<number>;
   state: string;
+  /** Live-call progress: securing line → allow mic → ringing → live. */
+  step?: CallStep;
   elapsed: number;
   muted: boolean;
   onMute: () => void;
   onEnd: () => void;
   error: string | null;
+  /** Offered when a retry won't help right now (caps, capacity, network) or the call dropped. */
+  onFallback?: () => void;
+  onReconnect?: () => void;
+  needsTap?: boolean;
+  onTapToHear?: () => void;
 }) {
   const last = captions.slice(-3);
   return (
@@ -245,9 +258,16 @@ export function CallScreen({
         </span>
         <p className="mt-5 font-display text-[22px] font-semibold text-ink">Ruko</p>
         <p className="text-[13px] text-ink-2">{lang === "hi" ? "डेमो बैंक सुरक्षा जाँच" : "Demo Bank safety check"}</p>
-        <p className="mt-1 font-mono text-[13px] tabular-nums text-go">
-          {mode === "live" && state !== "active" ? (state === "connecting" ? "connecting…" : state) : clock(elapsed)}
-        </p>
+        {mode === "live" && state !== "active" && state !== "ended" ? (
+          <CallSteps step={step ?? "securing"} lang={lang} />
+        ) : (
+          <p className="mt-1 font-mono text-[13px] tabular-nums text-go">{clock(elapsed)}</p>
+        )}
+        {needsTap && (
+          <button onClick={onTapToHear} className="ring-focus mx-auto mt-3 rounded-full bg-accent px-4 py-1.5 text-[12.5px] font-semibold text-[#0b111c]">
+            {lang === "hi" ? "सुनने के लिए टैप करें" : "Tap to hear Ruko"}
+          </button>
+        )}
         <div className="mt-auto space-y-2 text-left" aria-live="polite">
           {mode === "live" && !captions.length && (
             <p className="rounded-2xl bg-black/40 px-3.5 py-2.5 text-[13px] text-ink-2 backdrop-blur">
@@ -269,6 +289,20 @@ export function CallScreen({
             </motion.p>
           ))}
           {error && <p className="rounded-2xl bg-stop-soft px-3.5 py-2.5 text-[12.5px] text-stop">{error}</p>}
+          {(onFallback || onReconnect) && (
+            <div className="flex flex-wrap justify-center gap-2 pt-1">
+              {onReconnect && (
+                <button onClick={onReconnect} className="ring-focus rounded-full bg-white/10 px-3.5 py-1.5 text-[12.5px] font-semibold text-ink hover:bg-white/15">
+                  {lang === "hi" ? "फिर से जोड़ें" : "Reconnect"}
+                </button>
+              )}
+              {onFallback && (
+                <button onClick={onFallback} className="ring-focus rounded-full bg-ink px-3.5 py-1.5 text-[12.5px] font-semibold text-paper">
+                  {lang === "hi" ? "रिकॉर्ड किया रन देखें" : "Watch the recorded run"}
+                </button>
+              )}
+            </div>
+          )}
         </div>
         {mode === "live" && (
           <div className="mt-5 flex items-center justify-center gap-5">
@@ -282,6 +316,30 @@ export function CallScreen({
         )}
       </div>
     </motion.div>
+  );
+}
+
+const STEPS: { id: CallStep; en: string; hi: string }[] = [
+  { id: "securing", en: "Securing line", hi: "लाइन जोड़ रहे हैं" },
+  { id: "mic", en: "Allow microphone", hi: "माइक की अनुमति दें" },
+  { id: "ringing", en: "Ringing", hi: "घंटी बज रही है" },
+  { id: "active", en: "Live", hi: "लाइव" },
+];
+
+function CallSteps({ step, lang }: { step: CallStep; lang: Lang }) {
+  const at = Math.max(0, STEPS.findIndex((s) => s.id === step));
+  return (
+    <ol aria-label={lang === "hi" ? "कॉल की स्थिति" : "Call progress"} className="mx-auto mt-2 flex items-center gap-1.5 text-[10.5px] font-semibold">
+      {STEPS.map((s, i) => (
+        <li
+          key={s.id}
+          aria-current={i === at ? "step" : undefined}
+          className={cn("rounded-full px-2 py-0.5", i < at ? "text-go" : i === at ? "bg-white/10 text-ink" : "text-muted")}
+        >
+          {s[lang]}
+        </li>
+      ))}
+    </ol>
   );
 }
 

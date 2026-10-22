@@ -95,12 +95,20 @@ export default function CheckPage() {
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, [msgs.length, busy]);
 
-  const mint = useCallback(async () => {
-    const res = await fetch("/api/public/session", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ access_code: readAccessCode(), language: lang }) });
-    const j = await res.json();
-    if (!res.ok) throw Object.assign(new Error(j?.error?.message ?? "Could not start the call"), { code: j?.error?.code });
-    return j;
-  }, [lang]);
+  const mint = useCallback(
+    async (signal: AbortSignal) => {
+      const res = await fetch("/api/public/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ access_code: readAccessCode(), language: lang }),
+        signal,
+      });
+      const j = await res.json().catch(() => null);
+      if (!res.ok) throw Object.assign(new Error(j?.error?.message ?? "Could not start the call"), { code: j?.error?.code, scope: j?.error?.scope });
+      return j;
+    },
+    [lang],
+  );
   const call = useBolnaCall(mint);
 
   const send = async (content: string) => {

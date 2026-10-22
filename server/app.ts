@@ -11,7 +11,7 @@ import { noArchive, type Archive } from "./store/archive.js";
 import { CheckService, publicCheck, validateCreate, type StoredCheck } from "./engine/checks.js";
 import { runTool, type ContactDialer, type ToolDeps } from "./engine/toolHandlers.js";
 import { computeMetrics } from "./engine/metrics.js";
-import { checkGate, gateStatus, accessCodeValid } from "./engine/gate.js";
+import { checkGate, gateStatus, accessCodeValid, holdSlot, refundSlot, type GateKind } from "./engine/gate.js";
 import { safeEqual, sha256 } from "./engine/ids.js";
 import { BolnaClient, BolnaError } from "./bolna/client.js";
 import { checkUserData, contactUserData, lineUserData } from "./bolna/agents.js";
@@ -92,22 +92,43 @@ export function createApp(deps: AppDeps) {
     }
   }
 
-  async function mintCheckSession(c: StoredCheck, opts: { code?: string | null; visitor: string }) {
-    const gate = await checkGate(kv, cfg, bolna, { code: opts.code, visitor: opts.visitor });
+  /**
+   * Gate, then mint a Bolna web-call session. A slot is reserved by the gate and
+   * refunded if minting fails or the call never connects (see /api/live/release
+   * and the webhook). Bolna's own 429 comes back as at_capacity with its scope.
+   */
+  async function mintGated(
+    kind: GateKind,
+    agentId: string,
+    userData: Record<string, unknown>,
+    opts: { code?: string | null; preauthorized?: boolean; checkId?: string },
+  ) {
+    const gate = await checkGate(kv, { ...cfg, agents: { ...cfg.agents, check: agentId } }, bolna, { code: opts.code, kind, preauthorized: opts.preauthorized });
     if (!gate.ok) throw new HttpError(gate.reason === "access_code_invalid" ? 403 : 429, gate.message ?? "Live call unavailable.", gate.reason ?? "unavailable");
-    const wallet = await bolna!.me().then((m) => m.wallet).catch(() => null);
     try {
-      const session = await bolna!.mintWebSession({ agent_id: cfg.agents.check!, user_data: checkUserData(c, cfg.bankName) });
-      await checks.attachCall(c.id, { channel: "web", status: "queued", execution_id: session.run_id, agent_id: cfg.agents.check });
-      await checks.mutate(c.id, (cc) => {
-        cc.events.push({ at: new Date().toISOString(), type: "live.authorized", detail: "Live web call authorised by access code." });
-      });
-      await logSpend(kv, { kind: "mint", check_id: c.id, execution_id: session.run_id, cost_cents: null, duration_s: null, wallet_before: wallet });
+      const session = await bolna!.mintWebSession({ agent_id: agentId, user_data: userData });
+      await holdSlot(kv, session.run_id, gate.slot);
+      await logSpend(kv, { kind: "mint", check_id: opts.checkId, execution_id: session.run_id, cost_cents: null, duration_s: null, wallet_before: gate.wallet ?? null });
       return session;
     } catch (e) {
+      await refundSlot(kv, gate.slot);
+      if (e instanceof BolnaError && e.status === 429) {
+        const scope = typeof e.body === "object" && e.body && "scope" in e.body ? String((e.body as { scope: unknown }).scope) : "global";
+        throw new HttpError(429, "The voice service is at capacity right now. Watch the recorded run, or try again in a minute.", "at_capacity", { scope });
+      }
       if (e instanceof BolnaError) throw new HttpError(502, `Voice service error: ${e.message}`, "bolna_error");
+      if ((e as Error).name === "AbortError") throw new HttpError(504, "The voice service took too long to answer. Try again, or watch the recorded run.", "mint_timeout");
       throw e;
     }
+  }
+
+  async function mintCheckSession(c: StoredCheck, opts: { code?: string | null }) {
+    const session = await mintGated("customer", cfg.agents.check ?? "", checkUserData(c, cfg.bankName), { code: opts.code, checkId: c.id });
+    await checks.attachCall(c.id, { channel: "web", status: "queued", execution_id: session.run_id, agent_id: cfg.agents.check });
+    await checks.mutate(c.id, (cc) => {
+      cc.events.push({ at: new Date().toISOString(), type: "live.authorized", detail: "Live web call authorised by access code." });
+    });
+    return session;
   }
 
   // ---- routes -------------------------------------------------------------
@@ -167,7 +188,8 @@ export function createApp(deps: AppDeps) {
     if (c.risk.action !== "hold") throw new HttpError(409, "This payment was not held; no call needed.", "not_held");
     if (c.decision) throw new HttpError(409, "This check is already decided.", "already_decided");
     const body = (await readJson(req)) as { access_code?: string };
-    const session = await mintCheckSession(c, { code: body.access_code ?? req.headers.get("x-access-code"), visitor: visitorKey(req) });
+    await rateLimit(kv, `rl:mint:${visitorKey(req)}`, 30);
+    const session = await mintCheckSession(c, { code: body.access_code ?? req.headers.get("x-access-code") });
     return json(session);
   });
 
@@ -239,19 +261,21 @@ export function createApp(deps: AppDeps) {
     const c = await checkForApp(req, url, p.id);
     if (c.risk.action !== "hold" || c.decision) throw new HttpError(409, "No call needed for this check.", "not_needed");
     const body = (await readJson(req)) as { access_code?: string };
-    return json(await mintCheckSession(c, { code: body.access_code, visitor: visitorKey(req) }));
+    await rateLimit(kv, `rl:mint:${visitorKey(req)}`, 30);
+    return json(await mintCheckSession(c, { code: body.access_code }));
   });
 
   /** The trusted contact's "phone" in the demo: a second browser tab answers the contact agent's web call. */
   r.on("POST", "/api/demo/checks/:id/contact-session", async (req, p, url) => {
     const c = await checkForApp(req, url, p.id);
     if (c.contact?.status !== "ringing_web" || !cfg.agents.contact || !bolna) throw new HttpError(409, "No contact call is ringing.", "not_ringing");
+    // Part of an authorised live demo, so it doesn't use a judge's slot; at most two tries per check.
     const authorised = c.events.some((e) => e.type === "live.authorized");
-    const gate = await checkGate(kv, cfg, bolna, { visitor: visitorKey(req), preauthorized: authorised });
-    if (!gate.ok) throw new HttpError(429, gate.message ?? "Unavailable.", gate.reason ?? "unavailable");
-    const session = await bolna.mintWebSession({ agent_id: cfg.agents.contact, user_data: contactUserData(c, cfg.bankName) });
+    const tries = c.events.filter((e) => e.type === "contact.minted").length;
+    if (tries >= 2) throw new HttpError(429, "The contact call was already tried twice for this payment.", "contact_tries");
+    const session = await mintGated("contact", cfg.agents.contact, contactUserData(c, cfg.bankName), { preauthorized: authorised, checkId: c.id });
     await checks.setContact(c.id, { status: "ringing_web", execution_id: session.run_id });
-    await logSpend(kv, { kind: "mint", check_id: c.id, execution_id: session.run_id, cost_cents: null, duration_s: null });
+    await checks.noteEvent(c.id, "contact.minted", "Trusted contact answered in the browser (web call).");
     return json(session);
   });
 
@@ -278,6 +302,28 @@ export function createApp(deps: AppDeps) {
   // Live-call availability (no secrets exposed) ----------------------------------
 
   r.on("GET", "/api/live/status", async () => json(await gateStatus(kv, cfg)));
+
+  /**
+   * The browser reports a call that failed before connecting (mic denied, network,
+   * timeout). The slot is refunded only if Bolna confirms no conversation happened.
+   */
+  r.on("POST", "/api/live/release", async (req) => {
+    const body = (await readJson(req)) as { run_id?: string };
+    const runId = String(body.run_id ?? "");
+    if (!/^[0-9a-zA-Z-]{8,80}$/.test(runId)) throw new HttpError(400, "run_id is required.", "invalid_request");
+    await rateLimit(kv, `rl:release:${visitorKey(req)}`, 30);
+    if (!(await kv.get(`slot:${runId}`))) return json({ refunded: false, reason: "no_open_slot" });
+    let connected = false;
+    try {
+      const ex = await bolna!.getExecution(runId);
+      connected = ["in-progress", "in_progress", "ongoing"].includes(String(ex.status)) || Number(ex.conversation_duration ?? 0) > 0 || Boolean(ex.transcript && String(ex.transcript).trim());
+    } catch (e) {
+      // Bolna has no record of a call that never connected; anything else, keep the slot.
+      if (!(e instanceof BolnaError && e.status === 404)) return json({ refunded: false, reason: "unverified" });
+    }
+    if (connected) return json({ refunded: false, reason: "connected" });
+    return json({ refunded: await refundSlot(kv, runId) });
+  });
 
   r.on("POST", "/api/live/verify", async (req) => {
     const body = (await readJson(req)) as { access_code?: string };
@@ -345,12 +391,9 @@ export function createApp(deps: AppDeps) {
   r.on("POST", "/api/public/session", async (req) => {
     const body = (await readJson(req)) as { access_code?: string; language?: Lang };
     if (!cfg.agents.line) throw new HttpError(503, "The public line is not configured.", "not_configured");
-    const gate = await checkGate(kv, { ...cfg, agents: { ...cfg.agents, check: cfg.agents.line } }, bolna, { code: body.access_code, visitor: visitorKey(req) });
-    if (!gate.ok) throw new HttpError(gate.reason === "access_code_invalid" ? 403 : 429, gate.message ?? "Unavailable.", gate.reason ?? "unavailable");
+    await rateLimit(kv, `rl:mint:${visitorKey(req)}`, 30);
     const lang: Lang = body.language === "hi" ? "hi" : "en";
-    const session = await bolna!.mintWebSession({ agent_id: cfg.agents.line, user_data: lineUserData(lang) });
-    await logSpend(kv, { kind: "mint", execution_id: session.run_id, cost_cents: null, duration_s: null });
-    return json(session);
+    return json(await mintGated("line", cfg.agents.line, lineUserData(lang), { code: body.access_code }));
   });
 
   // Console (demo tenant, read-only) -----------------------------------------------

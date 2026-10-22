@@ -1,4 +1,4 @@
-import { motion, useReducedMotion, useSpring, useTransform } from "motion/react";
+import { isMotionValue, motion, useReducedMotion, useSpring, useTransform, type MotionValue } from "motion/react";
 import { useEffect, useId } from "react";
 import { cn } from "../kit";
 
@@ -7,14 +7,22 @@ import { cn } from "../kit";
  * shape of a voice: they breathe when idle and swell with the agent's audio level
  * (the Web Call SDK's `volume-level` event) during a live call.
  */
-export function Arcs({ level = 0, className, tone = "slate" }: { level?: number; className?: string; tone?: "slate" | "coral" | "sage" }) {
+export function Arcs({ level = 0, className, tone = "slate" }: { level?: number | MotionValue<number>; className?: string; tone?: "slate" | "coral" | "sage" }) {
   const reduce = useReducedMotion();
   const id = useId().replace(/:/g, "");
   const s = useSpring(0, { stiffness: 180, damping: 22 });
   const swell = useTransform(s, (v) => 1 + v * 1.6);
   const glow = useTransform(s, (v) => Math.min(0.9, v * 1.2));
   useEffect(() => {
-    s.set(level);
+    // A MotionValue drives the spring directly, without re-rendering React.
+    if (typeof level === "number") {
+      s.set(level);
+      return;
+    }
+    if (isMotionValue(level)) {
+      s.set(level.get());
+      return level.on("change", (v) => s.set(v));
+    }
   }, [level, s]);
   const colors = {
     slate: ["#7f8ca3", "#1b2638"],

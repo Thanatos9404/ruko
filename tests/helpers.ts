@@ -32,7 +32,12 @@ export function fakeBolna(routes: Record<string, (body: unknown) => unknown>) {
     const key = `${method} ${url.pathname}`;
     const h = routes[key];
     if (!h) return new Response(JSON.stringify({ message: "not found" }), { status: 404 });
-    const out = h(body);
+    const out = h(body) as unknown;
+    // A handler can return { __status, body } to simulate an error response.
+    if (out && typeof out === "object" && "__status" in out) {
+      const o = out as { __status: number; body?: unknown };
+      return new Response(JSON.stringify(o.body ?? {}), { status: o.__status, headers: { "Content-Type": "application/json" } });
+    }
     return new Response(JSON.stringify(out), { status: 200, headers: { "Content-Type": "application/json" } });
   }) as typeof fetch;
   return { client: new BolnaClient("bn-test", "https://api.bolna.test", fetchImpl), calls };

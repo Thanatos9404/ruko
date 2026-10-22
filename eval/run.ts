@@ -6,6 +6,7 @@
  *   npm run eval -- --only scam        # one kind
  *   npm run eval -- --agent-model openai/gpt-oss-120b
  *   npm run eval -- --set holdout      # held-out stories, never used for tuning
+ *   npm run eval -- --set holdout3     # third held-out set, frozen 22 Oct 2026 before any run
  *
  * Never calls Bolna. LLM calls go to Nebius Token Factory and are cached in
  * eval/.cache, so re-running with the same settings is free and reproducible.
@@ -16,6 +17,7 @@ import { Nebius } from "./nebius.js";
 import { buildScenarios, type EvalScenario } from "./scenarios.js";
 import { buildHoldout } from "./holdout.js";
 import { buildHoldout2 } from "./holdout2.js";
+import { buildHoldout3 } from "./holdout3.js";
 import { runConversation, type ConversationResult } from "./conversation.js";
 import { scoreRun } from "./score.js";
 import { writeReports } from "./report.js";
@@ -47,9 +49,15 @@ let scenarios: EvalScenario[] =
     ? buildHoldout()
     : set === "holdout2"
       ? buildHoldout2()
-      : set === "all"
-        ? [...buildScenarios(), ...buildHoldout(), ...buildHoldout2()]
-        : buildScenarios();
+      : set === "holdout3"
+        ? buildHoldout3()
+        : set === "all"
+          ? [...buildScenarios(), ...buildHoldout(), ...buildHoldout2(), ...buildHoldout3()]
+          : set === "dev"
+            ? buildScenarios()
+            : (() => {
+                throw new Error(`unknown --set ${set}`);
+              })();
 if (only) scenarios = scenarios.filter((s) => s.kind === only || s.id.includes(only));
 if (limit > 0) {
   // Spread a small run across kinds and languages instead of taking the first N.

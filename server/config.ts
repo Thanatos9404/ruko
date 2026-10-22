@@ -13,7 +13,8 @@ export interface Config {
   sandboxTenant: string;
   accessCodes: string[];
   dailyCallCap: number;
-  perVisitorDailyCap: number;
+  /** Live calls per access code per day (judges share venue NATs, so this is per code, not per IP). */
+  perCodeDailyCap: number;
   walletFloorCents: number;
   allowPhoneCalls: boolean;
   contactWebRing: boolean;
@@ -64,7 +65,7 @@ export function loadConfig(env: Record<string, string | undefined> = process.env
     sandboxTenant: env.RUKO_SANDBOX_TENANT ?? "sandbox",
     accessCodes: (env.RUKO_ACCESS_CODES ?? "").split(",").map((s) => s.trim()).filter(Boolean),
     dailyCallCap: Number(env.RUKO_DAILY_CALL_CAP ?? 12),
-    perVisitorDailyCap: Number(env.RUKO_PER_VISITOR_DAILY_CAP ?? 3),
+    perCodeDailyCap: Number(env.RUKO_PER_CODE_DAILY_CAP ?? env.RUKO_PER_VISITOR_DAILY_CAP ?? 6),
     walletFloorCents: Number(env.RUKO_WALLET_FLOOR_CENTS ?? 350),
     allowPhoneCalls: env.RUKO_ALLOW_PHONE_CALLS === "true",
     contactWebRing: env.RUKO_CONTACT_WEB_RING !== "false",

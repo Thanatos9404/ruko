@@ -35,12 +35,20 @@ export default function ContactPhone() {
     };
   }, [id, cs]);
 
-  const mint = useCallback(async () => {
-    const res = await fetch(`/api/demo/checks/${id}/contact-session`, { method: "POST", headers: { "Content-Type": "application/json", "X-Client-Secret": cs }, body: "{}" });
-    const j = await res.json();
-    if (!res.ok) throw Object.assign(new Error(j?.error?.message ?? "Could not connect"), { code: j?.error?.code });
-    return j;
-  }, [id, cs]);
+  const mint = useCallback(
+    async (signal: AbortSignal) => {
+      const res = await fetch(`/api/demo/checks/${id}/contact-session`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Client-Secret": cs },
+        body: "{}",
+        signal,
+      });
+      const j = await res.json().catch(() => null);
+      if (!res.ok) throw Object.assign(new Error(j?.error?.message ?? "Could not connect"), { code: j?.error?.code, scope: j?.error?.scope });
+      return j;
+    },
+    [id, cs],
+  );
   const call = useBolnaCall(mint);
   const ringing = status?.contact?.status === "ringing_web" && call.state !== "active" && call.state !== "ended";
   const tc = status?.trusted_contact;

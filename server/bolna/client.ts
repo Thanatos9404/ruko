@@ -185,10 +185,12 @@ export class BolnaClient {
     user_data?: Record<string, unknown>;
     agent_data?: { language?: string };
   }): Promise<WebCallSession> {
+    // The SDK's own contract names /web-call/freeswitch-session; the docs name /web-call/session.
+    // Try the SDK's first, fall back on 404, and keep each attempt short so the UI never hangs.
     try {
-      return await this.req("POST", "/web-call/session", input);
+      return await this.req("POST", "/web-call/freeswitch-session", input, 8_000);
     } catch (e) {
-      if (e instanceof BolnaError && e.status === 404) return this.req("POST", "/web-call/freeswitch-session", input);
+      if (e instanceof BolnaError && e.status === 404) return this.req("POST", "/web-call/session", input, 8_000);
       throw e;
     }
   }
