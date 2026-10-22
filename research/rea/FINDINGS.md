@@ -109,10 +109,118 @@ Produced with [REA](https://github.com/morluto/rea) (`rea-agents` 6.5.0, MIT) fo
 10. **Harden `useBolnaCall`:** add a re-entry guard, stop the old instance, reset mute, drive the level through a MotionValue, and set `debug` in dev.
 11. **Keep the call alive on phones.** Request a Wake Lock during calls, and on iOS tell users to keep Safari in the foreground.
 
-## 2. obliqq.framer.ai motion spec
+## 2. obliqq.framer.ai motion spec (motion 12 + Lenis)
 
-In progress.
+### Method
+
+- REA ran `list-browser-targets`, `inspect-web-page --include-script-sources` (allowed origins: obliqq.framer.ai and framerusercontent.com), `analyze-web-bundle` and `export-web-scripts`. They ran against a headless Chrome on a loopback debugging port, with its own profile.
+- `capture-browser-scenario` ran at 1440×900 with reduced motion off: PageDown five times, with a screenshot after each step.
+- `analyze-javascript-application` ran on the site's page module, main script and shared library.
+- REA's semantic graph doesn't keep property values inside object literals in Framer's minified code, so the spring and easing values were read from the scripts REA exported.
+- REA can't hover, so hover values come from the exported settings rather than from observation.
+
+### Stack
+
+Framer's runtime, a Framer Motion chunk and React. Lenis comes in through Framer's Smooth Scroll component. There is no canvas, no WebGL, no custom cursor and no pinned section.
+
+### Spec
+
+1. **Smooth scroll**
+   - Lenis with `duration: 1.0` (lerp off) and the default exponential-out easing.
+   - Nested `overflow:auto` elements get `data-lenis-prevent`, and anchor links go through `lenis.scrollTo`.
+   - Change for Ruko: switch from 1.1 with quartic-out to 1.0 with expo-out. Add `data-lenis-prevent` to the call captions, the engine timeline and the console tables.
+2. **Hero headline reveal (word by word, on mount)**
+   - Each word moves from opacity 0, blur 10 px and y 10 px to rest.
+   - Spring stiffness 163, damping 40, mass 1. Words are staggered by 0.05 s, and the subtitle starts 0.1 s later.
+   - Change for Ruko: give `WordReveal` a spring mode with these values.
+3. **Block reveal on scroll**
+   - Blocks fade and rise, with no blur. Each reveals once, when 50% is in view. Spring 150/30/1.
+   - Later siblings start lower and later: `y = 64 + 16·i` and `delay = 0.1·i`.
+   - Small elements use y 24 and a 0.6 s tween with ease `[.12, .23, .5, 1]`.
+4. **Scroll-linked transforms**
+   - Pattern: `useScroll({ target, offset: ['start end', 'end end'] })`, then `useTransform`, then `useSpring`.
+   - Hero screenshot: from `rotateX 20°, scale .8, y −80` to flat. Spring 400/100, with about 1200 px of perspective.
+   - Images: zoom out from `scale 1.3` to 1 inside a clipped, rounded frame. Spring 150/37.
+   - Text moves from y 60 to 0. Side elements move from x ±40 or ±200 to 0, spring 150/40.
+5. **Nav**
+   - It starts transparent and full width.
+   - When a sentinel after the hero enters view, it becomes a floating pill: white at 25%, `blur(10px)`, a 1 px hairline border and radius 100.
+   - On hover, links get a white background at 20%.
+6. **Marquees**
+   - 40 px/s for logos and 20 px/s for integrations, running in opposite directions.
+   - Hover slows them to 0.5× rather than pausing them.
+   - Edges fade over 20–25% of the width.
+   - Scroll velocity is added to the offset with a 0.1 lerp (`useAnimationFrame` + `useVelocity(scrollY)`).
+7. **Hover and press**
+   - Default: a spring with bounce 0.2 and duration 0.4.
+   - Image cards scale to 1.15 inside a clipped 16 px frame.
+   - The primary button goes to 85% ink, and ghost links get a warm tint.
+   - Icon pairs cross-fade, and small icon buttons scale to 0.9 on tap.
+8. **Type and colour**
+   - Open Runde. Headings are weight 600 with −0.03em tracking and 120% line height. Body text has 150% line height.
+   - Size scale: 16, 18, 20, 24, 28, 40, 44, 52 px.
+   - Radii: 16 px for cards, about 24 px for media, 100 for pills.
+   - A sky-to-sand gradient sits behind the hero and the screenshots.
+   - Ruko already has most of this, so these are small adjustments.
+9. **Performance**
+   - About 1.45 MB of uncompressed JS, about 0.97 MB of images, about 471 KB of fonts and 1,935 DOM nodes.
+   - Lenis keeps an animation loop running at all times.
+   - Use blur on hero text only.
+
+The structured values are in `raw/obliqq/motion-spec.json`.
 
 ## 3. bolna.ai design techniques
 
-In progress.
+### Method
+
+- REA ran list, inspect, bundle analysis and export on the home page and on `/symphony/buildathon`.
+- It captured one scenario in dark mode: the home page with PageDown ×5, then the buildathon page with PageDown ×5.
+- bolna.ai's robots.txt disallows `/_next/static/`. No extra fetches or source maps were requested, and scripts were read only from what the browser had already loaded.
+
+### Home page
+
+- **Stack.** Next.js App Router on Vercel, React, framer-motion 11.18.2.
+- **Hero.** Built entirely in CSS, with no canvas.
+  - A navy background with a grid of about 80 px cells and a diagonal blue light beam.
+  - A "Backed by Y Combinator" pill.
+  - A light-weight headline in which "Built for India" carries a saffron/white/green gradient.
+  - A square cyan CTA with a waveform icon.
+- **Section language.**
+  - Monospace uppercase eyebrow chips.
+  - A horizon arc glow behind section intros, and hairline dividers.
+  - A code panel with Python, JS and cURL tabs.
+  - Step cards joined by hand-drawn arrows.
+- **Motion.** Elements reveal from opacity 0, y 20–30 and scale 0.9–0.95, easing out over 0.4–0.5 s, staggered by 0.1 s. Shared-layout indicators use `layoutId`, and `useScroll` is used in a few places.
+
+### Buildathon page
+
+A separate Vite + React + Tailwind app.
+
+- **Hero.**
+  - The concentric arcs are a static image, not WebGL.
+  - The "BUILDATHON" wordmark is an image.
+  - Partner marks sit in a glass pill: black at 55%, heavy blur and saturation, and a 1 px inset highlight.
+- **Type.** Space Grotesk. Uppercase labels are tracked at 0.18–0.25em, and dates are set in YC orange.
+- **Textures.** Halftone-dot images at 10–25% opacity, with soft-light blending and a radial mask.
+- **"How it works".** A sticky full-screen stage. Progress comes from a passive scroll listener and drives a progress bar, step circles and a background-video scrub. No animation library is involved.
+- **Marquee.** A CSS keyframe loop (30 s, linear) that pauses on hover.
+- **Reduced motion.** Neither page handles it.
+
+### How Ruko can feel at home, in its own way
+
+1. Keep Ruko's SVG arcs as the Symphony nod, but drive them with live call audio. Bolna's arcs are static.
+2. Draw the halftone texture in CSS (radial-gradient dots plus a mask) instead of using images.
+3. Use Fragment Mono uppercase eyebrow chips (0.18em tracking) for developer labels.
+4. Add one dark "stage" band with a horizon rim glow for the live-call section.
+5. Add a pinned "How Ruko decides" sequence with `useScroll`: a progress line and steps that light up in turn.
+6. Add a tabbed cURL / JS / Python panel for the bank API, with a `layoutId` tab indicator.
+7. Use at most one pixel-type word. Don't reuse Bolna's assets, and mention partner marks only as plain fact.
+8. Respect reduced motion everywhere.
+
+The structured values are in `raw/bolna/design-techniques.json`.
+
+## Notes on how REA was run
+
+- REA could not name the SDK's custom events, and calls to global functions stayed unresolved, so every trace is partial. The behaviour described above was confirmed against the shipped `dist/index.js` and `index.d.ts`.
+- Source recovery needs Wakaru on Linux, so it wasn't used.
+- The agent's safety check declined to extract the SDK's original source from its source map, and no workaround was attempted.
