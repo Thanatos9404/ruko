@@ -1,0 +1,276 @@
+{
+ "generated": "2026-10-22",
+ "node": "v22.17.1",
+ "status": {
+  "mode": "model+lexicon",
+  "model_version": "ruko-text-1.0.0",
+  "library_version": "1.0.0",
+  "patterns": 72
+ },
+ "library_patterns": 72,
+ "model_bytes": 3021542,
+ "cold_start_ms": 106.1521,
+ "latency_ms": {
+  "note": "analyzeText() end to end, explanations on, single thread, after warm-up",
+  "transcripts_and_messages": {
+   "n": 1000,
+   "mean_chars": 305,
+   "p50": 0.7436,
+   "p95": 1.5308,
+   "p99": 2.1254,
+   "max": 6.4122
+  },
+  "short_texts_le_300_chars": {
+   "n": 1000,
+   "p50": 0.3381,
+   "p95": 0.7108,
+   "p99": 0.9333
+  }
+ },
+ "model_plus_lexicon": {
+  "test_synthetic_A": {
+   "n": 1517,
+   "recall_possible": 0.9859,
+   "fpr_possible": 0.0362,
+   "recall_likely": 0.9526,
+   "fpr_likely": 0.0114,
+   "pattern_top1": 0.7308,
+   "pattern_top3": 0.8478,
+   "pattern_none_returned": 0
+  },
+  "test_genB_cross_generator": {
+   "n": 1069,
+   "recall_possible": 0.9565,
+   "fpr_possible": 0.0531,
+   "recall_likely": 0.898,
+   "fpr_likely": 0.0212,
+   "pattern_top1": 0.7341,
+   "pattern_top3": 0.8913,
+   "pattern_none_returned": 0
+  },
+  "ood_realworld_curated": {
+   "n": 166,
+   "recall_possible": 0.832,
+   "fpr_possible": 0.1463,
+   "recall_likely": 0.632,
+   "fpr_likely": 0,
+   "pattern_top1": 0.576,
+   "pattern_top3": 0.752,
+   "pattern_none_returned": 0
+  },
+  "ood_ridham115_indian_sms": {
+   "n": 1580,
+   "recall_possible": 0.7315,
+   "fpr_possible": 0.1354,
+   "recall_likely": 0.5872,
+   "fpr_likely": 0.0549,
+   "pattern_top1": null,
+   "pattern_top3": null,
+   "pattern_none_returned": null
+  },
+  "test_mendeley_real_sms": {
+   "n": 1578,
+   "recall_possible": 0.8732,
+   "fpr_possible": 0.0007,
+   "recall_likely": 0.7676,
+   "fpr_likely": 0,
+   "pattern_top1": null,
+   "pattern_top3": null,
+   "pattern_none_returned": null
+  },
+  "ood_imc25_real_smishing_india": {
+   "n": 2621,
+   "recall_possible": 0.7184,
+   "fpr_possible": null,
+   "recall_likely": 0.5315,
+   "fpr_likely": null,
+   "pattern_top1": null,
+   "pattern_top3": null,
+   "pattern_none_returned": null
+  },
+  "ood_flowxai_en": {
+   "n": 378,
+   "recall_possible": 0.9702,
+   "fpr_possible": 0.2762,
+   "recall_likely": 0.9464,
+   "fpr_likely": 0.1571,
+   "pattern_top1": null,
+   "pattern_top3": null,
+   "pattern_none_returned": null
+  },
+  "ood_skyaara_genuine_payment_sms": {
+   "n": 33,
+   "recall_possible": null,
+   "fpr_possible": 0.1818,
+   "recall_likely": null,
+   "fpr_likely": 0.0909,
+   "pattern_top1": null,
+   "pattern_top3": null,
+   "pattern_none_returned": null
+  }
+ },
+ "fused_band_experiment": {
+  "test_synthetic_A": {
+   "n": 1517,
+   "recall_possible": 0.9869,
+   "fpr_possible": 0.0571,
+   "recall_likely": 0.9526,
+   "fpr_likely": 0.0114,
+   "pattern_top1": 0.7308,
+   "pattern_top3": 0.8478,
+   "pattern_none_returned": 0
+  },
+  "test_genB_cross_generator": {
+   "n": 1069,
+   "recall_possible": 0.9582,
+   "fpr_possible": 0.0892,
+   "recall_likely": 0.898,
+   "fpr_likely": 0.0212,
+   "pattern_top1": 0.7341,
+   "pattern_top3": 0.8913,
+   "pattern_none_returned": 0
+  },
+  "ood_realworld_curated": {
+   "n": 166,
+   "recall_possible": 0.848,
+   "fpr_possible": 0.1463,
+   "recall_likely": 0.632,
+   "fpr_likely": 0,
+   "pattern_top1": 0.576,
+   "pattern_top3": 0.752,
+   "pattern_none_returned": 0
+  },
+  "ood_ridham115_indian_sms": {
+   "n": 1580,
+   "recall_possible": 0.7503,
+   "fpr_possible": 0.1596,
+   "recall_likely": 0.5872,
+   "fpr_likely": 0.0549,
+   "pattern_top1": null,
+   "pattern_top3": null,
+   "pattern_none_returned": null
+  },
+  "test_mendeley_real_sms": {
+   "n": 1578,
+   "recall_possible": 0.8732,
+   "fpr_possible": 0.0007,
+   "recall_likely": 0.7676,
+   "fpr_likely": 0,
+   "pattern_top1": null,
+   "pattern_top3": null,
+   "pattern_none_returned": null
+  },
+  "ood_imc25_real_smishing_india": {
+   "n": 2621,
+   "recall_possible": 0.7425,
+   "fpr_possible": null,
+   "recall_likely": 0.5315,
+   "fpr_likely": null,
+   "pattern_top1": null,
+   "pattern_top3": null,
+   "pattern_none_returned": null
+  },
+  "ood_flowxai_en": {
+   "n": 378,
+   "recall_possible": 0.9702,
+   "fpr_possible": 0.2762,
+   "recall_likely": 0.9464,
+   "fpr_likely": 0.1571,
+   "pattern_top1": null,
+   "pattern_top3": null,
+   "pattern_none_returned": null
+  },
+  "ood_skyaara_genuine_payment_sms": {
+   "n": 33,
+   "recall_possible": null,
+   "fpr_possible": 0.1818,
+   "recall_likely": null,
+   "fpr_likely": 0.0909,
+   "pattern_top1": null,
+   "pattern_top3": null,
+   "pattern_none_returned": null
+  }
+ },
+ "lexicon_only_fallback": {
+  "test_synthetic_A": {
+   "n": 1517,
+   "recall_possible": 0.5413,
+   "fpr_possible": 0.1314,
+   "recall_likely": 0.1784,
+   "fpr_likely": 0.0229,
+   "pattern_top1": 0.2298,
+   "pattern_top3": 0.37,
+   "pattern_none_returned": 0.1381
+  },
+  "test_genB_cross_generator": {
+   "n": 1069,
+   "recall_possible": 0.6204,
+   "fpr_possible": 0.2548,
+   "recall_likely": 0.189,
+   "fpr_likely": 0.0382,
+   "pattern_top1": 0.2943,
+   "pattern_top3": 0.4381,
+   "pattern_none_returned": 0.1171
+  },
+  "ood_realworld_curated": {
+   "n": 166,
+   "recall_possible": 0.496,
+   "fpr_possible": 0.1463,
+   "recall_likely": 0.16,
+   "fpr_likely": 0,
+   "pattern_top1": 0.304,
+   "pattern_top3": 0.376,
+   "pattern_none_returned": 0.248
+  },
+  "ood_ridham115_indian_sms": {
+   "n": 1580,
+   "recall_possible": 0.4592,
+   "fpr_possible": 0.1226,
+   "recall_likely": 0.1004,
+   "fpr_likely": 0.0243,
+   "pattern_top1": null,
+   "pattern_top3": null,
+   "pattern_none_returned": null
+  },
+  "test_mendeley_real_sms": {
+   "n": 1578,
+   "recall_possible": 0.1408,
+   "fpr_possible": 0.0084,
+   "recall_likely": 0,
+   "fpr_likely": 0,
+   "pattern_top1": null,
+   "pattern_top3": null,
+   "pattern_none_returned": null
+  },
+  "ood_imc25_real_smishing_india": {
+   "n": 2621,
+   "recall_possible": 0.57,
+   "fpr_possible": null,
+   "recall_likely": 0.161,
+   "fpr_likely": null,
+   "pattern_top1": null,
+   "pattern_top3": null,
+   "pattern_none_returned": null
+  },
+  "ood_flowxai_en": {
+   "n": 378,
+   "recall_possible": 0.4643,
+   "fpr_possible": 0.1286,
+   "recall_likely": 0.1012,
+   "fpr_likely": 0,
+   "pattern_top1": null,
+   "pattern_top3": null,
+   "pattern_none_returned": null
+  },
+  "ood_skyaara_genuine_payment_sms": {
+   "n": 33,
+   "recall_possible": null,
+   "fpr_possible": 0,
+   "recall_likely": null,
+   "fpr_likely": 0,
+   "pattern_top1": null,
+   "pattern_top3": null,
+   "pattern_none_returned": null
+  }
+ }
+}

@@ -2,7 +2,7 @@
 
 This card covers every dataset the Ruko text classifier was trained or evaluated on. For each one it gives the source, the licence, the size, the language and how the data was used. The candidates we checked and rejected are listed in [`research/datasets/DATASETS.md`](../research/datasets/DATASETS.md), and datasets that need a login (none of which is used) are in [`research/datasets/NEEDS_LOGIN.md`](../research/datasets/NEEDS_LOGIN.md).
 
-**In short:** most training data is **synthetic**. That includes our own Nebius-generated set and the BothBosu dialogues. Real data enters training only as SMS: Mendeley smishing/ham and a slice of IMC25 smishing reports. No real Indian *call* data with an open licence exists that we could find, so the call-transcript side of the model has only been trained and in-distribution-tested on synthetic calls. Read every number in [`MODEL_CARD.md`](MODEL_CARD.md) with that in mind.
+**In short:** most training data is **synthetic**. That includes our own Nebius-generated set and the BothBosu dialogues. Real data enters training only as SMS, from the Mendeley smishing/ham set. The IMC25 real-smishing reports are used for evaluation; a training slice of them was tried and rejected, as `MODEL_CARD.md` explains. No real Indian *call* data with an open licence exists that we could find, so the call-transcript side of the model has only been trained and in-distribution-tested on synthetic calls. Read every number in [`MODEL_CARD.md`](MODEL_CARD.md) with that in mind.
 
 ## How to reproduce
 
@@ -23,18 +23,19 @@ The synthetic set can be rebuilt offline from the response cache (`ml/synth/gene
   - Synthetic data is split by generation request: all samples from one LLM call land in the same split.
   - Third-party sets are split by message.
   - Any held-out row whose normalised text equals a training row is dropped.
-  - IMC25 held-out reports that are near-duplicates (word-trigram Jaccard > 0.5) of a report in the IMC25 training slice are also dropped: 1,233 rows.
+  - IMC25 held-out reports that are near-duplicates (word-trigram Jaccard > 0.5) of a report in the IMC25 training slice are also dropped: 1,233 rows. That slice is used only by the rejected variant, but the held-out sets are kept identical for every model.
 
 ## Training data (the shipped model, experiment `main`)
 
 | Source | Licence | Rows used in train / val | Language | Real or synthetic | Label mapping |
 |---|---|---|---|---|---|
-| **Ruko synthetic set v1** (`ml/data/synthetic/ruko_synth_v1.jsonl`, generator A = Qwen3-235B-A22B-Instruct-2507 on Nebius) | MIT (this repo) | 5,317 / 468 (train includes 1,861 early-call windows at weight 0.5) | en, hi, Hinglish, mr, bn, ta | **Synthetic.** Every row is labelled `synthetic: true` | scam (pattern id) / genuine / hard_negative |
+| **Ruko synthetic set v1** (`ml/data/synthetic/ruko_synth_v1.jsonl`, generator A = Qwen3-235B-A22B-Instruct-2507 on Nebius) | MIT (this repo) | 6,974 / 662 (train includes 1,861 early-call windows at weight 0.5) | en, hi, Hinglish, mr, bn, ta | **Synthetic.** Every row is labelled `synthetic: true` | scam (pattern id) / genuine / hard_negative |
 | [BothBosu scam-dialogue, single-agent, multi-agent](https://huggingface.co/datasets/BothBosu/scam-dialogue) | Apache-2.0 | 3,384 / 521 (weight 0.5) | en (US scam types) | Synthetic (Llama-3-70B) | label 1 → scam, 0 → genuine. Scam vs genuine only, no pattern. |
 | [Mendeley f45bkkt8pr SMS phishing](https://data.mendeley.com/datasets/f45bkkt8pr/1) (Mishra & Soni, 2022) | CC BY 4.0 | 3,101 / 570 | en | Real SMS. The smishing texts were OCR'd from images posted online, and the set overlaps the UCI SMS Spam Collection. | smishing → scam; ham → genuine; spam → **excluded** (used only to measure the marketing-spam flag rate) |
-| [IMC25 "Fishing for Smishing"](https://github.com/reportsmishing/Smishing-Dataset-IMC25) (Agarwal et al., ACM IMC 2025): a deterministic 12% slice of non-Indian English reports | CC BY 4.0 | 2,012 / 0 (weight 0.5) | en | Real smishing from public user reports. Entity placeholders in the source are mapped to our dummies or removed. | scam only (marketing "spam" rows excluded) |
 
-### The synthetic set in detail (6,002 samples)
+**Not in the shipped model, used only by the rejected variant `variant_imc02_hn2`:** [IMC25 "Fishing for Smishing"](https://github.com/reportsmishing/Smishing-Dataset-IMC25) (Agarwal et al., ACM IMC 2025, CC BY 4.0). This is a deterministic 12% slice of the non-Indian English reports: 2,012 rows at weight 0.2, real smishing from public user reports. The source's entity placeholders are mapped to our dummies or removed. It raised recall on real smishing but also raised false alarms on genuine look-alike messages, so the shipped model leaves it out. See the model card.
+
+### The synthetic set in detail (8,361 samples)
 
 **Generation** (`ml/synth/generate.py`).
 
@@ -43,7 +44,9 @@ Scam samples are generated from the cited pattern definitions in the library: su
 Genuine samples come from 54 hand-written scenarios in `ml/synth/genuine_scenarios.json`:
 - 28 ordinary payments: rent, family support, school fees, a hospital bill, a vendor, EMI, a house deposit and so on.
 - 10 hard negatives: a real bank fraud-team call, a relative really in hospital, someone who ignored a scam call and is now paying rent, an official challan, official customs duty, a big genuine investment, a real job fee, a surprise gift kept secret, KYC done at the branch, and a bank-confirmed wrong-transfer reversal.
-- 16 genuine look-alike message categories: bank alerts, OTPs, awareness messages, KYC reminders, card dues, deliveries, utility bills, telecom, government credits, travel, appointments, salary and investments, refunds, brand promotions, family money chats, and FASTag/e-challan. These were added in round 2 after round 1 showed false positives on genuine transactional SMS.
+- 16 genuine look-alike message categories (1,275 messages): bank alerts, OTPs, awareness messages, KYC reminders, card dues, deliveries, utility bills, telecom, government credits, travel, appointments, salary and investments, refunds, brand promotions, family money chats, and FASTag/e-challan. These were added in round 2 after round 1 showed false positives on genuine transactional SMS. Later batches rotate through 55 named senders and 8 writing styles so they are not near-copies.
+
+In round 2d we added 1,784 **contrastive scam messages** for every pattern. They name the same real senders (SBI, HDFC, PhonePe, Tata Power and others), so the model has to learn the intent (block threats, links to "update", pay-to-receive) rather than "a bank name means genuine".
 
 **Formats.**
 - `call_check`: a Ruko safety-check call. The model sees only the customer's turns.
@@ -56,13 +59,13 @@ Genuine samples come from 54 hand-written scenarios in `ml/synth/genuine_scenari
 - 1: partly coached; details leak.
 - 2: heavily coached; the victim sticks to a cover story.
 
-**Languages.** en 3,134; Hinglish (romanised) 2,357; hi (Devanagari) 1,843; mr 217; bn 164; ta 148.
+**Languages.** en 3,365; Hinglish (romanised) 2,525; hi (Devanagari) 2,083; mr 154; bn 119; ta 115.
 
-**Formats (rows).** message 2,603; call_check 1,718; report 1,681; plus 1,861 call_window training augmentations.
+**Formats (rows).** message 4,962; call_check 1,718; report 1,681; plus 1,861 call_window training augmentations.
 
-**Kinds.** scam 4,748 rows (incl. windows); genuine 1,785; hard_negative 1,330.
+**Kinds.** scam 5,220; genuine 1,376; hard_negative (genuine but scam-like, including the look-alike messages) 1,765.
 
-**Patterns.** All 72 library patterns. Global patterns are English-only, with about 15 generator-A samples each. India patterns have about 35–50 each across languages.
+**Patterns.** All 72 library patterns. Generator A wrote 25 scam samples for each of the 18 English-only global patterns and 73–80 for each India pattern across languages.
 
 **Generator B (held out).** `google/gemma-3-27b-it` wrote 1,069 samples (598 scam, 471 genuine) from the same briefs. They are never trained on and are used only as a **cross-generator** test, to catch the model learning one LLM's writing style.
 
@@ -72,7 +75,7 @@ Genuine samples come from 54 hand-written scenarios in `ml/synth/genuine_scenari
 - Calls need at least 2 customer turns.
 - Truncated JSON is salvaged to its complete samples only.
 
-**Cost.** 2,303 Nebius requests: 1.47M prompt and 2.42M completion tokens, cumulative, from `ml/data/synthetic/generation_log.json`. Library translations and Hinglish fixes added about 100 more requests. No dollar figure is stated here; check it against Nebius's price list.
+**Cost.** 2,760 Nebius requests: 1.74M prompt and 2.73M completion tokens, cumulative, from `ml/data/synthetic/generation_log.json`. Library translations and Hinglish fixes added about 100 more requests. No dollar figure is stated here; check it against Nebius's price list.
 
 **Known limits.**
 - LLM dialogues are cleaner than real speech-recogniser output.
@@ -84,7 +87,7 @@ Genuine samples come from 54 hand-written scenarios in `ml/synth/genuine_scenari
 
 | Set | Source and licence | Size after cleaning | What it measures |
 |---|---|---|---|
-| `test_synthetic_A` | Our synthetic, generator A, held-out request groups | 1,009 (610 scam / 399 genuine) | In-distribution |
+| `test_synthetic_A` | Our synthetic, generator A, held-out request groups | 1,517 (992 scam / 525 genuine) | In-distribution |
 | `test_genB_cross_generator` | Our synthetic, generator B (Gemma-27B) | 1,069 (598 / 471) | Cross-generator generalisation |
 | `test_mendeley_real_sms` | Mendeley, held-out messages | 1,578 (142 / 1,436) | Real SMS, same source as training |
 | `test_bothbosu` | BothBosu, held-out dialogues | 895 | Same source as training |
@@ -101,5 +104,5 @@ Genuine samples come from 54 hand-written scenarios in `ml/synth/genuine_scenari
 
 - **No real Indian call audio or transcripts.** All call-side training data is synthetic.
 - **Real speech-recogniser output is missing.** No ASR errors, disfluencies or code-switch transcription errors from Bolna's actual speech-to-text appear in training.
-- **Languages.** Coverage beyond en/hi/Hinglish is thin. mr, bn and ta have about 150–220 synthetic rows each, and there are no Telugu, Kannada, Malayalam or Gujarati rows. Ridham115 includes some te/ta/bn/mr code-mixed SMS, but only in evaluation.
+- **Languages.** Coverage beyond en/hi/Hinglish is thin. mr, bn and ta have about 115–155 synthetic rows each, and there are no Telugu, Kannada, Malayalam or Gujarati rows. Ridham115 includes some te/ta/bn/mr code-mixed SMS, but only in evaluation.
 - **Some library patterns rest on news reports only.** Seven India patterns have no official source we could open: AePS, APK malware, e-challan APK, fake cybercrime notice, LPG, Ponzi and wrong-transfer. See `provenance` in `library.json`.
