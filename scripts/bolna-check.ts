@@ -28,7 +28,7 @@ type J = Record<string, unknown>;
 const get = (o: unknown, path: string): unknown => path.split(".").reduce<unknown>((x, k) => (x && typeof x === "object" ? (x as J)[k] : undefined), o);
 const SECRET = /token|api_key|password|webhook_url/i;
 const show = (path: string, v: unknown) => (SECRET.test(path) ? "(hidden)" : JSON.stringify(v)?.slice(0, 140));
-const norm = (v: unknown): unknown => (v === "" ? null : v);
+const norm = (v: unknown): unknown => (v === "" || v === undefined ? null : v);
 /** Key order doesn't matter: Bolna returns objects with its own key order. */
 const canon = (v: unknown): unknown =>
   Array.isArray(v) ? v.map(canon) : v && typeof v === "object" ? Object.fromEntries(Object.keys(v as J).sort().map((k) => [k, canon((v as J)[k])])) : v;
@@ -49,8 +49,16 @@ function compare(label: string, want: J, have: J): string[] {
     same(`task_config.${k}`, get(wt, `task_config.${k}`), get(ht, `task_config.${k}`));
   for (const k of ["llm_agent.llm_config.model", "llm_agent.llm_config.temperature", "transcriber.provider", "transcriber.model", "transcriber.language", "transcriber.endpointing", "transcriber.keywords", "synthesizer.provider", "synthesizer.provider_config.model", "synthesizer.provider_config.voice_id"])
     same(`tools_config.${k}`, get(wt, `tools_config.${k}`), get(ht, `tools_config.${k}`));
-  for (const lang of ["en", "hi"])
-    same(`multilingual.${lang}.synthesizer`, get(wt, `tools_config.multilingual_config.languages.${lang}.synthesizer.provider_config.voice_id`), get(ht, `tools_config.multilingual_config.languages.${lang}.synthesizer.provider_config.voice_id`));
+  same("multilingual.active_language", get(wt, "tools_config.multilingual_config.active_language"), get(ht, "tools_config.multilingual_config.active_language"));
+  same("multilingual.language_switch_trigger", get(wt, "tools_config.multilingual_config.language_switch_trigger"), get(ht, "tools_config.multilingual_config.language_switch_trigger"));
+  for (const lang of ["en", "hi"]) {
+    const ml = `tools_config.multilingual_config.languages.${lang}`;
+    for (const k of ["synthesizer.provider", "synthesizer.provider_config.model", "synthesizer.provider_config.voice_id", "system_prompt", "handoff_message", "agent_name"])
+      same(`multilingual.${lang}.${k}`, get(wt, `${ml}.${k}`), get(ht, `${ml}.${k}`));
+    // A per-language transcriber is only compared where the repo sets one (Bolna returns null otherwise).
+    if (get(wt, `${ml}.transcriber`))
+      for (const k of ["provider", "model", "language"]) same(`multilingual.${lang}.transcriber.${k}`, get(wt, `${ml}.transcriber.${k}`), get(ht, `${ml}.transcriber.${k}`));
+  }
   const wTools = (get(wt, "tools_config.api_tools.tools") as J[]) ?? [];
   const hTools = (get(ht, "tools_config.api_tools.tools") as J[]) ?? [];
   same("tools (names)", wTools.map((t) => t.name).sort(), hTools.map((t) => t.name).sort());

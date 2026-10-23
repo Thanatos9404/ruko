@@ -82,7 +82,9 @@ export async function checkGate(
   const cKey = kind !== "contact" && opts.code ? codeKey(d, opts.code) : null;
   if (kind !== "contact") {
     if (used >= cfg.dailyCallCap) return { ok: false, reason: "daily_cap", message: "Today's live calls are used up. Watch the recorded run instead." };
-    if (cKey && ((await kv.get<number>(cKey)) ?? 0) >= cfg.perCodeDailyCap)
+    const code = opts.code?.trim() ?? "";
+    const cap = cfg.codeCaps?.[cfg.accessCodes.find((c) => safeEqual(c, code)) ?? ""] ?? cfg.perCodeDailyCap;
+    if (cKey && ((await kv.get<number>(cKey)) ?? 0) >= cap)
       return { ok: false, reason: "code_cap", message: "This access code has used today's live calls. Watch the recorded run instead." };
   }
   let wallet: number | null = null;

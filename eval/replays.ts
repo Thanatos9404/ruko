@@ -12,6 +12,7 @@ import { DEMO_SCENARIOS } from "../shared/scenarios.js";
 import type { Lang } from "../shared/types.js";
 import { Nebius } from "./nebius.js";
 import { runConversation } from "./conversation.js";
+import { estimateSeconds } from "./score.js";
 import type { EvalScenario } from "./scenarios.js";
 
 const PERSONAS: Record<string, Record<Lang, string>> = {
@@ -38,8 +39,8 @@ const PERSONAS: Record<string, Record<Lang, string>> = {
 };
 
 const RULES: Record<Lang, string> = {
-  en: " Speak natural Indian English. Say only what you would say out loud, one or two short sentences. Never mention being an AI. If the assistant says goodbye, reply exactly [END].",
-  hi: " केवल वही बोलें जो आप फ़ोन पर बोलेंगे, एक-दो छोटे वाक्य। कभी न कहें कि आप AI हैं। सहायक विदा ले तो ठीक [END] लिखें।",
+  en: " Speak natural Indian English. Say only what you would say out loud: one short sentence, two at most. Never mention being an AI. If the assistant says goodbye, reply exactly [END].",
+  hi: " केवल वही बोलें जो आप फ़ोन पर बोलेंगे: एक छोटा वाक्य, ज़्यादा से ज़्यादा दो। कभी न कहें कि आप AI हैं। सहायक विदा ले तो ठीक [END] लिखें।",
 };
 
 const llm = new Nebius();
@@ -59,19 +60,27 @@ for (const sc of DEMO_SCENARIOS.filter((s) => s.id !== "rent")) {
     };
     // A replay must end with the agent's set_decision, or the demo would stall waiting for one.
     let r = null as Awaited<ReturnType<typeof runConversation>> | null;
-    for (const seed of [11, 12, 13, 14, 15]) {
+    for (const seed of [11, 12, 13, 14, 15, 16, 17, 18]) {
       r = await runConversation(llm, scenario, {
         agentModel: "Qwen/Qwen3-30B-A3B-Instruct-2507",
         customerModel: "deepseek-ai/DeepSeek-V4-Flash-0731",
         maxCustomerTurns: 8,
         seed,
       });
-      const ok = r.set_decision_called && r.turns.some((t) => t.role === "tool" && t.tool === "set_decision") && scenario.expect.includes(r.decision ?? "release");
+      // The same gate as tests/replays.test.ts: a decision, no code-word mismatch, about a minute, the right call.
+      const dec = r.turns.find((t) => t.role === "tool" && t.tool === "set_decision");
+      const ok =
+        r.set_decision_called &&
+        Boolean(dec) &&
+        !r.turns.some((t) => t.role === "tool" && t.tool === "record_signal" && t.args?.signal === "codeword_mismatch") &&
+        estimateSeconds(r) <= 60 &&
+        scenario.expect.includes(String(dec?.args?.recommendation) as never) &&
+        scenario.expect.includes(r.decision ?? "release");
       if (ok) break;
-      console.log(`${sc.id}-${lang}: seed ${seed} gave ${r.decision} without a clean set_decision; retrying`);
+      console.log(`${sc.id}-${lang}: seed ${seed} failed the gate (${r.decision}, ${estimateSeconds(r)} s); retrying`);
       r = null;
     }
-    if (!r) throw new Error(`${sc.id}-${lang}: no complete recorded run after 5 seeds`);
+    if (!r) throw new Error(`${sc.id}-${lang}: no recorded run passed the gate after 8 seeds`);
     const greeting = r.turns[0]?.text ?? "";
     const code = greeting.match(/(?:code word is|कोड शब्द है)\s+([^\s.।?]+\s\d{2})/)?.[1] ?? null;
     const out = {

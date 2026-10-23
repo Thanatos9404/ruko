@@ -12,6 +12,8 @@ export interface Config {
   /** Public sandbox traffic (/demo) lives in its own tenant, out of the console's headline view. */
   sandboxTenant: string;
   accessCodes: string[];
+  /** Optional per-code daily caps ("CODE:2" in RUKO_ACCESS_CODES); others use perCodeDailyCap. */
+  codeCaps: Record<string, number>;
   dailyCallCap: number;
   /** Live calls per access code per day (judges share venue NATs, so this is per code, not per IP). */
   perCodeDailyCap: number;
@@ -63,7 +65,8 @@ export function loadConfig(env: Record<string, string | undefined> = process.env
     apiKeys,
     demoTenant: env.RUKO_DEMO_TENANT ?? "demo-bank",
     sandboxTenant: env.RUKO_SANDBOX_TENANT ?? "sandbox",
-    accessCodes: (env.RUKO_ACCESS_CODES ?? "").split(",").map((s) => s.trim()).filter(Boolean),
+    accessCodes: parseCodes(env.RUKO_ACCESS_CODES).codes,
+    codeCaps: parseCodes(env.RUKO_ACCESS_CODES).caps,
     dailyCallCap: Number(env.RUKO_DAILY_CALL_CAP ?? 12),
     perCodeDailyCap: Number(env.RUKO_PER_CODE_DAILY_CAP ?? env.RUKO_PER_VISITOR_DAILY_CAP ?? 6),
     walletFloorCents: Number(env.RUKO_WALLET_FLOOR_CENTS ?? 350),
@@ -75,4 +78,17 @@ export function loadConfig(env: Record<string, string | undefined> = process.env
     countPublicStats: mode === "production" && env.RUKO_COUNT_PUBLIC_STATS !== "false",
     statsMinPerPattern: Number(env.RUKO_STATS_MIN_PER_PATTERN ?? 5),
   };
+}
+
+/** RUKO_ACCESS_CODES = "CODE" or "CODE:cap", comma-separated (one code per judge, each with its own cap). */
+function parseCodes(raw: string | undefined): { codes: string[]; caps: Record<string, number> } {
+  const codes: string[] = [];
+  const caps: Record<string, number> = {};
+  for (const part of (raw ?? "").split(",").map((s) => s.trim()).filter(Boolean)) {
+    const m = part.match(/^(.+?):(\d+)$/);
+    const code = (m ? m[1] : part).trim();
+    codes.push(code);
+    if (m) caps[code] = Number(m[2]);
+  }
+  return { codes, caps };
 }
