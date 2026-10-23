@@ -11,6 +11,15 @@
 Built on <a href="https://www.bolna.ai">Bolna</a> for the Bolna × Y Combinator Symphony Buildathon (Oct 2026). MIT licence.
 </p>
 
+<p align="center">
+<a href="https://ruko-symphony.vercel.app"><b>Live app</b></a> ·
+<a href="https://ruko-symphony.vercel.app/demo">Sandbox demo</a> ·
+<a href="https://ruko-symphony.vercel.app/check">Is this a scam?</a> ·
+<a href="https://ruko-symphony.vercel.app/console">Fraud-ops console</a> ·
+<a href="deck/Ruko-pitch.pdf">Pitch deck (PDF)</a> ·
+<a href="https://github.com/Thanatos9404/ruko">Code</a>
+</p>
+
 ---
 
 **Ruko** (Hindi for "wait") is an API for banks, UPI apps and NBFCs. When a payment looks coached, Ruko holds it, and within seconds a Bolna voice agent calls the customer in their language. The app shows a one-time **code word** that the agent says first, so the call is hard to spoof. The agent asks what a fraud officer would ask ("Is anyone on another call telling you what to do?"), records what it hears as evidence through tool calls, says the official truth out loud ("There's no 'digital arrest' in Indian law…"), and with consent calls the customer's trusted family contact. A deterministic, explained policy then **releases, delays or blocks** the payment. The LLM can make the outcome stricter but never more lenient, and Ruko never asks for an OTP, PIN, card or account number.
