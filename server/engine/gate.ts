@@ -15,6 +15,12 @@ import { sha256, safeEqual } from "./ids.js";
  * connects (failed mic, network, Bolna at capacity), so a failed attempt costs
  * nothing. The trusted-contact call that belongs to an authorised demo is exempt
  * from the caps but still respects the wallet floor.
+ *
+ * Counters are reserved increment-first and rolled back when a cap is exceeded or the
+ * wallet check fails, inside a lock, so concurrent requests can't both take the last
+ * slot. The store has no atomic increment, so the lock covers requests on one function
+ * instance (Vercel reuses a warm instance for concurrent requests); across instances the
+ * window is a single read-then-write, and the wallet floor is the backstop.
  */
 
 export type GateDenied =
@@ -54,6 +60,31 @@ export function accessCodeValid(cfg: Config, code: string | null | undefined): b
 
 const codeKey = (d: string, code: string) => `cap:${d}:code:${sha256(code.trim()).slice(0, 16)}`;
 
+const locks = new Map<string, Promise<void>>();
+
+/** Runs fn after every earlier holder of the same key has finished (a per-process mutex). */
+export async function withLock<T>(key: string, fn: () => Promise<T>): Promise<T> {
+  const prev = locks.get(key) ?? Promise.resolve();
+  const run = prev.then(fn);
+  const tail = run.then(
+    () => undefined,
+    () => undefined,
+  );
+  locks.set(key, tail);
+  try {
+    return await run;
+  } finally {
+    if (locks.get(key) === tail) locks.delete(key);
+  }
+}
+
+/** Adds delta to a counter and returns the new value (call inside withLock). */
+export async function bump(kv: KV, key: string, delta: number, ttl = TTL): Promise<number> {
+  const n = Math.max(0, ((await kv.get<number>(key)) ?? 0) + delta);
+  await kv.set(key, n, ttl);
+  return n;
+}
+
 export async function gateStatus(kv: KV, cfg: Config): Promise<{ live: boolean; calls_left_today: number; reason?: GateDenied }> {
   const used = (await kv.get<number>(`cap:${day()}`)) ?? 0;
   const left = Math.max(0, cfg.dailyCallCap - used);
@@ -78,29 +109,53 @@ export async function checkGate(
     if (!accessCodeValid(cfg, opts.code)) return { ok: false, reason: "access_code_invalid", message: "That access code isn't valid." };
   }
   const d = day();
-  const used = (await kv.get<number>(`cap:${d}`)) ?? 0;
-  const cKey = kind !== "contact" && opts.code ? codeKey(d, opts.code) : null;
-  if (kind !== "contact") {
-    if (used >= cfg.dailyCallCap) return { ok: false, reason: "daily_cap", message: "Today's live calls are used up. Watch the recorded run instead." };
-    const code = opts.code?.trim() ?? "";
-    const cap = cfg.codeCaps?.[cfg.accessCodes.find((c) => safeEqual(c, code)) ?? ""] ?? cfg.perCodeDailyCap;
-    if (cKey && ((await kv.get<number>(cKey)) ?? 0) >= cap)
+  const readWallet = async (): Promise<GateResult | number | null> => {
+    try {
+      const me = await bolna.me();
+      const w = typeof me.wallet === "number" ? me.wallet : null;
+      if (w !== null && w < cfg.walletFloorCents)
+        return { ok: false, reason: "wallet_floor", message: "Live calls are paused to protect the demo budget. Watch the recorded run instead.", wallet: w };
+      return w;
+    } catch {
+      return { ok: false, reason: "bolna_unreachable", message: "Couldn't reach the voice service. Try again in a moment, or watch the recorded run." };
+    }
+  };
+
+  if (kind === "contact") {
+    const w = await readWallet();
+    if (w !== null && typeof w === "object") return w;
+    const used = (await kv.get<number>(`cap:${d}`)) ?? 0;
+    return { ok: true, wallet: w, slot: null, calls_left_today: Math.max(0, cfg.dailyCallCap - used) };
+  }
+
+  // Reserve first (increment, then check), rolling back if a cap is exceeded.
+  const cKey = opts.code ? codeKey(d, opts.code) : null;
+  const code = opts.code?.trim() ?? "";
+  const codeCap = cfg.codeCaps?.[cfg.accessCodes.find((c) => safeEqual(c, code)) ?? ""] ?? cfg.perCodeDailyCap;
+  const reserved = await withLock(`gate:${d}`, async (): Promise<GateResult | { used: number }> => {
+    const used = await bump(kv, `cap:${d}`, 1);
+    if (used > cfg.dailyCallCap) {
+      await bump(kv, `cap:${d}`, -1);
+      return { ok: false, reason: "daily_cap", message: "Today's live calls are used up. Watch the recorded run instead." };
+    }
+    if (cKey && (await bump(kv, cKey, 1)) > codeCap) {
+      await bump(kv, cKey, -1);
+      await bump(kv, `cap:${d}`, -1);
       return { ok: false, reason: "code_cap", message: "This access code has used today's live calls. Watch the recorded run instead." };
+    }
+    return { used };
+  });
+  if ("ok" in reserved) return reserved;
+  const slot: Slot = { day: d, codeKey: cKey };
+
+  // The wallet floor is read after reserving, so a slow /user/me can't widen the race; a
+  // failed check gives the slot back.
+  const w = await readWallet();
+  if (w !== null && typeof w === "object") {
+    await refundSlot(kv, slot);
+    return w;
   }
-  let wallet: number | null = null;
-  try {
-    const me = await bolna.me();
-    wallet = typeof me.wallet === "number" ? me.wallet : null;
-    if (wallet !== null && wallet < cfg.walletFloorCents)
-      return { ok: false, reason: "wallet_floor", message: "Live calls are paused to protect the demo budget. Watch the recorded run instead.", wallet };
-  } catch {
-    return { ok: false, reason: "bolna_unreachable", message: "Couldn't reach the voice service. Try again in a moment, or watch the recorded run." };
-  }
-  if (kind === "contact") return { ok: true, wallet, slot: null, calls_left_today: Math.max(0, cfg.dailyCallCap - used) };
-  // Reserve the slot now; it is refunded if the call never connects.
-  await kv.set(`cap:${d}`, used + 1, TTL);
-  if (cKey) await kv.set(cKey, ((await kv.get<number>(cKey)) ?? 0) + 1, TTL);
-  return { ok: true, wallet, slot: { day: d, codeKey: cKey }, calls_left_today: cfg.dailyCallCap - used - 1 };
+  return { ok: true, wallet: w, slot, calls_left_today: Math.max(0, cfg.dailyCallCap - reserved.used) };
 }
 
 /** Remembers which counters a minted session reserved, until the call connects or fails. */
@@ -122,11 +177,10 @@ export async function refundSlot(kv: KV, slotOrRunId: Slot | string | null | und
     if (!slot) return false;
     await kv.delete(`slot:${slotOrRunId}`);
   } else slot = slotOrRunId;
-  const dec = async (key: string) => {
-    const n = (await kv.get<number>(key)) ?? 0;
-    if (n > 0) await kv.set(key, n - 1, TTL);
-  };
-  await dec(`cap:${slot.day}`);
-  if (slot.codeKey) await dec(slot.codeKey);
+  const s = slot;
+  await withLock(`gate:${s.day}`, async () => {
+    await bump(kv, `cap:${s.day}`, -1);
+    if (s.codeKey) await bump(kv, s.codeKey, -1);
+  });
   return true;
 }

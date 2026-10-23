@@ -19,7 +19,7 @@ import { navigate } from "../../lib/router";
 import { formatINR } from "../../../shared/format";
 import type { Check } from "../../../shared/types";
 import { useNow, useResource } from "./hooks";
-import { consoleData, originOf, TENANT_LABEL, type TenantView } from "./data";
+import { consoleData, isScriptedTest, originOf, TENANT_LABEL, type TenantView } from "./data";
 import { ago, agoShort, clockTime, duration, int, LANG_NAME, pct, usd } from "./fmt";
 import { EmptyState, ErrorState, OriginTag, OutcomeBadge, RiskCell, Skeleton, StaleBanner, StatusPill, TileFrame, TileHead } from "./ui";
 import { SignalsChart } from "./SignalsChart";
@@ -72,7 +72,7 @@ export function Overview({ tenant }: { tenant: TenantView }) {
                 m.median_release_seconds !== null
                   ? `Median hold-to-release time on released payments`
                   : m.released
-                    ? "No live calls yet. Replayed conversations don't count toward friction."
+                    ? "No live call has released a payment here yet. Replayed conversations don't count toward friction."
                     : "No payment has been released after a call yet"
               }
             />
@@ -374,7 +374,7 @@ function ChecksPanel({ res, tenant }: { res: ReturnType<typeof useResource<{ dat
                       <span className="block truncate text-ink">{c.customer.name}</span>
                       <span className="flex items-center gap-1.5 text-[12px] text-muted">
                         {LANG_NAME[c.customer.language] ?? c.customer.language}
-                        <OriginTag origin={originOf(c)} compact />
+                        <OriginTag origin={originOf(c)} scripted={isScriptedTest(c)} compact />
                       </span>
                     </td>
                     <td>
@@ -431,7 +431,7 @@ function ChecksPanel({ res, tenant }: { res: ReturnType<typeof useResource<{ dat
                     <RiskCell score={c.risk.score} band={c.risk.band} />
                     <StatusPill status={c.status} />
                     {c.decision?.pattern && <span className="text-[12.5px] text-muted">{c.decision.pattern.name}</span>}
-                    <OriginTag origin={originOf(c)} />
+                    <OriginTag origin={originOf(c)} scripted={isScriptedTest(c)} />
                   </div>
                 </a>
               </li>

@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowUpRight, Check as CheckIcon, CircleCheck, Clock3, Copy, FlaskConical, MonitorSmartphone, OctagonX, RefreshCw, TriangleAlert } from "lucide-react";
+import { ArrowUpRight, AudioLines, Check as CheckIcon, CircleCheck, Clock3, Copy, FlaskConical, MonitorSmartphone, OctagonX, RefreshCw, TriangleAlert } from "lucide-react";
 import { cn, EASE } from "../../kit";
 import type { CheckStatus, Confidence, Outcome, RiskBand, Severity } from "../../../shared/types";
 import { copyText } from "./hooks";
@@ -114,8 +114,26 @@ export function ConfidenceMeter({ confidence }: { confidence: Confidence }) {
 
 const ORIGIN_NOTE = "An eval conversation replayed through the real engine. The customer is an LLM playing a scripted person, not a real customer.";
 
-/** Provenance tag. Eval replays say so plainly everywhere they appear. */
-export function OriginTag({ origin, compact, className }: { origin: "api" | "sandbox" | "eval-replay" | null; compact?: boolean; className?: string }) {
+const SCRIPTED_NOTE = "One of our own test runs: a real, live Bolna web call in which the customer is a scripted text-to-speech voice, not a real person.";
+
+/** Provenance tag. Eval replays and our scripted test calls say so plainly everywhere they appear. */
+export function OriginTag({ origin, scripted, compact, className }: { origin: "api" | "sandbox" | "eval-replay" | null; scripted?: boolean; compact?: boolean; className?: string }) {
+  if (scripted) {
+    return (
+      <span
+        title={SCRIPTED_NOTE}
+        className={cn(
+          "inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full border border-dashed border-[var(--hair-strong)] font-medium text-muted [&>svg]:size-3 [&>svg]:stroke-[1.8]",
+          compact ? "px-1.5 py-px text-[10.5px]" : "px-2 py-0.5 text-[11.5px]",
+          className,
+        )}
+      >
+        <AudioLines aria-hidden />
+        {compact ? "Scripted test call" : "Live web call · scripted TTS customer"}
+        {compact && <span className="sr-only"> · live web call with a scripted text-to-speech customer</span>}
+      </span>
+    );
+  }
   if (origin !== "eval-replay" && origin !== "sandbox") return null;
   const replay = origin === "eval-replay";
   return (

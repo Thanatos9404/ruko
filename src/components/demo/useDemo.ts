@@ -78,7 +78,14 @@ export function useDemo() {
     return j;
   }, []);
   const mint = useCallback(
-    (signal: AbortSignal) => mintFrom("/api/demo/checks/:id/session", { access_code: readAccessCode() }, "Could not start the call", signal),
+    // ?scripted_test=1 marks our own scripted test runs (scripts/live-call.mjs); the server only honours it with the owner's code.
+    (signal: AbortSignal) =>
+      mintFrom(
+        "/api/demo/checks/:id/session",
+        { access_code: readAccessCode(), ...(new URLSearchParams(window.location.search).get("scripted_test") === "1" ? { scripted_test: true } : {}) },
+        "Could not start the call",
+        signal,
+      ),
     [mintFrom],
   );
   const mintContact = useCallback(

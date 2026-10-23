@@ -20,6 +20,15 @@ describe("Bolna execution webhook", () => {
     expect((await hook(app, { id: EXEC, status: "completed" }, "wrong")).status).toBe(401);
   });
 
+  it("accepts the token in a header instead of the query string", async () => {
+    const { app } = await setup({ id: EXEC, status: "in-progress" });
+    const viaHeader = await app.handle(req("POST", "/v1/bolna/webhook", { id: EXEC, status: "in-progress" }, { "X-Ruko-Webhook-Token": WEBHOOK_TOKEN }));
+    expect(viaHeader.status).not.toBe(401);
+    const bearer = await app.handle(req("POST", "/v1/bolna/webhook", { id: EXEC, status: "in-progress" }, { Authorization: `Bearer ${WEBHOOK_TOKEN}` }));
+    expect(bearer.status).not.toBe(401);
+    expect((await app.handle(req("POST", "/v1/bolna/webhook", { id: EXEC, status: "in-progress" }, { Authorization: "Bearer wrong" }))).status).toBe(401);
+  });
+
   it("uses the execution fetched back from Bolna, not the posted body, for terminal events", async () => {
     const real = {
       id: EXEC,

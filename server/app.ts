@@ -6,13 +6,13 @@ import { analyzeText, getLibrary, getSources, mlStatus } from "./ml/index.js";
 import { readModelResults } from "./ml-results.js";
 import { SIGNALS } from "../shared/signals.js";
 import { loadConfig, BOLNA_IPS, type Config } from "./config.js";
-import { Router, json, readJson, HttpError, clientIp, bearer } from "./http.js";
+import { Router, json, readJson, HttpError, clientIp, bearer, rateLimitAddress } from "./http.js";
 import type { KV } from "./store/store.js";
 import { noArchive, type Archive } from "./store/archive.js";
 import { CheckService, publicCheck, validateCreate, type StoredCheck } from "./engine/checks.js";
 import { runTool, type ContactDialer, type ToolDeps } from "./engine/toolHandlers.js";
 import { computeMetrics } from "./engine/metrics.js";
-import { checkGate, gateStatus, accessCodeValid, holdSlot, refundSlot, type GateKind } from "./engine/gate.js";
+import { checkGate, gateStatus, accessCodeValid, holdSlot, refundSlot, withLock, bump, type GateKind } from "./engine/gate.js";
 import { safeEqual, sha256 } from "./engine/ids.js";
 import { BolnaClient, BolnaError } from "./bolna/client.js";
 import { checkUserData, contactUserData, lineUserData } from "./bolna/agents.js";
@@ -94,6 +94,22 @@ export function createApp(deps: AppDeps) {
   }
 
   /**
+   * Wrong access codes are budgeted per client IP per day, shared by /api/live/verify and
+   * every route that mints with a code. Once spent, every attempt from that address gets
+   * the same 429 (a right code too), so the answer stops being an oracle. A right code
+   * never uses the budget.
+   */
+  const failKey = (visitor: string) => `fail:code:${new Date().toISOString().slice(0, 10)}:${visitor}`;
+  async function assertCodeBudget(visitor: string): Promise<void> {
+    if (((await kv.get<number>(failKey(visitor))) ?? 0) >= cfg.codeFailuresPerDay)
+      throw new HttpError(429, "Too many wrong access codes from your network today. Watch the recorded run instead, or try again tomorrow.", "rate_limited");
+  }
+  async function noteCodeFailure(visitor: string): Promise<void> {
+    const k = failKey(visitor);
+    await withLock(k, () => bump(kv, k, 1, 26 * 3600));
+  }
+
+  /**
    * Gate, then mint a Bolna web-call session. A slot is reserved by the gate and
    * refunded if minting fails or the call never connects (see /api/live/release
    * and the webhook). Bolna's own 429 comes back as at_capacity with its scope.
@@ -102,9 +118,12 @@ export function createApp(deps: AppDeps) {
     kind: GateKind,
     agentId: string,
     userData: Record<string, unknown>,
-    opts: { code?: string | null; preauthorized?: boolean; checkId?: string },
+    opts: { code?: string | null; preauthorized?: boolean; checkId?: string; visitor?: string },
   ) {
+    const usesCode = kind !== "contact" && !opts.preauthorized && Boolean(opts.code);
+    if (usesCode && opts.visitor) await assertCodeBudget(opts.visitor);
     const gate = await checkGate(kv, { ...cfg, agents: { ...cfg.agents, check: agentId } }, bolna, { code: opts.code, kind, preauthorized: opts.preauthorized });
+    if (!gate.ok && gate.reason === "access_code_invalid" && usesCode && opts.visitor) await noteCodeFailure(opts.visitor);
     if (!gate.ok) throw new HttpError(gate.reason === "access_code_invalid" ? 403 : 429, gate.message ?? "Live call unavailable.", gate.reason ?? "unavailable");
     try {
       const session = await bolna!.mintWebSession({ agent_id: agentId, user_data: userData });
@@ -123,8 +142,8 @@ export function createApp(deps: AppDeps) {
     }
   }
 
-  async function mintCheckSession(c: StoredCheck, opts: { code?: string | null }) {
-    const session = await mintGated("customer", cfg.agents.check ?? "", checkUserData(c, cfg.bankName), { code: opts.code, checkId: c.id });
+  async function mintCheckSession(c: StoredCheck, opts: { code?: string | null; visitor: string }) {
+    const session = await mintGated("customer", cfg.agents.check ?? "", checkUserData(c, cfg.bankName), { code: opts.code, checkId: c.id, visitor: opts.visitor });
     await checks.attachCall(c.id, { channel: "web", status: "queued", execution_id: session.run_id, agent_id: cfg.agents.check, started_at: new Date().toISOString() });
     await checks.extendHold(c.id, 90 + 120);
     await checks.mutate(c.id, (cc) => {
@@ -135,21 +154,14 @@ export function createApp(deps: AppDeps) {
 
   // ---- routes -------------------------------------------------------------
 
-  const r = new Router();
+  // Paid-call, access-code and sandbox routes answer browsers on Ruko's own origins only.
+  const r = new Router({
+    restricted: (path) => path.startsWith("/api/live/") || path.startsWith("/api/demo/") || path === "/api/public/session",
+    origins: [...new Set([...cfg.allowedOrigins, new URL(cfg.baseUrl).origin])],
+  });
 
-  r.on("GET", "/v1/health", async () =>
-    json({
-      ok: true,
-      service: "ruko",
-      store: kv.kind,
-      archive: archive.enabled,
-      bolna: { configured: Boolean(bolna), agents: { check: Boolean(cfg.agents.check), contact: Boolean(cfg.agents.contact), line: Boolean(cfg.agents.line) } },
-      tools_configured: Boolean(cfg.toolToken),
-      phone_calls: cfg.allowPhoneCalls,
-      text_model: mlStatus(),
-      env: cfg.env,
-    }),
-  );
+  // A liveness check only: deployment details (store, agents, tokens) are not public.
+  r.on("GET", "/v1/health", async () => json({ ok: true, service: "ruko" }));
 
   // Bank API -----------------------------------------------------------------
 
@@ -190,8 +202,9 @@ export function createApp(deps: AppDeps) {
     if (c.risk.action !== "hold") throw new HttpError(409, "This payment was not held; no call needed.", "not_held");
     if (c.decision) throw new HttpError(409, "This check is already decided.", "already_decided");
     const body = (await readJson(req)) as { access_code?: string };
-    await rateLimit(kv, `rl:mint:${visitorKey(req)}`, 30);
-    const session = await mintCheckSession(c, { code: body.access_code ?? req.headers.get("x-access-code") });
+    const visitor = visitorKey(req);
+    await rateLimit(kv, `rl:mint:${visitor}`, 30);
+    const session = await mintCheckSession(c, { code: body.access_code ?? req.headers.get("x-access-code"), visitor });
     return json(session);
   });
 
@@ -226,7 +239,10 @@ export function createApp(deps: AppDeps) {
 
   r.on("POST", "/v1/bolna/webhook", async (req, _p, url) => {
     if (!cfg.webhookToken) throw new HttpError(503, "Webhook not configured (RUKO_WEBHOOK_TOKEN).", "not_configured");
-    const tok = url.searchParams.get("token") ?? "";
+    // Bolna's webhook URL carries the token in the query string; a header is accepted too
+    // (Authorization: Bearer or X-Ruko-Webhook-Token) so it can stay out of request logs.
+    const header = req.headers.get("x-ruko-webhook-token") ?? (req.headers.get("authorization") ?? "").replace(/^Bearer\s+/i, "");
+    const tok = header || (url.searchParams.get("token") ?? "");
     if (!safeEqual(tok, cfg.webhookToken)) throw new HttpError(401, "Bad webhook token.", "unauthorized");
     if (cfg.enforceBolnaIps && !BOLNA_IPS.includes(clientIp(req))) throw new HttpError(403, "Not from Bolna's published IPs.", "forbidden");
     const result = await handleExecutionWebhook({ checks, kv, bolna, agents: cfg.agents }, await readJson(req, 512_000));
@@ -262,9 +278,19 @@ export function createApp(deps: AppDeps) {
   r.on("POST", "/api/demo/checks/:id/session", async (req, p, url) => {
     const c = await checkForApp(req, url, p.id);
     if (c.risk.action !== "hold" || c.decision) throw new HttpError(409, "No call needed for this check.", "not_needed");
-    const body = (await readJson(req)) as { access_code?: string };
-    await rateLimit(kv, `rl:mint:${visitorKey(req)}`, 30);
-    return json(await mintCheckSession(c, { code: body.access_code }));
+    const body = (await readJson(req)) as { access_code?: string; scripted_test?: boolean };
+    const visitor = visitorKey(req);
+    await rateLimit(kv, `rl:mint:${visitor}`, 30);
+    const session = await mintCheckSession(c, { code: body.access_code, visitor });
+    // Our own scripted test runs (scripts/live-call.mjs, owner's code only) are tagged so the
+    // console can say plainly that the "customer" was a text-to-speech voice.
+    if (body.scripted_test === true && cfg.ownerCode && typeof body.access_code === "string" && safeEqual(body.access_code.trim(), cfg.ownerCode)) {
+      await checks.mutate(c.id, (cc) => {
+        cc.test_run = "scripted-tts";
+        cc.events.push({ at: new Date().toISOString(), type: "test.scripted", detail: "Scripted test run: the customer is a text-to-speech voice, not a person." });
+      });
+    }
+    return json(session);
   });
 
   /** The trusted contact's "phone" in the demo: a second browser tab answers the contact agent's web call. */
@@ -272,10 +298,28 @@ export function createApp(deps: AppDeps) {
     const c = await checkForApp(req, url, p.id);
     if (c.contact?.status !== "ringing_web" || !cfg.agents.contact || !bolna) throw new HttpError(409, "No contact call is ringing.", "not_ringing");
     // Part of an authorised live demo, so it doesn't use a judge's slot; at most two tries per check.
+    // The try is reserved before minting (and given back if minting fails), so two
+    // simultaneous requests can't both take the last one.
     const authorised = c.events.some((e) => e.type === "live.authorized");
-    const tries = c.events.filter((e) => e.type === "contact.minted").length;
-    if (tries >= 2) throw new HttpError(429, "The contact call was already tried twice for this payment.", "contact_tries");
-    const session = await mintGated("contact", cfg.agents.contact, contactUserData(c, cfg.bankName), { preauthorized: authorised, checkId: c.id });
+    const agentId = cfg.agents.contact;
+    const tryKey = `contact-tries:${c.id}`;
+    const tries = await withLock(tryKey, async () => {
+      const n = ((await kv.get<number>(tryKey)) ?? c.events.filter((e) => e.type === "contact.minted").length) + 1;
+      await kv.set(tryKey, Math.min(n, 3), 6 * 3600);
+      return n;
+    });
+    const giveBack = () => withLock(tryKey, () => bump(kv, tryKey, -1, 6 * 3600));
+    if (tries > 2) {
+      await giveBack();
+      throw new HttpError(429, "The contact call was already tried twice for this payment.", "contact_tries");
+    }
+    let session: Awaited<ReturnType<typeof mintGated>>;
+    try {
+      session = await mintGated("contact", agentId, contactUserData(c, cfg.bankName), { preauthorized: authorised, checkId: c.id });
+    } catch (e) {
+      await giveBack();
+      throw e;
+    }
     await checks.setContact(c.id, { status: "ringing_web", execution_id: session.run_id });
     await checks.noteEvent(c.id, "contact.minted", "Trusted contact answered in the browser (web call).");
     return json(session);
@@ -331,8 +375,12 @@ export function createApp(deps: AppDeps) {
 
   r.on("POST", "/api/live/verify", async (req) => {
     const body = (await readJson(req)) as { access_code?: string };
-    await rateLimit(kv, `rl:verify:${visitorKey(req)}`, 20);
-    return json({ valid: accessCodeValid(cfg, body.access_code) });
+    const visitor = visitorKey(req);
+    await rateLimit(kv, `rl:verify:${visitor}`, 20);
+    await assertCodeBudget(visitor);
+    const valid = accessCodeValid(cfg, body.access_code);
+    if (!valid) await noteCodeFailure(visitor);
+    return json({ valid });
   });
 
   // Public "Is this a scam?" line -------------------------------------------------
@@ -395,9 +443,10 @@ export function createApp(deps: AppDeps) {
   r.on("POST", "/api/public/session", async (req) => {
     const body = (await readJson(req)) as { access_code?: string; language?: Lang };
     if (!cfg.agents.line) throw new HttpError(503, "The public line is not configured.", "not_configured");
-    await rateLimit(kv, `rl:mint:${visitorKey(req)}`, 30);
+    const visitor = visitorKey(req);
+    await rateLimit(kv, `rl:mint:${visitor}`, 30);
     const lang: Lang = body.language === "hi" ? "hi" : "en";
-    return json(await mintGated("line", cfg.agents.line, lineUserData(lang), { code: body.access_code }));
+    return json(await mintGated("line", cfg.agents.line, lineUserData(lang), { code: body.access_code, visitor }));
   });
 
   // Console (demo tenant, read-only) -----------------------------------------------
@@ -499,7 +548,12 @@ export function createApp(deps: AppDeps) {
 
 async function rateLimit(kv: KV, key: string, perHour: number, kind: "sandbox" | "default" = "default"): Promise<void> {
   const k = `${key}:${new Date().toISOString().slice(0, 13)}`;
-  const n = (await kv.get<number>(k)) ?? 0;
+  // Count first (under the per-process lock), so concurrent requests can't all slip under the limit.
+  const n = await withLock(k, async () => {
+    const cur = (await kv.get<number>(k)) ?? 0;
+    if (cur < perHour) await kv.set(k, cur + 1, 3600);
+    return cur;
+  });
   if (n >= perHour)
     throw new HttpError(
       429,
@@ -508,38 +562,58 @@ async function rateLimit(kv: KV, key: string, perHour: number, kind: "sandbox" |
         : "Too many requests from your network. Please try again in a minute.",
       "rate_limited",
     );
-  await kv.set(k, n + 1, 3600);
 }
 
 /**
- * Per-visitor key for rate limits. On Vercel the client address is the first
- * entry of x-forwarded-for (or x-real-ip); the user agent is mixed in so a
- * shared office or campus IP doesn't collapse everyone into one bucket.
+ * Rate-limit key: the client IP alone (IPv6 by its /64), hashed so raw addresses never sit
+ * in the store. Headers a client controls, such as the user agent, are deliberately left
+ * out, so changing them can't reset a limit. A shared office or venue NAT shares one
+ * bucket; the per-hour limits are sized for that, and live calls are capped per access
+ * code rather than per IP (see engine/gate.ts).
  */
-function visitorKey(req: Request): string {
-  const ip = clientIp(req);
-  const ua = req.headers.get("user-agent") ?? "";
-  return sha256(`${ip}|${ua}`).slice(0, 20);
+export function visitorKey(req: Request): string {
+  return sha256(`ip|${rateLimitAddress(clientIp(req))}`).slice(0, 20);
 }
 
 export type RukoApp = ReturnType<typeof createApp>;
 
 /**
+ * Our five scripted live test calls on 23 Oct 2026 (docs/BOLNA_SPEND.md), made before
+ * test runs were tagged at mint time. Each had a text-to-speech customer, not a person.
+ */
+const SCRIPTED_TEST_EXECUTIONS = new Set([
+  "ddc9026c-e7f1-4cdc-8ee1-34431deb822b",
+  "b6818362-8118-49fd-8f76-146432254c27",
+  "152e968b-2386-46d8-8dc5-3fddaff8ae1f",
+  "2bfbdec6-4bab-440b-be19-8fbb9a7d4a37",
+  "9f893617-24cd-4d04-a693-5ae88ee06554",
+]);
+
+export function isScriptedTestRun(c: Pick<StoredCheck, "test_run" | "call">): boolean {
+  return c.test_run === "scripted-tts" || SCRIPTED_TEST_EXECUTIONS.has(c.call?.execution_id ?? "");
+}
+
+/**
  * What the public console may show about a check: no code word, masked phone numbers,
- * and a transcript only for synthetic eval conversations (never a real caller's words).
+ * and a transcript only for eval conversations and our scripted test runs (never a real caller's words).
  */
 function consoleView(c: StoredCheck) {
   const v = publicCheck(c) as Record<string, unknown> & ReturnType<typeof publicCheck>;
-  const synthetic = c.origin === "eval-replay";
+  const scripted = isScriptedTestRun(c);
+  // Eval replays (an LLM customer) and our scripted test runs (a TTS customer) involve no real person.
+  const synthetic = c.origin === "eval-replay" || scripted;
   const mask = (p?: string) => (p ? maskPhone(p) : p);
   return {
     ...v,
+    test_run: scripted ? ("scripted-tts" as const) : undefined,
     code_word: undefined,
     customer: {
       ...v.customer,
       phone_e164: mask(v.customer.phone_e164),
       trusted_contact: v.customer.trusted_contact ? { ...v.customer.trusted_contact, phone_e164: mask(v.customer.trusted_contact.phone_e164) } : v.customer.trusted_contact,
     },
-    call: v.call ? { ...v.call, transcript: synthetic ? v.call.transcript : undefined, transcript_withheld: !synthetic && Boolean(v.call.transcript?.length) } : v.call,
+    call: v.call
+      ? { ...v.call, agent_id: undefined, transcript: synthetic ? v.call.transcript : undefined, transcript_withheld: !synthetic && Boolean(v.call.transcript?.length) }
+      : v.call,
   };
 }

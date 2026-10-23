@@ -232,6 +232,12 @@ export interface Check {
   mode: "live" | "demo" | "eval";
   /** Where the check came from: a bank's API call, the public sandbox, or an eval conversation replayed through the engine (synthetic customer). */
   origin?: CheckOrigin;
+  /**
+   * Set on our own scripted test runs (scripts/live-call.mjs): a live Bolna web call whose
+   * "customer" is a scripted text-to-speech voice, not a person. Only the owner's access
+   * code can set it. The public console may show these transcripts; never a real caller's.
+   */
+  test_run?: "scripted-tts";
   created_at: string;
   updated_at: string;
   status: CheckStatus;

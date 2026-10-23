@@ -12,6 +12,8 @@ export interface Config {
   /** Public sandbox traffic (/demo) lives in its own tenant, out of the console's headline view. */
   sandboxTenant: string;
   accessCodes: string[];
+  /** The owner's access code (RUKO_ACCESS_CODE_USER); only it may tag a call as a scripted test run. */
+  ownerCode: string | null;
   /** Optional per-code daily caps ("CODE:2" in RUKO_ACCESS_CODES); others use perCodeDailyCap. */
   codeCaps: Record<string, number>;
   dailyCallCap: number;
@@ -26,7 +28,16 @@ export interface Config {
   /** Public counters only count real production traffic. */
   countPublicStats: boolean;
   statsMinPerPattern: number;
+  /** Wrong access codes allowed per client IP per day, shared by /api/live/verify and the mint routes. */
+  codeFailuresPerDay: number;
+  /**
+   * Browser origins that may call the live-call, sandbox and public-session routes cross-origin
+   * (RUKO_ALLOWED_ORIGINS, comma-separated). The API's own origin is always allowed.
+   */
+  allowedOrigins: string[];
 }
+
+export const DEFAULT_ALLOWED_ORIGINS = ["https://ruko-symphony.vercel.app", "http://localhost:5410", "http://127.0.0.1:5410", "http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:4173"];
 
 export const BOLNA_IPS = ["13.203.39.153", "13.126.9.249", "13.202.133.53"];
 
@@ -68,6 +79,7 @@ export function loadConfig(env: Record<string, string | undefined> = process.env
     demoTenant: env.RUKO_DEMO_TENANT ?? "demo-bank",
     sandboxTenant: env.RUKO_SANDBOX_TENANT ?? "sandbox",
     accessCodes: parseCodes(env.RUKO_ACCESS_CODES).codes,
+    ownerCode: env.RUKO_ACCESS_CODE_USER?.trim() || null,
     codeCaps: parseCodes(env.RUKO_ACCESS_CODES).caps,
     dailyCallCap: Number(env.RUKO_DAILY_CALL_CAP ?? 12),
     perCodeDailyCap: Number(env.RUKO_PER_CODE_DAILY_CAP ?? env.RUKO_PER_VISITOR_DAILY_CAP ?? 6),
@@ -79,6 +91,10 @@ export function loadConfig(env: Record<string, string | undefined> = process.env
     chatDailyCap: Number(env.RUKO_CHAT_DAILY_CAP ?? 800),
     countPublicStats: mode === "production" && env.RUKO_COUNT_PUBLIC_STATS !== "false",
     statsMinPerPattern: Number(env.RUKO_STATS_MIN_PER_PATTERN ?? 5),
+    codeFailuresPerDay: Number(env.RUKO_CODE_FAILURES_PER_DAY ?? 10),
+    allowedOrigins: env.RUKO_ALLOWED_ORIGINS
+      ? env.RUKO_ALLOWED_ORIGINS.split(",").map((s) => s.trim().replace(/\/$/, "")).filter(Boolean)
+      : DEFAULT_ALLOWED_ORIGINS,
   };
 }
 

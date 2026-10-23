@@ -21,8 +21,30 @@ export class HttpError extends Error {
   }
 }
 
+/**
+ * Cross-origin policy. Most routes are open (the bank API is called server-to-server and
+ * the pattern library is public), but the routes that mint paid calls, check access codes or
+ * drive the sandbox only answer browsers on Ruko's own origins.
+ */
+export interface CorsPolicy {
+  restricted: (pathname: string) => boolean;
+  /** Allowed browser origins, e.g. "https://ruko-symphony.vercel.app". The API's own host is always allowed. */
+  origins: string[];
+}
+
+export function originAllowed(origin: string, url: URL, origins: string[]): boolean {
+  if (origins.includes(origin)) return true;
+  try {
+    return new URL(origin).host === url.host;
+  } catch {
+    return false;
+  }
+}
+
 export class Router {
   private routes: Route[] = [];
+
+  constructor(private readonly cors?: CorsPolicy) {}
 
   on(method: string, path: string, handler: Handler): this {
     const keys: string[] = [];
@@ -40,7 +62,24 @@ export class Router {
 
   async handle(req: Request): Promise<Response> {
     const url = new URL(req.url);
-    if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders() });
+    const restricted = this.cors?.restricted(url.pathname) ?? false;
+    const origin = req.headers.get("origin");
+    const allowed = !restricted || !origin || originAllowed(origin, url, this.cors?.origins ?? []);
+    // Restricted routes: only allowed origins get CORS headers back, and a write from any
+    // other site is refused outright (a "simple" cross-site POST would otherwise still run).
+    const finish = (res: Response): Response => {
+      if (!restricted) return res;
+      const out = new Response(res.body, res); // headers of a fetched Response are immutable
+      out.headers.delete("Access-Control-Allow-Origin");
+      if (origin && allowed) {
+        out.headers.set("Access-Control-Allow-Origin", origin);
+        out.headers.append("Vary", "Origin");
+      }
+      return out;
+    };
+    if (req.method === "OPTIONS") return finish(new Response(null, { status: 204, headers: corsHeaders() }));
+    if (!allowed && req.method !== "GET" && req.method !== "HEAD")
+      return finish(json({ error: { code: "forbidden_origin", message: "This endpoint only accepts requests from Ruko's own site." } }, 403));
     let pathMatched = false;
     for (const r of this.routes) {
       const m = url.pathname.match(r.re);
@@ -50,12 +89,12 @@ export class Router {
       const params: Params = {};
       r.keys.forEach((k, i) => (params[k] = decodeURIComponent(m[i + 1])));
       try {
-        return await r.handler(req, params, url);
+        return finish(await r.handler(req, params, url));
       } catch (e) {
-        return errorResponse(e);
+        return finish(errorResponse(e));
       }
     }
-    return json({ error: { code: pathMatched ? "method_not_allowed" : "not_found", message: `${req.method} ${url.pathname}` } }, pathMatched ? 405 : 404);
+    return finish(json({ error: { code: pathMatched ? "method_not_allowed" : "not_found", message: `${req.method} ${url.pathname}` } }, pathMatched ? 405 : 404));
   }
 }
 
@@ -95,10 +134,28 @@ export async function readJson(req: Request, maxBytes = 64_000): Promise<unknown
   }
 }
 
+/** The client address. On Vercel the platform sets x-forwarded-for (first entry) and x-real-ip. */
 export function clientIp(req: Request): string {
   const xff = req.headers.get("x-forwarded-for");
   if (xff) return xff.split(",")[0].trim();
   return req.headers.get("x-real-ip") ?? "unknown";
+}
+
+/**
+ * The address rate limits are keyed on: IPv4 as is, IPv4-mapped IPv6 as its IPv4 address,
+ * and other IPv6 addresses by their /64 prefix (one subscriber usually holds a whole /64,
+ * so rotating the low bits must not buy a fresh budget).
+ */
+export function rateLimitAddress(ip: string): string {
+  const v = ip.trim().toLowerCase().replace(/^\[|\]$/g, "").replace(/%.*$/, "");
+  const mapped = v.match(/^::ffff:(\d{1,3}(?:\.\d{1,3}){3})$/);
+  if (mapped) return mapped[1];
+  if (!v.includes(":")) return v;
+  const [head, tail = ""] = v.split("::");
+  const left = head ? head.split(":") : [];
+  const right = tail ? tail.split(":") : [];
+  const groups = v.includes("::") ? [...left, ...Array(Math.max(0, 8 - left.length - right.length)).fill("0"), ...right] : left;
+  return groups.slice(0, 4).map((g) => g.replace(/^0+(?=.)/, "")).join(":") + "::/64";
 }
 
 export function bearer(req: Request): string | null {

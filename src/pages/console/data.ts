@@ -32,6 +32,9 @@ export const consoleData = {
   checks: (t: TenantView, limit = 60) => get<{ data: Check[] }>(`/api/console/checks?limit=${limit}${t === "sandbox" ? `&${q(t)}` : ""}`),
 };
 
+/** One of our own scripted live test calls: a real Bolna web call with a text-to-speech customer. */
+export const isScriptedTest = (c: Check) => c.test_run === "scripted-tts";
+
 /** Where a check came from. Older checks predate the field. */
 export function originOf(c: Check): "api" | "sandbox" | "eval-replay" | null {
   const o = (c as Check & { origin?: string }).origin;

@@ -50,7 +50,7 @@ import {
 } from "./ui";
 import { Transcript, turnDomId, useHighlights, type TxSignal, type TxTurn } from "./Transcript";
 import { findRecordedRun, type RecordedRun } from "./recorded";
-import { originOf } from "./data";
+import { isScriptedTest, originOf } from "./data";
 import { ModelOpinionPanel } from "./ModelOpinion";
 
 const POLL_MS = 3000;
@@ -246,7 +246,7 @@ function Header({ c }: { c: Check }) {
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[12.5px] text-muted">
               <Chip>{MODE_LABEL(c)}</Chip>
-              <OriginTag origin={originOf(c)} />
+              <OriginTag origin={originOf(c)} scripted={isScriptedTest(c)} />
               <span>
                 <time dateTime={c.created_at}>{dateTime(c.created_at)}</time> IST · {ago(c.created_at, now)}
               </span>
