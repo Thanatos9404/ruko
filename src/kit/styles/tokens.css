@@ -215,8 +215,9 @@
   .glass {
     background: var(--glass);
     border: 1px solid var(--glass-border);
-    backdrop-filter: blur(18px) saturate(140%);
+    /* Prefixed first, standard last: Lightning CSS keeps the last one when it merges them. */
     -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
   }
   .sky {
     background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 46%, var(--sky-bottom) 100%);

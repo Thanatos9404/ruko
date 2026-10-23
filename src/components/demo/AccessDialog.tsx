@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { KeyRound, Loader2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { api } from "../../lib/api";
 import { EASE } from "../../kit";
 import { saveAccessCode } from "./useDemo";
@@ -47,7 +48,9 @@ export function AccessDialog({ open, onClose, onOk }: { open: boolean; onClose: 
     }
   };
 
-  return (
+  // A portal keeps the dialog full-screen even when an ancestor is transformed (the landing tilt-in).
+  if (typeof document === "undefined") return null;
+  return createPortal(
     <AnimatePresence>
       {open && (
         <motion.div
@@ -106,6 +109,7 @@ export function AccessDialog({ open, onClose, onOk }: { open: boolean; onClose: 
           </motion.form>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   );
 }

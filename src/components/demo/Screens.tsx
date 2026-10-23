@@ -154,12 +154,15 @@ export function HoldScreen({
   liveAvailable,
   onAnswer,
   onReplay,
+  replayLabel,
 }: {
-  check: DemoCheck;
+  check: Pick<DemoCheck, "code_word">;
   lang: Lang;
   liveAvailable: boolean;
   onAnswer: () => void;
   onReplay: () => void;
+  /** Overrides the secondary button's label (the landing preview uses it to start the demo). */
+  replayLabel?: string;
 }) {
   const t = T[lang];
   const reduce = useReducedMotion();
@@ -204,7 +207,7 @@ export function HoldScreen({
               liveAvailable ? "border border-[#161f2e]/45 text-[#161f2e]" : "bg-[#161f2e] text-[#fdfdfb]",
             )}
           >
-            {t.replay}
+            {replayLabel ?? t.replay}
           </button>
         </div>
       </div>

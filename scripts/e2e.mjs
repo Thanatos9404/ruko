@@ -135,15 +135,27 @@ for (const sc of scenarios.data) {
   await page.goto(`${base}/`, { waitUntil: "load", timeout: 60000 });
   await page.evaluate(() => document.getElementById("demo")?.scrollIntoView());
   await sleep(1200);
+  // Idle, the phone previews the coral hold screen; "Try it" turns it into the bank app.
+  const preview = /Payment paused/.test(await page.evaluate(() => document.getElementById("demo")?.querySelector('[aria-label="Sandbox bank app"]')?.textContent ?? ""));
+  if (preview) await clickText(page, "Try it: make the payment");
+  await sleep(600);
   const embed = await page.evaluate(() => {
     const root = document.getElementById("demo");
     const chips = root?.querySelectorAll('[role=radiogroup][aria-label=Scenario] [role=radio]').length ?? 0;
     const phone = root?.querySelector('[aria-label="Sandbox bank app"]')?.textContent ?? "";
     return { chips, ready: /Pay ₹1,90,000/.test(phone) };
   });
-  const ok = embed.chips >= 3 && embed.ready;
-  console.log(`${ok ? "PASS" : "FAIL"} landing embed      → ${embed.chips} chips, ${embed.ready ? "CBI scenario ready to pay" : "phone not ready"}`);
+  const ok = embed.chips >= 3 && embed.ready && preview;
+  console.log(`${ok ? "PASS" : "FAIL"} landing embed      → ${preview ? "coral preview, then " : "no idle preview; "}${embed.chips} chips, ${embed.ready ? "CBI scenario ready to pay" : "phone not ready"}`);
   if (!ok) failures++;
+  // The production CSS must keep the standard backdrop-filter (Chrome ignores the -webkit- one).
+  const blur = await page.evaluate(() => {
+    const g = document.querySelector(".glass");
+    return g ? getComputedStyle(g).backdropFilter : "no .glass element";
+  });
+  const blurOk = /blur/.test(blur);
+  console.log(`${blurOk ? "PASS" : "FAIL"} glass blur          → backdrop-filter: ${blur}`);
+  if (!blurOk) failures++;
   if (ok) {
     await clickText(page, "Pay ₹1,90,000");
     await sleep(2500);

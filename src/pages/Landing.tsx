@@ -1,6 +1,6 @@
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { ArrowDown, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button, EASE, Magnetic, Marquee, Reveal, SmoothScroll, WordReveal } from "../kit";
 import { SiteFooter, SiteNav } from "../components/SiteNav";
 import { RukoIntro } from "../components/brand/RukoLogo";
@@ -17,7 +17,8 @@ function Hero() {
   // On phones the logo beat plays alongside the copy instead of before it, so the
   // headline and the buttons are on screen at once.
   const [phone] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches);
-  const at = phone ? { word: 0.1, lead: 0.3, cta: 0.4, stats: 0.55, note: 0.6 } : { word: 1.9, lead: 2.4, cta: 2.6, stats: 2.8, note: 2.9 };
+  // Copy never waits on the logo beat: everything is on screen within half a second.
+  const at = phone ? { word: 0.1, lead: 0.3, cta: 0.4, stats: 0.5, note: 0.5 } : { word: 0.15, lead: 0.3, cta: 0.4, stats: 0.5, note: 0.5 };
   const after = (d: number) => ({
     initial: reduce ? { opacity: 0 } : { opacity: 0, y: 12, filter: "blur(6px)" },
     animate: { opacity: 1, y: 0, filter: "blur(0px)" },
@@ -68,6 +69,14 @@ function Hero() {
 }
 
 function DemoSection() {
+  // The demo tilts up into place as it scrolls in (REA motion spec: scroll-linked, spring-smoothed).
+  const stage = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: stage, offset: ["start end", "start 35%"] });
+  const spring = { stiffness: 400, damping: 100, mass: 1 };
+  const rotateX = useSpring(useTransform(scrollYProgress, [0, 1], [14, 0]), spring);
+  const scale = useSpring(useTransform(scrollYProgress, [0, 1], [0.92, 1]), spring);
+  const y = useSpring(useTransform(scrollYProgress, [0, 1], [48, 0]), spring);
   return (
     <section id="demo" className="relative scroll-mt-20 pb-10 pt-8">
       <div className="container-x">
@@ -80,7 +89,11 @@ function DemoSection() {
             Full sandbox <ArrowRight size={15} />
           </a>
         </Reveal>
-        <DemoExperience compact scenarios={["digital-arrest", "investment-group", "flat-deposit", "rent"]} />
+        <div ref={stage} style={{ perspective: 1200 }}>
+          <motion.div style={reduce ? undefined : { rotateX, scale, y, transformOrigin: "top center" }}>
+            <DemoExperience compact scenarios={["digital-arrest", "investment-group", "flat-deposit", "rent"]} />
+          </motion.div>
+        </div>
       </div>
     </section>
   );

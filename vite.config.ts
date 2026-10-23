@@ -52,8 +52,12 @@ export default defineConfig({
     // Pre-bundle everything the lazy routes use, so a late discovery can't split React into two copies.
     include: ["react", "react-dom", "react-dom/client", "react/jsx-runtime", "motion/react", "lucide-react", "lenis", "ogl", "@bolna/web-call"],
   },
+  // Lightning CSS minifies with real browser targets, so it keeps both backdrop-filter and
+  // -webkit-backdrop-filter (the default minifier dropped the unprefixed one: no blur in Chrome).
+  css: { lightningcss: { targets: { chrome: 100 << 16, edge: 100 << 16, firefox: 100 << 16, safari: (15 << 16) | (4 << 8), ios_saf: (15 << 16) | (4 << 8) } } },
   build: {
     target: "es2022",
+    cssMinify: "lightningcss",
     chunkSizeWarningLimit: 900,
   },
   test: {

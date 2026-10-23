@@ -21,6 +21,8 @@ const LANG_LABEL: Record<Lang, string> = { en: "English", hi: "हिंदी" 
  */
 export function DemoExperience({ compact = false, scenarios: only }: { compact?: boolean; scenarios?: string[] }) {
   const d = useDemo();
+  // Landing page only: the phone starts on a preview of the coral hold screen until the visitor acts.
+  const [preview, setPreview] = useState(compact);
   const scenarios = DEMO_SCENARIO_VIEWS;
   const [live, setLive] = useState<LiveStatus | null>(null);
   const [askCode, setAskCode] = useState(false);
@@ -67,14 +69,27 @@ export function DemoExperience({ compact = false, scenarios: only }: { compact?:
 
   return (
     <div ref={stageRef} className="scroll-mt-24">
-      <Controls d={d} list={list} locked={locked} />
+      <div onClickCapture={() => preview && setPreview(false)}>
+        <Controls d={d} list={list} locked={locked} />
+      </div>
       <div className={cn("mt-4 grid grid-cols-1 gap-6 lg:gap-10", compact ? "lg:grid-cols-[340px_minmax(0,1fr)]" : "lg:grid-cols-[360px_minmax(0,1fr)]")}>
       <div className="min-w-0">
         <div>
           <Phone label="Sandbox bank app">
             <AnimatePresence mode="wait">
-              <motion.div key={d.phase} className="flex flex-1 flex-col" exit={{ opacity: 0, filter: "blur(6px)" }} transition={{ duration: 0.25 }}>
-                {(d.phase === "pay" || d.phase === "checking") && (
+              <motion.div key={`${d.phase}-${preview}`} className="flex flex-1 flex-col" exit={{ opacity: 0, filter: "blur(6px)" }} transition={{ duration: 0.25 }}>
+                {preview && d.phase === "pay" && (
+                  // The brand moment first: on the landing page, an idle phone shows what a paused payment looks like.
+                  <HoldScreen
+                    check={{ code_word: "NEEM 42" }}
+                    lang={d.lang}
+                    liveAvailable={false}
+                    onAnswer={() => setPreview(false)}
+                    onReplay={() => setPreview(false)}
+                    replayLabel={d.lang === "hi" ? "आज़माएँ: भुगतान करें" : "Try it: make the payment"}
+                  />
+                )}
+                {!preview && (d.phase === "pay" || d.phase === "checking") && (
                   <PayScreen scenario={sc} lang={d.lang} busy={d.phase === "checking"} onPay={d.pay} bank="Demo Bank" />
                 )}
                 {d.phase === "allowed" && d.check && <AllowedScreen check={d.check} scenario={sc} lang={d.lang} onAgain={d.reset} />}
