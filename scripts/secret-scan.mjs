@@ -13,7 +13,7 @@ for (const f of ENV_FILES) {
   if (!existsSync(f)) continue;
   for (const line of readFileSync(f, "utf8").split(/\r?\n/)) {
     const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*"?([^"\s#]+)"?/);
-    if (m && m[2].length >= 12 && /KEY|TOKEN|SECRET|PASS/i.test(m[1])) secrets.push({ name: m[1], value: m[2] });
+    if (m && m[2].length >= 12 && /KEY|TOKEN|SECRET|PASS|ACCESS_CODE/i.test(m[1])) secrets.push({ name: m[1], value: m[2] });
   }
 }
 
