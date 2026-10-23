@@ -70,9 +70,9 @@ sequenceDiagram
 |---|---|---|
 | Agent API v2 | Three agents built and kept in sync by `npm run bolna:setup`: payment safety check, trusted-contact call, public safety line. All saved with `restricted: false` under Bolna's content-safety checks; `npm run bolna:check` diffs the saved agents against the repo. | in use (synced, no drift) |
 | Multilingual config | English + Hindi with mid-call switching; the call starts in the customer's language via `agent_language`. | configured; first live Hindi call pending |
-| Custom functions | `get_check_context`, `record_signal`, `call_trusted_contact`, `check_trusted_contact`, `set_decision` (+ `report_contact_outcome`, `lookup_pattern`, `log_report`). Prompt variables fill `check_id` and the call reference; every parameter is required because Bolna fills requests from `%(name)s` templates. | wired and tested against the engine; first live call pending |
-| Web Call SDK (`@bolna/web-call`) | Browser calls in the demo, the trusted contact's "phone" and the public line. Sessions are minted server-side, single-use, behind an access code, a daily cap, a per-code cap and a wallet floor read from `GET /user/me`. | wired (deployed, gated); first live call pending |
-| Webhooks | Token-protected, optional IP allowlist (Bolna's three published IPs), idempotent per execution and status; terminal events are **re-read from Bolna's API** before they can change a decision. | wired and tested; first live call pending |
+| Custom functions | `get_check_context`, `record_signal`, `call_trusted_contact`, `check_trusted_contact`, `set_decision` (+ `report_contact_outcome`, `lookup_pattern`, `log_report`). Prompt variables fill `check_id` and the call reference; every parameter is required because Bolna fills requests from `%(name)s` templates. | live: exercised on the first calls (execution `b6818362…`, 23 Oct) |
+| Web Call SDK (`@bolna/web-call`) | Browser calls in the demo, the trusted contact's "phone" and the public line. Sessions are minted server-side, single-use, behind an access code, a daily cap, a per-code cap and a wallet floor read from `GET /user/me`. | live: 2 calls from the production demo (23 Oct) |
+| Webhooks | Token-protected, optional IP allowlist (Bolna's three published IPs), idempotent per execution and status; terminal events are **re-read from Bolna's API** before they can change a decision. | live: verified on the first calls |
 | Preferred models | gpt-4.1-mini, Deepgram nova-3, Sarvam saaras:v3, ElevenLabs eleven_turbo_v2_5, Sarvam bulbul:v3: all inside Bolna's flat per-minute rate. | configured |
 | Transfer to a human | Documented option for banks that need a human in the loop (UK FCA FG24/6): add Bolna's transfer tool with the bank's fraud-desk number. | documented |
 | Batch calls | Documented for bank-scale back-testing of the policy against consenting staff. | documented |
@@ -186,7 +186,7 @@ Returns `action: "hold"`, the code word, every risk reason with its weight, and 
 
 ## Honest limits
 
-- **No live call measured yet.** The voice path is wired end to end but untested on Bolna until deployment; the eval is text mode with a stand-in LLM and estimated call times.
+- **Only two live calls so far** (23 Oct, scripted text-to-speech customer, English; see [docs/BOLNA_SPEND.md](docs/BOLNA_SPEND.md)). The second ran the whole flow and blocked a coached digital-arrest victim in 78 s. Everything else is measured in text mode with a stand-in LLM and estimated call times; Hindi has not yet run live.
 - **Voice languages:** English and Hindi (with Hinglish). Tamil, Bengali and Marathi truth lines in the library are drafts awaiting native review.
 - **Phone calls are switched off** (`RUKO_ALLOW_PHONE_CALLS=false`) to protect the $5 budget; in the demo the trusted contact's call rings in a browser tab instead.
 - **The pre-call policy's weights are hand-set**, not learned; a bank would tune them on its own data and feed in its own signals (FRI, mule lists, device telemetry). The device signals in the sandbox are simulated.
