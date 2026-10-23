@@ -162,3 +162,11 @@ describe("console data hygiene", () => {
     expect([...cfg.apiKeys.values()]).toEqual(["pilot-bank"]);
   });
 });
+
+describe("input robustness", () => {
+  it("rejects an unknown time zone with a 400", async () => {
+    const app = makeApp();
+    const r = await app.handle(req("POST", "/v1/checks", { payment: payment({ timezone: "Mars/Olympus" }), customer: customer(), device: device() }, bank()));
+    expect(r.status).toBe(400);
+  });
+});

@@ -126,7 +126,7 @@ export function validateCreate(body: unknown): CreateCheckInput {
       note: typeof p.note === "string" ? p.note.slice(0, 140) : undefined,
       initiated_via: (["manual", "collect_request", "qr", "link"].includes(String(p.initiated_via)) ? p.initiated_via : "manual") as PaymentContext["initiated_via"],
       initiated_at: typeof p.initiated_at === "string" && !Number.isNaN(Date.parse(p.initiated_at)) ? p.initiated_at : new Date().toISOString(),
-      timezone: typeof p.timezone === "string" ? p.timezone : "Asia/Kolkata",
+      timezone: validTimezone(p.timezone),
     },
     customer: {
       customer_ref: c.customer_ref.slice(0, 64),
@@ -657,3 +657,15 @@ export function scrubEvidence(s: string): string {
 }
 
 export const ALL_PATTERN_IDS = PATTERNS.map((p) => p.id);
+
+/** An IANA time zone, defaulting to India; an unknown one is a 400, not a crash later. */
+function validTimezone(tz: unknown): string {
+  if (tz === undefined || tz === null || tz === "") return "Asia/Kolkata";
+  if (typeof tz !== "string") throw new ValidationError("payment.timezone must be an IANA time zone such as Asia/Kolkata", "payment.timezone");
+  try {
+    new Intl.DateTimeFormat("en-IN", { timeZone: tz });
+    return tz;
+  } catch {
+    throw new ValidationError(`payment.timezone "${tz.slice(0, 40)}" is not a known time zone`, "payment.timezone");
+  }
+}

@@ -37,7 +37,7 @@ export function Nav({
             : "max-w-[1200px] border border-transparent py-3 pl-4 pr-3",
         )}
       >
-        <a href="#top" className="shrink-0">
+        <a href={typeof location !== "undefined" && location.pathname !== "/" ? "/" : "#top"} className="shrink-0" aria-label="Ruko home">
           {brand}
         </a>
         <ul className="hidden items-center gap-1 md:flex">

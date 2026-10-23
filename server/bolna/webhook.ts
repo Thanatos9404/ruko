@@ -111,6 +111,8 @@ async function process(
 
   const isContact = (exec.agent_id && exec.agent_id === deps.agents.contact) || check.contact?.execution_id === id;
   const mapped = STATUS_MAP[status] ?? "in-progress";
+  // Deliveries can arrive out of order: once a call has ended, an earlier status is ignored.
+  if (!TERMINAL_STATUSES.has(status) && check.call?.execution_id === id && check.call.ended_at) return { handled: true, check_id: checkId, status, verified };
 
   if (isContact) {
     if (TERMINAL_STATUSES.has(status) && check.contact?.status !== "reached") {
