@@ -2,9 +2,11 @@ import { Reveal } from "../kit";
 import { SiteFooter, SiteNav } from "../components/SiteNav";
 import { DemoExperience } from "../components/demo/DemoExperience";
 import { useEvalResults } from "../lib/useEvalResults";
+import { RealCallPlayer, useRealCall } from "../components/RealCallPlayer";
 
 export default function DemoPage() {
   const ev = useEvalResults();
+  const call = useRealCall();
   return (
     <>
       <SiteNav />
@@ -21,6 +23,7 @@ export default function DemoPage() {
           <div className="mt-10">
             <DemoExperience />
           </div>
+          {call && <RealCallPlayer call={call} className="mt-6" />}
           <Reveal className="mt-12 grid gap-4 text-[13px] leading-relaxed text-muted md:grid-cols-3">
             <p>
               <strong className="text-ink-2">What's real.</strong> The risk policy, the hold, the code word, the engine's tool endpoints, the decision policy and the audit trail. Live calls are real Bolna web calls.
@@ -30,7 +33,9 @@ export default function DemoPage() {
             </p>
             <p>
               <strong className="text-ink-2">What's never asked.</strong> Ruko never asks for an OTP, PIN, card or account number.
-              {ev ? ` Across ${ev.totals.conversations} eval conversations (${ev.totals.agent_turns} agent turns), it asked ${ev.totals.otp_requests === 0 ? "for none" : `${ev.totals.otp_requests} times`}.` : ""}
+              {ev
+                ? ` In ${ev.version}'s ${(ev.totals_current ?? ev.totals).conversations} eval conversations (${(ev.totals_current ?? ev.totals).agent_turns} agent turns), it asked ${(ev.totals_current ?? ev.totals).otp_requests === 0 ? "for none" : `${(ev.totals_current ?? ev.totals).otp_requests} times`}.`
+                : ""}
             </p>
           </Reveal>
         </div>
