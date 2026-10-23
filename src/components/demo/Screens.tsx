@@ -3,6 +3,7 @@ import { type MotionValue, motion, useReducedMotion } from "motion/react";
 import { Check, Loader2, Mic, MicOff, PhoneOff, ShieldAlert, ShieldCheck, ShieldX, Smartphone } from "lucide-react";
 import type { AppStatus, Lang } from "../../../shared/types";
 import { formatINR, minutesLabel } from "../../../shared/format";
+import { patternById } from "../../../shared/patterns";
 import type { DemoCheck, DemoScenarioView } from "../../lib/api";
 import { cn, EASE } from "../../kit";
 import { Arcs } from "../Arcs";
@@ -139,7 +140,9 @@ export function AllowedScreen({ check, scenario, lang, onAgain }: { check: DemoC
         {formatINR(scenario?.payment.amount_inr ?? 0)} → {scenario?.payment.payee.name}
       </p>
       <p className="mt-6 max-w-[26ch] text-[12.5px] text-muted">
-        Ruko scored this payment {check.risk.score}/100. No hold, no call: genuine payers aren't slowed down.
+        {lang === "hi"
+          ? `रुको ने इस भुगतान को ${check.risk.score}/100 अंक दिए। न रोक, न कॉल: असली भुगतान धीमे नहीं होते।`
+          : `Ruko scored this payment ${check.risk.score}/100. No hold, no call: genuine payers aren't slowed down.`}
       </p>
       <button onClick={onAgain} className="ring-focus mt-8 rounded-full border border-hair px-4 py-2 text-[13px] font-semibold text-ink-2 hover:text-ink">
         {t.again}
@@ -351,6 +354,29 @@ function CallSteps({ step, lang }: { step: CallStep; lang: Lang }) {
   );
 }
 
+/** Short Hindi forms of the policy's reasons for the customer's screen (the audit trail keeps the English). */
+const REASON_HI: Record<string, string> = {
+  MULTIPLE_STRONG_SIGNS: "कई गंभीर चेतावनी संकेत मिले।",
+  CRITICAL_SIGN: "एक गंभीर चेतावनी संकेत मिला; भुगतान 24 घंटे रुका है।",
+  SEVERAL_WARNING_SIGNS: "कई चेतावनी संकेत मिले।",
+  UNEXPLAINED_WARNING_SIGN: "एक चेतावनी संकेत, जिसकी कोई वजह नहीं मिली।",
+  EXPLAINED: "कोई गंभीर संकेत नहीं, और आपके जवाब भुगतान से मेल खाते हैं।",
+  NO_WARNING_SIGNS: "बातचीत में कोई चेतावनी संकेत नहीं मिला।",
+  CUSTOMER_CANCELLED: "आपने भुगतान रद्द करना चुना।",
+  CUSTOMER_WANTS_TIME: "आपने जाँच के लिए समय माँगा।",
+  PATTERN_SUSPECTED: "बातचीत एक जाने-पहचाने धोखे से मेल खाती है।",
+  SAFE_DEFAULT_CRITICAL_RISK: "भुगतान बहुत जोखिम वाला था और इसके असली होने का पक्का सबूत नहीं मिला।",
+  ESCALATED_TO_FRAUD_DESK: "बैंक की धोखाधड़ी टीम आपको वापस कॉल करेगी।",
+  CHECK_INCOMPLETE: "जाँच पूरी होने से पहले कॉल कट गई।",
+  CONTACT_CONCERNED: "आपके भरोसेमंद संपर्क को इस भुगतान की जानकारी नहीं थी या उन्होंने चिंता जताई।",
+  CONTACT_CONFIRMED: "आपके भरोसेमंद संपर्क ने भुगतान की पुष्टि की।",
+  AGENT_CAUTION: "सहायक ने ज़्यादा सावधानी की सलाह दी।",
+  POLICY_OVERRODE_AGENT: "बैंक की नीति ने सहायक से ज़्यादा सख़्त फ़ैसला लिया।",
+  NO_CONVERSATION: "हम आपसे बात नहीं कर पाए।",
+  NO_ANSWER_AFTER_RETRY: "दोबारा कॉल करने पर भी बात नहीं हो पाई।",
+  AWAITING_CONTACT: "आपके भरोसेमंद संपर्क से बात होने तक भुगतान रुका है।",
+};
+
 export function OutcomeScreen({ status, lang, onAgain }: { status: AppStatus; lang: Lang; onAgain: () => void }) {
   const t = T[lang];
   const d = status.decision!;
@@ -370,7 +396,7 @@ export function OutcomeScreen({ status, lang, onAgain }: { status: AppStatus; la
         </p>
         {d.pattern && (
           <p className="mt-4 inline-flex w-fit rounded-full border border-hair px-3 py-1 text-[12px] font-semibold text-ink">
-            {lang === "hi" ? "पहचाना गया पैटर्न" : "Pattern"}: {d.pattern.name}
+            {lang === "hi" ? "पहचाना गया पैटर्न" : "Pattern"}: {patternById(d.pattern.id)?.name[lang] ?? d.pattern.name}
           </p>
         )}
         <p className="mt-4 text-[13.5px] leading-snug text-ink">{d.customer_message}</p>
@@ -379,7 +405,7 @@ export function OutcomeScreen({ status, lang, onAgain }: { status: AppStatus; la
           <ul className="mt-2 space-y-1.5">
             {d.reasons.slice(0, 3).map((r) => (
               <li key={r.code} className="text-[12px] leading-snug text-ink-2">
-                · {r.text}
+                · {lang === "hi" ? (REASON_HI[r.code] ?? r.text) : r.text}
               </li>
             ))}
           </ul>

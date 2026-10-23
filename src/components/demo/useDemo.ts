@@ -138,7 +138,11 @@ export function useDemo() {
     setStartedAt(null);
   }, [call, contactCall]);
 
+  const paying = useRef(false);
   const pay = useCallback(async () => {
+    // A double click must not create two checks.
+    if (paying.current) return;
+    paying.current = true;
     setError(null);
     setPhase("checking");
     try {
@@ -157,6 +161,8 @@ export function useDemo() {
             : err.message,
       );
       setPhase("pay");
+    } finally {
+      paying.current = false;
     }
   }, [scenario, lang]);
 

@@ -64,7 +64,10 @@ export function DemoExperience({ compact = false, scenarios: only }: { compact?:
     if (readAccessCode()) void d.startLive();
     else setAskCode(true);
   };
-  const elapsed = d.startedAt ? now - d.startedAt : 0;
+  // The "since hold" clock stops at the decision.
+  const decidedEvent = d.status?.decision ? d.status.events?.find((e) => e.type === "decision.made") : undefined;
+  const decidedAt = decidedEvent ? Date.parse(decidedEvent.at) : null;
+  const elapsed = d.startedAt ? Math.max(0, (decidedAt && decidedAt > d.startedAt ? Math.min(now, decidedAt) : now) - d.startedAt) : 0;
   const locked = d.phase !== "pay";
 
   return (
