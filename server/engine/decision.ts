@@ -186,7 +186,7 @@ export function decide(input: DecisionInput): Decision {
     reasons.push({
       code: "SAFE_DEFAULT_CRITICAL_RISK",
       text: hardRule
-        ? "A hard pre-payment rule fired (such as a 'safe account' payee), and only an independent check of the payee can release that. The payment waits; the customer can confirm in the app or ask for a call-back."
+        ? "A hard pre-payment rule fired (such as a 'safe account' payee), and only an independent check of the payee can release that. The payment waits for a call-back from the fraud desk; in-app confirmation is switched off for this payment."
         : "Pre-payment risk was critical and the call gave no positive evidence that the payment is genuine (the customer checked the payee themselves, or knows the payee personally and the purpose fits). The payment waits; the customer can confirm in the app or ask for a call-back.",
     });
     reasons.push({
@@ -251,6 +251,7 @@ export function decide(input: DecisionInput): Decision {
   if (outcome !== "delay") delay = undefined;
 
   const pattern = outcome === "release" ? null : inferPattern(check.signals);
+  const hard = check.risk.reasons.some((r) => r.hard);
   return {
     outcome,
     reasons,
@@ -258,7 +259,11 @@ export function decide(input: DecisionInput): Decision {
     pattern,
     agent_recommendation: agentRec,
     escalated_over_agent: escalated,
-    customer_message: input.noConversation ? noAnswerMessage(lang) : customerMessage(outcome, lang, check.payment.amount_inr, delay),
+    customer_message: input.noConversation ? noAnswerMessage(lang, hard) : customerMessage(outcome, lang, check.payment.amount_inr, delay),
+    // A delay never turns into a release by itself: when it runs out, the fraud desk calls back.
+    on_expiry: outcome === "delay" ? "fraud_desk_callback" : undefined,
+    // After a hard rule the customer can't wave the payment through themselves.
+    self_confirm_allowed: outcome === "delay" ? !hard : undefined,
     decided_at: now,
     policy_version: POLICY_VERSION,
   };
@@ -269,7 +274,11 @@ function describe(xs: Signal[]): string {
   return labels.join(", ");
 }
 
-export function noAnswerMessage(lang: Lang): string {
+export function noAnswerMessage(lang: Lang, hard = false): string {
+  if (hard)
+    return lang === "hi"
+      ? "हम आपसे बात नहीं कर पाए। आपका भुगतान रुका है और पैसा सुरक्षित है। बैंक अपने आधिकारिक नंबर से आपको वापस कॉल करेगा।"
+      : "We couldn't reach you. Your payment is on hold and your money is safe. The bank will call you back from its official number.";
   return lang === "hi"
     ? "हम आपसे बात नहीं कर पाए। आपका भुगतान रुका है और पैसा सुरक्षित है। ऐप में पुष्टि करें या बैंक से कॉल-बैक माँगें।"
     : "We couldn't reach you. Your payment is on hold and your money is safe. Confirm in the app, or ask the bank to call you back.";

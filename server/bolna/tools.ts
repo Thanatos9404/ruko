@@ -44,6 +44,7 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
       type: "object",
       properties: {
         check_id: checkId,
+        execution_id: executionId,
         signal: {
           type: "string",
           description: SIGNALS.map((s) => `${s.type}: ${s.listen_for}`).join(" | "),
@@ -57,7 +58,7 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
           enum: ["none", ...PATTERNS.map((p) => p.id)],
         },
       },
-      required: ["check_id", "signal", "evidence", "confidence", "pattern_hint"],
+      required: ["check_id", "execution_id", "signal", "evidence", "confidence", "pattern_hint"],
     },
   },
   {
@@ -69,9 +70,10 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
       type: "object",
       properties: {
         check_id: checkId,
+        execution_id: executionId,
         customer_consent: { type: "string", description: "Did the customer clearly agree?", enum: ["yes", "no"] },
       },
-      required: ["check_id", "customer_consent"],
+      required: ["check_id", "execution_id", "customer_consent"],
     },
   },
   {
@@ -87,6 +89,7 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
       type: "object",
       properties: {
         check_id: checkId,
+        execution_id: executionId,
         recommendation: {
           type: "string",
           description: "release = safe to send; delay = hold for a few hours to verify; block = stop the payment.",
@@ -94,7 +97,7 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
         },
         reason: { type: "string", description: "One sentence explaining your recommendation." },
       },
-      required: ["check_id", "recommendation", "reason"],
+      required: ["check_id", "execution_id", "recommendation", "reason"],
     },
   },
 ];

@@ -134,13 +134,22 @@ export async function recordSignal(deps: ToolDeps, args: Args, source: "agent" |
   }
   const conf = (["high", "medium", "low"].includes(str(args.confidence)) ? str(args.confidence) : "medium") as Confidence;
   const hint = str(args.pattern_hint);
-  const { check, duplicate } = await deps.checks.recordSignal(id, {
+  let { check, duplicate } = await deps.checks.recordSignal(id, {
     type,
     evidence: str(args.evidence) || "(no quote given)",
     confidence: conf,
     pattern_hint: hint && hint !== "none" ? hint : undefined,
     source,
   });
+  // "Family is on the call", but the bank sees a caller who isn't in their contacts: the story conflicts.
+  if (type === "family_helping" && check.device.active_call && check.device.caller_in_contacts === false && !check.signals.some((s) => s.type === "story_conflict")) {
+    ({ check } = await deps.checks.recordSignal(id, {
+      type: "story_conflict",
+      evidence: "Says family is on the call, but the caller's number isn't in their contacts",
+      confidence: "high",
+      source: "policy",
+    }));
+  }
   // Customer evidence only: Ruko's own questions are the same in scam and genuine calls.
   const ml = modelOpinion(
     check.signals.filter((x) => x.source !== "contact_agent").map((x) => x.evidence).join("\n"),
@@ -341,6 +350,16 @@ export const TOOL_HANDLERS: Record<string, (deps: ToolDeps, args: Args) => Promi
 export async function runTool(deps: ToolDeps, name: string, args: Args): Promise<{ status: number; body: ToolResult }> {
   const h = TOOL_HANDLERS[name];
   if (!h) return { status: 404, body: { error: `unknown tool ${name}` } };
+  // A wrong or garbled check_id: recover the check from this call's execution id, server-side.
+  const execId = str(args.execution_id).replace(/["'{}\s]/g, "");
+  if (execId && /^[0-9a-zA-Z-]{8,80}$/.test(execId)) {
+    const raw = str(args.check_id).replace(/["'{}\s]/g, "");
+    const known = /^chk_[A-Z0-9]{6,16}$/.test(raw) ? await deps.checks.get(raw) : null;
+    if (!known) {
+      const mapped = await deps.checks.checkIdForExecution(execId);
+      if (mapped) args = { ...args, check_id: mapped };
+    }
+  }
   try {
     return { status: 200, body: await h(deps, args) };
   } catch (e) {

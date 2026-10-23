@@ -95,6 +95,9 @@ async function process(
   // Which check? From our execution map, else from the user_data echoed back.
   const recipient = (exec.context_details?.recipient_data ?? b.context_details?.recipient_data ?? {}) as Record<string, unknown>;
   let checkId = await deps.checks.checkIdForExecution(id);
+  // The check named in the call's own user data must agree with our execution map.
+  if (checkId && typeof recipient.check_id === "string" && recipient.check_id && recipient.check_id !== checkId)
+    return { handled: false, reason: "execution and check_id disagree", status };
   if (!checkId && typeof recipient.check_id === "string") checkId = recipient.check_id;
 
   // Public line calls carry no check; just log their cost.

@@ -82,8 +82,10 @@ function rows(status: AppStatus): Row[] {
         break;
       case "decision.made":
       case "decision.updated": {
-        const last = (e.detail.split(":")[0].split("→").pop() ?? "").trim();
-        const outc = last.startsWith("block") ? "block" : last.startsWith("release") ? "release" : "delay";
+        // "Hold expired; policy applied: block." and "delay → block (…)" both name the outcome in words.
+        const applied = e.detail.match(/policy applied:\s*(block|release|delay)/i)?.[1]?.toLowerCase();
+        const head = (e.detail.split(":")[0].split("→").pop() ?? "").trim();
+        const outc = (applied ?? head.match(/(block|release|delay)/gi)?.pop()?.toLowerCase() ?? "delay") as "block" | "release" | "delay";
         out.push({
           key,
           t,

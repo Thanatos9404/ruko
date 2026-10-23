@@ -124,6 +124,10 @@ export interface Decision {
   /** True when the policy was stricter than the agent's recommendation. */
   escalated_over_agent?: boolean;
   customer_message: string;
+  /** What happens when a delay runs out: never an automatic release. */
+  on_expiry?: "fraud_desk_callback";
+  /** Whether the customer may confirm the payment themselves in the app (never after a hard rule). */
+  self_confirm_allowed?: boolean;
   decided_at: string;
   policy_version: string;
 }

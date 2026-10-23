@@ -100,7 +100,18 @@ describe("Bolna custom function endpoints", () => {
 
   it("a contact's confirmation re-decides a delayed payment", async () => {
     const app = makeApp({ agents: { check: "a1", contact: "a2" }, contactWebRing: true });
-    const c = await heldCheck(app);
+    // An ordinary hold (no hard rule, no call): a clear confirmation from the contact can lift the delay.
+    const c = await (
+      await app.handle(
+        req(
+          "POST",
+          "/v1/checks",
+          { payment: payment({ amount_inr: 85_000, payee: { name: "City Care Hospital", handle: "citycare@okdemo", is_new: true, prior_payments: 0 } }), customer: customer({ language: "en" }), device: device({ active_call: false }) },
+          bank(),
+        ),
+      )
+    ).json();
+    expect(c.action).toBe("hold");
     await call(app, "record_signal", { check_id: c.id, signal: "urgency_pressure", evidence: "hospital needs it today", confidence: "high" });
     await call(app, "call_trusted_contact", { check_id: c.id, customer_consent: "yes" });
     const d = await (await call(app, "set_decision", { check_id: c.id, recommendation: "delay", reason: "waiting for son" })).json();

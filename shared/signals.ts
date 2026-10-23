@@ -88,6 +88,13 @@ export const SIGNALS: SignalDef[] = [
     listen_for: "The customer says the code word in their app is different from the one you said.",
   },
   {
+    type: "story_conflict",
+    severity: "high",
+    label: "Their story doesn't fit the facts",
+    listen_for:
+      "What they say contradicts what the bank can see: a 'cousin' when the payee is a 'Safe Custody Account', or 'family is on the call' when the caller's number isn't in their contacts.",
+  },
+  {
     type: "distress",
     severity: "medium",
     label: "Sounds afraid or distressed",

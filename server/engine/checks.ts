@@ -50,6 +50,7 @@ import { decide } from "./decision.js";
 import { newCheckId, newCodeWord, newSecret, newSignalId, sha256, safeEqual } from "./ids.js";
 
 export const HOLD_MINUTES = 15;
+const STRICTNESS: Record<Outcome, number> = { release: 0, delay: 1, block: 2 };
 /** Sandbox holds resolve quickly so an abandoned demo never sits "holding" for long. */
 export const SANDBOX_HOLD_MINUTES = 3;
 export const RETRY_MINUTES = 5;
@@ -316,6 +317,8 @@ export class CheckService {
   async linkExecution(id: string, executionId: string, agentId?: string): Promise<void> {
     const c = await this.require(id);
     if (c.call?.execution_id === executionId) return;
+    const owner = await this.kv.get<string>(`exec:${executionId}`);
+    if (owner && owner !== id) return; // never steal another check's call
     await this.kv.set(`exec:${executionId}`, id, CHECK_TTL);
     await this.mutate(id, (cc) => {
       cc.call = { ...(cc.call ?? { channel: "web", status: "in-progress" }), execution_id: executionId, agent_id: agentId ?? cc.call?.agent_id };
@@ -443,6 +446,10 @@ export class CheckService {
 
   /** Called by the contact agent. A new outcome can change an earlier decision. */
   async reportContactOutcome(id: string, outcome: ContactOutcome): Promise<StoredCheck> {
+    const before = await this.require(id);
+    // Reached only if a contact call was actually placed for this check.
+    const placed = ["dialing", "ringing_web", "reached", "simulated"].includes(String(before.contact?.status));
+    outcome = { ...outcome, reached: Boolean(outcome.reached && placed) };
     await this.mutate(id, (c) => {
       c.contact = {
         ...(c.contact ?? { status: "not_requested" }),
@@ -461,8 +468,12 @@ export class CheckService {
     const c = await this.require(id);
     // An earlier "delay" from the agent was made while waiting for this call, so
     // the contact's answer supersedes it. An earlier "block" still stands.
-    const prev = c.agent_recommendation?.outcome ?? null;
-    if (c.decision) return this.finalize(id, { agentRecommendation: prev === "block" ? "block" : null, reason: "contact outcome" });
+    // Re-decide with the agent's own recommendation intact; finalize keeps the strictest outcome
+    // unless the contact explicitly confirmed the payment (CONTACT_CONFIRMED).
+    const rec = c.agent_recommendation?.outcome ?? null;
+    // Only a clear confirmation (reached, knew about it, no concern) may lift the agent's own delay.
+    const clear = Boolean(c.contact?.outcome?.reached && c.contact.outcome.knows_about_payment === true && !c.contact.outcome.concern_raised);
+    if (c.decision) return this.finalize(id, { agentRecommendation: clear && rec !== "block" ? null : rec, reason: "contact outcome" });
     return c;
   }
 
@@ -470,6 +481,12 @@ export class CheckService {
 
   async recommend(id: string, outcome: Outcome, reason: string): Promise<StoredCheck> {
     return this.mutate(id, (c) => {
+      // The agent can only tighten its own earlier call: a later "release" never lifts its "block".
+      const prev = c.agent_recommendation?.outcome;
+      if (prev && STRICTNESS[prev] > STRICTNESS[outcome]) {
+        this.event(c, "agent.recommendation", `Agent recommends ${outcome}, but its earlier ${prev} stands: ${scrubEvidence(reason).slice(0, 200)}`);
+        return;
+      }
       c.agent_recommendation = { outcome, reason: scrubEvidence(reason).slice(0, 300), at: this.iso() };
       this.event(c, "agent.recommendation", `Agent recommends ${outcome}: ${c.agent_recommendation.reason}`);
     });
@@ -504,6 +521,11 @@ export class CheckService {
             : "Your payment will wait until we have spoken with your trusted contact. The money is safe in your account.";
       }
       const prev = c.decision;
+      // A re-decision never loosens an earlier one, except when the trusted contact confirmed the payment.
+      if (prev && STRICTNESS[prev.outcome] > STRICTNESS[d.outcome] && !d.reasons.some((r) => r.code === "CONTACT_CONFIRMED")) {
+        this.event(c, "decision.kept", `Kept ${prev.outcome}: a later re-decision (${d.outcome}) can't loosen it.`);
+        return;
+      }
       c.decision = d;
       c.status = "decided";
       this.event(
@@ -547,10 +569,30 @@ export class CheckService {
     return this.save(c);
   }
 
+  /** A live call is under way (or about to start): the hold must not expire under it. */
+  private callActive(c: StoredCheck): boolean {
+    const call = c.call;
+    if (!call || call.channel === "text-eval") return false;
+    if (!["queued", "ringing", "in-progress", "initiated"].includes(String(call.status))) return false;
+    // A call record that never ended is not trusted forever.
+    const since = Date.parse(call.started_at ?? c.updated_at);
+    return Number.isNaN(since) || this.now().getTime() - since < 15 * 60_000;
+  }
+
+  /** Gives a live call room to finish: the hold now ends no sooner than `seconds` from now. */
+  async extendHold(id: string, seconds: number): Promise<StoredCheck> {
+    return this.mutate(id, (c) => {
+      if (c.decision || c.risk.action !== "hold") return;
+      const until = this.now().getTime() + seconds * 1000;
+      if (!c.hold_expires_at || Date.parse(c.hold_expires_at) < until) c.hold_expires_at = new Date(until).toISOString();
+    });
+  }
+
   /** A hold that nobody resolved in time: decide from what was heard, or follow the no-answer path. */
   private async expireIfDue(c: StoredCheck): Promise<StoredCheck> {
     if (c.decision || c.risk.action !== "hold" || !c.hold_expires_at) return c;
     if (Date.parse(c.hold_expires_at) > this.now().getTime()) return c;
+    if (this.callActive(c)) return c;
     const talked = (c.call?.transcript?.some((t) => t.role === "customer") ?? false) || c.signals.length > 0;
     if (!talked) return this.applyNoAnswer(c, "Hold expired with no answer");
     const d = decide({ check: c, agentRecommendation: c.agent_recommendation?.outcome ?? null, incomplete: !c.agent_recommendation, now: this.iso() });

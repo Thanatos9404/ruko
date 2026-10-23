@@ -124,7 +124,8 @@ export function createApp(deps: AppDeps) {
 
   async function mintCheckSession(c: StoredCheck, opts: { code?: string | null }) {
     const session = await mintGated("customer", cfg.agents.check ?? "", checkUserData(c, cfg.bankName), { code: opts.code, checkId: c.id });
-    await checks.attachCall(c.id, { channel: "web", status: "queued", execution_id: session.run_id, agent_id: cfg.agents.check });
+    await checks.attachCall(c.id, { channel: "web", status: "queued", execution_id: session.run_id, agent_id: cfg.agents.check, started_at: new Date().toISOString() });
+    await checks.extendHold(c.id, 90 + 120);
     await checks.mutate(c.id, (cc) => {
       cc.events.push({ at: new Date().toISOString(), type: "live.authorized", detail: "Live web call authorised by access code." });
     });
@@ -294,7 +295,9 @@ export function createApp(deps: AppDeps) {
       contact: { dial: async () => ({ status: "simulated", channel: "text-eval" }) },
     };
     if (c.call?.channel !== "text-eval") await checks.attachCall(c.id, { channel: "text-eval", status: "in-progress" });
-    const { body: out } = await runTool(replayDeps, body.tool, { ...(body.args ?? {}), check_id: c.id });
+    const args = { ...(body.args ?? {}), check_id: c.id };
+    delete (args as Record<string, unknown>).execution_id;
+    const { body: out } = await runTool(replayDeps, body.tool, args);
     if (body.tool === "set_decision") await checks.attachCall(c.id, { channel: "text-eval", status: "completed" });
     return json({ result: out, status: checks.appStatus(await checks.require(c.id)) });
   });
