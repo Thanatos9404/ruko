@@ -28,6 +28,7 @@
   <div class="s1-meta">
     <span><b>Yashvardhan Thanvi</b>, solo founder</span>
     <span class="mono">ruko-symphony.vercel.app</span>
+    <span class="mono">github.com/Thanatos9404/ruko</span>
     <span>Ruko (रुको) is Hindi for “wait”.</span>
   </div>
 </section>
@@ -160,7 +161,7 @@
   </div>
   <div class="foot">
     <div class="brand"><img src="assets/brand/ruko-mark-dark.svg" alt="">RUKO</div>
-    <div class="src">Recorded run at ruko-symphony.vercel.app/demo (agent v5), captured 23 Oct 2026: a text-mode eval conversation (no audio) whose tool calls replay into the live engine, so the decision is computed live. Times are engine time since the hold in this capture; the replay’s pace varies by a few seconds.</div>
+    <div class="src">Recorded run at ruko-symphony.vercel.app/demo (agent v5), captured 23 Oct 2026: a text-mode eval conversation (no audio) whose tool calls replay into the live engine, so the decision is computed live. Times are engine time since the hold in this capture; the replay’s pace varies by a few seconds. The same scenario ran live on Bolna on 23 Oct (slide 6).</div>
     <div class="pg">05 / 12</div>
   </div>
 </section>
@@ -173,21 +174,21 @@
     <table class="s6-table">
       <tr><td class="f">Agent API v2</td><td>Three agents: payment check, trusted contact, public line. Kept in sync from code and saved unrestricted.</td><td><span class="chip use">In use</span></td></tr>
       <tr><td class="f">Custom functions</td><td>Mid-call tools into Ruko: <span class="mono">get_check_context</span>, <span class="mono">record_signal</span>, <span class="mono">call_trusted_contact</span>, <span class="mono">set_decision</span>.</td><td><span class="chip use">In use</span></td></tr>
-      <tr><td class="f">Web Call SDK</td><td>Browser calls for the demo, the contact’s “phone” and the public line. Sessions minted on the server behind an access code, caps and a wallet floor.</td><td><span class="chip use">In use</span></td></tr>
+      <tr><td class="f">Web Call SDK</td><td>Browser calls for the demo, the contact’s “phone” and the public line; 5 live calls on 23 Oct. Sessions are minted on the server behind an access code, caps and a wallet floor.</td><td><span class="chip use">In use</span></td></tr>
       <tr><td class="f">Webhooks</td><td>Token-protected. Every final event is re-read from Bolna’s API before it can change a decision.</td><td><span class="chip use">In use</span></td></tr>
-      <tr><td class="f">Multilingual</td><td>English and Hindi with mid-call switching; <span class="mono">agent_language</span> opens in the customer’s language.</td><td><span class="chip cfg">Configured</span></td></tr>
-      <tr><td class="f">Preferred models</td><td>gpt-4.1-mini, nova-3, saaras:v3, eleven_turbo_v2_5, bulbul:v3, all at the flat per-minute rate.</td><td><span class="chip cfg">Configured</span></td></tr>
+      <tr><td class="f">Multilingual</td><td>English and Hindi; <span class="mono">agent_language</span> opens in the customer’s language. First live Hindi call 23 Oct; mid-call switching not yet tried live.</td><td><span class="chip use">In use</span></td></tr>
+      <tr><td class="f">Preferred models</td><td>gpt-4.1-mini, nova-3, saaras:v3, eleven_turbo_v2_5, bulbul:v3, all at the flat per-minute rate.</td><td><span class="chip use">In use</span></td></tr>
       <tr><td class="f">Call transfer</td><td>Hand-off to the bank’s fraud desk where a human must be reachable (UK FCA FG24/6).</td><td><span class="chip doc">Designed, not built</span></td></tr>
       <tr><td class="f">Phone calls</td><td>Switched off to protect a $5 credit. In the demo, the trusted contact’s call rings in a browser tab.</td><td><span class="chip off">Off</span></td></tr>
     </table>
     <figure class="s6-shot">
-      <img class="shot" src="assets/img/console-transcript.jpg" alt="Console: Hindi transcript with evidence highlighted, and the signals heard">
-      <figcaption>The fraud team’s view: the transcript with each evidence quote highlighted where it was said, and the signals the agent recorded. Eval replay, synthetic customer.</figcaption>
+      <img class="shot" src="assets/img/console-live.jpg" alt="Console: live Bolna web call, verified with Bolna, blocked 58 seconds after the hold">
+      <figcaption>A live Bolna web call in the production console (23 Oct, English): verified with Bolna, blocked 58 s after the hold, each signal with the customer’s own words. The customer was a scripted text-to-speech voice.</figcaption>
     </figure>
   </div>
   <div class="foot">
     <div class="brand"><img src="assets/brand/ruko-mark.svg" alt="">RUKO</div>
-    <div class="src">Status on 23 Oct 2026. Live Bolna calls: <!--r:live.note-->No live Bolna call has been measured yet; the demo video records the first one.<!--/r--> Ruko’s engine, policy, tools and eval talk plain HTTP, so they are not tied to one voice provider.</div>
+    <div class="src">Status on 23 Oct 2026: <!--r:live.short-->5 live Bolna calls (customer: a scripted voice); 2 full runs blocked the scam<!--/r-->. Ruko’s engine, policy, tools and eval talk plain HTTP, so they are not tied to one voice provider.</div>
     <div class="pg">06 / 12</div>
   </div>
 </section>
@@ -412,7 +413,7 @@
       <p class="small muted">BCA student, BIT Mesra (Jaipur campus)</p>
       <p class="small">Built Ruko end to end since 16 October 2026: the engine and policy, three Bolna agents, the eval harness and its held-out sets, the console, the public checker, the 72-pattern library and the text model.</p>
       <p class="small">Previously shipped <b>LLMSlim</b>, an open-source Python library on PyPI that fits documents, chat history and tool output into an LLM’s token budget (16 releases).</p>
-      <div class="s12-status"><b>Status, plainly:</b> no customers and no pilots yet. <!--r:live.note-->No live Bolna call has been measured yet; the demo video records the first one.<!--/r--></div>
+      <div class="s12-status"><b>Status, plainly:</b> no customers and no pilots yet. <!--r:live.short-->5 live Bolna calls (customer: a scripted voice); 2 full runs blocked the scam<!--/r-->.</div>
     </div>
     <div class="s12-ask">
       <div class="s12-k">The ask</div>
@@ -420,12 +421,12 @@
         <li><b>Introductions to two or three Indian banks or NBFCs</b> (co-operative banks, small finance banks) for a shadow-mode pilot: Ruko scores and calls, the bank still decides.</li>
         <li><b>Help running the first measured live-call study:</b> consent, scripts, and what to measure.</li>
       </ol>
-      <div class="s12-url mono">ruko-symphony.vercel.app</div>
+      <div class="s12-url mono">ruko-symphony.vercel.app<br>github.com/Thanatos9404/ruko</div>
     </div>
     <div class="s12-next">
       <div class="s12-k">Next 30 days, to 22 Nov</div>
       <ol class="s12-list sm">
-        <li>Measure live Bolna calls in English and Hindi with consenting volunteers: time to decision, completion, false holds.</li>
+        <li>Live calls with consenting volunteers, real voices instead of a script, in English and Hindi: time to decision, completion, false holds.</li>
         <li>A fresh frozen held-out set for every agent version, published next to the dev set.</li>
         <li>Approach co-operative banks, small finance banks and NBFCs. Goal: two shadow-mode agreements.</li>
         <li>Native-speaker review of the Tamil, Bengali and Marathi truth lines.</li>
@@ -435,7 +436,7 @@
   </div>
   <div class="foot">
     <div class="brand"><img src="assets/brand/ruko-mark-dark.svg" alt="">RUKO</div>
-    <div class="src">Logo by Yashvardhan Thanvi. Built with AI assistance (Claude). Ruko is not affiliated with Bolna, the RBI, NPCI, I4C or any bank; Demo Bank is fictional.</div>
+    <div class="src">Logo by Yashvardhan Thanvi. Built with AI assistance (Claude). Ruko is not affiliated with Bolna, Y Combinator, the RBI, NPCI, I4C or any bank; Demo Bank is fictional.</div>
     <div class="pg">12 / 12</div>
   </div>
 </section>

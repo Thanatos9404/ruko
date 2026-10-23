@@ -151,6 +151,9 @@ values["lat.p50"] = lat ? String(lat.p50) : "–";
 values["lat.p95"] = lat ? String(lat.p95) : "–";
 values["live.made"] = String(cfg.live_calls.made);
 values["live.note"] = cfg.live_calls.note;
+values["live.short"] = cfg.live_calls.short ?? cfg.live_calls.note;
+values["live.narration"] = cfg.live_calls.narration ?? cfg.live_calls.note;
+values["live.cost"] = cfg.live_calls.cost_cents != null ? `${cfg.live_calls.cost_cents}¢` : "–";
 values.chart = chart(dev, ho);
 
 // ---------- the results chart: 95% intervals, dev vs held-out ----------
@@ -216,7 +219,8 @@ fill("DEMO_SCRIPT.md");
 // ---------- the video's results scene (deck/video/ruko-demo.yaml) ----------
 function videoResults() {
   const holds = (k) => `${k} false hold${k === 1 ? "" : "s"}`;
-  const live = cfg.live_calls.made ? `${cfg.live_calls.made} live Bolna calls measured so far` : "An LLM plays the customer; no live calls measured yet";
+  const live = cfg.live_calls.short ?? (cfg.live_calls.made ? `${cfg.live_calls.made} live Bolna calls so far` : "Text mode only so far: an LLM plays the customer");
+  const liveSaid = cfg.live_calls.made && cfg.live_calls.narration ? ` ${cfg.live_calls.narration}` : "";
   return [
     "  # >>> results: written by deck/tools/build.mjs from deck/results.config.json; edit the template there",
     "  - id: results",
@@ -231,7 +235,7 @@ function videoResults() {
     `    chapter: "Results"`,
     "    narration: >-",
     `      In text-mode tests, Ruko caught ${dev.catch.k} of ${dev.catch.n} scams on the set we tuned on, and ${ho.catch.k} of ${ho.catch.n} on a held-out set`,
-    `      we froze before any run, with ${holds(ho.fh.k)} in ${ho.fh.n} genuine payments. The held-out number is the one we are improving.`,
+    `      we froze before any run, with ${holds(ho.fh.k)} in ${ho.fh.n} genuine payments. The held-out number is the one we are improving.${liveSaid}`,
     "  # <<< results",
   ].join("\n");
 }

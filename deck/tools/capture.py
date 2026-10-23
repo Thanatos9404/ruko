@@ -8,7 +8,7 @@ sandbox demo (no Bolna call, no credit used) and opens console pages.
 
 Defaults: https://ruko-symphony.vercel.app and %TEMP%/ruko-deck-shots (raw PNG
 at 2x; kept outside the repo).
-`only` is a comma list of: landing, demo, demo_hi, check, console, console_eval_check.
+`only` is a comma list of: landing, demo, demo_hi, check, console, console_live, console_eval_check.
 Then run deck/tools/prep_images.py to crop and compress for the deck.
 """
 from __future__ import annotations
@@ -30,6 +30,8 @@ W, H, DSF = 1440, 900, 2
 HIDE_NAV = "header.fixed { visibility: hidden !important; }"
 PHONE = '[role=region][aria-label="Sandbox bank app"]'
 ENGINE = 'section[aria-label="Ruko engine"]'
+LIVE_HI = "chk_KEFA2WGBYA"  # live call #5, 23 Oct: first live Hindi call, blocked (scripted TTS customer)
+LIVE_EN = "chk_B3RQU9A6M6"  # live call #2, 23 Oct: English, blocked (scripted TTS customer)
 CHECK_ID = "chk_YEEMZU2H8H"  # production demo tenant (v5 seed): eval replay, Hindi, digital arrest, "Safe Custody Account RBI", blocked
 
 
@@ -164,6 +166,14 @@ def main() -> None:
             shot(page, "console-check")
             scroll_through(page)
             shot(page, "console-check-full", full=True)
+
+        if want("console_live"):
+            # The live Bolna calls of 23 Oct, in the sandbox tenant: Hindi (#5) and English (#2).
+            for name, cid in [("console-live-hi", LIVE_HI), ("console-live-en", LIVE_EN)]:
+                page.goto(f"{BASE}/console/checks/{cid}?tenant=sandbox")
+                settle(page, 3)
+                scroll_through(page)
+                shot(page, f"{name}-full", full=True)
 
         if want("console_eval_check"):
             # An eval-replay check with a transcript: Hindi, digital arrest, blocked.

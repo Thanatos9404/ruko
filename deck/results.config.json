@@ -1,5 +1,5 @@
 {
-  "_how": "deck/tools/build.mjs reads this file, fills every <!--r:key-->...<!--/r--> marker in deck/index.html, docs/PITCH.md, docs/SUBMISSION.md and DEMO_SCRIPT.md, rewrites the video's results scene, then prints deck/Ruko-pitch.pdf. source \"public\" reads public/eval/results.json (what eval/publish.ts publishes); \"runs\" reads eval/results/<run>/summary.json for the two run ids below. After a new version, update the run ids and rewrite the *_note texts by hand from the reports.",
+  "_how": "deck/tools/build.mjs reads this file, fills every <!--r:key-->...<!--/r--> marker in deck/index.html, docs/PITCH.md, docs/SUBMISSION.md and DEMO_SCRIPT.md, rewrites the video's results scene, then prints deck/Ruko-pitch.pdf. source \"public\" reads public/eval/results.json (what eval/publish.ts publishes); \"runs\" reads eval/results/<run>/summary.json for the two run ids below. After a new version or more live calls, update the run ids and rewrite the *_note texts by hand from the reports.",
   "source": "public",
   "version": "v5",
   "dev": {
@@ -20,8 +20,49 @@
   "failure_note": "Three held-out scams got through: a cloud-mining “machine rental”, a kidney-donor “reward” and a loan-app recovery threat. In each, the customer insisted the payment was their own decision.",
   "false_hold_note": "Both held-out false holds were delays, not blocks, and both in Hindi: a daughter guiding her father’s hospital payment, and a farmer buying tractor parts at night. That is the trade-off v5 chose: when risk is critical, it delays rather than release on a cover story.",
   "live_calls": {
-    "made": 0,
-    "note": "No live Bolna call has been measured yet; the demo video records the first one."
+    "made": 5,
+    "date": "2026-10-23",
+    "cost_cents": 41.25,
+    "calls": [
+      {
+        "execution": "ddc9026c",
+        "lang": "en",
+        "seconds": 32,
+        "cost_cents": 5.5,
+        "outcome": "delay (CHECK_INCOMPLETE): the agent's question audio never reached the browser"
+      },
+      {
+        "execution": "b6818362",
+        "lang": "en",
+        "seconds": 78,
+        "cost_cents": 8.25,
+        "outcome": "block: coached digital-arrest victim, full flow"
+      },
+      {
+        "execution": "152e968b",
+        "lang": "en",
+        "seconds": 80,
+        "cost_cents": 8.25,
+        "outcome": "delay 24 h: scripted customer talked over the truth line, then ran out of lines"
+      },
+      {
+        "execution": "2bfbdec6",
+        "lang": "en",
+        "seconds": 36,
+        "cost_cents": 5.5,
+        "outcome": "delay (CHECK_INCOMPLETE): speech-to-text missed the scripted cover story"
+      },
+      {
+        "execution": "9f893617",
+        "lang": "hi",
+        "seconds": 146,
+        "cost_cents": 13.75,
+        "outcome": "block: first live Hindi call (Sarvam saaras:v3 + bulbul:v3)"
+      }
+    ],
+    "note": "Five live Bolna web calls on 23 Oct (4 English, 1 Hindi; 41.25¢ in all), each with a scripted text-to-speech customer, not a real person. Two ran the full flow and blocked the payment, including the first live Hindi call, where the policy was stricter than the agent; three ended on a safe hold after test set-up faults.",
+    "short": "5 live Bolna calls (customer: a scripted voice); 2 full runs blocked the scam",
+    "narration": "We have also made five live Bolna calls, with a scripted computer voice as the customer. Both calls that ran the full flow blocked the scam."
   },
   "latency_file": "eval/results/tool-latency.json"
 }

@@ -2,6 +2,8 @@
 
 Everything needed to submit Ruko to the Bolna × Y Combinator Symphony Buildathon (due 31 October 2026) and to pitch it.
 
+**Live:** https://ruko-symphony.vercel.app · **Code:** https://github.com/Thanatos9404/ruko · **Demo video:** [link to add]
+
 | | |
 |---|---|
 | Pitch deck (PDF, 12 slides, 16:9) | [`deck/Ruko-pitch.pdf`](../deck/Ruko-pitch.pdf), built from [`deck/index.html`](../deck/index.html) |
@@ -10,7 +12,7 @@ Everything needed to submit Ruko to the Bolna × Y Combinator Symphony Buildatho
 | Demo video shot list | [DEMO_SCRIPT.md](../DEMO_SCRIPT.md), with the scene file [`deck/video/ruko-demo.yaml`](../deck/video/ruko-demo.yaml) (vidkit, Piper narration) |
 | Sources | [CITATIONS.md](CITATIONS.md), [BUSINESS.md](BUSINESS.md), [`research/PRIOR_ART.md`](../research/PRIOR_ART.md), `eval/results/*/report.md` |
 
-**Status, plainly.** No customers, no pilots. <!--r:live.note-->No live Bolna call has been measured yet; the demo video records the first one.<!--/r--> Results are text mode (<!--r:version-->v5<!--/r-->): an LLM plays the customer.
+**Status, plainly.** No customers, no pilots. <!--r:live.note-->Five live Bolna web calls on 23 Oct (4 English, 1 Hindi; 41.25¢ in all), each with a scripted text-to-speech customer, not a real person. Two ran the full flow and blocked the payment, including the first live Hindi call, where the policy was stricter than the agent; three ended on a safe hold after test set-up faults.<!--/r--> Results are text mode (<!--r:version-->v5<!--/r-->): an LLM plays the customer.
 
 **Numbers in this file update themselves.** Values between `r:` comment markers are written by `node deck/tools/build.mjs` from [`deck/results.config.json`](../deck/results.config.json), the same run that fills the deck. It now reads the published v5 results (`public/eval/results.json`). After a live call or a new version, edit the config (run ids, the notes, `live_calls`) and run the build: the deck, this file, SUBMISSION.md, DEMO_SCRIPT.md and the video's results scene change together. See [Updating the deck](#updating-the-deck).
 
@@ -30,17 +32,25 @@ Counts are Python `len()` on the exact text, spaces and punctuation included.
 | 4 | For banks and UPI apps: when a payment looks coached, Ruko holds it and a Bolna voice agent calls the customer with a code word, names the scam and decides by policy. Never asks for an OTP. | 189 |
 | 5 | Ruko stops payment scams before the money leaves: a Bolna voice agent calls the customer within seconds of a risky payment and breaks the scammer's script. For banks, UPI apps and NBFCs. | 186 |
 
-**Recommended: #1.** It answers the form's two questions in order: what it does (holds the payment, calls in the customer's language, names the scam, blocks if needed) and who it is for (Indian banks, UPI apps and NBFCs). It names Bolna, which the judges are looking for, and makes no claim the results don't support. #2 is the runner-up if you want the speed ("about a minute") in the description. Ruko's calls take about 67–83 s in full, with the decision at about 51–59 s, so we say "about a minute", never "60 seconds".
+**Recommended: #1.** It answers the form's two questions in order: what it does (holds the payment, calls in the customer's language, names the scam, blocks if needed) and who it is for (Indian banks, UPI apps and NBFCs). It names Bolna, which the judges are looking for, and makes no claim the results don't support. #2 is the runner-up if you want the speed in the description. Everywhere, the duration is "about a minute".
 
 ## (b) Demo video: script and shot list
 
-The full plan is in [DEMO_SCRIPT.md](../DEMO_SCRIPT.md): the shot list, the scripted customer's lines, the narration, the render and splice commands, and fallbacks A–E. In short:
+The full plan is in [DEMO_SCRIPT.md](../DEMO_SCRIPT.md): the shot list, the narration, the build and splice commands, and fallbacks A–E. In short:
 
-- **Length:** target 2:45, between 2:30 and 3:00. Narration around the call is 90 s, measured with Piper; the call runs 70–85 s.
-- **Spine:** one real Bolna web call in the digital-arrest scenario, in English. The customer is a **scripted computer voice** ("Kamla", eight short WAV lines from [`deck/video/customer-lines.ps1`](../deck/video/customer-lines.ps1)), and the agent's side is live. The code word changes every session, so the script never says it.
-- **Around it:** a cold open on /demo, the title, the problem, the hold, then after the call the console's decision and transcript, the results, the price and the ask, and the end card. All are rendered by vidkit from [`deck/video/ruko-demo.yaml`](../deck/video/ruko-demo.yaml). The browser scenes were rehearsed against production.
-- **If the call fails:** fallback A renders the same video with the narrated recorded run in place of the call.
-- **Disclosures:** fictional customer and bank; the customer is a scripted computer voice; text-mode results; synthetic narration and AI assistance.
+- **Length:** about 2:30–2:45, never over 3:00.
+- **Spine:** the live Bolna web calls of 23 October. On each, the customer was a scripted text-to-speech voice and the agent was live.
+  - The English call (execution `b6818362`) **plays as recorded**, with captions from Bolna's transcript.
+  - The first live Hindi call (execution `9f893617`) is shown **as transcript lines only**. Its audio is not used, because its scripted customer was a CC BY-NC-SA voice.
+- **Around it:** a cold open on /demo, the title, the problem and the hold. After the calls come the console's decision and transcript, the results, the price and the ask, and the end card. All of these are rendered by vidkit from [`deck/video/ruko-demo.yaml`](../deck/video/ruko-demo.yaml) and were rehearsed against production.
+- **Narration:** Piper `en_US-ljspeech-high`, from public-domain LJSpeech data. Not lessac, which is research-only. Or read the lines yourself.
+- **If the English clip can't be used:** fallback A puts the narrated recorded run in its place.
+- **Disclosures:**
+  - the customer and bank are fictional
+  - the live calls' customer is a scripted text-to-speech voice
+  - the Hindi call appears as transcript only
+  - eval results are text mode
+  - the narration is synthetic, and the video was made with AI assistance
 
 ## (c) 90-second live pitch (finale)
 
@@ -54,7 +64,7 @@ About 240 words: 90 seconds at about 160 words a minute, a normal pitch pace. Re
 >
 > **[4]** Ruko is a voice check, built on Bolna, that decides in about a minute. The bank sends us the risky payment; we hold it, her app shows a code word, and a Bolna agent calls her in her language. It says the code word first, asks if anyone on another call is telling her what to do, says there's no digital arrest in Indian law, and with her yes, calls her son. A deterministic policy then decides. The model can make it stricter, never softer, and it never asks for an OTP.
 >
-> **[7]** In text-mode tests we caught <!--r:dev.catch-->60/60<!--/r--> scams on the set we tuned on, and <!--r:ho.catch-->15/18<!--/r--> on a held-out set frozen before any run. Closing that gap is the work.
+> **[7]** In text-mode tests we caught <!--r:dev.catch-->60/60<!--/r--> scams on the set we tuned on, and <!--r:ho.catch-->15/18<!--/r--> on a held-out set frozen before any run. On live Bolna calls, both full runs blocked the scam, one of them in Hindi.
 >
 > **[8]** From January, RBI's directions treat ignoring a bank's clear warning as customer negligence.
 >
@@ -88,13 +98,13 @@ They already do, and it is our weakest case: heavily coached customers caught we
 The bank is the data fiduciary and Ruko its processor under contract. The customer gets notice and gives consent at enrolment, and every call opens by saying it is an automated assistant and that the call is recorded. Transcripts are kept only as long as the bank sets; OTPs and PINs are never collected, and evidence quotes are scrubbed of digit runs. The trusted contact is a separate data principal with their own notice and consent, and is called only after a warning sign and the customer's yes. Under TRAI PR 119/2026, each bank pre-declares these automated calls and their caller IDs; calls come from the bank's 1600xx numbers through its own telephony, which Bolna supports. The DPDP Rules' notice and consent duties apply from 13 May 2027. This is our reading, not legal advice.
 
 **8. "You're wholly dependent on Bolna."**
-For voice, yes; for the decision, no. The engine, policy, tools and eval talk plain HTTP and are provider-neutral, so the product survives a provider change. The real Bolna risks are pricing, its content rules (it disallows "scam or fraud-related behaviour"; our agents are a bank's payment safety check and are saved unrestricted today) and concurrency (paid accounts start at 10 concurrent calls). We would negotiate enterprise concurrency and fall back to in-app confirmation and the bank's own desk. Bolna is also why this is cheap and multilingual: ₹5.52 a minute for its preferred models, before telephony and platform fees.
+For voice, yes; for the decision, no. The engine, policy, tools and eval talk plain HTTP and are provider-neutral, so the product survives a provider change. The real Bolna risks are pricing, its content rules (it disallows "scam or fraud-related behaviour"; our agents are a bank's payment safety check and are saved unrestricted today) and concurrency (paid accounts start at 10 concurrent calls). We would negotiate enterprise concurrency and fall back to in-app confirmation and the bank's own desk. Bolna is also why this is cheap and multilingual: ₹5.52 a minute for its preferred models, before telephony and platform fees. Our five live web calls on 23 October, including the first in Hindi, cost 41.25¢ in all.
 
 **9. "You're a solo student founder. Why will a bank trust you?"**
 Today it wouldn't, and I don't pretend otherwise. What I can show is speed and rigour: I built Ruko end to end since 16 October, from the engine and Bolna agents to an eval that publishes its misses, and I shipped LLMSlim, an open-source Python library on PyPI, before that. What I lack is bank sales and fraud-operations experience. The plan is a co-founder or advisor from a bank fraud team, design partners before revenue, and YC's network for the first introductions.
 
 **10. "What will be true in 30 days?"**
-Five things, by 22 November: measured live Bolna calls in English and Hindi with consenting volunteers (time to decision, completion, false holds); a fresh frozen held-out set for every agent version, published next to the development set; conversations with co-operative banks, small finance banks and NBFCs, with two shadow-mode agreements as the goal; native-speaker review of the Tamil, Bengali and Marathi truth lines; and a DPDP pack for banks (processor terms, consent and retention defaults, the trusted contact's notice).
+Five things, by 22 November: live calls with consenting volunteers, real voices instead of our scripted text-to-speech customer, in English and Hindi (time to decision, completion, false holds); a fresh frozen held-out set for every agent version, published next to the development set; conversations with co-operative banks, small finance banks and NBFCs, with two shadow-mode agreements as the goal; native-speaker review of the Tamil, Bengali and Marathi truth lines; and a DPDP pack for banks (processor terms, consent and retention defaults, the trusted contact's notice).
 
 ## Fact sheet
 
@@ -118,6 +128,7 @@ Every number on the slides, with where it comes from. "Derived" is our arithmeti
 | £7–18 of reimbursement avoided per check | BUSINESS.md §2.2 (derived) |
 | 72 patterns (54 India, 18 global), 223 sources | `data/patterns/library.json`, `data/patterns/sources.json` |
 | Development set <!--r:dev.catch-->60/60<!--/r--> caught (CI <!--r:dev.catch_ci-->94–100%<!--/r-->), <!--r:dev.fh-->2/24<!--/r--> false holds; held-out <!--r:ho.catch-->15/18<!--/r--> (CI <!--r:ho.catch_ci-->61–94%<!--/r-->), <!--r:ho.fh-->2/10<!--/r--> | `eval/results/<!--r:dev.run-->v5-dev-qwen3-30b<!--/r-->`, `eval/results/<!--r:ho.run-->v5-holdout4-qwen3-30b<!--/r-->` |
+| Live Bolna web calls: <!--r:live.note-->Five live Bolna web calls on 23 Oct (4 English, 1 Hindi; 41.25¢ in all), each with a scripted text-to-speech customer, not a real person. Two ran the full flow and blocked the payment, including the first live Hindi call, where the policy was stricter than the agent; three ended on a safe hold after test set-up faults.<!--/r--> | `docs/BOLNA_SPEND.md` |
 | OTP and PIN: <!--r:otp.summary-->v5 asked for an OTP, PIN, card or account number 0 times in 959 agent turns across all 5 sets. Across every version: 1 judge flag in 3,487 turns, v4's question about whether a code had already been shared, since reworded<!--/r--> | `public/eval/results.json` (`totals_current`, `totals`) |
 | Held-out sets seen in earlier tuning (<!--r:seen.count-->3<!--/r-->): <!--r:seen.catch-->43/48<!--/r--> caught, <!--r:seen.fh-->4/36<!--/r--> false holds | `public/eval/results.json` |
 | Median decision about a minute (<!--r:ho.median_s-->58<!--/r--> s fresh set, <!--r:dev.median_s-->59<!--/r--> s dev), estimated from transcript length | same |
@@ -127,20 +138,10 @@ Every number on the slides, with where it comes from. "Derived" is our arithmeti
 
 ```bash
 # 1. Fresh screenshots (production, read-only; no Bolna calls)
-../_videos/toolkit/.venv/Scripts/python.exe -I deck/tools/capture.py https://ruko-symphony.vercel.app "$TEMP/ruko-deck-shots" demo,console_eval_check
+<toolkit>/.venv/Scripts/python.exe -I deck/tools/capture.py https://ruko-symphony.vercel.app "$TEMP/ruko-deck-shots" demo,console_eval_check
 python deck/tools/prep_images.py "$TEMP/ruko-deck-shots"   # crops and compresses into deck/assets/img/
 # 2. Results: edit deck/results.config.json (run ids, notes, live_calls), then
 node deck/tools/build.mjs                 # fills the deck, this file, SUBMISSION.md, DEMO_SCRIPT.md and the video's results scene; prints the PDF
 ```
 
 `build.mjs` stops if a marker names a value it doesn't know, so nothing is left stale. The deck's page 5 timings (+10.6 s to +32.1 s) describe the recorded run captured on 23 October (agent v5), and the slide says so. If you recapture, read the new times off `engine-outcome` and update that slide by hand. Open `deck/index.html` in a browser to view the deck at screen size.
-
-## Issues found while building the pitch
-
-These are for whoever owns each file; none of them is in the deck.
-
-- **"Can't be spoofed".** README.md (line 16) and docs/MEMO.md (line 11) still say the code word means the call "can't be spoofed". The deck and these docs now say "hard to spoof". A screen-sharing scammer could read the code word, which is why a remote-access app is a hard hold.
-- **"The public line collects new scripts".** docs/MEMO.md (risks) and docs/BUSINESS.md (§7, scammer adaptation) say this. The production checker is model-free and stores nothing the person types (anonymous counts only), so the claim should go or move to pilot data.
-- **README links `SUBMISSION.md` at the repo root.** The file is `docs/SUBMISSION.md`.
-- **Console overview on production** counts visitors' sandbox runs among its checks (for example "Held back ₹35,85,398"). The tiles are labelled "Demo tenant", but a judge could still read them as traction. Consider a "demo data" note on those tiles.
-- **Fixed since 22 October:** the Hindi recorded run now reaches a decision on production; MEMO.md's TAM and results are corrected; the console's Evaluation page reads v5.

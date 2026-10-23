@@ -1,22 +1,26 @@
-# Ruko pitch and demo video (Bolna × YC Symphony Buildathon). Target 2:40, hard limit 3:00.
-# Plan, shot list, the scripted customer's lines and fallbacks: DEMO_SCRIPT.md (repo root).
+# Ruko pitch and demo video (Bolna × YC Symphony Buildathon). Target 2:30–2:45, hard limit 3:00.
+# Plan, shot list and fallbacks: DEMO_SCRIPT.md (repo root).
 #
-# The video is built around ONE real Bolna web call (digital-arrest scenario), recorded separately
-# with audio (vidkit's headless screencast has no sound). Render the narrated parts with vidkit, then
-# splice the call clip in between with ffmpeg (commands in DEMO_SCRIPT.md):
+# Built around the live Bolna web calls of 23 Oct 2026 (customer: a scripted text-to-speech voice):
+#   - call-en: the English call (execution b6818362), played as recorded. vidkit renders a placeholder card;
+#     splice the clip in with ffmpeg (DEMO_SCRIPT.md).
+#   - call-hi: the first live Hindi call (execution 9f893617), shown as transcript lines on a card with narration.
+#     Its audio is NOT used: the scripted customer there is Piper hi_IN-pratham (CC BY-NC-SA).
 #
-#   set PY=C:\Desktop\COLLEGE\Coding\Hackathon\_videos\toolkit\.venv\Scripts\python.exe
-#   set R=C:\Desktop\COLLEGE\Coding\Hackathon\_videos\toolkit\render.py
+# Narration voice: Piper en_US-ljspeech-high (public-domain LJSpeech data); download it into <toolkit>\voices first.
+#
+#   set PY=<toolkit>\.venv\Scripts\python.exe
+#   set R=<toolkit>\render.py
 #   %PY% %R% deck\video\ruko-demo.yaml --tts-only
-#   %PY% %R% deck\video\ruko-demo.yaml --only cold,title,problem,hold --output ..\_videos\ruko-part-a.mp4
-#   %PY% %R% deck\video\ruko-demo.yaml --only decide,results,ask,end --output ..\_videos\ruko-part-b.mp4
+#   %PY% %R% deck\video\ruko-demo.yaml --only cold,title,problem,hold --output <videos>\ruko-part-a.mp4
+#   %PY% %R% deck\video\ruko-demo.yaml --only call-hi,decide,results,ask,end --output <videos>\ruko-part-b.mp4
 #
-# Fallback if the live call is unusable: render everything except "call-live" in one go:
-#   %PY% %R% deck\video\ruko-demo.yaml --only cold,title,problem,hold,call-recorded,decide,results,ask,end --output ..\_videos\ruko-demo.mp4
-# (Run from the repo root. Outputs go to the _videos folder beside the repo, never into git.)
+# Fallback if the English call clip can't be used: render everything except "call-en" in one go:
+#   %PY% %R% deck\video\ruko-demo.yaml --only cold,title,problem,hold,call-recorded,call-hi,decide,results,ask,end --output <videos>\ruko-demo.mp4
+# (<toolkit> is your vidkit folder and <videos> a folder outside the repo; never write videos into git.)
 #
-# Every number spoken here is in docs/CITATIONS.md or eval/results; the results scene is written by
-# deck/tools/build.mjs from deck/results.config.json, so it always matches the deck.
+# Every number spoken here is in docs/CITATIONS.md, eval/results or docs/BOLNA_SPEND.md; the results scene is
+# written by deck/tools/build.mjs from deck/results.config.json, so it always matches the deck.
 title: "Ruko: a voice check that stops payment scams before the money leaves"
 output: ../../../_videos/ruko-demo.mp4   # next to the other demo videos, outside the repo
 theme: carbon
@@ -31,6 +35,7 @@ speedup_position: top-left
 caption_max_chars: 64
 narration_offset: 0.4
 pad_after: 0.45
+voice: en_US-ljspeech-high   # public-domain LJSpeech voice (Piper); not lessac, which is research-only
 length_scale: 1.0
 bed: true
 bed_gain_db: -26
@@ -55,16 +60,17 @@ cards:
     title: "Ruko"
     tagline: "Stop the scam before the money *leaves.*"
     subtitle: "A voice check for risky bank and UPI payments that decides in about a minute. Built on Bolna."
-    footer: ["Yashvardhan Thanvi", "ruko-symphony.vercel.app"]
+    footer: ["Yashvardhan Thanvi", "ruko-symphony.vercel.app", "github.com/Thanatos9404/ruko"]
   end:
     eyebrow: "Built on Bolna"
     title: "Only a voice breaks a *voice.*"
-    repo: "ruko-symphony.vercel.app"
+    repo: "github.com/Thanatos9404/ruko"
     lines:
+      - "Live: ruko-symphony.vercel.app"
       - "Kamla, Ravi and Demo Bank are fictional. The trusted contact's phone rings in a browser tab."
-      - "Results are text mode: an LLM plays the customer. No customers or pilots yet."
+      - "Eval results are text mode: an LLM plays the customer. No customers or pilots yet."
     disclosures:
-      - "Live call: a real Bolna web call; the customer is a scripted computer voice."
+      - "Live calls: real Bolna web calls on 23 Oct 2026; the customer is a scripted text-to-speech voice."
 
 scenes:
   - id: cold
@@ -114,17 +120,19 @@ scenes:
       Her bank sends the payment to Ruko's API. It is held, with a plain reason for every point of risk,
       and her app shows a one-time code word. Then a Bolna voice agent calls her.
 
-  # Placeholder for the real call. Replace this segment with the recorded clip (docs/PITCH.md, splice).
-  - id: call-live
+  # Placeholder for the English live call (execution b6818362, 23 Oct). Replace this segment with the clip
+  # (still frame + the call's recording + captions; DEMO_SCRIPT.md, "The English call").
+  - id: call-en
+    label: "Live Bolna call · the customer is a scripted text-to-speech voice"
     card:
       template: section
-      eyebrow: "Live Bolna web call"
-      title: "Call clip goes *here.*"
-      subtitle: "Splice the recorded call (screen and audio) in place of this card."
-    min_duration: 70
-    chapter: "The call"
+      eyebrow: "Live Bolna web call · 23 Oct 2026"
+      title: "English call clip goes *here.*"
+      subtitle: "Splice the recorded call (audio and captions) in place of this card."
+    min_duration: 36
+    chapter: "A live call"
 
-  # Fallback for the call: the recorded run, narrated. Used only if the live call is unusable.
+  # Fallback for the English call: the recorded run, narrated. Used only if the clip can't be used.
   - id: call-recorded
     url: /demo
     label: "Recorded run: text mode, no audio"
@@ -140,8 +148,25 @@ scenes:
       - point: {selector: "text=decided by policy, not by the LLM", seconds: 2.5}
     narration: >-
       This is a recorded run: a text-mode conversation replayed through the live engine. The agent says the code word first,
-      and that it is an automated assistant. Kamla says a CBI officer is on the other phone. The agent says the official line:
-      there is no digital arrest in Indian law. With her yes, it asks to call her son, Ravi. The money never leaves.
+      then uses the bank's own signal: your app shows you were on a call while paying. Kamla admits a CBI officer is on the
+      other call. The agent says the official line: there is no digital arrest in Indian law. The money never leaves.
+
+  # The first live Hindi call (execution 9f893617, 23 Oct), as transcript only. Do not use its audio.
+  - id: call-hi
+    label: "Live Bolna call #5 · transcript only · customer: a scripted text-to-speech voice"
+    card:
+      template: section
+      eyebrow: "Live Bolna web call · Hindi · 23 Oct 2026"
+      title: "The same scam, *live in Hindi.*"
+      bullets:
+        - "Ruko: आपके ऐप के अनुसार, भुगतान करते समय आप एक कॉल पर थे। (Your app shows you were on a call while paying.)"
+        - "Customer: उसने कहा वो सीबीआई से है। (He said he is from the CBI.)"
+        - "Customer: प्लीज़ यह पेमेंट रोक दीजिए। (Please stop this payment.)"
+        - "Blocked: the agent said delay; the policy, reading the evidence, blocked."
+    chapter: "A live call in Hindi"
+    narration: >-
+      Then our first live call in Hindi. Bolna's Hindi speech-to-text understood the scripted customer, and Ruko answered in Hindi.
+      The agent recommended a delay. The policy, reading the recorded evidence, blocked the payment.
 
   - id: decide
     url: /console/checks/chk_YEEMZU2H8H
@@ -165,11 +190,11 @@ scenes:
       bullets:
         - "Development set: 60/60 scams caught, 2/24 false holds"
         - "Fresh held-out set 4, frozen before any run: 15/18 caught, 2/10 false holds"
-        - "An LLM plays the customer; no live calls measured yet"
+        - "5 live Bolna calls (customer: a scripted voice); 2 full runs blocked the scam"
     chapter: "Results"
     narration: >-
       In text-mode tests, Ruko caught 60 of 60 scams on the set we tuned on, and 15 of 18 on a held-out set
-      we froze before any run, with 2 false holds in 10 genuine payments. The held-out number is the one we are improving.
+      we froze before any run, with 2 false holds in 10 genuine payments. The held-out number is the one we are improving. We have also made five live Bolna calls, with a scripted computer voice as the customer. Both calls that ran the full flow blocked the scam.
   # <<< results
 
   - id: ask

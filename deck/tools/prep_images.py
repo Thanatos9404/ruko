@@ -48,6 +48,21 @@ def main() -> None:
     for name in ["phone-pay", "phone-hold", "phone-greeting", "phone-probe", "phone-truth", "phone-outcome"]:
         save(first(name), name, 680)
 
+    # Console, live call #2 (English, 23 Oct): the header card above, then the call card and the signals side
+    # by side. Fractions fit chk_B3RQU9A6M6 at 1440 px wide (page about 6,570 px tall at 2x).
+    live = first("console-live-en-full")
+    header = crop_frac(live, 0.195, 0.0497, 0.977, 0.144)
+    call = crop_frac(live, 0.195, 0.392, 0.647, 0.465)
+    signals = crop_frac(live, 0.659, 0.392, 0.977, 0.517)
+    gap = 36
+    width = header.width
+    row = max(call.height, signals.height)
+    canvas = Image.new("RGB", (width, header.height + gap + row), (11, 17, 28))
+    canvas.paste(header, (0, 0))
+    canvas.paste(call, (0, header.height + gap))
+    canvas.paste(signals, (width - signals.width, header.height + gap))
+    save(canvas, "console-live", 1500)
+
     # Console: an eval-replay check (Hindi, digital arrest), its transcript card with evidence highlighted.
     # Fractions fit chk_YEEMZU2H8H at 1440 px wide (page about 6,800 px tall at 2x); recheck after a recapture.
     cc = first("console-eval-check-full")
