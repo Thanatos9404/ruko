@@ -78,9 +78,30 @@ function candidate(id: string, lang: Lang): Candidate | null {
   };
 }
 
+/** At most four distinct advice lines, without foreign helplines. */
+function tidyAdvice(advice: string[]): string[] {
+  const seen = new Set<string>();
+  return advice
+    .filter((a) => !/\b(UK|United Kingdom|Singapore|Action Fraud|159 |ScamShield)\b/i.test(a))
+    .filter((a) => {
+      const k = a.toLowerCase().replace(/[^a-zऀ-ॿ0-9]+/g, " ").trim();
+      if (seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    })
+    .slice(0, 4);
+}
+
+/** Enough real words to judge: at least six words, mostly letters. */
+function meaningful(text: string): boolean {
+  const ws = text.trim().split(/\s+/).filter((w) => /[a-zऀ-ॿ]{2,}/i.test(w));
+  return ws.length >= 6;
+}
+
 function safeAnalyze(text: string): TextAnalysis | null {
   try {
-    return analyzeText(text, { topK: 3 });
+    // The public checker serves people in India: rank the library's Indian patterns only.
+    return analyzeText(text, { topK: 3, region: "india" });
   } catch {
     return null;
   }
@@ -184,7 +205,7 @@ export async function publicChat(
         risk: (["likely_scam", "possible_scam", "unclear", "unlikely"].includes(String(j.risk)) ? j.risk : "unclear") as ChatReply["risk"],
         pattern: c ? { id: c.id, name: c.name } : null,
         truth: c ? c.truth : null,
-        advice: c ? c.advice : [],
+        advice: c ? tidyAdvice(c.advice) : [],
         sources: c ? c.sources : [],
         next_question: j.next_question ? String(j.next_question).slice(0, 200) : null,
         method: "llm+library",
@@ -201,7 +222,10 @@ export async function publicChat(
     const ruleScore = matches[0]?.score ?? 0;
     const risk: ChatReply["risk"] = !top
       ? ml?.band === "unlikely_scam"
-        ? "unlikely"
+        ? // A few words, or gibberish, is never "no warning signs": it's "not clear yet".
+          meaningful(userText)
+          ? "unlikely"
+          : "unclear"
         : "unclear"
       : ruleScore >= 2 || ml?.band === "likely_scam"
         ? "likely_scam"
@@ -217,7 +241,7 @@ export async function publicChat(
       risk,
       pattern: top ? { id: top.id, name: top.name } : null,
       truth: top ? top.truth : null,
-      advice: top ? top.advice : [],
+      advice: top ? tidyAdvice(top.advice) : [],
       sources: top ? top.sources : [],
       next_question: null,
       method: "library-only",
