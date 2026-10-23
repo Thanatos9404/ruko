@@ -28,12 +28,26 @@ if (!env.RUKO_API_KEYS) {
   env.RUKO_API_KEYS = `demo-bank:rk_test_${randomBytes(18).toString("base64url")}`;
   generated.push("RUKO_API_KEYS");
 }
-if (!env.RUKO_ACCESS_CODES) {
-  env.RUKO_ACCESS_CODES = `SYMPHONY-${randomBytes(3).toString("hex").toUpperCase()}`;
-  generated.push("RUKO_ACCESS_CODES");
+// Access codes: one for the owner (6 calls a day) and one per judge (2 a day each), 12+ random characters.
+const code = (prefix) => `${prefix}-${randomBytes(9).toString("base64url").replace(/[-_]/g, "X").toUpperCase()}`;
+if (!env.RUKO_ACCESS_CODE_USER) {
+  env.RUKO_ACCESS_CODE_USER = (env.RUKO_ACCESS_CODES ?? "").split(",")[0]?.split(":")[0] || code("RUKO");
+  generated.push("RUKO_ACCESS_CODE_USER");
 }
-if (generated.length) {
-  writeFileSync(path, raw.replace(/\s*$/, "\n") + generated.map((k) => `${k}=${env[k]}`).join("\n") + "\n");
+for (const n of [1, 2, 3]) {
+  const k = `RUKO_ACCESS_CODE_JUDGE_${n}`;
+  if (!env[k]) {
+    env[k] = code(`JUDGE${n}`);
+    generated.push(k);
+  }
+}
+env.RUKO_ACCESS_CODES = [`${env.RUKO_ACCESS_CODE_USER}:6`, ...[1, 2, 3].map((n) => `${env[`RUKO_ACCESS_CODE_JUDGE_${n}`]}:2`)].join(",");
+{
+  // Rewrite .env in place: replace the combined list, append anything newly generated.
+  let text = raw.replace(/^RUKO_ACCESS_CODES=.*\r?\n?/m, "").replace(/\s*$/, "\n");
+  text += `RUKO_ACCESS_CODES=${env.RUKO_ACCESS_CODES}\n`;
+  for (const k of generated) text += `${k}=${env[k]}\n`;
+  writeFileSync(path, text);
 }
 
 const prod = {
@@ -47,9 +61,10 @@ const prod = {
   RUKO_ACCESS_CODES: env.RUKO_ACCESS_CODES,
   RUKO_PUBLIC_BASE_URL: base,
   RUKO_BANK_NAME: env.RUKO_BANK_NAME ?? "Demo Bank",
-  RUKO_DAILY_CALL_CAP: env.RUKO_DAILY_CALL_CAP ?? "6",
-  RUKO_PER_VISITOR_DAILY_CAP: env.RUKO_PER_VISITOR_DAILY_CAP ?? "2",
-  RUKO_WALLET_FLOOR_CENTS: env.RUKO_WALLET_FLOOR_CENTS ?? "350",
+  RUKO_DAILY_CALL_CAP: "8",
+  RUKO_PER_CODE_DAILY_CAP: "2",
+  // Keeps $1.50 in reserve for a live call at the 20 Nov finale.
+  RUKO_WALLET_FLOOR_CENTS: "150",
   RUKO_ALLOW_PHONE_CALLS: "false",
 };
 

@@ -22,7 +22,7 @@ const env = Object.fromEntries(
     .filter((l) => /^[A-Z0-9_]+=/.test(l))
     .map((l) => [l.slice(0, l.indexOf("=")), l.slice(l.indexOf("=") + 1)]),
 );
-const code = (env.RUKO_ACCESS_CODES ?? "").split(",")[0];
+const code = env.RUKO_ACCESS_CODE_USER ?? (env.RUKO_ACCESS_CODES ?? "").split(",")[0]?.split(":")[0];
 if (!code) throw new Error("RUKO_ACCESS_CODES missing in .env");
 
 const clip = (name) => readFileSync(`.data/tts/${name}.wav`).toString("base64");
