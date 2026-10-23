@@ -7,7 +7,7 @@ Newest first. Wallet figures come from Bolna's `GET /user/me` (free); 500 = $5.0
 **What works**
 - **Production:** https://ruko-symphony.vercel.app (Vercel, bom1). State lives in the Vercel Runtime Cache and is shared across function instances (`scripts/state-check.mjs`: 80 parallel reads, consistent). e2e on production passes 33/33: every scenario in English and Hindi to the final screen, glass blur, phone widths, hero timing.
 - **Live calls, gated:** per-judge access codes (2 calls a day each) plus the owner's, a daily cap of 8, a wallet floor of 150 cents kept for the 20 Nov finale. A slot is refunded if a call never connects. Hardened per the Web Call SDK reverse-engineering findings (re-entry guard, mint deadline, error codes, iOS audio, Wake Lock, `?relay=1`).
-- **First live Bolna web calls (2, 13.75 cents in total):** the second one ran the whole flow on the live voice path: code word, device-signal question, cover story caught as a payee mismatch, admission, `coached_on_call`, **blocked**, contact offer. Two fixes followed (fillers, truth line in the decision message). See BOLNA_SPEND.md.
+- **First live Bolna web calls (3, 22 cents in total):** call #2 ran the whole flow on the live voice path: code word, device-signal question, cover story caught as a payee mismatch, admission, `coached_on_call`, **blocked**, contact offer. Two fixes followed (fillers, truth line in the decision message). Call #3 (hero take #1) spoke the official truth line live after the adaptive probe; the scripted customer ran out of lines, so the payment was held 24 h rather than blocked. See BOLNA_SPEND.md.
 - **Agent v5** (frozen c0b56c9, text model ruko-text-1.0.0): fresh held-out set 4 (frozen before v5 ran, heavy coaching in Hindi/Hinglish) **15/18 scams caught, 2/10 false holds (both delays)**, about a minute to a decision, 0 OTP or PIN requests in 959 agent turns. Holdouts 1–3 are reported as previously seen. Safe default: on critical pre-call risk, a release needs positive evidence; a delay never auto-releases.
 - **Policy holes closed** with tests (a later decision can't loosen an earlier one, an unsure contact can't wipe a delay, execution ownership, story conflicts, holds never expire under a live call).
 - **Console:** no code words, masked phones, no real caller's transcript, private line reports; the full 72-pattern library; the demo bank shows the v5 eval replays only.
@@ -17,7 +17,7 @@ Newest first. Wallet figures come from Bolna's `GET /user/me` (free); 500 = $5.0
 **Next**
 - Hero call (English, or Hinglish if a Piper Hindi voice is approved), then a "Hear the real call" player from Bolna's recording.
 
-**Wallet:** 486.25.
+**Wallet:** 478.
 
 ## 17 Oct 2026, ~22:45 IST: brand system, retheme, working 60-second demo, eval v3
 
