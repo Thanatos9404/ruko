@@ -234,12 +234,24 @@ const clickText = (t) =>
   }, t);
 
 await page.goto(`${base}/demo`, { waitUntil: "load", timeout: 60000 });
-await sleep(2500);
+// Wait until the app is really up (a fresh deployment can be slow on its first request).
+await page.waitForSelector("[role=radio]", { timeout: 60000 });
+await page.waitForSelector("#__ruko_rec", { timeout: 30000 });
+await sleep(1500);
 await page.click("#__ruko_rec"); // a trusted click, so tab capture is allowed
 await sleep(1500);
 if (lang === "hi") await clickText("हिंदी");
 await sleep(500);
-await clickText("₹1,90,000");
+// Pay, and make sure the hold screen is up before answering.
+for (let i = 0; i < 3; i++) {
+  await clickText("₹1,90,000");
+  let held = false;
+  for (let j = 0; j < 20 && !held; j++) {
+    await sleep(500);
+    held = /Payment paused|भुगतान रुका है/.test(await page.evaluate(() => document.querySelector('[aria-label="Sandbox bank app"]')?.textContent ?? ""));
+  }
+  if (held) break;
+}
 const button = dry ? (lang === "hi" ? "रिकॉर्डेड रन देखें" : "Watch the recorded run") : lang === "hi" ? "कॉल उठाएँ" : "Answer the call";
 for (let i = 0; i < 20 && !(await clickText(button)); i++) await sleep(500);
 console.log(dry ? "[ruko-call] dry run: recorded run playing (no Bolna call)" : "[ruko-call] answered; live call starting");
