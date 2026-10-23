@@ -133,7 +133,16 @@ interface LibraryData {
 }
 
 async function loadLibrary(): Promise<LibraryData> {
-  const res = (await api.patterns()) as Awaited<ReturnType<typeof api.patterns>> & { categories?: unknown; sources?: unknown };
+  // The full research library (72 patterns, India and global) when the deployment bundles it,
+  // the 12-pattern core otherwise. The signal taxonomy always comes from the core API.
+  const core = await api.patterns();
+  const full = await fetch("/api/console/library")
+    .then((r) => (r.ok ? (r.json() as Promise<{ patterns: PatternView[]; categories?: unknown; sources?: unknown }>) : null))
+    .catch(() => null);
+  const res = { ...core, ...(full ? { data: full.patterns, categories: full.categories, sources: full.sources } : {}) } as Awaited<ReturnType<typeof api.patterns>> & {
+    categories?: unknown;
+    sources?: unknown;
+  };
   const categories = new Map<string, string>();
   if (Array.isArray(res.categories))
     for (const c of res.categories) if (c && typeof c === "object" && typeof (c as Dict<unknown>).id === "string") categories.set((c as Dict<string>).id, String((c as Dict<unknown>).name ?? (c as Dict<string>).id));
@@ -177,6 +186,7 @@ export function Library() {
   }, [data]);
 
   const current = data?.patterns.find((p) => p.id === selected) ?? null;
+  const missing = Boolean(data && selected && !current);
   const shown = current ?? list[0] ?? null;
 
   if (!data) {
@@ -186,10 +196,15 @@ export function Library() {
 
   return (
     <div className="space-y-5">
+      {missing && (
+        <div role="status" className="rounded-2xl border border-hair bg-paper-2 px-4 py-3 text-[13.5px] text-ink-2">
+          Pattern “{selected}” was not found in this library. Showing the full list instead.
+        </div>
+      )}
       <Reveal>
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <p className="max-w-[68ch] text-[14px] leading-relaxed text-muted">
-            Each pattern is built from official Indian advisories, with its sources. The agent names a pattern from the signals it hears, then says the pattern's one-line truth to break the
+            {data.patterns.length} patterns, India first, each with its sources (official advisories wherever they exist; machine-drafted translations are labelled). The agent names a pattern from the signals it hears, then says the pattern's one-line truth to break the
             script. It never improvises official advice.
           </p>
           <div className="relative shrink-0 overflow-x-auto">

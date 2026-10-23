@@ -80,7 +80,7 @@ function ogCard() {
   <g transform="translate(40 95) scale(0.72)">${markGroup("dark", "og")}</g>
   <g transform="translate(${530 - 15 * s} ${150 - 20 * s}) scale(${s})">${wordmarkGroup("dark")}</g>
   <text x="530" y="345" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="40" font-weight="600" fill="#eef1f6">Wait, before the money leaves.</text>
-  <text x="530" y="405" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="26" fill="#c2c9d6">A 60-second voice check, built on Bolna,</text>
+  <text x="530" y="405" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="26" fill="#c2c9d6">A one-minute voice check, built on Bolna,</text>
   <text x="530" y="442" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="26" fill="#c2c9d6">that stops payment scams like "digital arrest".</text>
   <text x="530" y="540" font-family="Consolas, monospace" font-size="20" fill="#8f9aac">Bolna x YC Symphony Buildathon · 2026</text>
 </svg>\n`;

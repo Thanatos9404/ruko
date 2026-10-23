@@ -68,11 +68,11 @@ sequenceDiagram
 
 | Bolna feature | How Ruko uses it | Status |
 |---|---|---|
-| Agent API v2 | Three agents built and kept in sync by `npm run bolna:setup`: payment safety check, trusted-contact call, public safety line. All saved with `restricted: false` under Bolna's content-safety checks. | in use |
-| Multilingual config | English + Hindi with mid-call switching; the call starts in the customer's language via `agent_language`. | configured |
-| Custom functions | `get_check_context`, `record_signal`, `call_trusted_contact`, `check_trusted_contact`, `set_decision` (+ `report_contact_outcome`, `lookup_pattern`, `log_report`). Prompt variables fill `check_id` and the call reference; every parameter is required because Bolna fills requests from `%(name)s` templates. | in use |
-| Web Call SDK (`@bolna/web-call`) | Browser calls in the demo, the trusted contact's "phone" and the public line. Sessions are minted server-side, single-use, behind an access code, a daily cap, a per-visitor cap and a wallet floor read from `GET /user/me`. | in use |
-| Webhooks | Token-protected, optional IP allowlist (Bolna's three published IPs), idempotent per execution and status; terminal events are **re-read from Bolna's API** before they can change a decision. | in use |
+| Agent API v2 | Three agents built and kept in sync by `npm run bolna:setup`: payment safety check, trusted-contact call, public safety line. All saved with `restricted: false` under Bolna's content-safety checks; `npm run bolna:check` diffs the saved agents against the repo. | in use (synced, no drift) |
+| Multilingual config | English + Hindi with mid-call switching; the call starts in the customer's language via `agent_language`. | configured; first live Hindi call pending |
+| Custom functions | `get_check_context`, `record_signal`, `call_trusted_contact`, `check_trusted_contact`, `set_decision` (+ `report_contact_outcome`, `lookup_pattern`, `log_report`). Prompt variables fill `check_id` and the call reference; every parameter is required because Bolna fills requests from `%(name)s` templates. | wired and tested against the engine; first live call pending |
+| Web Call SDK (`@bolna/web-call`) | Browser calls in the demo, the trusted contact's "phone" and the public line. Sessions are minted server-side, single-use, behind an access code, a daily cap, a per-code cap and a wallet floor read from `GET /user/me`. | wired (deployed, gated); first live call pending |
+| Webhooks | Token-protected, optional IP allowlist (Bolna's three published IPs), idempotent per execution and status; terminal events are **re-read from Bolna's API** before they can change a decision. | wired and tested; first live call pending |
 | Preferred models | gpt-4.1-mini, Deepgram nova-3, Sarvam saaras:v3, ElevenLabs eleven_turbo_v2_5, Sarvam bulbul:v3: all inside Bolna's flat per-minute rate. | configured |
 | Transfer to a human | Documented option for banks that need a human in the loop (UK FCA FG24/6): add Bolna's transfer tool with the bank's fraud-desk number. | documented |
 | Batch calls | Documented for bank-scale back-testing of the policy against consenting staff. | documented |
@@ -124,7 +124,7 @@ npm run dev                   # http://localhost:5410 (app + API on one server)
 Without a Bolna key everything works except live calls: the sandbox shows the recorded run, which replays a text-mode conversation's tool calls into the live engine.
 
 ```bash
-npm run check                 # type-check, lint, unit tests (57), secret scan
+npm run check                 # type-check, lint, unit tests (105), text-model tests (73), secret scan
 npm run build && npx tsx scripts/serve-prod.ts 5430   # production build, served like Vercel
 node scripts/e2e.mjs http://localhost:5430            # every scenario + a full recorded run
 node scripts/screenshots.mjs http://localhost:5430    # docs/screenshots at 1440 and 375

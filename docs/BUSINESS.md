@@ -1,6 +1,6 @@
 # Ruko: business plan
 
-Ruko sells banks and payment apps a 60-second voice check on risky payments. They pay per completed check, and nothing for payments that pass. India comes first, then markets where banks pay for scam losses, starting with the UK.
+Ruko sells banks and payment apps a voice check of about a minute on risky payments. They pay per completed check, and nothing for payments that pass. India comes first, then markets where banks pay for scam losses, starting with the UK.
 
 Status: 22 October 2026. Every web source in this document was accessed in October 2026. Figures marked **(derived)** are our arithmetic on a cited figure. Figures marked **(assumption)** or **(estimate)** are ours. [RESEARCH.md](RESEARCH.md) has the wider evidence and [CITATIONS.md](CITATIONS.md) the audit.
 

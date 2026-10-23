@@ -213,12 +213,13 @@ export function Results() {
   );
 }
 
-const BOLNA: { icon: ReactNode; title: string; body: string; status: "live" | "configured" | "documented" }[] = [
+// "wired": built, deployed and tested against the engine, but no paid live call has run through it yet.
+const BOLNA: { icon: ReactNode; title: string; body: string; status: "live" | "wired" | "configured" | "documented" }[] = [
   { icon: <AudioLines />, title: "Voice agents (Agent API v2)", body: "Three agents built and kept in sync over the API: the payment safety check, the trusted-contact call and the public safety line. All saved unrestricted under Bolna's content-safety checks.", status: "live" },
   { icon: <Languages />, title: "Multilingual, mid-call switching", body: "English and Hindi, with the call starting in the customer's language and switching if they do. Hinglish is handled by the Hindi stack (Sarvam saaras:v3 + bulbul:v3).", status: "configured" },
-  { icon: <Braces />, title: "Custom functions", body: "Five tools call Ruko mid-call: get_check_context, record_signal, call_trusted_contact, check_trusted_contact, set_decision. Prompt variables fill check_id and the call reference.", status: "live" },
-  { icon: <Globe2 />, title: "Web Call SDK", body: "The demo and the public line call in the browser. Sessions are minted server-side, single-use, behind an access code, daily caps and a wallet floor.", status: "live" },
-  { icon: <Webhook />, title: "Execution webhooks", body: "Token-protected, idempotent per execution and status, and every terminal event is re-read from Bolna's API before it can change a decision.", status: "live" },
+  { icon: <Braces />, title: "Custom functions", body: "Five tools call Ruko mid-call: get_check_context, record_signal, call_trusted_contact, check_trusted_contact, set_decision. Prompt variables fill check_id and the call reference.", status: "wired" },
+  { icon: <Globe2 />, title: "Web Call SDK", body: "The demo and the public line call in the browser. Sessions are minted server-side, single-use, behind an access code, daily caps and a wallet floor.", status: "wired" },
+  { icon: <Webhook />, title: "Execution webhooks", body: "Token-protected, idempotent per execution and status, and every terminal event is re-read from Bolna's API before it can change a decision.", status: "wired" },
   { icon: <Gauge />, title: "Preferred models, flat rate", body: "gpt-4.1-mini, Deepgram nova-3, Sarvam saaras:v3, ElevenLabs turbo v2.5 and Sarvam bulbul:v3: all inside Bolna's flat per-minute rate.", status: "configured" },
   { icon: <PhoneForwarded />, title: "Transfer to a human fraud desk", body: "For banks that need a human in the loop (the UK's FCA expects one), the agent's transfer tool hands the call to the bank's fraud desk number.", status: "documented" },
   { icon: <Layers />, title: "Batch calls for back-testing", body: "A bank can replay last quarter's flagged payments as a Bolna batch against consenting staff, to tune the policy before going live.", status: "documented" },
@@ -241,10 +242,10 @@ export function BuiltOnBolna() {
                   <span
                     className={cn(
                       "rounded-full px-2 py-0.5 text-[10.5px] font-semibold uppercase tracking-wide",
-                      f.status === "live" ? "bg-go-soft text-go" : f.status === "configured" ? "bg-paper-3 text-ink-2" : "border border-hair text-muted",
+                      f.status === "live" ? "bg-go-soft text-go" : f.status === "wired" ? "bg-accent-soft text-ink" : f.status === "configured" ? "bg-paper-3 text-ink-2" : "border border-hair text-muted",
                     )}
                   >
-                    {f.status === "live" ? "in use" : f.status}
+                    {f.status === "live" ? "in use" : f.status === "wired" ? "wired · live call pending" : f.status}
                   </span>
                 </span>
               }

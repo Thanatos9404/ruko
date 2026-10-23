@@ -23,6 +23,8 @@ const T = {
     paused: "Payment paused",
     calling: "Your bank is calling you now to check it's really you. The assistant will say this code word first:",
     neverOtp: "Ruko never asks for your OTP, PIN or card details.",
+    codeLabel: "Code word",
+    neverRead: "Never read this code to anyone. Ruko says it to you.",
     answer: "Answer the call",
     replay: "Watch the recorded run",
     sent: "Payment sent",
@@ -41,6 +43,8 @@ const T = {
     paused: "भुगतान रुका है",
     calling: "आपका बैंक अभी आपको कॉल कर रहा है। सहायक सबसे पहले यह कोड शब्द बोलेगी:",
     neverOtp: "रुको कभी आपका ओटीपी, पिन या कार्ड नंबर नहीं माँगता।",
+    codeLabel: "कोड शब्द",
+    neverRead: "यह कोड किसी को पढ़कर न सुनाएँ। रुको इसे आपको बोलती है।",
     answer: "कॉल उठाएँ",
     replay: "रिकॉर्डेड रन देखें",
     sent: "भुगतान भेजा गया",
@@ -177,10 +181,11 @@ export function HoldScreen({
         <p className="mt-2 text-[14px] leading-snug text-[#161f2e]">{t.calling}</p>
         <div className="relative mt-6 grid place-items-center rounded-3xl bg-[#161f2e] px-4 py-6 text-[#fdfdfb]">
           {!reduce && <span aria-hidden className="animate-ring absolute inset-0 rounded-3xl border-2 border-[#fdfdfb]/50" />}
-          <span className="t-eyebrow !text-[10.5px] !text-[#f7b9b1]">Code word</span>
+          <span className="t-eyebrow !text-[10.5px] !text-[#f7b9b1]">{t.codeLabel}</span>
           <span className="mt-1 font-display text-[34px] font-semibold tracking-[0.04em]" aria-live="polite">
             {code}
           </span>
+          <span className="mt-1.5 text-center text-[11.5px] font-medium text-[#f7b9b1]">{t.neverRead}</span>
         </div>
         <p className="mt-4 text-[12.5px] font-medium text-[#161f2e]">{t.neverOtp}</p>
         <div className="mt-auto space-y-2.5">
