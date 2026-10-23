@@ -84,7 +84,7 @@ function tidyAdvice(advice: string[]): string[] {
   return advice
     .filter((a) => !/\b(UK|United Kingdom|Singapore|Action Fraud|159 |ScamShield)\b/i.test(a))
     .filter((a) => {
-      const k = a.toLowerCase().replace(/[^a-zऀ-ॿ0-9]+/g, " ").trim();
+      const k = a.toLowerCase().replace(/[^a-z\u0900-\u097f0-9]+/g, " ").trim();
       if (seen.has(k)) return false;
       seen.add(k);
       return true;
@@ -94,7 +94,7 @@ function tidyAdvice(advice: string[]): string[] {
 
 /** Enough real words to judge: at least six words, mostly letters. */
 function meaningful(text: string): boolean {
-  const ws = text.trim().split(/\s+/).filter((w) => /[a-zऀ-ॿ]{2,}/i.test(w));
+  const ws = text.trim().split(/\s+/).filter((w) => /[a-z\u0900-\u097f]{2,}/i.test(w));
   return ws.length >= 6;
 }
 
