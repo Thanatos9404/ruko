@@ -30,7 +30,7 @@ W, H, DSF = 1440, 900, 2
 HIDE_NAV = "header.fixed { visibility: hidden !important; }"
 PHONE = '[role=region][aria-label="Sandbox bank app"]'
 ENGINE = 'section[aria-label="Ruko engine"]'
-CHECK_ID = "chk_98SC6WF89W"  # production demo tenant: eval replay, Nirmala, hi, digital arrest, blocked
+CHECK_ID = "chk_YEEMZU2H8H"  # production demo tenant (v5 seed): eval replay, Hindi, digital arrest, "Safe Custody Account RBI", blocked
 
 
 def want(name: str) -> bool:
@@ -103,7 +103,7 @@ def demo(page: Page, lang: str | None, tag: str) -> None:
         print("no recorded-run button")
         return
     # Named frames, taken the first time their line is on the phone (English run).
-    moments = {"greeting": "Your code word is", "truth": "no 'digital arrest' in Indian", "contact": "like me to call Ravi"}
+    moments = {"greeting": "code word is", "probe": "app shows you were on a call", "truth": "no 'digital arrest' in Indian", "ravi": "my son Ravi"}
     taken: set[str] = set()
     t0 = time.time()
     i = 0

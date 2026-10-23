@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ruko pitch deck</title>
-<meta name="description" content="Ruko: a 60-second Bolna voice check that holds a risky payment and calls the customer before the money leaves. Bolna × YC Symphony Buildathon, October 2026.">
+<meta name="description" content="Ruko: a Bolna voice check that holds a risky payment and calls the customer, deciding in about a minute, before the money leaves. Bolna × YC Symphony Buildathon, October 2026.">
 <link rel="icon" href="assets/brand/ruko-mark-dark.svg">
 <link rel="stylesheet" href="deck.css">
 <link rel="stylesheet" href="slides.css">
@@ -21,8 +21,8 @@
   <img class="s1-lockup" src="assets/brand/ruko-lockup-horizontal-dark.svg" alt="Ruko">
   <div class="s1-main">
     <div class="eyebrow">Bolna × Y Combinator Symphony Buildathon <span class="tag">· October 2026</span></div>
-    <h1>A 60-second voice check that stops payment scams before the money <span class="serif">leaves.</span></h1>
-    <p class="lede">When a bank or UPI payment looks coached, Ruko holds it and a Bolna voice agent calls the customer in their language. For banks, UPI apps and NBFCs in India.</p>
+    <h1>A voice check that stops payment scams before the money <span class="serif">leaves.</span></h1>
+    <p class="lede">When a bank or UPI payment looks coached, Ruko holds it and a Bolna voice agent calls the customer in their language. The decision comes in about a minute. For banks, UPI apps and NBFCs in India.</p>
   </div>
   <img class="phone s1-phone" src="assets/img/phone-hold.jpg" alt="The sandbox bank app holding a payment and showing the code word">
   <div class="s1-meta">
@@ -119,7 +119,7 @@
         <li><b>The LLM can escalate a decision, never soften it.</b> The policy decides from recorded evidence.</li>
         <li><b>Never asks for an OTP, PIN, card or account number.</b></li>
         <li><b>Every point of risk has a named reason</b> in plain language, for the customer and the auditor.</li>
-        <li><b>The code word is shown only in the bank’s app</b>, so the customer can check the call is real.</li>
+        <li><b>The code word is shown only in the bank’s app</b>, so the call is hard to spoof.</li>
       </ul>
       <div class="rule"></div>
       <h3 class="s4-also">Also shipped</h3>
@@ -132,35 +132,35 @@
   </div>
   <div class="foot">
     <div class="brand"><img src="assets/brand/ruko-mark.svg" alt="">RUKO</div>
-    <div class="src">Screens from the sandbox bank at ruko-symphony.vercel.app/demo, 22 Oct 2026. Library translations beyond English and Hindi are machine drafts, labelled as such until a native speaker reviews them.</div>
+    <div class="src">Screens from the sandbox bank at ruko-symphony.vercel.app/demo, captured 23 Oct 2026. Library translations beyond English and Hindi are machine drafts, labelled as such until a native speaker reviews them.</div>
     <div class="pg">04 / 12</div>
   </div>
 </section>
 
 <!-- 05 · Demo frames -->
 <section class="slide dark s5" id="s5">
-  <div class="eyebrow">05 <span class="tag">The demo · digital arrest</span></div>
+  <div class="eyebrow">05 <span class="tag">The demo · digital arrest · recorded run, captured 23 Oct 2026</span></div>
   <h2 class="s5-title">Kamla, 68, has been on a “CBI” video call for 47 minutes. She is paying <span class="coral">₹1,90,000</span> to “Safe Custody Account RBI”.</h2>
   <div class="s5-strip">
     <figure><img class="phone" src="assets/img/phone-pay.jpg" alt=""><figcaption><b>Pay</b> The app sees an active call, a new payee and 15.8× her usual maximum.</figcaption></figure>
     <figure><img class="phone" src="assets/img/phone-hold.jpg" alt=""><figcaption><b>Hold</b> Risk 100/100. A “safe account” payee always holds.</figcaption></figure>
-    <figure><img class="phone" src="assets/img/phone-greeting.jpg" alt=""><figcaption><b>Code word first</b> The agent says it is automated and the call is recorded.</figcaption></figure>
-    <figure><img class="phone" src="assets/img/phone-truth.jpg" alt=""><figcaption><b>Truth line</b> “There’s no ‘digital arrest’ in Indian law.”</figcaption></figure>
-    <figure><img class="phone" src="assets/img/phone-contact.jpg" alt=""><figcaption><b>Trusted contact</b> Ruko offers to call her son, Ravi. She says yes.</figcaption></figure>
+    <figure><img class="phone" src="assets/img/phone-greeting.jpg" alt=""><figcaption><b>Code word first</b> An automated safety line, on a recorded call.</figcaption></figure>
+    <figure><img class="phone" src="assets/img/phone-probe.jpg" alt=""><figcaption><b>The bank’s signal</b> “Your app shows you were on a call while paying.”</figcaption></figure>
+    <figure><img class="phone" src="assets/img/phone-truth.jpg" alt=""><figcaption><b>Truth line</b> She admits a CBI officer is on the other call. “There’s no ‘digital arrest’ in Indian law.”</figcaption></figure>
     <figure><img class="phone" src="assets/img/phone-outcome.jpg" alt=""><figcaption><b>Blocked</b> The money never leaves. Call 1930 if pressured.</figcaption></figure>
   </div>
   <div class="s5-engine">
     <div class="s5-tl">
-      <span><i>+14.0 s</i>told they are under investigation</span>
-      <span><i>+24.6 s</i>directed on another call</span>
-      <span><i>+52.1 s</i>trusted contact requested</span>
-      <span class="hot"><i>+52.7 s</i>blocked</span>
+      <span><i>+10.6 s</i>agent reads the check</span>
+      <span><i>+20.9 s</i>told they are under investigation</span>
+      <span><i>+31.5 s</i>directed on another call</span>
+      <span class="hot"><i>+32.1 s</i>blocked</span>
     </div>
-    <p class="s5-why">The assistant recommended “delay”; the recorded evidence required “block”. <b>Decided by policy, not by the LLM.</b></p>
+    <p class="s5-why">The agent recommended “block”; the policy decided “block” from the two critical signs it recorded. <b>Decided by policy, not by the LLM:</b> the model can make a decision stricter, never softer.</p>
   </div>
   <div class="foot">
     <div class="brand"><img src="assets/brand/ruko-mark-dark.svg" alt="">RUKO</div>
-    <div class="src">Recorded run at ruko-symphony.vercel.app/demo, captured 22 Oct 2026: a text-mode eval conversation (no audio) whose tool calls replay into the live engine, so the decision is computed live. The trusted-contact call is simulated in the replay. Times are engine time since the hold.</div>
+    <div class="src">Recorded run at ruko-symphony.vercel.app/demo (agent v5), captured 23 Oct 2026: a text-mode eval conversation (no audio) whose tool calls replay into the live engine, so the decision is computed live. Times are engine time since the hold in this capture; the replay’s pace varies by a few seconds.</div>
     <div class="pg">05 / 12</div>
   </div>
 </section>
@@ -187,14 +187,14 @@
   </div>
   <div class="foot">
     <div class="brand"><img src="assets/brand/ruko-mark.svg" alt="">RUKO</div>
-    <div class="src">Status on 22 Oct 2026. Live Bolna calls: <!--r:live.note-->No live Bolna call has been measured yet; the demo video records the first one.<!--/r--> Ruko’s engine, policy, tools and eval talk plain HTTP, so they are not tied to one voice provider.</div>
+    <div class="src">Status on 23 Oct 2026. Live Bolna calls: <!--r:live.note-->No live Bolna call has been measured yet; the demo video records the first one.<!--/r--> Ruko’s engine, policy, tools and eval talk plain HTTP, so they are not tied to one voice provider.</div>
     <div class="pg">06 / 12</div>
   </div>
 </section>
 
 <!-- 07 · Results -->
 <section class="slide s7" id="s7">
-  <div class="eyebrow">07 <span class="tag">Results · text mode · <!--r:version-->v4<!--/r--></span></div>
+  <div class="eyebrow">07 <span class="tag">Results · text mode · <!--r:version-->v5<!--/r--></span></div>
   <h2>We tuned on one set and froze another. <span class="serif">The frozen one is the number to trust.</span></h2>
   <div class="s7-body">
     <div class="s7-left">
@@ -202,36 +202,36 @@
         <div class="s7-col">
           <div class="s7-set"><span class="dot dev"></span><!--r:dev.label-->Development set<!--/r--></div>
           <div class="s7-note"><!--r:dev.note-->96 conversations; the prompt was tuned on it<!--/r--></div>
-          <div class="s7-big"><!--r:dev.catch-->58/60<!--/r--></div>
-          <div class="s7-cap">scams caught · <!--r:dev.catch_pct-->96.7%<!--/r-->, 95% CI <!--r:dev.catch_ci-->89–99%<!--/r--></div>
-          <div class="s7-mid"><!--r:dev.fh-->1/24<!--/r--></div>
-          <div class="s7-cap">false holds on genuine payments · CI <!--r:dev.fh_ci-->1–20%<!--/r--></div>
+          <div class="s7-big"><!--r:dev.catch-->60/60<!--/r--></div>
+          <div class="s7-cap">scams caught · <!--r:dev.catch_pct-->100%<!--/r-->, 95% CI <!--r:dev.catch_ci-->94–100%<!--/r--></div>
+          <div class="s7-mid"><!--r:dev.fh-->2/24<!--/r--></div>
+          <div class="s7-cap">false holds on genuine payments · CI <!--r:dev.fh_ci-->2–26%<!--/r--></div>
         </div>
         <div class="s7-col ho">
-          <div class="s7-set"><span class="dot ho"></span><!--r:ho.label-->Held-out set 3<!--/r--></div>
-          <div class="s7-note"><!--r:ho.note-->28 conversations, written and frozen before any run<!--/r--></div>
-          <div class="s7-big"><!--r:ho.catch-->12/16<!--/r--></div>
-          <div class="s7-cap">scams caught · <!--r:ho.catch_pct-->75%<!--/r-->, 95% CI <!--r:ho.catch_ci-->51–90%<!--/r--></div>
-          <div class="s7-mid"><!--r:ho.fh-->2/12<!--/r--></div>
-          <div class="s7-cap">false holds on genuine payments · CI <!--r:ho.fh_ci-->5–45%<!--/r--></div>
+          <div class="s7-set"><span class="dot ho"></span><!--r:ho.label-->Fresh held-out set 4<!--/r--></div>
+          <div class="s7-note"><!--r:ho.note-->28 conversations, frozen before any v5 run; heavy coaching in Hindi and Hinglish<!--/r--></div>
+          <div class="s7-big"><!--r:ho.catch-->15/18<!--/r--></div>
+          <div class="s7-cap">scams caught · <!--r:ho.catch_pct-->83.3%<!--/r-->, 95% CI <!--r:ho.catch_ci-->61–94%<!--/r--></div>
+          <div class="s7-mid"><!--r:ho.fh-->2/10<!--/r--></div>
+          <div class="s7-cap">false holds on genuine payments · CI <!--r:ho.fh_ci-->6–51%<!--/r--></div>
         </div>
       </div>
-      <div class="s7-chart"><!--r:chart--><svg class="ci" viewBox="0 0 1000 242" width="1000" height="242" role="img" aria-label="Scam catch and false-hold rates with 95% intervals, development set against the held-out set"><line class="g" x1="200.0" y1="26" x2="200.0" y2="210"/><text class="ax" x="200.0" y="230" text-anchor="middle">0%</text><line class="g" x1="357.5" y1="26" x2="357.5" y2="210"/><text class="ax" x="357.5" y="230" text-anchor="middle">25%</text><line class="g" x1="515.0" y1="26" x2="515.0" y2="210"/><text class="ax" x="515.0" y="230" text-anchor="middle">50%</text><line class="g" x1="672.5" y1="26" x2="672.5" y2="210"/><text class="ax" x="672.5" y="230" text-anchor="middle">75%</text><line class="g" x1="830.0" y1="26" x2="830.0" y2="210"/><text class="ax" x="830.0" y="230" text-anchor="middle">100%</text><text class="t" x="0" y="20">Scams caught</text><text class="lab" x="0" y="52">Development set</text><line class="w" x1="758.4" y1="47" x2="824.2" y2="47" stroke="var(--dev)"/><circle cx="809.0" cy="47" r="7.5" fill="var(--dev)" stroke="var(--paper)" stroke-width="2.5"><title>Development set: 58/60 (96.7%), 95% CI 89–99%</title></circle><text class="val" x="1000" y="52" text-anchor="end">58/60 · 96.7%</text><text class="lab" x="0" y="86">Held-out set 3</text><line class="w" x1="518.2" y1="81" x2="765.9" y2="81" stroke="var(--coral)"/><circle cx="672.5" cy="81" r="7.5" fill="var(--coral)" stroke="var(--paper)" stroke-width="2.5"><title>Held-out set 3: 12/16 (75%), 95% CI 51–90%</title></circle><text class="val" x="1000" y="86" text-anchor="end">12/16 · 75%</text><text class="t" x="0" y="128">False holds on genuine payments</text><text class="lab" x="0" y="160">Development set</text><line class="w" x1="204.7" y1="155" x2="327.5" y2="155" stroke="var(--dev)"/><circle cx="226.3" cy="155" r="7.5" fill="var(--dev)" stroke="var(--paper)" stroke-width="2.5"><title>Development set: 1/24 (4.2%), 95% CI 1–20%</title></circle><text class="val" x="1000" y="160" text-anchor="end">1/24 · 4.2%</text><text class="lab" x="0" y="194">Held-out set 3</text><line class="w" x1="229.6" y1="189" x2="482.3" y2="189" stroke="var(--coral)"/><circle cx="305.0" cy="189" r="7.5" fill="var(--coral)" stroke="var(--paper)" stroke-width="2.5"><title>Held-out set 3: 2/12 (16.7%), 95% CI 5–45%</title></circle><text class="val" x="1000" y="194" text-anchor="end">2/12 · 16.7%</text></svg><!--/r--></div>
+      <div class="s7-chart"><!--r:chart--><svg class="ci" viewBox="0 0 1000 242" width="1000" height="242" role="img" aria-label="Scam catch and false-hold rates with 95% intervals, development set against the held-out set"><line class="g" x1="200.0" y1="26" x2="200.0" y2="210"/><text class="ax" x="200.0" y="230" text-anchor="middle">0%</text><line class="g" x1="357.5" y1="26" x2="357.5" y2="210"/><text class="ax" x="357.5" y="230" text-anchor="middle">25%</text><line class="g" x1="515.0" y1="26" x2="515.0" y2="210"/><text class="ax" x="515.0" y="230" text-anchor="middle">50%</text><line class="g" x1="672.5" y1="26" x2="672.5" y2="210"/><text class="ax" x="672.5" y="230" text-anchor="middle">75%</text><line class="g" x1="830.0" y1="26" x2="830.0" y2="210"/><text class="ax" x="830.0" y="230" text-anchor="middle">100%</text><text class="t" x="0" y="20">Scams caught</text><text class="lab" x="0" y="52">Development set</text><line class="w" x1="792.1" y1="47" x2="830.0" y2="47" stroke="var(--dev)"/><circle cx="830.0" cy="47" r="7.5" fill="var(--dev)" stroke="var(--paper)" stroke-width="2.5"><title>Development set: 60/60 (100%), 95% CI 94–100%</title></circle><text class="val" x="1000" y="52" text-anchor="end">60/60 · 100%</text><text class="lab" x="0" y="86">Fresh held-out set 4</text><line class="w" x1="582.9" y1="81" x2="793.2" y2="81" stroke="var(--coral)"/><circle cx="725.0" cy="81" r="7.5" fill="var(--coral)" stroke="var(--paper)" stroke-width="2.5"><title>Fresh held-out set 4: 15/18 (83.3%), 95% CI 61–94%</title></circle><text class="val" x="1000" y="86" text-anchor="end">15/18 · 83.3%</text><text class="t" x="0" y="128">False holds on genuine payments</text><text class="lab" x="0" y="160">Development set</text><line class="w" x1="214.6" y1="155" x2="362.9" y2="155" stroke="var(--dev)"/><circle cx="252.5" cy="155" r="7.5" fill="var(--dev)" stroke="var(--paper)" stroke-width="2.5"><title>Development set: 2/24 (8.3%), 95% CI 2–26%</title></circle><text class="val" x="1000" y="160" text-anchor="end">2/24 · 8.3%</text><text class="lab" x="0" y="194">Fresh held-out set 4</text><line class="w" x1="235.7" y1="189" x2="521.2" y2="189" stroke="var(--coral)"/><circle cx="326.0" cy="189" r="7.5" fill="var(--coral)" stroke="var(--paper)" stroke-width="2.5"><title>Fresh held-out set 4: 2/10 (20%), 95% CI 6–51%</title></circle><text class="val" x="1000" y="194" text-anchor="end">2/10 · 20%</text></svg><!--/r--></div>
     </div>
     <div class="s7-right">
       <ul class="s7-facts">
-        <li><b>OTP and PIN.</b> Development: <!--r:dev.otp_text-->1 of 408 agent turns flagged by the judge: the flagged turn asked whether the customer had already shared an OTP with the caller; it was a question about a disclosure, not a request for the OTP<!--/r-->. Held-out: <!--r:ho.otp_text-->0 of 123 agent turns asked for an OTP, PIN, card or account number<!--/r-->.</li>
-        <li><b>Time.</b> Median decision about <!--r:dev.median_s-->55<!--/r--> s (dev) and <!--r:ho.median_s-->54<!--/r--> s (held-out), estimated from transcript length, not measured on calls. Tool endpoints: p50 <!--r:lat.p50-->74<!--/r--> ms, p95 <!--r:lat.p95-->303<!--/r--> ms on a local dev server.</li>
-        <li><b>Heavily coached customers caught:</b> <!--r:dev.heavy-->28/30<!--/r--> dev, <!--r:ho.heavy-->4/8<!--/r--> held-out. This is the hard case.</li>
-        <li><b>What failed.</b> <!--r:failure_note-->Every held-out scam that got through had the same shape: no live caller, and a customer who insisted the payment was their own idea (a landlord deposit, a tower lease, a pilgrimage booking, a 'boss' on WhatsApp). v5, now under test, delays rather than releases when the evidence is not clearly genuine.<!--/r--></li>
-        <li><b>False holds.</b> <!--r:false_hold_note-->Both held-out false holds were Hindi: a tax payment made while on a call with an accountant, and a son guiding his mother to pay a hospital.<!--/r--></li>
+        <li><b>OTP and PIN.</b> <!--r:otp.summary-->v5 asked for an OTP, PIN, card or account number 0 times in 959 agent turns across all 5 sets. Across every version: 1 judge flag in 3,487 turns, v4's question about whether a code had already been shared, since reworded<!--/r-->.</li>
+        <li><b>About a minute.</b> Median decision at <!--r:ho.median_s-->58<!--/r--> s on the fresh set and <!--r:dev.median_s-->59<!--/r--> s on dev, estimated from transcript length, not measured on calls. Tool endpoints: p50 <!--r:lat.p50-->74<!--/r--> ms, p95 <!--r:lat.p95-->303<!--/r--> ms (local dev server).</li>
+        <li><b>Heavily coached customers caught:</b> <!--r:dev.heavy-->30/30<!--/r--> dev, <!--r:ho.heavy-->13/16<!--/r--> fresh. Held-out sets seen in earlier tuning (<!--r:seen.count-->3<!--/r-->): <!--r:seen.catch-->43/48<!--/r--> caught, <!--r:seen.fh-->4/36<!--/r--> false holds.</li>
+        <li><b>What failed.</b> <!--r:failure_note-->Three held-out scams got through: a cloud-mining “machine rental”, a kidney-donor “reward” and a loan-app recovery threat. In each, the customer insisted the payment was their own decision.<!--/r--></li>
+        <li><b>False holds.</b> <!--r:false_hold_note-->Both held-out false holds were delays, not blocks, and both in Hindi: a daughter guiding her father’s hospital payment, and a farmer buying tractor parts at night. That is the trade-off v5 chose: when risk is critical, it delays rather than release on a cover story.<!--/r--></li>
       </ul>
     </div>
   </div>
   <div class="s7-caveat"><b>Text mode, not calls.</b> An LLM plays the customer. A Nebius-hosted Qwen3-30B stands in for Bolna’s gpt-4.1-mini, with the same prompt and tools, against the real engine and policy. No audio. Small sets, so intervals are wide.</div>
   <div class="foot">
     <div class="brand"><img src="assets/brand/ruko-mark.svg" alt="">RUKO</div>
-    <div class="src"><!--r:source_line-->Source: eval/results/v4-dev-qwen3-30b and eval/results/v4-holdout3-qwen3-30b (generated 22 Oct 2026); report.md in each. 95% Wilson intervals. Tool latency: 100 calls, local dev server (Vite middleware, file store), 17 Oct 2026.<!--/r--></div>
+    <div class="src"><!--r:source_line-->Source: public/eval/results.json (v5, published 22 Oct 2026): runs v5-dev-qwen3-30b and v5-holdout4-qwen3-30b. 95% Wilson intervals. Tool latency: 100 calls, local dev server (Vite middleware, file store), 17 Oct 2026.<!--/r--></div>
     <div class="pg">07 / 12</div>
   </div>
 </section>
@@ -264,7 +264,7 @@
   </div>
   <div class="s8-cost">
     <div class="s8-big">₹5.52<span>/min</span></div>
-    <p>Bolna’s flat voice-AI rate for its preferred models, before telephony and platform fees. A one-minute check costs rupees, not a fraud officer’s time.</p>
+    <p>Bolna’s flat voice-AI rate for its preferred models, before telephony and platform fees. A check of about a minute costs rupees, not a fraud officer’s time.</p>
   </div>
   <div class="foot">
     <div class="brand"><img src="assets/brand/ruko-mark-dark.svg" alt="">RUKO</div>

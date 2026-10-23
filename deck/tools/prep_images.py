@@ -45,16 +45,13 @@ def first(*names: str) -> Image.Image:
 def main() -> None:
     # Only what deck/index.html uses.
     # Phone screens, whole device (element captures at 2x: about 680 px wide).
-    for name in ["phone-pay", "phone-hold", "phone-greeting", "phone-truth", "phone-outcome"]:
+    for name in ["phone-pay", "phone-hold", "phone-greeting", "phone-probe", "phone-truth", "phone-outcome"]:
         save(first(name), name, 680)
-    # The trusted-contact moment; fall back to the last call frame before the outcome screen.
-    runs = sorted(SHOTS.glob("phone-run-[0-9]*.png"))
-    contact = SHOTS / "phone-contact.png"
-    save(Image.open(contact if contact.exists() else runs[-2]), "phone-contact", 680)
 
     # Console: an eval-replay check (Hindi, digital arrest), its transcript card with evidence highlighted.
-    cc = first("console-eval-check-full")  # 2880 x ~5966 at 2x
-    save(crop_frac(cc, 0.193, 0.400, 0.648, 0.668), "console-transcript", 1300)
+    # Fractions fit chk_YEEMZU2H8H at 1440 px wide (page about 6,800 px tall at 2x); recheck after a recapture.
+    cc = first("console-eval-check-full")
+    save(crop_frac(cc, 0.193, 0.352, 0.648, 0.588), "console-transcript", 1300)
 
 
 if __name__ == "__main__":

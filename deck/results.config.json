@@ -1,23 +1,24 @@
 {
-  "_how": "deck/tools/build.mjs reads this file, fills every <!--r:key-->...<!--/r--> marker in deck/index.html and docs/PITCH.md, then prints deck/Ruko-pitch.pdf. To switch to v5: set source to \"public\" once eval/publish.ts publishes v5 to public/eval/results.json, or keep \"runs\" and change the run ids below. Then rewrite the three *_note texts by hand from the new reports.",
-  "source": "runs",
-  "version": "v4",
+  "_how": "deck/tools/build.mjs reads this file, fills every <!--r:key-->...<!--/r--> marker in deck/index.html, docs/PITCH.md, docs/SUBMISSION.md and DEMO_SCRIPT.md, rewrites the video's results scene, then prints deck/Ruko-pitch.pdf. source \"public\" reads public/eval/results.json (what eval/publish.ts publishes); \"runs\" reads eval/results/<run>/summary.json for the two run ids below. After a new version, update the run ids and rewrite the *_note texts by hand from the reports.",
+  "source": "public",
+  "version": "v5",
   "dev": {
-    "run": "v4-dev-qwen3-30b",
+    "run": "v5-dev-qwen3-30b",
     "set": "dev",
     "label": "Development set",
     "note": "96 conversations; the prompt was tuned on it"
   },
   "holdout": {
-    "run": "v4-holdout3-qwen3-30b",
-    "set": "holdout3",
-    "label": "Held-out set 3",
-    "note": "28 conversations, written and frozen before any run"
+    "run": "v5-holdout4-qwen3-30b",
+    "set": "holdout4",
+    "label": "Fresh held-out set 4",
+    "note": "28 conversations, frozen before any v5 run; heavy coaching in Hindi and Hinglish"
   },
-  "otp_note_dev": "the flagged turn asked whether the customer had already shared an OTP with the caller; it was a question about a disclosure, not a request for the OTP",
+  "otp_note_dev": "",
   "otp_note_holdout": "",
-  "failure_note": "Every held-out scam that got through had the same shape: no live caller, and a customer who insisted the payment was their own idea (a landlord deposit, a tower lease, a pilgrimage booking, a 'boss' on WhatsApp). v5, now under test, delays rather than releases when the evidence is not clearly genuine.",
-  "false_hold_note": "Both held-out false holds were Hindi: a tax payment made while on a call with an accountant, and a son guiding his mother to pay a hospital.",
+  "otp_note_history": "v4's question about whether a code had already been shared, since reworded",
+  "failure_note": "Three held-out scams got through: a cloud-mining “machine rental”, a kidney-donor “reward” and a loan-app recovery threat. In each, the customer insisted the payment was their own decision.",
+  "false_hold_note": "Both held-out false holds were delays, not blocks, and both in Hindi: a daughter guiding her father’s hospital payment, and a farmer buying tractor parts at night. That is the trade-off v5 chose: when risk is critical, it delays rather than release on a cover story.",
   "live_calls": {
     "made": 0,
     "note": "No live Bolna call has been measured yet; the demo video records the first one."

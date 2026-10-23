@@ -1,9 +1,9 @@
 # Ruko pitch and demo video (Bolna × YC Symphony Buildathon). Target 2:40, hard limit 3:00.
-# Plan, shot list and fallbacks: docs/PITCH.md, section (b).
+# Plan, shot list, the scripted customer's lines and fallbacks: DEMO_SCRIPT.md (repo root).
 #
 # The video is built around ONE real Bolna web call (digital-arrest scenario), recorded separately
 # with audio (vidkit's headless screencast has no sound). Render the narrated parts with vidkit, then
-# splice the call clip in between with ffmpeg (commands in docs/PITCH.md):
+# splice the call clip in between with ffmpeg (commands in DEMO_SCRIPT.md):
 #
 #   set PY=C:\Desktop\COLLEGE\Coding\Hackathon\_videos\toolkit\.venv\Scripts\python.exe
 #   set R=C:\Desktop\COLLEGE\Coding\Hackathon\_videos\toolkit\render.py
@@ -17,7 +17,7 @@
 #
 # Every number spoken here is in docs/CITATIONS.md or eval/results; the results scene is written by
 # deck/tools/build.mjs from deck/results.config.json, so it always matches the deck.
-title: "Ruko: a 60-second voice check that stops payment scams"
+title: "Ruko: a voice check that stops payment scams before the money leaves"
 output: ../../../_videos/ruko-demo.mp4   # next to the other demo videos, outside the repo
 theme: carbon
 accent: "#e46157"
@@ -54,7 +54,7 @@ cards:
     eyebrow: "Bolna × Y Combinator Symphony Buildathon"
     title: "Ruko"
     tagline: "Stop the scam before the money *leaves.*"
-    subtitle: "A 60-second voice check for risky bank and UPI payments, built on Bolna."
+    subtitle: "A voice check for risky bank and UPI payments that decides in about a minute. Built on Bolna."
     footer: ["Yashvardhan Thanvi", "ruko-symphony.vercel.app"]
   end:
     eyebrow: "Built on Bolna"
@@ -64,7 +64,7 @@ cards:
       - "Kamla, Ravi and Demo Bank are fictional. The trusted contact's phone rings in a browser tab."
       - "Results are text mode: an LLM plays the customer. No customers or pilots yet."
     disclosures:
-      - "Live call: a real Bolna web call; the customer is played by a person."
+      - "Live call: a real Bolna web call; the customer is a scripted computer voice."
 
 scenes:
   - id: cold
@@ -144,7 +144,7 @@ scenes:
       there is no digital arrest in Indian law. With her yes, it asks to call her son, Ravi. The money never leaves.
 
   - id: decide
-    url: /console/checks/chk_98SC6WF89W
+    url: /console/checks/chk_YEEMZU2H8H
     label: "Eval replay · synthetic customer"
     chapter: "Decide"
     actions:
@@ -160,16 +160,16 @@ scenes:
   - id: results
     card:
       template: section
-      eyebrow: "Results · text mode · v4"
+      eyebrow: "Results · text mode · v5"
       title: "Tuned on one set. *Frozen* the other."
       bullets:
-        - "Development set: 58/60 scams caught, 1/24 false holds"
-        - "Held-out set 3, frozen before any run: 12/16 caught, 2/12 false holds"
+        - "Development set: 60/60 scams caught, 2/24 false holds"
+        - "Fresh held-out set 4, frozen before any run: 15/18 caught, 2/10 false holds"
         - "An LLM plays the customer; no live calls measured yet"
     chapter: "Results"
     narration: >-
-      In text-mode tests, Ruko caught 58 of 60 scams on the set we tuned on, and 12 of 16 on a held-out set
-      we froze before any run, with 2 false holds in 12 genuine payments. The held-out number is the one we are improving.
+      In text-mode tests, Ruko caught 60 of 60 scams on the set we tuned on, and 15 of 18 on a held-out set
+      we froze before any run, with 2 false holds in 10 genuine payments. The held-out number is the one we are improving.
   # <<< results
 
   - id: ask

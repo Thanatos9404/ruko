@@ -8,8 +8,9 @@
  * 1. Reads deck/results.config.json and the results it points at:
  *    - source "runs":   eval/results/<run>/summary.json for the dev and held-out runs
  *    - source "public": public/eval/results.json (what eval/publish.ts publishes)
- * 2. Rewrites every <!--r:key-->...<!--/r--> marker in deck/index.html and
- *    docs/PITCH.md. Unknown keys stop the build, so nothing is left stale.
+ * 2. Rewrites every <!--r:key-->...<!--/r--> marker in deck/index.html, docs/PITCH.md,
+ *    docs/SUBMISSION.md and DEMO_SCRIPT.md, and the results scene in
+ *    deck/video/ruko-demo.yaml. Unknown keys stop the build, so nothing is left stale.
  * 3. Prints the deck to deck/Ruko-pitch.pdf with headless Chrome (16:9, one slide a page).
  */
 import { readFileSync, writeFileSync, existsSync, statSync, mkdtempSync, rmSync } from "node:fs";
@@ -38,6 +39,7 @@ function fromSummary(s) {
     otp: h.otp_pin_requests.confirmed,
     turns: h.otp_pin_requests.agent_turns,
     median_s: h.median_est_seconds_to_decision,
+    call_s: h.median_est_seconds_call ?? null,
     heavy: s.detail.by_coaching.heavy,
     e2e: s.end_to_end.scam_caught,
     precall_missed: s.end_to_end.scam_missed_by_precall,
@@ -55,13 +57,16 @@ function fromPublic(c, published) {
     otp: c.otp_requests,
     turns: c.agent_turns,
     median_s: c.median_seconds,
+    call_s: c.median_call_seconds ?? null,
     heavy: c.heavy_catch,
     e2e: c.e2e_scam_caught,
-    precall_missed: c.e2e_scam_caught ? null : null,
+    precall_missed: null, // not in the published compact form
   };
 }
 
-let dev, ho, sourceLine, version;
+const sum = (rates) => ({ k: rates.reduce((a, r) => a + r.k, 0), n: rates.reduce((a, r) => a + r.n, 0) });
+
+let dev, ho, sourceLine, version, seen, otpNow, otpAll;
 if (cfg.source === "public") {
   const pub = readJson("public/eval/results.json");
   const pick = (want, fallback) => pub.current.find((c) => c.run_id === want.run) ?? pub.current.find(fallback);
@@ -71,11 +76,19 @@ if (cfg.source === "public") {
   dev = fromPublic(d, pub.generated_at);
   ho = fromPublic(h, pub.generated_at);
   version = pub.version;
+  // Held-out sets the agent was tuned against earlier ("previously seen"), reported beside the clean one.
+  const prev = pub.current.filter((c) => c.set !== "dev" && !c.clean_holdout);
+  seen = { count: prev.length, catch: sum(prev.map((c) => c.scam_catch)), fh: sum(prev.map((c) => c.false_hold)) };
+  otpNow = { flags: pub.totals_current?.otp_requests ?? 0, turns: pub.totals_current?.agent_turns ?? 0, conversations: pub.totals_current?.conversations ?? 0, sets: pub.current.length };
+  otpAll = { flags: pub.totals?.otp_requests ?? 0, turns: pub.totals?.agent_turns ?? 0 };
   sourceLine = `Source: public/eval/results.json (${pub.version}, published ${day(pub.generated_at)}): runs ${d.run_id} and ${h.run_id}. 95% Wilson intervals.`;
 } else {
   dev = fromSummary({ run_id: cfg.dev.run, ...readJson(`eval/results/${cfg.dev.run}/summary.json`) });
   ho = fromSummary({ run_id: cfg.holdout.run, ...readJson(`eval/results/${cfg.holdout.run}/summary.json`) });
   version = cfg.version;
+  seen = null;
+  otpNow = { flags: dev.otp + ho.otp, turns: dev.turns + ho.turns, conversations: dev.scenarios + ho.scenarios, sets: 2 };
+  otpAll = otpNow;
   sourceLine = `Source: eval/results/${dev.run_id} and eval/results/${ho.run_id} (generated ${day(ho.generated_at)}); report.md in each. 95% Wilson intervals.`;
 }
 const lat = existsSync(join(ROOT, cfg.latency_file)) ? readJson(cfg.latency_file) : null;
@@ -117,12 +130,23 @@ for (const [p, m, c] of [["dev", dev, cfg.dev], ["ho", ho, cfg.holdout]]) {
     [`${p}.otp`]: `${m.otp} of ${m.turns}`,
     [`${p}.otp_text`]: otpText(m, p === "dev" ? cfg.otp_note_dev : cfg.otp_note_holdout),
     [`${p}.median_s`]: secs(m.median_s),
+    [`${p}.call_s`]: secs(m.call_s),
     [`${p}.heavy`]: frac(m.heavy),
     [`${p}.e2e`]: frac(m.e2e),
     [`${p}.precall_missed`]: m.precall_missed == null ? "–" : String(m.precall_missed),
   });
 }
 values["otp.turns_total"] = String(dev.turns + ho.turns);
+values["seen.count"] = seen ? String(seen.count) : "–";
+values["seen.catch"] = seen ? frac(seen.catch) : "–";
+values["seen.fh"] = seen ? frac(seen.fh) : "–";
+values["otp.summary"] =
+  (otpNow.flags
+    ? `${version}: ${otpNow.flags} of ${otpNow.turns} agent turns flagged by the judge across ${otpNow.sets} sets`
+    : `${version} asked for an OTP, PIN, card or account number 0 times in ${otpNow.turns} agent turns across all ${otpNow.sets} sets`) +
+  (otpAll.turns > otpNow.turns
+    ? `. Across every version: ${otpAll.flags} judge flag${otpAll.flags === 1 ? "" : "s"} in ${otpAll.turns.toLocaleString("en-GB")} turns${cfg.otp_note_history ? `, ${cfg.otp_note_history}` : ""}`
+    : "");
 values["lat.p50"] = lat ? String(lat.p50) : "–";
 values["lat.p95"] = lat ? String(lat.p95) : "–";
 values["live.made"] = String(cfg.live_calls.made);
@@ -186,6 +210,8 @@ function fill(file) {
 }
 fill("deck/index.html");
 fill("docs/PITCH.md");
+fill("docs/SUBMISSION.md");
+fill("DEMO_SCRIPT.md");
 
 // ---------- the video's results scene (deck/video/ruko-demo.yaml) ----------
 function videoResults() {
