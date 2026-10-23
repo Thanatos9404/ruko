@@ -1,0 +1,879 @@
+{
+ "dropped": [
+  "rwe_0148"
+ ],
+ "rows": {
+  "rwe_0001": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": null
+  },
+  "rwe_0002": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 4
+  },
+  "rwe_0003": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 17
+  },
+  "rwe_0004": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 12
+  },
+  "rwe_0005": {
+   "mode": "scrub",
+   "changed": true,
+   "run_before": 3
+  },
+  "rwe_0006": {
+   "mode": "scrub",
+   "changed": true,
+   "run_before": 5
+  },
+  "rwe_0007": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 4
+  },
+  "rwe_0008": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 4
+  },
+  "rwe_0009": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 2
+  },
+  "rwe_0010": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 6
+  },
+  "rwe_0011": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 9
+  },
+  "rwe_0012": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 11
+  },
+  "rwe_0013": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 4
+  },
+  "rwe_0014": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 6
+  },
+  "rwe_0015": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0016": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 10
+  },
+  "rwe_0017": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 12,
+   "second_pass_run": 7
+  },
+  "rwe_0018": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0019": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 11,
+   "second_pass_run": 9
+  },
+  "rwe_0020": {
+   "mode": "scrub",
+   "changed": true,
+   "run_before": 6
+  },
+  "rwe_0021": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 1
+  },
+  "rwe_0022": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 11
+  },
+  "rwe_0023": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0024": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0025": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 4
+  },
+  "rwe_0026": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 10,
+   "second_pass_run": 7
+  },
+  "rwe_0027": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 2
+  },
+  "rwe_0028": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 6
+  },
+  "rwe_0029": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0030": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 2
+  },
+  "rwe_0031": {
+   "mode": "scrub",
+   "changed": true,
+   "run_before": 4
+  },
+  "rwe_0032": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0033": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0034": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 11
+  },
+  "rwe_0035": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 7
+  },
+  "rwe_0036": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0037": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0038": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 7
+  },
+  "rwe_0039": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 12
+  },
+  "rwe_0040": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 4
+  },
+  "rwe_0041": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0042": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 6
+  },
+  "rwe_0043": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 15
+  },
+  "rwe_0044": {
+   "mode": "scrub",
+   "changed": true,
+   "run_before": 3
+  },
+  "rwe_0045": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 6
+  },
+  "rwe_0046": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 12,
+   "second_pass_run": 7
+  },
+  "rwe_0047": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 6
+  },
+  "rwe_0048": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0049": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 13
+  },
+  "rwe_0050": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0051": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0052": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 9
+  },
+  "rwe_0053": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0054": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 4
+  },
+  "rwe_0055": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 4
+  },
+  "rwe_0056": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0057": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": null
+  },
+  "rwe_0058": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": null
+  },
+  "rwe_0059": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": null
+  },
+  "rwe_0060": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": null
+  },
+  "rwe_0061": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": null
+  },
+  "rwe_0062": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": null
+  },
+  "rwe_0063": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": null
+  },
+  "rwe_0064": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0065": {
+   "mode": "scrub",
+   "changed": true,
+   "run_before": 4
+  },
+  "rwe_0066": {
+   "mode": "scrub",
+   "changed": true,
+   "run_before": 4
+  },
+  "rwe_0067": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0068": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0069": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": null
+  },
+  "rwe_0070": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": null
+  },
+  "rwe_0071": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 10
+  },
+  "rwe_0072": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 9,
+   "second_pass_run": 7
+  },
+  "rwe_0073": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 12
+  },
+  "rwe_0074": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 12
+  },
+  "rwe_0075": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 10,
+   "second_pass_run": 7
+  },
+  "rwe_0076": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 10
+  },
+  "rwe_0077": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 14
+  },
+  "rwe_0078": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 10
+  },
+  "rwe_0079": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 23
+  },
+  "rwe_0080": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 10
+  },
+  "rwe_0081": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 16
+  },
+  "rwe_0082": {
+   "mode": "scrub",
+   "changed": true,
+   "run_before": 7
+  },
+  "rwe_0083": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 10,
+   "second_pass_run": 8
+  },
+  "rwe_0084": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 13,
+   "second_pass_run": 7
+  },
+  "rwe_0085": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 9,
+   "second_pass_run": 7
+  },
+  "rwe_0086": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 21
+  },
+  "rwe_0087": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 8
+  },
+  "rwe_0088": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 11,
+   "second_pass_run": 6
+  },
+  "rwe_0089": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 6
+  },
+  "rwe_0090": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 10
+  },
+  "rwe_0091": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 11,
+   "second_pass_run": 7
+  },
+  "rwe_0092": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 11
+  },
+  "rwe_0093": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 10,
+   "second_pass_run": 8
+  },
+  "rwe_0094": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 10
+  },
+  "rwe_0095": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 7
+  },
+  "rwe_0096": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 19,
+   "second_pass_run": 8
+  },
+  "rwe_0097": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 9,
+   "second_pass_run": 8
+  },
+  "rwe_0098": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0099": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 6
+  },
+  "rwe_0100": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 8
+  },
+  "rwe_0101": {
+   "mode": "scrub",
+   "changed": true,
+   "run_before": 5
+  },
+  "rwe_0102": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 10,
+   "second_pass_run": 6
+  },
+  "rwe_0103": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 18
+  },
+  "rwe_0104": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0105": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 9,
+   "second_pass_run": 7
+  },
+  "rwe_0106": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 10,
+   "second_pass_run": 7
+  },
+  "rwe_0107": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 7
+  },
+  "rwe_0108": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0109": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 2
+  },
+  "rwe_0110": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0111": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0112": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 4
+  },
+  "rwe_0113": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0114": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 2
+  },
+  "rwe_0115": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0116": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 7
+  },
+  "rwe_0117": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0118": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 9,
+   "second_pass_run": 8
+  },
+  "rwe_0119": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0120": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 6
+  },
+  "rwe_0121": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 7
+  },
+  "rwe_0122": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 2
+  },
+  "rwe_0123": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0124": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0125": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0126": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 7
+  },
+  "rwe_0127": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 7
+  },
+  "rwe_0128": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 2
+  },
+  "rwe_0129": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 9
+  },
+  "rwe_0130": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0131": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0132": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0133": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 8
+  },
+  "rwe_0134": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0135": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0136": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 2
+  },
+  "rwe_0137": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 2
+  },
+  "rwe_0138": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 7
+  },
+  "rwe_0139": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 8
+  },
+  "rwe_0140": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 2
+  },
+  "rwe_0141": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 9
+  },
+  "rwe_0142": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 5
+  },
+  "rwe_0143": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 8
+  },
+  "rwe_0144": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 9,
+   "second_pass_run": 5
+  },
+  "rwe_0145": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 10
+  },
+  "rwe_0146": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 8
+  },
+  "rwe_0147": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 13,
+   "second_pass_run": 6
+  },
+  "rwe_0149": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 8,
+   "second_pass_run": 5
+  },
+  "rwe_0150": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 7
+  },
+  "rwe_0151": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 18
+  },
+  "rwe_0152": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 8
+  },
+  "rwe_0153": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 6
+  },
+  "rwe_0154": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 3
+  },
+  "rwe_0155": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 9
+  },
+  "rwe_0156": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 2
+  },
+  "rwe_0157": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 6
+  },
+  "rwe_0158": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 2
+  },
+  "rwe_0159": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 1
+  },
+  "rwe_0160": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 8
+  },
+  "rwe_0161": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 18,
+   "second_pass_run": 7
+  },
+  "rwe_0162": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 4
+  },
+  "rwe_0163": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 7
+  },
+  "rwe_0165": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 1
+  },
+  "rwe_0166": {
+   "mode": "scrub",
+   "changed": false,
+   "run_before": 1
+  },
+  "rwe_0167": {
+   "mode": "rewrite",
+   "changed": true,
+   "run_before": 14,
+   "second_pass_run": 13
+  }
+ },
+ "manual_fixes": {
+  "rwe_0073": [
+   "महासमुंद के सरकारी अस्पताल में काम करने वाली नर्स पदमा"
+  ],
+  "rwe_0076": [
+   "जिसने अपना नाम धर्मेंद्र बताया"
+  ],
+  "rwe_0091": [
+   "वह रितिका सिन्हा है"
+  ],
+  "rwe_0065": [
+   "a video of Sadhguru saying",
+   "a firm called Mirrox",
+   "install the Mirrox app"
+  ],
+  "rwe_0075": [
+   "आगरा पुलिस लाइंस की ओर से"
+  ],
+  "rwe_0048": [
+   "head office in BKC"
+  ]
+ },
+ "summary": "Pre-publication revision, 23 Oct 2026. Row rwe_0148 dropped (a first-person account built around a real case that ended in a death). Rows sharing a run of 8+ words with their cited article (measured on word tokens against the fetched page text), and rows whose article could not be fetched to check, were re-paraphrased. Names of people and scammer aliases were replaced with roles or [name]; street/sector/neighbourhood-level places removed (city or state kept). After revision the longest shared run with any fetched source is 9 words (155 of 165 rows checked; 10 rows whose pages block automated fetching were re-paraphrased without a check).",
+ "notes_scrubbed": "Provenance notes edited to city/district/state level; neighbourhoods, police stations, employers and officials removed."
+}

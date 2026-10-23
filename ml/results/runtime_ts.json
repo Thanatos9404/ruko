@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-22",
+ "generated": "2026-10-23",
  "node": "v22.17.1",
  "status": {
   "mode": "model+lexicon",
@@ -9,22 +9,22 @@
  },
  "library_patterns": 72,
  "model_bytes": 3021542,
- "cold_start_ms": 106.1521,
+ "cold_start_ms": 103.0766,
  "latency_ms": {
   "note": "analyzeText() end to end, explanations on, single thread, after warm-up",
   "transcripts_and_messages": {
    "n": 1000,
    "mean_chars": 305,
-   "p50": 0.7436,
-   "p95": 1.5308,
-   "p99": 2.1254,
-   "max": 6.4122
+   "p50": 0.7134,
+   "p95": 1.4756,
+   "p99": 2.1794,
+   "max": 6.6926
   },
   "short_texts_le_300_chars": {
    "n": 1000,
-   "p50": 0.3381,
-   "p95": 0.7108,
-   "p99": 0.9333
+   "p50": 0.3049,
+   "p95": 0.6628,
+   "p99": 0.9311
   }
  },
  "model_plus_lexicon": {
@@ -49,13 +49,13 @@
    "pattern_none_returned": 0
   },
   "ood_realworld_curated": {
-   "n": 166,
-   "recall_possible": 0.832,
-   "fpr_possible": 0.1463,
-   "recall_likely": 0.632,
+   "n": 165,
+   "recall_possible": 0.8629,
+   "fpr_possible": 0.0732,
+   "recall_likely": 0.6532,
    "fpr_likely": 0,
-   "pattern_top1": 0.576,
-   "pattern_top3": 0.752,
+   "pattern_top1": 0.5887,
+   "pattern_top3": 0.75,
    "pattern_none_returned": 0
   },
   "ood_ridham115_indian_sms": {
@@ -131,13 +131,13 @@
    "pattern_none_returned": 0
   },
   "ood_realworld_curated": {
-   "n": 166,
-   "recall_possible": 0.848,
-   "fpr_possible": 0.1463,
-   "recall_likely": 0.632,
+   "n": 165,
+   "recall_possible": 0.879,
+   "fpr_possible": 0.0732,
+   "recall_likely": 0.6532,
    "fpr_likely": 0,
-   "pattern_top1": 0.576,
-   "pattern_top3": 0.752,
+   "pattern_top1": 0.5887,
+   "pattern_top3": 0.75,
    "pattern_none_returned": 0
   },
   "ood_ridham115_indian_sms": {
@@ -213,14 +213,14 @@
    "pattern_none_returned": 0.1171
   },
   "ood_realworld_curated": {
-   "n": 166,
-   "recall_possible": 0.496,
-   "fpr_possible": 0.1463,
-   "recall_likely": 0.16,
+   "n": 165,
+   "recall_possible": 0.5161,
+   "fpr_possible": 0.1707,
+   "recall_likely": 0.1532,
    "fpr_likely": 0,
-   "pattern_top1": 0.304,
-   "pattern_top3": 0.376,
-   "pattern_none_returned": 0.248
+   "pattern_top1": 0.2661,
+   "pattern_top3": 0.3306,
+   "pattern_none_returned": 0.2419
   },
   "ood_ridham115_indian_sms": {
    "n": 1580,

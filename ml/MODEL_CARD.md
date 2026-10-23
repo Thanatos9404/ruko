@@ -11,6 +11,22 @@
 | Results | `ml/results/*.json`. The tables below are printed by `ml/report_tables.py` from those files. |
 | Owner | Ruko research + ML. Built 22 Oct 2026. |
 
+## Attribution
+
+`server/ml/model/ruko-text-v1.json` (ruko-text-1.0.0) is a model trained on three sources:
+- Ruko's synthetic set (MIT, this repository);
+- the BothBosu scam-dialogue datasets by Pitipat Gumphusiri and Tuul Triyason ([Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0)): https://huggingface.co/datasets/BothBosu/scam-dialogue and its single-agent and multi-agent companions;
+- the SMS Phishing Dataset for Machine Learning and Pattern Recognition by Sandhya Mishra and Devpriya Soni, Mendeley Data V1, doi:10.17632/f45bkkt8pr.1 ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)). Its genuine messages largely come from the SMS Spam Collection by Tiago A. Almeida and José María Gómez Hidalgo, UCI Machine Learning Repository, doi:10.24432/C5CC84 (CC BY 4.0).
+
+Changes we made to the CC BY material:
+- personal data replaced with placeholders;
+- labels mapped to scam / genuine;
+- marketing-spam rows excluded from training.
+
+The model was **evaluated, not trained,** on IMC25 (CC BY 4.0), Ridham115 (CC BY 4.0), skyaara (CC BY 4.0), ScamGuardBench (Apache-2.0) and ICFD-31k. ICFD-31k is used under its defensive-research and benchmarking terms; it is not redistributed and not used for training. Full citations and licence links are in [`NOTICE`](../NOTICE).
+
+**Data hash.** `training_data_sha256` in the model file refers to `ml/work/dataset.jsonl` as built on 22 Oct 2026. On 23 Oct the evaluation-only real-world set was revised before publication (see `DATA_CARD.md`). The training rows did not change, so a dataset rebuilt today has a different hash but the same training data. The real-world numbers below are re-scored on the revised 165-row set.
+
 ## What it does
 
 The model takes one short text in English, Hindi (Devanagari), Hinglish (romanised) or, less reliably, Tamil, Bengali or Marathi. That text can be:
@@ -53,7 +69,7 @@ All numbers come from `ml/results/main.json`. Held-out sets are described in [`D
 
 - **On synthetic data like its training data, it is very good.** AUROC is 0.997, and at P ≥ 0.5 it catches 98.6% of scams with 3.6% false alarms. On synthetic calls written by a different LLM it scores AUROC 0.989, 95.7% recall and 5.3% false alarms, so it has not just memorised one generator's style.
 - **On real-world text it is moderate.**
-  - The 166 cited real Indian cases and messages: AUROC 0.933, 83% recall, 15% false alarms.
+  - The 165 cited real Indian cases and messages: AUROC 0.957, 86% recall, 7% false alarms. Before that set's 23 Oct pre-publication revision (166 rows, see `DATA_CARD.md`), the figures were 0.933, 83% and 15%.
   - Real Indian smishing reports (IMC25): 72% caught.
   - Global smishing reports: only 49%.
 - **False alarms on genuine Indian look-alike messages are still too high** for the model to act alone:
@@ -72,7 +88,7 @@ All numbers come from `ml/results/main.json`. Held-out sets are described in [`D
 | Synthetic, other generator (Gemma-27B) | 1069 (598/471) | 0.989 [0.985–0.993] | 95.7% | 5.3% | 89.8% | 2.1% | 0.013 |
 | Real SMS, Mendeley held-out | 1578 (142/1436) | 0.992 [0.982–0.999] | 87.3% | 0.1% | 76.8% | 0.0% | 0.009 |
 | BothBosu dialogues, held-out | 895 (439/456) | 1.000 [1.000–1.000] | 99.5% | 0.0% | 99.1% | 0.0% | 0.004 |
-| Real-world curated (166, cited) | 166 (125/41) | 0.933 [0.890–0.966] | 83.2% | 14.6% | 63.2% | 0.0% | 0.119 |
+| Real-world curated (165, cited) | 165 (124/41) | 0.957 [0.927–0.983] | 86.3% | 7.3% | 65.3% | 0.0% | 0.116 |
 | Indian SMS, other team (Ridham115) | 1580 (797/783) | 0.887 [0.869–0.902] | 73.2% | 13.5% | 58.7% | 5.5% | 0.116 |
 | Legit look-alikes (ScamGuardBench en) | 378 (168/210) | 0.970 [0.951–0.984] | 97.0% | 27.6% | 94.6% | 15.7% | 0.156 |
 | Genuine Indian payment SMS (skyaara) | 33 (0/33) | – | – | 18.2% | – | 9.1% | 0.219 |
@@ -100,7 +116,7 @@ AUROC confidence intervals are 500-sample bootstraps. "–" means the set has on
 |---|---|---|---|---|---|---|
 | Synthetic, held-out requests (in-distribution) | 992 | 72.5% | 84.3% | 74.3% | 78.7% | 0.681 |
 | Synthetic, other generator (Gemma-27B) | 598 | 73.6% | 88.8% | 78.3% | 82.4% | 0.718 |
-| Real-world curated (166, cited) | 125 | 57.6% | 74.4% | 60.0% | 69.6% | 0.506 |
+| Real-world curated (165, cited) | 124 | 58.9% | 75.0% | 60.5% | 67.7% | 0.505 |
 
 - **Twins merged** counts a global pattern and its Indian counterpart as the same, for example `romance_scam_global` and `romance_social_media`. **Same category** counts any pattern in the same library category, for example both authority impersonation.
 - The most confused pairs are close by design:
@@ -109,18 +125,18 @@ AUROC confidence intervals are 500-sample bootstraps. "–" means the set has on
   - `job_task_scam_global` → `task_job`;
   - `investment_trading` → `crypto_investment`;
   - `credit_card_reward_points` → `apk_malware_invite`.
-- The weakest patterns have few samples or overlap heavily with another: `fake_payment_screenshot`, `crypto_investment`, `mule_account_recruitment`, and the English-only global patterns with only 15 synthetic samples each. On real-world text, top-3 (74%) is the honest figure to quote.
+- The weakest patterns have few samples or overlap heavily with another: `fake_payment_screenshot`, `crypto_investment`, `mule_account_recruitment`, and the English-only global patterns with only 15 synthetic samples each. On real-world text, top-3 (75%) is the honest figure to quote.
 
 ### Which way does it generalise? (train on one source, test on another)
 
 | Trained on | Synthetic test | Other-generator test | Mendeley real SMS | Real-world curated | Ridham115 | IMC25 India recall @0.5 |
 |---|---|---|---|---|---|---|
-| Synthetic only (`synthetic_only`) | 0.998 | 0.998 | 0.714 | 0.928 | 0.873 | 77.9% |
-| Real SMS only (Mendeley + IMC25 slice, `real_sms_only`) | 0.532 | 0.526 | 0.997 | 0.704 | 0.586 | 93.2% |
-| BothBosu US dialogues only (`bothbosu_only`) | 0.603 | 0.606 | 0.862 | 0.623 | 0.668 | 2.3% |
-| **Shipped** (synthetic + BothBosu + Mendeley) | 0.997 | 0.989 | 0.992 | 0.933 | 0.887 | 71.8% |
+| Synthetic only (`synthetic_only`) | 0.998 | 0.998 | 0.714 | 0.944 | 0.873 | 77.9% |
+| Real SMS only (Mendeley + IMC25 slice, `real_sms_only`) | 0.532 | 0.526 | 0.997 | 0.745 | 0.586 | 93.2% |
+| BothBosu US dialogues only (`bothbosu_only`) | 0.603 | 0.606 | 0.862 | 0.686 | 0.668 | 2.3% |
+| **Shipped** (synthetic + BothBosu + Mendeley) | 0.997 | 0.989 | 0.992 | 0.957 | 0.887 | 71.8% |
 
-The cells are AUROC unless marked. Synthetic data transfers to real Indian text much better (0.928 on the curated set) than real Western SMS transfers to Indian calls and messages (0.704). Real SMS, though, catches far more real smishing.
+The cells are AUROC unless marked. Synthetic data transfers to real Indian text much better (0.944 on the curated set) than real Western SMS transfers to Indian calls and messages (0.745). Real SMS, though, catches far more real smishing.
 
 **Language hold-out** (`lang_holdout_ta_bn_mr`). We trained without any Tamil, Bengali or Marathi rows. On those slices recall collapsed: ta 28%, bn 0%, mr 50%, with AUROC 0.61, 0.40 and 0.96. Character n-grams do not carry across scripts, so **a language must be in training data to be covered**. Telugu, Kannada, Malayalam, Gujarati and others are not covered at all.
 
@@ -149,9 +165,9 @@ We trained in four rounds. Every model below is scored on the **same** final hel
 | BothBosu dialogues, held-out | AUROC | 1.000 | 1.000 | 1.000 |
 | BothBosu dialogues, held-out | recall @0.5 | 100.0% | 99.1% | 99.5% |
 | BothBosu dialogues, held-out | false alarms @0.5 | 0.0% | 0.0% | 0.0% |
-| Real-world curated (166, cited) | AUROC | 0.910 | 0.915 | 0.933 |
-| Real-world curated (166, cited) | recall @0.5 | 83.2% | 85.6% | 83.2% |
-| Real-world curated (166, cited) | false alarms @0.5 | 14.6% | 19.5% | 14.6% |
+| Real-world curated (165, cited) | AUROC | 0.930 | 0.934 | 0.957 |
+| Real-world curated (165, cited) | recall @0.5 | 83.1% | 86.3% | 86.3% |
+| Real-world curated (165, cited) | false alarms @0.5 | 14.6% | 14.6% | 7.3% |
 | Indian SMS, other team (Ridham115) | AUROC | 0.866 | 0.853 | 0.887 |
 | Indian SMS, other team (Ridham115) | recall @0.5 | 83.9% | 82.3% | 73.2% |
 | Indian SMS, other team (Ridham115) | false alarms @0.5 | 28.2% | 26.2% | 13.5% |
@@ -179,8 +195,8 @@ We trained in four rounds. Every model below is scored on the **same** final hel
   - Global IMC25 smishing: 59.5% → 48.6%.
   - Ridham scam recall: 83.9% → 73.2%.
 
-**The rejected alternative (`variant_imc02_hn2`)** trains on the IMC25 slice. It catches far more real smishing (India 89.6%, global 83.1%), but it raises false alarms everywhere: ScamGuardBench 60%, genuine payment SMS 55%, real-world 19.5%. `ml/results/tradeoff.json` sweeps the threshold.
-- At a matched 16–17% false-alarm rate on pooled genuine look-alikes, the IMC model still catches more Indian smishing (80% vs 72%), but recall on the real-world curated set falls (59% vs 83%).
+**The rejected alternative (`variant_imc02_hn2`)** trains on the IMC25 slice. It catches far more real smishing (India 89.6%, global 83.1%), but it raises false alarms almost everywhere: ScamGuardBench 60%, genuine payment SMS 55%, real-world 14.6%. `ml/results/tradeoff.json` sweeps the threshold.
+- At a matched 16–17% false-alarm rate on pooled genuine look-alikes, the IMC model still catches more Indian smishing (80% vs 72%), but recall on the real-world curated set falls (63% vs 86%).
 - We shipped the version that is better on the calls and victim accounts Ruko actually sees, and kept the other for a future SMS-only checker.
 
 We picked between these few configurations using the held-out results above, so those numbers are slightly optimistic for the shipped model. Every configuration we tried is in `ml/results/ablation_logs/`.
@@ -192,22 +208,22 @@ We picked between these few configurations using the held-out results above, so 
 - In-distribution ECE: 0.013.
 - On real-world text the model is **overconfident in both directions**: ECE 0.12 on the curated set and 0.31 on IMC25 India.
 
-The band cut-offs, 0.5 and 0.85, are **fixed policy values, not tuned**. Choosing them on validation percentiles collapsed both to 0.5, because the validation set is nearly separable. At 0.85, false alarms on the real-world curated set are 0% (0 of 41) and recall is 63%.
+The band cut-offs, 0.5 and 0.85, are **fixed policy values, not tuned**. Choosing them on validation percentiles collapsed both to 0.5, because the validation set is nearly separable. At 0.85, false alarms on the real-world curated set are 0% (0 of 41) and recall is 65%.
 
 ### Latency, size, cold start (TypeScript runtime)
 
 Measured by `server/ml/scripts/eval_runtime.ts`, written to `ml/results/runtime_ts.json`, on Node 22, single thread, Windows laptop:
-- **`analyzeText()` end to end** (tokenise, model, lexicon, explanations) on transcripts and messages averaging 305 characters: **p50 0.74 ms, p95 1.53 ms, p99 2.13 ms**. Texts ≤ 300 characters: p95 0.71 ms. That is well under the 5 ms target.
+- **`analyzeText()` end to end** (tokenise, model, lexicon, explanations) on transcripts and messages averaging 305 characters: **p50 0.71 ms, p95 1.48 ms, p99 2.18 ms**. Texts ≤ 300 characters: p95 0.66 ms. That is well under the 5 ms target.
 - **Model file:** 3.02 MB JSON; 62,606 features; 72 pattern classes.
-- **Cold start:** about 106 ms to read and verify the model and library and build the indexes. This is once per server instance.
+- **Cold start:** about 103 ms to read and verify the model and library and build the indexes. This is once per server instance.
 - **Python reference:** 1.4 ms per text.
 
 ### Fallback: cue lexicon only
 
 If the model file is missing or fails its checksum, `analyzeText` answers from the lexicon and reports `engine.mode = "lexicon_only"`. It is much weaker. At its "possible" band:
 - In-distribution recall is 54% with 13% false alarms.
-- Real-world curated recall is 50% with 15% false alarms.
-- Pattern top-1 on the real-world set is 30%.
+- Real-world curated recall is 52% with 17% false alarms.
+- Pattern top-1 on the real-world set is 27%.
 
 It is a safety net, not a replacement.
 

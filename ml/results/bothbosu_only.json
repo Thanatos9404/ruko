@@ -697,34 +697,34 @@
   },
   "ood_realworld_curated": {
    "binary": {
-    "n": 166,
-    "n_scam": 125,
+    "n": 165,
+    "n_scam": 124,
     "n_genuine": 41,
-    "auroc": 0.6234,
+    "auroc": 0.686,
     "auroc_95ci": [
-     0.5189,
-     0.7216
+     0.5981,
+     0.7688
     ],
-    "auprc": 0.8343,
-    "brier": 0.6534,
-    "ece": 0.6695,
+    "auprc": 0.8657,
+    "brier": 0.625,
+    "ece": 0.6488,
     "reliability": [
      {
       "bin": "0.0-0.1",
-      "n": 141,
-      "mean_p": 0.0098,
-      "frac_scam": 0.7234
+      "n": 133,
+      "mean_p": 0.0136,
+      "frac_scam": 0.7068
      },
      {
       "bin": "0.1-0.2",
-      "n": 6,
-      "mean_p": 0.1407,
+      "n": 8,
+      "mean_p": 0.1327,
       "frac_scam": 1.0
      },
      {
       "bin": "0.2-0.3",
-      "n": 2,
-      "mean_p": 0.225,
+      "n": 5,
+      "mean_p": 0.2401,
       "frac_scam": 1.0
      },
      {
@@ -735,76 +735,117 @@
      },
      {
       "bin": "0.4-0.5",
-      "n": 2,
-      "mean_p": 0.4416,
-      "frac_scam": 1.0
-     },
-     {
-      "bin": "0.5-0.6",
-      "n": 1,
-      "mean_p": 0.5597,
+      "n": 3,
+      "mean_p": 0.4538,
       "frac_scam": 1.0
      },
      {
       "bin": "0.6-0.7",
-      "n": 1,
-      "mean_p": 0.6582,
-      "frac_scam": 1.0
-     },
-     {
-      "bin": "0.7-0.8",
-      "n": 1,
-      "mean_p": 0.7663,
+      "n": 2,
+      "mean_p": 0.6507,
       "frac_scam": 1.0
      },
      {
       "bin": "0.8-0.9",
-      "n": 3,
-      "mean_p": 0.8455,
-      "frac_scam": 0.6667
+      "n": 4,
+      "mean_p": 0.8473,
+      "frac_scam": 0.75
      },
      {
       "bin": "0.9-1.0",
-      "n": 6,
-      "mean_p": 0.973,
+      "n": 7,
+      "mean_p": 0.9405,
       "frac_scam": 1.0
      }
     ],
     "at_possible": {
      "threshold": 0.5,
-     "tp": 11,
+     "tp": 12,
      "fp": 1,
-     "fn": 114,
+     "fn": 112,
      "tn": 40,
-     "precision": 0.9167,
-     "recall": 0.088,
-     "f1": 0.1606,
+     "precision": 0.9231,
+     "recall": 0.0968,
+     "f1": 0.1752,
      "fpr": 0.0244,
-     "accuracy": 0.3072
+     "accuracy": 0.3152
     },
     "at_likely": {
      "threshold": 0.85,
-     "tp": 6,
+     "tp": 8,
      "fp": 1,
-     "fn": 119,
+     "fn": 116,
      "tn": 40,
-     "precision": 0.8571,
-     "recall": 0.048,
-     "f1": 0.0909,
+     "precision": 0.8889,
+     "recall": 0.0645,
+     "f1": 0.1203,
      "fpr": 0.0244,
-     "accuracy": 0.2771
+     "accuracy": 0.2909
     },
     "at_0.5": {
      "threshold": 0.5,
-     "tp": 11,
+     "tp": 12,
      "fp": 1,
-     "fn": 114,
+     "fn": 112,
      "tn": 40,
-     "precision": 0.9167,
-     "recall": 0.088,
-     "f1": 0.1606,
+     "precision": 0.9231,
+     "recall": 0.0968,
+     "f1": 0.1752,
      "fpr": 0.0244,
-     "accuracy": 0.3072
+     "accuracy": 0.3152
+    }
+   },
+   "by_lang": {
+    "en": {
+     "n": 80,
+     "n_scam": 66,
+     "auroc": 0.6158,
+     "recall_at_possible": 0.1818,
+     "fpr_at_possible": 0.0714
+    },
+    "hi": {
+     "n": 82,
+     "n_scam": 58,
+     "auroc": 0.6591,
+     "recall_at_possible": 0.0,
+     "fpr_at_possible": 0.0
+    },
+    "hinglish": {
+     "n": 3,
+     "n_scam": 0,
+     "recall_at_possible": null,
+     "fpr_at_possible": 0.0
+    }
+   },
+   "by_format": {
+    "call_opening": {
+     "n": 24,
+     "n_scam": 24,
+     "recall_at_possible": 0.2083,
+     "fpr_at_possible": null
+    },
+    "message": {
+     "n": 36,
+     "n_scam": 35,
+     "auroc": 0.6,
+     "recall_at_possible": 0.2,
+     "fpr_at_possible": 0.0
+    },
+    "victim_account": {
+     "n": 105,
+     "n_scam": 65,
+     "auroc": 0.6712,
+     "recall_at_possible": 0.0,
+     "fpr_at_possible": 0.025
+    }
+   },
+   "by_source": {
+    "realworld_curated": {
+     "n": 165,
+     "n_scam": 124,
+     "auroc": 0.686,
+     "recall_at_possible": 0.0968,
+     "fpr_at_possible": 0.0244
     }
    }
   },
@@ -1359,5 +1400,12 @@
     }
    }
   }
+ },
+ "results_revision_note": "ood_realworld_curated re-scored on 23 Oct 2026 after the pre-publication revision of ml/data/realworld (165 rows; see ml/data/realworld/REVISION_LOG.json). All other sets are unchanged.",
+ "realworld_before_revision": {
+  "n": 166,
+  "auroc": 0.6234,
+  "recall_at_0.5": 0.088,
+  "fpr_at_0.5": 0.0244
  }
 }

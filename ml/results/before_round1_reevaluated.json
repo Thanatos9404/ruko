@@ -2053,131 +2053,131 @@
   },
   "ood_realworld_curated": {
    "binary": {
-    "n": 166,
-    "n_scam": 125,
+    "n": 165,
+    "n_scam": 124,
     "n_genuine": 41,
-    "auroc": 0.9099,
+    "auroc": 0.9296,
     "auroc_95ci": [
-     0.8579,
-     0.9516
+     0.8844,
+     0.9651
     ],
-    "auprc": 0.9682,
-    "brier": 0.1314,
-    "ece": 0.1261,
+    "auprc": 0.974,
+    "brier": 0.1244,
+    "ece": 0.1195,
     "reliability": [
      {
       "bin": "0.0-0.1",
-      "n": 32,
-      "mean_p": 0.0218,
-      "frac_scam": 0.2188
+      "n": 33,
+      "mean_p": 0.0207,
+      "frac_scam": 0.1212
      },
      {
       "bin": "0.1-0.2",
-      "n": 6,
-      "mean_p": 0.1498,
-      "frac_scam": 0.5
+      "n": 9,
+      "mean_p": 0.1563,
+      "frac_scam": 0.6667
      },
      {
       "bin": "0.2-0.3",
-      "n": 6,
-      "mean_p": 0.2494,
+      "n": 7,
+      "mean_p": 0.2548,
       "frac_scam": 1.0
      },
      {
       "bin": "0.3-0.4",
-      "n": 4,
-      "mean_p": 0.3495,
-      "frac_scam": 0.25
+      "n": 3,
+      "mean_p": 0.3331,
+      "frac_scam": 0.6667
      },
      {
       "bin": "0.4-0.5",
-      "n": 8,
-      "mean_p": 0.4686,
+      "n": 4,
+      "mean_p": 0.4491,
       "frac_scam": 0.5
      },
      {
       "bin": "0.5-0.6",
-      "n": 5,
-      "mean_p": 0.5608,
-      "frac_scam": 0.8
+      "n": 8,
+      "mean_p": 0.5613,
+      "frac_scam": 0.875
      },
      {
       "bin": "0.6-0.7",
       "n": 8,
-      "mean_p": 0.663,
-      "frac_scam": 0.875
+      "mean_p": 0.6616,
+      "frac_scam": 0.75
      },
      {
       "bin": "0.7-0.8",
-      "n": 11,
-      "mean_p": 0.7499,
+      "n": 5,
+      "mean_p": 0.7412,
       "frac_scam": 1.0
      },
      {
       "bin": "0.8-0.9",
-      "n": 9,
-      "mean_p": 0.8596,
-      "frac_scam": 0.7778
+      "n": 8,
+      "mean_p": 0.8576,
+      "frac_scam": 0.875
      },
      {
       "bin": "0.9-1.0",
-      "n": 77,
-      "mean_p": 0.9869,
-      "frac_scam": 0.974
+      "n": 80,
+      "mean_p": 0.9842,
+      "frac_scam": 0.975
      }
     ],
     "at_possible": {
      "threshold": 0.5,
-     "tp": 104,
+     "tp": 103,
      "fp": 6,
      "fn": 21,
      "tn": 35,
-     "precision": 0.9455,
-     "recall": 0.832,
-     "f1": 0.8851,
+     "precision": 0.945,
+     "recall": 0.8306,
+     "f1": 0.8841,
      "fpr": 0.1463,
-     "accuracy": 0.8373
+     "accuracy": 0.8364
     },
     "at_likely": {
      "threshold": 0.85,
-     "tp": 80,
-     "fp": 4,
-     "fn": 45,
-     "tn": 37,
-     "precision": 0.9524,
-     "recall": 0.64,
-     "f1": 0.7656,
-     "fpr": 0.0976,
-     "accuracy": 0.7048
+     "tp": 82,
+     "fp": 3,
+     "fn": 42,
+     "tn": 38,
+     "precision": 0.9647,
+     "recall": 0.6613,
+     "f1": 0.7847,
+     "fpr": 0.0732,
+     "accuracy": 0.7273
     },
     "at_0.5": {
      "threshold": 0.5,
-     "tp": 104,
+     "tp": 103,
      "fp": 6,
      "fn": 21,
      "tn": 35,
-     "precision": 0.9455,
-     "recall": 0.832,
-     "f1": 0.8851,
+     "precision": 0.945,
+     "recall": 0.8306,
+     "f1": 0.8841,
      "fpr": 0.1463,
-     "accuracy": 0.8373
+     "accuracy": 0.8364
     }
    },
    "patterns": {
-    "n_scam_with_pattern": 125,
-    "n_scored": 125,
+    "n_scam_with_pattern": 124,
+    "n_scored": 124,
     "n_pattern_not_in_model": 0,
-    "top1": 0.584,
-    "top3": 0.736,
-    "top1_twins_merged": 0.616,
-    "top1_same_category": 0.688,
-    "macro_f1": 0.5303,
+    "top1": 0.5565,
+    "top3": 0.7339,
+    "top1_twins_merged": 0.5887,
+    "top1_same_category": 0.621,
+    "macro_f1": 0.5208,
     "per_pattern": {
      "aeps_biometric_misuse": {
       "support": 1,
-      "precision": 0.3333,
+      "precision": 0.1667,
       "recall": 1.0,
-      "f1": 0.5
+      "f1": 0.2857
      },
      "ai_voice_clone_emergency": {
       "support": 1,
@@ -2187,9 +2187,9 @@
      },
      "apk_malware_invite": {
       "support": 4,
-      "precision": 0.2222,
+      "precision": 0.25,
       "recall": 0.5,
-      "f1": 0.3077
+      "f1": 0.3333
      },
      "army_buyer_seller_olx": {
       "support": 3,
@@ -2199,9 +2199,9 @@
      },
      "bank_fraud_dept_impersonation": {
       "support": 5,
-      "precision": 0.3333,
+      "precision": 0.5,
       "recall": 0.2,
-      "f1": 0.25
+      "f1": 0.2857
      },
      "bank_safe_account_impersonation": {
       "support": 1,
@@ -2227,23 +2227,17 @@
       "recall": 0.0,
       "f1": 0.0
      },
-     "courier_fraud_cash_collection": {
-      "support": 0,
-      "precision": 0.0,
-      "recall": 0.0,
-      "f1": 0.0
-     },
      "courier_parcel": {
-      "support": 3,
-      "precision": 0.6,
-      "recall": 1.0,
-      "f1": 0.75
-     },
-     "credit_card_limit_or_fee": {
       "support": 3,
       "precision": 0.75,
       "recall": 1.0,
       "f1": 0.8571
+     },
+     "credit_card_limit_or_fee": {
+      "support": 3,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
      },
      "credit_card_reward_points": {
       "support": 4,
@@ -2272,14 +2266,14 @@
      "e_challan_apk": {
       "support": 5,
       "precision": 1.0,
-      "recall": 1.0,
-      "f1": 1.0
+      "recall": 0.8,
+      "f1": 0.8889
      },
      "electricity_disconnection": {
       "support": 4,
-      "precision": 1.0,
+      "precision": 0.75,
       "recall": 0.75,
-      "f1": 0.8571
+      "f1": 0.75
      },
      "epfo_pf_withdrawal": {
       "support": 1,
@@ -2301,21 +2295,21 @@
      },
      "fake_ecommerce_site": {
       "support": 2,
-      "precision": 0.0,
-      "recall": 0.0,
-      "f1": 0.0
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1": 0.5
      },
      "fake_job_offer_fee": {
       "support": 5,
-      "precision": 0.75,
+      "precision": 1.0,
       "recall": 0.6,
-      "f1": 0.6667
+      "f1": 0.75
      },
      "fake_support_refund": {
       "support": 4,
-      "precision": 1.0,
-      "recall": 0.25,
-      "f1": 0.4
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
      },
      "foreign_gift_customs": {
       "support": 2,
@@ -2331,9 +2325,9 @@
      },
      "gift_card_payment_demand": {
       "support": 2,
-      "precision": 0.5,
-      "recall": 1.0,
-      "f1": 0.6667
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
      },
      "government_imposter_tax": {
       "support": 2,
@@ -2355,9 +2349,9 @@
      },
      "income_tax_refund": {
       "support": 3,
-      "precision": 0.6,
+      "precision": 0.5,
       "recall": 1.0,
-      "f1": 0.75
+      "f1": 0.6667
      },
      "insurance_policy_bonus": {
       "support": 2,
@@ -2371,20 +2365,14 @@
       "recall": 1.0,
       "f1": 0.8571
      },
-     "job_task_scam_global": {
-      "support": 0,
-      "precision": 0.0,
-      "recall": 0.0,
-      "f1": 0.0
-     },
      "kyc_block": {
       "support": 3,
-      "precision": 0.5,
+      "precision": 0.6667,
       "recall": 0.6667,
-      "f1": 0.5714
+      "f1": 0.6667
      },
      "loan_app_harassment": {
-      "support": 2,
+      "support": 1,
       "precision": 0.0,
       "recall": 0.0,
       "f1": 0.0
@@ -2398,8 +2386,8 @@
      "lpg_gas_connection": {
       "support": 3,
       "precision": 1.0,
-      "recall": 1.0,
-      "f1": 1.0
+      "recall": 0.6667,
+      "f1": 0.8
      },
      "matrimonial_fraud": {
       "support": 2,
@@ -2415,9 +2403,9 @@
      },
      "mule_account_recruitment": {
       "support": 1,
-      "precision": 0.1667,
+      "precision": 0.1,
       "recall": 1.0,
-      "f1": 0.2857
+      "f1": 0.1818
      },
      "pension_life_certificate": {
       "support": 2,
@@ -2463,9 +2451,9 @@
      },
      "relative_emergency": {
       "support": 1,
-      "precision": 0.5,
+      "precision": 1.0,
       "recall": 1.0,
-      "f1": 0.6667
+      "f1": 1.0
      },
      "remote_access": {
       "support": 3,
@@ -2517,9 +2505,9 @@
      },
      "travel_pilgrimage_booking": {
       "support": 1,
-      "precision": 0.5,
+      "precision": 1.0,
       "recall": 1.0,
-      "f1": 0.6667
+      "f1": 1.0
      },
      "upi_collect_request": {
       "support": 1,
@@ -2529,15 +2517,15 @@
      },
      "video_call_blackmail": {
       "support": 2,
-      "precision": 0.4,
+      "precision": 0.3333,
       "recall": 1.0,
-      "f1": 0.5714
+      "f1": 0.5
      },
      "wrong_transfer_return": {
       "support": 2,
-      "precision": 1.0,
+      "precision": 0.6667,
       "recall": 1.0,
-      "f1": 1.0
+      "f1": 0.8
      }
     },
     "top_confusions": [
@@ -2547,18 +2535,18 @@
       "n": 2
      },
      {
-      "true": "matrimonial_fraud",
-      "predicted": "romance_social_media",
+      "true": "bank_fraud_dept_impersonation",
+      "predicted": "aeps_biometric_misuse",
+      "n": 2
+     },
+     {
+      "true": "fake_support_refund",
+      "predicted": "mule_account_recruitment",
       "n": 2
      },
      {
       "true": "foreign_gift_customs",
       "predicted": "video_call_blackmail",
-      "n": 2
-     },
-     {
-      "true": "loan_app_harassment",
-      "predicted": "apk_malware_invite",
       "n": 2
      },
      {
@@ -2568,7 +2556,7 @@
      },
      {
       "true": "kyc_block",
-      "predicted": "apk_malware_invite",
+      "predicted": "income_tax_refund",
       "n": 1
      },
      {
@@ -2578,7 +2566,12 @@
      },
      {
       "true": "electricity_disconnection",
-      "predicted": "credit_card_limit_or_fee",
+      "predicted": "matrimonial_fraud",
+      "n": 1
+     },
+     {
+      "true": "e_challan_apk",
+      "predicted": "apk_malware_invite",
       "n": 1
      },
      {
@@ -2597,23 +2590,18 @@
       "n": 1
      },
      {
-      "true": "bank_fraud_dept_impersonation",
-      "predicted": "kyc_block",
-      "n": 1
-     },
-     {
       "true": "apk_malware_invite",
       "predicted": "bank_fraud_dept_impersonation",
       "n": 1
      },
      {
-      "true": "fake_support_refund",
-      "predicted": "mule_account_recruitment",
+      "true": "remote_access",
+      "predicted": "apk_malware_invite",
       "n": 1
      },
      {
-      "true": "fake_support_refund",
-      "predicted": "apk_malware_invite",
+      "true": "army_buyer_seller_olx",
+      "predicted": "qr_code_receive",
       "n": 1
      }
     ]
@@ -2622,15 +2610,15 @@
     "en": {
      "n": 80,
      "n_scam": 66,
-     "auroc": 0.8864,
-     "recall_at_possible": 0.8485,
+     "auroc": 0.8983,
+     "recall_at_possible": 0.8636,
      "fpr_at_possible": 0.2143
     },
     "hi": {
-     "n": 83,
-     "n_scam": 59,
-     "auroc": 0.9181,
-     "recall_at_possible": 0.8136,
+     "n": 82,
+     "n_scam": 58,
+     "auroc": 0.9483,
+     "recall_at_possible": 0.7931,
      "fpr_at_possible": 0.125
     },
     "hinglish": {
@@ -2650,24 +2638,24 @@
     "message": {
      "n": 36,
      "n_scam": 35,
-     "auroc": 0.9143,
-     "recall_at_possible": 0.7714,
+     "auroc": 0.9714,
+     "recall_at_possible": 0.8,
      "fpr_at_possible": 0.0
     },
     "victim_account": {
-     "n": 106,
-     "n_scam": 66,
-     "auroc": 0.897,
-     "recall_at_possible": 0.8182,
+     "n": 105,
+     "n_scam": 65,
+     "auroc": 0.92,
+     "recall_at_possible": 0.8,
      "fpr_at_possible": 0.15
     }
    },
    "by_source": {
     "realworld_curated": {
-     "n": 166,
-     "n_scam": 125,
-     "auroc": 0.9099,
-     "recall_at_possible": 0.832,
+     "n": 165,
+     "n_scam": 124,
+     "auroc": 0.9296,
+     "recall_at_possible": 0.8306,
      "fpr_at_possible": 0.1463
     }
    }

@@ -6518,7 +6518,7 @@
      "redirected_from_transaction_state": "root",
      "method": "GET",
      "url": {
-      "url": "https://pthg.bolna.ai/array/phc_U5IIF51BsZRF2hLsithQGSBncrGPMEyEHE7sl1B7WCX/config.js",
+      "url": "https://pthg.bolna.ai/array/phc_[redacted]/config.js",
       "origin": "https://pthg.bolna.ai",
       "query_parameter_names": [],
       "redacted": false
@@ -7191,7 +7191,7 @@
      "redirected_from_transaction_state": "root",
      "method": "GET",
      "url": {
-      "url": "https://pthg.bolna.ai/array/phc_U5IIF51BsZRF2hLsithQGSBncrGPMEyEHE7sl1B7WCX/config.js",
+      "url": "https://pthg.bolna.ai/array/phc_[redacted]/config.js",
       "origin": "https://pthg.bolna.ai",
       "query_parameter_names": [],
       "redacted": false
@@ -7225,7 +7225,7 @@
      "redirected_from_transaction_state": "root",
      "method": "GET",
      "url": {
-      "url": "https://pthg.bolna.ai/array/phc_U5IIF51BsZRF2hLsithQGSBncrGPMEyEHE7sl1B7WCX/config.js",
+      "url": "https://pthg.bolna.ai/array/phc_[redacted]/config.js",
       "origin": "https://pthg.bolna.ai",
       "query_parameter_names": [],
       "redacted": false

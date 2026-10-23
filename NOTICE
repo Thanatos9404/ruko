@@ -1,0 +1,103 @@
+Ruko
+Copyright (c) 2026 the Ruko authors. Ruko's own code, data and documents are released under the MIT License (see LICENSE).
+
+This NOTICE lists third-party datasets and voice models that Ruko was trained, evaluated or built with, together with their
+authors, licences and licence links. No third-party dataset rows are redistributed in this repository: they are downloaded
+at build time by ml/fetch_data.py (SHA-256 pinned in ml/data_pins.json) and are git-ignored. Where we used CC BY 4.0
+material we changed it: we removed or replaced personal data (phone numbers, UPI IDs, e-mails, account and card numbers,
+URLs) with fixed placeholders, mapped labels to scam / genuine, dropped some rows and split the data into train and test sets.
+See ml/DATA_CARD.md for exactly how each source is used.
+
+---------------------------------------------------------------------------------------------------------------------------
+DATASETS
+---------------------------------------------------------------------------------------------------------------------------
+
+1. SMS Phishing Dataset for Machine Learning and Pattern Recognition (Mendeley Data, V1)
+   Authors: Sandhya Mishra, Devpriya Soni (2022). DOI: 10.17632/f45bkkt8pr.1
+   Source:  https://data.mendeley.com/datasets/f45bkkt8pr/1
+   Licence: Creative Commons Attribution 4.0 International (CC BY 4.0) - https://creativecommons.org/licenses/by/4.0/
+   Use:     Training and held-out testing of the text model (smishing = scam, ham = genuine; spam used only to measure
+            how often marketing is flagged). Not redistributed.
+
+2. SMS Spam Collection (UCI Machine Learning Repository, dataset 228)
+   Authors: Tiago A. Almeida, José María Gómez Hidalgo (2011). DOI: 10.24432/C5CC84
+   Source:  https://archive.ics.uci.edu/dataset/228/sms+spam+collection
+   Licence: CC BY 4.0 - https://creativecommons.org/licenses/by/4.0/
+   Use:     Not downloaded directly. Credited because most of dataset 1's genuine ("ham") messages come from this collection.
+
+3. BothBosu scam dialogue datasets: scam-dialogue, single-agent-scam-conversations, multi-agent-scam-conversation
+   Authors: BothBosu (Pitipat Gumphusiri, Tuul Triyason), "Synthetic Data for Scam Detection: Leveraging LLMs to Train
+            Deep Learning Models", IEEE/WIC WI-IAT 2024.
+   Source:  https://huggingface.co/datasets/BothBosu/scam-dialogue
+            https://huggingface.co/datasets/BothBosu/single-agent-scam-conversations
+            https://huggingface.co/datasets/BothBosu/multi-agent-scam-conversation
+   Licence: Apache License 2.0 - https://www.apache.org/licenses/LICENSE-2.0
+   Use:     Training (weight 0.5, scam vs genuine only) and held-out testing. Not redistributed.
+
+4. Fishing for Smishing: SMS phishing reports dataset (ACM IMC 2025 artifact)
+   Authors: Sharad Agarwal, Antonis Papasavva, Guillermo Suarez-Tangil, Marie Vasek. "Fishing for Smishing: Understanding
+            SMS Phishing Infrastructure and Strategies by Mining Public User Reports", Proceedings of the 2025 ACM Internet
+            Measurement Conference (IMC '25). DOI: 10.1145/3730567.3764431
+   Source:  https://github.com/reportsmishing/Smishing-Dataset-IMC25
+   Licence: CC BY 4.0 - https://creativecommons.org/licenses/by/4.0/
+   Use:     Evaluation (held-out recall on real smishing). A training slice was tried only in a rejected experiment.
+            Not redistributed.
+
+5. Indian Scam SMS (synthetic, audited)
+   Author:  Ridham115 (Hugging Face)
+   Source:  https://huggingface.co/datasets/Ridham115/indian-scam-sms-synthetic-audited
+   Licence: CC BY 4.0 - https://creativecommons.org/licenses/by/4.0/
+   Use:     Evaluation only. Not redistributed.
+
+6. Indian Payment SMS Corpus
+   Authors: SplitEasy contributors (GitHub: skyaara). Copyright (c) 2026 SplitEasy contributors.
+   Source:  https://github.com/skyaara/indian-payment-sms-dataset
+   Licence: CC BY 4.0 - https://creativecommons.org/licenses/by/4.0/
+   Use:     Evaluation only (false alarms on genuine payment SMS). Not redistributed.
+
+7. ScamGuardBench v0.2
+   Author:  flowxai (Hugging Face)
+   Source:  https://huggingface.co/datasets/flowxai/scamguardbench
+   Licence: Apache License 2.0 - https://www.apache.org/licenses/LICENSE-2.0
+   Use:     Evaluation only (English rows). Not redistributed.
+
+8. ICFD-31k: Indian Conversational Fraud Dataset. EVALUATION ONLY, NOT REDISTRIBUTED.
+   Citation: Rishi Ahuja, Kumar Prateek, Simranjit Singh. "ICFD-31k: A Large-Scale Dataset and Benchmark for Real-Time
+            Conversational Fraud Detection." In Proceedings of the Thirty-Fifth International Joint Conference on
+            Artificial Intelligence (IJCAI-ECAI), 2026.
+   Source:  https://huggingface.co/datasets/rishia2220/icfd-31k   (code: https://github.com/SPELLAILab/ICFD-31k)
+   Licence: ICFD-31k Data Use Terms (defensive research, education and benchmarking; no commercial deployment without the
+            authors' written permission) - https://github.com/SPELLAILab/ICFD-31k/blob/main/LICENSE-DATA.md
+   Use:     Benchmarking only: Ruko measures recall on the test and cross-domain splits. The shipped model is NOT trained on
+            ICFD-31k, and no ICFD-31k content is stored in this repository.
+
+Ruko's own data (MIT, this repository):
+   - ml/data/synthetic/ruko_synth_v1.jsonl: synthetic dialogues and messages generated with LLMs on Nebius Token Factory
+     (Qwen3-235B-A22B-Instruct-2507; google/gemma-3-27b-it for the held-out generator). Every row is labelled synthetic.
+   - ml/data/realworld/realworld_eval.jsonl: our own paraphrases of real cases and messages. Each row cites its source URL.
+     The text is ours (MIT); the facts come from the cited sources.
+   - data/patterns/: the scam pattern library. Its text paraphrases the sources listed in data/patterns/sources.json,
+     with short quotes only.
+
+---------------------------------------------------------------------------------------------------------------------------
+TEXT MODEL
+---------------------------------------------------------------------------------------------------------------------------
+
+server/ml/model/ruko-text-v1.json (ruko-text-1.0.0) was trained on Ruko's synthetic set (MIT), the BothBosu datasets
+(Apache-2.0, item 3) and the Mendeley SMS Phishing Dataset (CC BY 4.0, item 1, which includes UCI SMS Spam Collection
+messages, item 2). It was evaluated, but not trained, on items 4-8. See ml/MODEL_CARD.md.
+
+---------------------------------------------------------------------------------------------------------------------------
+VOICE MODELS (Piper TTS) USED FOR DEMO AUDIO
+---------------------------------------------------------------------------------------------------------------------------
+
+- en_US-ljspeech (Piper): trained on the LJ Speech Dataset, which is in the public domain.
+  https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/ljspeech/medium/MODEL_CARD
+  https://keithito.com/LJ-Speech-Dataset/
+- en_US-lessac (Piper): trained on the Lessac Blizzard 2013 data, which is under a research-only licence.
+  https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/lessac/high/MODEL_CARD
+  https://www.cstr.ed.ac.uk/projects/blizzard/2013/lessac_blizzard2013/license.html
+  It is no longer used for Ruko's narration.
+- hi_IN-pratham (Piper): licensed CC BY-NC-SA 4.0 (https://creativecommons.org/licenses/by-nc-sa/4.0/).
+  https://huggingface.co/rhasspy/piper-voices/blob/main/hi/hi_IN/pratham/medium/MODEL_CARD
+  Audio made with this voice is not shipped.

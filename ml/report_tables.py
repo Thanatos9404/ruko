@@ -16,7 +16,7 @@ SETS = [
     ("test_genB_cross_generator", "Synthetic, other generator (Gemma-27B)"),
     ("test_mendeley_real_sms", "Real SMS, Mendeley held-out"),
     ("test_bothbosu", "BothBosu dialogues, held-out"),
-    ("ood_realworld_curated", "Real-world curated (166, cited)"),
+    ("ood_realworld_curated", "Real-world curated (165, cited)"),
     ("ood_ridham115_indian_sms", "Indian SMS, other team (Ridham115)"),
     ("ood_flowxai_en", "Legit look-alikes (ScamGuardBench en)"),
     ("ood_skyaara_genuine_payment_sms", "Genuine Indian payment SMS (skyaara)"),

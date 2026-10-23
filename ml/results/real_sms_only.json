@@ -744,47 +744,47 @@
   },
   "ood_realworld_curated": {
    "binary": {
-    "n": 166,
-    "n_scam": 125,
+    "n": 165,
+    "n_scam": 124,
     "n_genuine": 41,
-    "auroc": 0.7044,
+    "auroc": 0.745,
     "auroc_95ci": [
-     0.6014,
-     0.7927
+     0.6539,
+     0.8286
     ],
-    "auprc": 0.8713,
-    "brier": 0.272,
-    "ece": 0.2587,
+    "auprc": 0.8889,
+    "brier": 0.233,
+    "ece": 0.2124,
     "reliability": [
      {
       "bin": "0.0-0.1",
-      "n": 42,
-      "mean_p": 0.0189,
-      "frac_scam": 0.619
+      "n": 35,
+      "mean_p": 0.0222,
+      "frac_scam": 0.5429
      },
      {
       "bin": "0.1-0.2",
-      "n": 10,
-      "mean_p": 0.1412,
-      "frac_scam": 0.5
+      "n": 6,
+      "mean_p": 0.1364,
+      "frac_scam": 0.3333
      },
      {
       "bin": "0.2-0.3",
-      "n": 3,
-      "mean_p": 0.2784,
-      "frac_scam": 0.6667
+      "n": 4,
+      "mean_p": 0.2751,
+      "frac_scam": 0.5
      },
      {
       "bin": "0.3-0.4",
-      "n": 1,
-      "mean_p": 0.377,
-      "frac_scam": 0.0
+      "n": 5,
+      "mean_p": 0.3521,
+      "frac_scam": 0.8
      },
      {
       "bin": "0.4-0.5",
-      "n": 4,
-      "mean_p": 0.4344,
-      "frac_scam": 0.75
+      "n": 6,
+      "mean_p": 0.4533,
+      "frac_scam": 0.8333
      },
      {
       "bin": "0.5-0.6",
@@ -794,64 +794,117 @@
      },
      {
       "bin": "0.6-0.7",
-      "n": 5,
-      "mean_p": 0.6425,
-      "frac_scam": 0.6
+      "n": 6,
+      "mean_p": 0.6397,
+      "frac_scam": 0.6667
      },
      {
       "bin": "0.7-0.8",
-      "n": 7,
-      "mean_p": 0.7269,
-      "frac_scam": 0.5714
+      "n": 12,
+      "mean_p": 0.7369,
+      "frac_scam": 0.6667
      },
      {
       "bin": "0.8-0.9",
-      "n": 8,
-      "mean_p": 0.8539,
-      "frac_scam": 0.5
+      "n": 10,
+      "mean_p": 0.8475,
+      "frac_scam": 0.6
      },
      {
       "bin": "0.9-1.0",
-      "n": 84,
-      "mean_p": 0.9803,
-      "frac_scam": 0.9048
+      "n": 79,
+      "mean_p": 0.9857,
+      "frac_scam": 0.9114
      }
     ],
     "at_possible": {
      "threshold": 0.5,
-     "tp": 89,
+     "tp": 92,
      "fp": 17,
-     "fn": 36,
+     "fn": 32,
      "tn": 24,
-     "precision": 0.8396,
-     "recall": 0.712,
-     "f1": 0.7706,
+     "precision": 0.844,
+     "recall": 0.7419,
+     "f1": 0.7897,
      "fpr": 0.4146,
-     "accuracy": 0.6807
+     "accuracy": 0.703
     },
     "at_likely": {
      "threshold": 0.85,
-     "tp": 79,
-     "fp": 11,
-     "fn": 46,
-     "tn": 30,
-     "precision": 0.8778,
-     "recall": 0.632,
-     "f1": 0.7349,
-     "fpr": 0.2683,
-     "accuracy": 0.6566
+     "tp": 75,
+     "fp": 10,
+     "fn": 49,
+     "tn": 31,
+     "precision": 0.8824,
+     "recall": 0.6048,
+     "f1": 0.7177,
+     "fpr": 0.2439,
+     "accuracy": 0.6424
     },
     "at_0.5": {
      "threshold": 0.5,
-     "tp": 89,
+     "tp": 92,
      "fp": 17,
-     "fn": 36,
+     "fn": 32,
      "tn": 24,
-     "precision": 0.8396,
-     "recall": 0.712,
-     "f1": 0.7706,
+     "precision": 0.844,
+     "recall": 0.7419,
+     "f1": 0.7897,
      "fpr": 0.4146,
-     "accuracy": 0.6807
+     "accuracy": 0.703
+    }
+   },
+   "by_lang": {
+    "en": {
+     "n": 80,
+     "n_scam": 66,
+     "auroc": 0.7424,
+     "recall_at_possible": 0.7879,
+     "fpr_at_possible": 0.6429
+    },
+    "hi": {
+     "n": 82,
+     "n_scam": 58,
+     "auroc": 0.741,
+     "recall_at_possible": 0.6897,
+     "fpr_at_possible": 0.25
+    },
+    "hinglish": {
+     "n": 3,
+     "n_scam": 0,
+     "recall_at_possible": null,
+     "fpr_at_possible": 0.6667
+    }
+   },
+   "by_format": {
+    "call_opening": {
+     "n": 24,
+     "n_scam": 24,
+     "recall_at_possible": 0.75,
+     "fpr_at_possible": null
+    },
+    "message": {
+     "n": 36,
+     "n_scam": 35,
+     "auroc": 0.9714,
+     "recall_at_possible": 0.8571,
+     "fpr_at_possible": 0.0
+    },
+    "victim_account": {
+     "n": 105,
+     "n_scam": 65,
+     "auroc": 0.6977,
+     "recall_at_possible": 0.6769,
+     "fpr_at_possible": 0.425
+    }
+   },
+   "by_source": {
+    "realworld_curated": {
+     "n": 165,
+     "n_scam": 124,
+     "auroc": 0.745,
+     "recall_at_possible": 0.7419,
+     "fpr_at_possible": 0.4146
     }
    }
   },
@@ -1454,5 +1507,12 @@
     }
    }
   }
+ },
+ "results_revision_note": "ood_realworld_curated re-scored on 23 Oct 2026 after the pre-publication revision of ml/data/realworld (165 rows; see ml/data/realworld/REVISION_LOG.json). All other sets are unchanged.",
+ "realworld_before_revision": {
+  "n": 166,
+  "auroc": 0.7044,
+  "recall_at_0.5": 0.712,
+  "fpr_at_0.5": 0.4146
  }
 }

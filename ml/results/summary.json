@@ -86,18 +86,18 @@
     "n": 378
    },
    "ood_realworld_curated": {
-    "auroc": 0.9327,
-    "auprc": 0.9774,
-    "ece": 0.1188,
-    "fpr_at_possible": 0.1463,
-    "recall_at_possible": 0.832,
-    "top1": 0.576,
-    "top3": 0.744,
-    "top1_twins_merged": 0.6,
-    "top1_same_category": 0.696,
-    "recall_at_likely": 0.632,
+    "auroc": 0.9569,
+    "auprc": 0.9861,
+    "ece": 0.1163,
+    "fpr_at_possible": 0.0732,
+    "recall_at_possible": 0.8629,
+    "top1": 0.5887,
+    "top3": 0.75,
+    "top1_twins_merged": 0.6048,
+    "top1_same_category": 0.6774,
+    "recall_at_likely": 0.6532,
     "fpr_at_likely": 0.0,
-    "n": 166
+    "n": 165
    },
    "ood_icfd31k_calls": {
     "auroc": 0.6355,
@@ -270,18 +270,18 @@
     "n": 378
    },
    "ood_realworld_curated": {
-    "auroc": 0.9155,
-    "auprc": 0.9698,
-    "ece": 0.1004,
-    "fpr_at_possible": 0.1951,
-    "recall_at_possible": 0.856,
-    "top1": 0.56,
-    "top3": 0.736,
-    "top1_twins_merged": 0.584,
-    "top1_same_category": 0.664,
-    "recall_at_likely": 0.704,
-    "fpr_at_likely": 0.0976,
-    "n": 166
+    "auroc": 0.9339,
+    "auprc": 0.9758,
+    "ece": 0.0869,
+    "fpr_at_possible": 0.1463,
+    "recall_at_possible": 0.8629,
+    "top1": 0.5726,
+    "top3": 0.7419,
+    "top1_twins_merged": 0.5968,
+    "top1_same_category": 0.6532,
+    "recall_at_likely": 0.7097,
+    "fpr_at_likely": 0.0488,
+    "n": 165
    },
    "ood_icfd31k_calls": {
     "auroc": 0.6249,
@@ -454,18 +454,18 @@
     "n": 378
    },
    "ood_realworld_curated": {
-    "auroc": 0.9278,
-    "auprc": 0.9749,
-    "ece": 0.0734,
-    "fpr_at_possible": 0.2195,
-    "recall_at_possible": 0.896,
-    "top1": 0.592,
-    "top3": 0.752,
-    "top1_twins_merged": 0.616,
-    "top1_same_category": 0.696,
-    "recall_at_likely": 0.744,
-    "fpr_at_likely": 0.0732,
-    "n": 166
+    "auroc": 0.9443,
+    "auprc": 0.9795,
+    "ece": 0.0669,
+    "fpr_at_possible": 0.122,
+    "recall_at_possible": 0.8871,
+    "top1": 0.5806,
+    "top3": 0.7258,
+    "top1_twins_merged": 0.6048,
+    "top1_same_category": 0.6532,
+    "recall_at_likely": 0.7661,
+    "fpr_at_likely": 0.0244,
+    "n": 165
    },
    "ood_icfd31k_calls": {
     "auroc": 0.6152,
@@ -638,18 +638,18 @@
     "n": 378
    },
    "ood_realworld_curated": {
-    "auroc": 0.7044,
-    "auprc": 0.8713,
-    "ece": 0.2587,
+    "auroc": 0.745,
+    "auprc": 0.8889,
+    "ece": 0.2124,
     "fpr_at_possible": 0.4146,
-    "recall_at_possible": 0.712,
+    "recall_at_possible": 0.7419,
     "top1": null,
     "top3": null,
     "top1_twins_merged": null,
     "top1_same_category": null,
-    "recall_at_likely": 0.632,
-    "fpr_at_likely": 0.2683,
-    "n": 166
+    "recall_at_likely": 0.6048,
+    "fpr_at_likely": 0.2439,
+    "n": 165
    },
    "ood_icfd31k_calls": {
     "auroc": 0.3549,
@@ -822,18 +822,18 @@
     "n": 378
    },
    "ood_realworld_curated": {
-    "auroc": 0.6234,
-    "auprc": 0.8343,
-    "ece": 0.6695,
+    "auroc": 0.686,
+    "auprc": 0.8657,
+    "ece": 0.6488,
     "fpr_at_possible": 0.0244,
-    "recall_at_possible": 0.088,
+    "recall_at_possible": 0.0968,
     "top1": null,
     "top3": null,
     "top1_twins_merged": null,
     "top1_same_category": null,
-    "recall_at_likely": 0.048,
+    "recall_at_likely": 0.0645,
     "fpr_at_likely": 0.0244,
-    "n": 166
+    "n": 165
    },
    "ood_icfd31k_calls": {
     "auroc": 0.6446,
@@ -1006,18 +1006,18 @@
     "n": 378
    },
    "ood_realworld_curated": {
-    "auroc": 0.9319,
-    "auprc": 0.9777,
-    "ece": 0.1264,
-    "fpr_at_possible": 0.1463,
-    "recall_at_possible": 0.808,
-    "top1": 0.584,
-    "top3": 0.744,
-    "top1_twins_merged": 0.608,
-    "top1_same_category": 0.688,
-    "recall_at_likely": 0.6,
+    "auroc": 0.9534,
+    "auprc": 0.985,
+    "ece": 0.1254,
+    "fpr_at_possible": 0.0732,
+    "recall_at_possible": 0.8145,
+    "top1": 0.5726,
+    "top3": 0.7339,
+    "top1_twins_merged": 0.5887,
+    "top1_same_category": 0.6452,
+    "recall_at_likely": 0.629,
     "fpr_at_likely": 0.0,
-    "n": 166
+    "n": 165
    },
    "ood_icfd31k_calls": {
     "auroc": 0.6452,
@@ -1105,5 +1105,6 @@
    }
   }
  },
- "dataset_sha256": "97d128ac928560037d9134367204148b4f0de11cff92881b4473c9a73a1e1a85"
+ "dataset_sha256": "97d128ac928560037d9134367204148b4f0de11cff92881b4473c9a73a1e1a85",
+ "note": "ood_realworld_curated re-scored on 23 Oct 2026 after the pre-publication revision of ml/data/realworld (165 rows; see ml/data/realworld/REVISION_LOG.json). All other sets are unchanged."
 }
