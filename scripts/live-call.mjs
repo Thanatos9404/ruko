@@ -25,12 +25,16 @@ const env = Object.fromEntries(
 const code = env.RUKO_ACCESS_CODE_USER ?? (env.RUKO_ACCESS_CODES ?? "").split(",")[0]?.split(":")[0];
 if (!code) throw new Error("RUKO_ACCESS_CODES missing in .env");
 
-const clip = (name) => readFileSync(`.data/tts/${name}.wav`).toString("base64");
+// --lang hi uses .data/tts/hi_*.wav (Piper); English uses the SAPI clips. The story: code word,
+// a cover story, then the admission after the agent's device-signal question or probe.
+const lang = process.argv.includes("--lang") ? process.argv[process.argv.indexOf("--lang") + 1] : "en";
+const pre = lang === "hi" ? "hi_" : "";
+const clip = (name) => readFileSync(`.data/tts/${pre}${name}.wav`).toString("base64");
 const CLIPS = {
   match: clip("c1_match"),
-  story: clip("c2_story"),
-  still: clip("c3_still"),
-  more: clip("c4_more"),
+  cover: clip("c2_cover"),
+  admit: clip("c3_admit"),
+  still: clip("c4_still"),
   consent: clip("c5_consent"),
   thanks: clip("c6_thanks"),
 };
@@ -84,6 +88,7 @@ await page.evaluateOnNewDocument(
 
     // Tap the agent's audio (the SDK attaches it to an <audio> element) for turn-taking and recording.
     let agentLevel = 0;
+    let streams = 0;
     const desc = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, "srcObject");
     Object.defineProperty(HTMLMediaElement.prototype, "srcObject", {
       get() {
@@ -98,7 +103,10 @@ await page.evaluateOnNewDocument(
           src.connect(an);
           src.connect(recordBus);
           const buf = new Uint8Array(an.fftSize);
+          // Several streams can be attached over a call; the newest one drives the level.
+          const mine = ++streams;
           setInterval(() => {
+            if (mine !== streams) return;
             an.getByteTimeDomainData(buf);
             let s = 0;
             for (const b of buf) s += ((b - 128) / 128) ** 2;
@@ -111,12 +119,16 @@ await page.evaluateOnNewDocument(
 
     // Follow the real engine's status, as the page polls it.
     let status = null;
+    const ids = { checkId: null, runId: null };
     const realFetch = window.fetch.bind(window);
     window.fetch = async (...args) => {
       const r = await realFetch(...args);
       try {
         const url = String(args[0] instanceof Request ? args[0].url : args[0]);
-        if (/\/api\/demo\/checks\/[^/]+$/.test(url.split("?")[0]) && r.ok) r.clone().json().then((j) => (status = j)).catch(() => {});
+        const path = url.split("?")[0];
+        if (/\/api\/demo\/checks\/[^/]+$/.test(path) && r.ok) r.clone().json().then((j) => (status = j)).catch(() => {});
+        if (/\/api\/demo\/pay$/.test(path) && r.ok) r.clone().json().then((j) => (ids.checkId = j.id)).catch(() => {});
+        if (/\/session$/.test(path) && r.ok) r.clone().json().then((j) => (ids.runId = j.run_id)).catch(() => {});
       } catch {
         /* ignore */
       }
@@ -134,28 +146,39 @@ await page.evaluateOnNewDocument(
     };
 
     // Turn-taking: answer after the agent has spoken and then been quiet for 1.3 s.
-    const queue = ["match", "story", "still", "more"];
+    const queue = ["match", "cover", "admit", "still"];
     let saidConsent = false;
     let done = false;
-    window.__rukoCall = { get status() { return status; }, get done() { return done; } };
+    window.__rukoCall = { get status() { return status; }, get done() { return done; }, ids };
     (async () => {
       await ready;
-      let spoke = false;
+      let spokeMs = 0;
       let quietSince = 0;
       let busy = false;
+      let floor = 1;
+      let peak = 0;
+      let tick = 0;
       for (;;) {
         await new Promise((r) => setTimeout(r, 100));
+        // Adaptive threshold: a little above the quietest level heard recently.
+        floor = Math.min(floor * 1.02 + 0.0002, agentLevel);
+        peak = Math.max(peak, agentLevel);
+        if (++tick % 10 === 0) {
+          log(`level max ${peak.toFixed(3)} floor ${floor.toFixed(3)} spoke ${spokeMs} ms${busy ? " (customer talking)" : ""}`);
+          peak = 0;
+        }
         if (busy || done) continue;
-        const loud = agentLevel > 0.02;
+        const loud = agentLevel > Math.max(0.006, floor + 0.008);
         if (loud) {
-          spoke = true;
+          spokeMs += 100;
           quietSince = 0;
           continue;
         }
-        if (!spoke) continue;
+        // A short filler ("Okay.") isn't a turn: wait for real speech, then 1.6 s of quiet.
+        if (spokeMs < 900) continue;
         if (!quietSince) quietSince = Date.now();
-        if (Date.now() - quietSince < 1300) continue;
-        spoke = false;
+        if (Date.now() - quietSince < 1600) continue;
+        spokeMs = 0;
         quietSince = 0;
         busy = true;
         const decided = Boolean(status && status.decision);
@@ -212,8 +235,10 @@ await page.goto(`${base}/demo`, { waitUntil: "load", timeout: 60000 });
 await sleep(2500);
 await page.click("#__ruko_rec"); // a trusted click, so tab capture is allowed
 await sleep(1500);
-await clickText("Pay ₹1,90,000");
-const button = dry ? "Watch the recorded run" : "Answer the call";
+if (lang === "hi") await clickText("हिंदी");
+await sleep(500);
+await clickText("₹1,90,000");
+const button = dry ? (lang === "hi" ? "रिकॉर्डेड रन देखें" : "Watch the recorded run") : lang === "hi" ? "कॉल उठाएँ" : "Answer the call";
 for (let i = 0; i < 20 && !(await clickText(button)); i++) await sleep(500);
 console.log(dry ? "[ruko-call] dry run: recorded run playing (no Bolna call)" : "[ruko-call] answered; live call starting");
 const t0 = Date.now();
@@ -223,12 +248,11 @@ while (Date.now() - t0 < 150_000) {
   const st = await page.evaluate(() => ({ status: window.__rukoCall?.status ?? null, done: window.__rukoCall?.done ?? false }));
   final = st.status;
   const phone = await page.evaluate(() => document.querySelector('[aria-label="Sandbox bank app"]')?.textContent ?? "");
-  if ((st.done || dry) && /Payment stopped|Payment on hold|Payment sent/.test(phone)) {
+  if ((st.done || dry) && /Payment stopped|Payment on hold|Payment sent|भुगतान रोका गया|भुगतान होल्ड पर|भुगतान भेजा गया/.test(phone)) {
     await sleep(6000);
     break;
   }
 }
-await clickText("End call").catch(() => false);
 await page.evaluate(() => document.querySelector('[aria-label="End call"]')?.click());
 await sleep(3000);
 await page.evaluate(() => window.__rukoRec.stop?.());
@@ -248,7 +272,7 @@ writeFileSync(`.data/live/call-${stamp}.webm`, Buffer.from(files.video, "base64"
 writeFileSync(`.data/live/call-${stamp}-audio.webm`, Buffer.from(files.audio, "base64"));
 writeFileSync(
   `.data/live/call-${stamp}.json`,
-  JSON.stringify({ check_id: final?.id ?? null, run_id: final?.call?.execution_id ?? null, decision: final?.decision ?? null, contact: final?.contact ?? null }, null, 2),
+  JSON.stringify({ lang, ...(await page.evaluate(() => window.__rukoCall?.ids ?? {})), decision: final?.decision ?? null, contact: final?.contact ?? null, events: final?.events ?? null }, null, 2),
 );
 console.log(`[ruko-call] saved .data/live/call-${stamp}.webm (+ -audio.webm, .json); decision=${final?.decision?.outcome ?? "none"}`);
 await browser.close();
