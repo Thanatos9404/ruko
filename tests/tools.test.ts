@@ -134,7 +134,9 @@ describe("Bolna custom function endpoints", () => {
     const m = await (await call(app, "lookup_pattern", { description: "someone says my parcel from FedEx has drugs and customs will arrest me", language: "en" })).json();
     expect(["courier_parcel", "digital_arrest"]).toContain(m.pattern_id);
     await call(app, "log_report", { pattern_id: "courier_parcel", summary: "Caller got a parcel threat call from +91 98765 43210", language: "en" });
-    const reports = await (await app.handle(req("GET", "/api/console/reports"))).json();
+    // Line reports are private to the operator: no key, no reports.
+    expect((await app.handle(req("GET", "/api/console/reports"))).status).toBe(401);
+    const reports = await (await app.handle(req("GET", "/api/console/reports", undefined, bank()))).json();
     expect(reports.data[0].summary).not.toMatch(/98765/);
   });
 });

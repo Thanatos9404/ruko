@@ -45,7 +45,9 @@ export function loadConfig(env: Record<string, string | undefined> = process.env
   const apiKeys = new Map<string, string>();
   for (const pair of (env.RUKO_API_KEYS ?? "").split(",").map((s) => s.trim()).filter(Boolean)) {
     const [tenant, key] = pair.split(":");
-    if (tenant && key) apiKeys.set(key, tenant);
+    // The demo bank and the sandbox are display tenants; an API key may never write into them.
+    const reserved = [env.RUKO_DEMO_TENANT ?? "demo-bank", env.RUKO_SANDBOX_TENANT ?? "sandbox"];
+    if (tenant && key && !reserved.includes(tenant)) apiKeys.set(key, tenant);
   }
   const base =
     env.RUKO_PUBLIC_BASE_URL ??

@@ -622,8 +622,20 @@ function CallPanel({
             </div>
           ) : (
             <div className="mt-3 rounded-2xl border border-dashed border-[var(--hair-strong)]">
-              <EmptyState icon={<MessageSquareText />} title={call.status === "in-progress" || call.status === "queued" || call.status === "ringing" ? "Transcript arrives when the call ends" : "No transcript stored"} className="py-8">
-                {call.status === "in-progress" || call.status === "queued" || call.status === "ringing"
+              <EmptyState
+                icon={<MessageSquareText />}
+                title={
+                  (call as { transcript_withheld?: boolean }).transcript_withheld
+                    ? "Transcript withheld"
+                    : call.status === "in-progress" || call.status === "queued" || call.status === "ringing"
+                      ? "Transcript arrives when the call ends"
+                      : "No transcript stored"
+                }
+                className="py-8"
+              >
+                {(call as { transcript_withheld?: boolean }).transcript_withheld
+                  ? "This was a real person's call. The public console shows its signals and decision, never their words."
+                  : call.status === "in-progress" || call.status === "queued" || call.status === "ringing"
                   ? "Bolna sends the transcript with the final webhook. Signals appear on the right as the agent records them."
                   : call.channel === "text-eval"
                     ? "This check ran from tool calls only, and they don't match a published recording, so there are no words to show. The signals and their evidence are still on the right."

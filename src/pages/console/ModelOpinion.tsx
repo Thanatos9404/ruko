@@ -58,22 +58,20 @@ export function ModelOpinionPanel({ c }: { c: Check }) {
           <span className="size-2 rounded-full" style={{ background: tone }} aria-hidden />
           {BAND[ml.band] ?? ml.band}
         </Chip>
-        {ml.scam_probability !== null && <Chip>Scam probability {Math.round(ml.scam_probability * 100)}%</Chip>}
       </div>
       {ml.patterns.length > 0 && (
-        <ul className="mt-4 space-y-2.5">
-          {ml.patterns.map((p) => (
-            <li key={p.id}>
-              <div className="flex items-baseline justify-between gap-3 text-[13px]">
-                <span className="min-w-0 truncate text-ink-2">{p.name}</span>
-                <span className="t-num shrink-0 text-ink">{p.p_given_scam === null ? "–" : `${Math.round(p.p_given_scam * 100)}%`}</span>
-              </div>
-              <div className="mt-1 h-1 overflow-hidden rounded-full bg-paper-3" aria-hidden>
-                <span className="block h-full rounded-full bg-ink-2" style={{ width: `${Math.round((p.p_given_scam ?? 0) * 100)}%` }} />
-              </div>
-            </li>
-          ))}
-        </ul>
+        <>
+          {/* Patterns in the model's order of likelihood; no percentages, which would overstate its precision. */}
+          <p className="t-eyebrow mt-4 !text-[10.5px]">Closest patterns, most likely first</p>
+          <ol className="mt-2 space-y-1.5 text-[13px] text-ink-2">
+            {ml.patterns.map((p, i) => (
+              <li key={p.id} className="flex gap-2">
+                <span className="t-num text-muted">{i + 1}.</span>
+                <span className="min-w-0 truncate">{p.name}</span>
+              </li>
+            ))}
+          </ol>
+        </>
       )}
       {ml.cues.length > 0 && (
         <div className="mt-4">

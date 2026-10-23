@@ -20,8 +20,11 @@ export async function ensureSeeded(checks: CheckService, kv: KV, tenant: string)
   for (const c of list) await kv.set(`check:${c.id}`, { ...c, tenant }, 14 * 24 * 3600);
   const idxKey = `index:${tenant}`;
   const existing = (await kv.get<string[]>(idxKey)) ?? [];
-  const ids = [...list.map((c) => c.id).reverse(), ...existing.filter((id) => !list.some((c) => c.id === id))];
+  // Drop the previous seed's checks, so an older eval version never shows next to the current one.
+  const previous = new Set((await kv.get<string[]>(`seed:${tenant}:ids`)) ?? []);
+  const ids = [...list.map((c) => c.id).reverse(), ...existing.filter((id) => !previous.has(id) && !list.some((c) => c.id === id))];
   await kv.set(idxKey, ids.slice(0, 300), 14 * 24 * 3600);
+  await kv.set(`seed:${tenant}:ids`, list.map((c) => c.id), 30 * 24 * 3600);
   void checks;
   return list.length;
 }

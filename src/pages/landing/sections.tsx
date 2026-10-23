@@ -119,7 +119,7 @@ export function HowItWorks() {
           <Beat
             n="02 · Call"
             title="Ruko calls, in their language"
-            body="Within seconds, a Bolna voice agent calls the customer. It says the code word shown in their app first, so it can't be spoofed, and asks what fraud teams ask. If it hears a scam, it says the official truth out loud, and with consent it rings the customer's trusted family contact."
+            body="Within seconds, a Bolna voice agent calls the customer. It says the code word shown in their app first, so it's hard to spoof, and asks what fraud teams ask. If it hears a scam, it says the official truth out loud, and with consent it rings the customer's trusted family contact."
             visual={
               <div className="flex flex-col items-center">
                 <RukoMark motion="live" className="h-24 w-24 text-ink" title="" />

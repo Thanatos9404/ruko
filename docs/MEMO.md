@@ -8,7 +8,7 @@
 
 **Product.** When a payment looks risky (new payee, large amount, odd hour, active call, "safe account" payee), the bank calls Ruko's API. Ruko holds the payment, and a Bolna agent calls the customer in their language:
 
-- It opens with a one-time code word shown in the app, so the call can't be spoofed.
+- It opens with a one-time code word shown in the app, so the call is hard to spoof.
 - It asks "Is anyone on another call telling you what to do?", and uses the bank's own device signal ("your app shows you were on a call").
 - It names the scam with an official line. With consent, it calls a trusted family contact.
 - A deterministic, explained policy then releases, delays or blocks the payment.
@@ -54,6 +54,6 @@ The LLM can escalate, never de-escalate, and Ruko never asks for an OTP or PIN. 
 - Coached customers: the device signal, cover-story probes, the safe default and the trusted contact help.
 - Bolna dependence: our engine is provider-neutral; concurrency and content rules are Bolna's.
 - Data protection: DPDP consent covers recordings and trusted contacts.
-- Scammer adaptation: the public line collects new scripts.
+- Scammer adaptation: device signals don't depend on what the customer says, and new scripts reach the library through public advisories and bank partners' consented reports.
 
 **The ask.** Introductions to two or three Indian banks or NBFCs for shadow-mode pilots, and help running the first measured live-call study.

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { API_KEY_B, bank, customer, device, makeApp, payment, req } from "./helpers.js";
+import { loadConfig } from "../server/config.js";
 
 const body = () => ({ payment: payment(), customer: customer(), device: device() });
 
@@ -141,5 +142,23 @@ describe("demo tenant provenance", () => {
     expect(sandbox.data[0].origin).toBe("sandbox");
     const detail = await app.handle(req("GET", `/api/console/checks/${sandbox.data[0].id}`));
     expect(detail.status).toBe(200);
+  });
+});
+
+describe("console data hygiene", () => {
+  it("never shows a code word, a full phone number, or a real caller's transcript", async () => {
+    const app = makeApp({ agents: { check: "agent-check" } });
+    const pay = await (await app.handle(req("POST", "/api/demo/pay", { scenario: "digital-arrest", language: "en" }))).json();
+    await app.checks.attachCall(pay.id, { channel: "web", status: "completed", transcript: [{ role: "customer", text: "my real words" }] });
+    const v = await (await app.handle(req("GET", `/api/console/checks/${pay.id}`))).json();
+    expect(v.code_word).toBeUndefined();
+    expect(String(v.customer.phone_e164)).not.toMatch(/\d{6,}/);
+    expect(v.call.transcript).toBeUndefined();
+    expect(v.call.transcript_withheld).toBe(true);
+  });
+
+  it("refuses an API key that names the demo or sandbox tenant", () => {
+    const cfg = loadConfig({ NODE_ENV: "test", RUKO_API_KEYS: "demo-bank:rk_test_x1234567890,sandbox:rk_test_y1234567890,pilot-bank:rk_test_z1234567890" });
+    expect([...cfg.apiKeys.values()]).toEqual(["pilot-bank"]);
   });
 });

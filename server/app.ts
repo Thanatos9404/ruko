@@ -1,6 +1,7 @@
 import type { Lang } from "../shared/types.js";
 import { PATTERNS, patternById, patternSources, matchText, truthFor } from "../shared/patterns.js";
 import { DEMO_SCENARIO_VIEWS, scenarioById } from "../shared/scenarios.js";
+import { maskPhone } from "../shared/format.js";
 import { analyzeText, getLibrary, getSources, mlStatus } from "./ml/index.js";
 import { readModelResults } from "./ml-results.js";
 import { SIGNALS } from "../shared/signals.js";
@@ -402,10 +403,15 @@ export function createApp(deps: AppDeps) {
   // Console (demo tenant, read-only) -----------------------------------------------
 
   const consoleTenant = (url: URL) => (url.searchParams.get("tenant") === "sandbox" ? cfg.sandboxTenant : cfg.demoTenant);
+  // The demo bank shows only the synthetic eval conversations, never test or visitor traffic.
+  const consoleList = async (tenant: string, limit: number) => {
+    const list = await checks.list(tenant, Math.max(limit, 300));
+    return (tenant === cfg.demoTenant ? list.filter((c) => c.origin === "eval-replay") : list).slice(0, limit);
+  };
 
   r.on("GET", "/api/console/overview", async (_req, _p, url) => {
     if (consoleTenant(url) === cfg.demoTenant) await ensureSeeded(checks, kv, cfg.demoTenant);
-    const list = await checks.list(consoleTenant(url), 300);
+    const list = await consoleList(consoleTenant(url), 300);
     const spend = (await kv.get<SpendEntry[]>("spend:log")) ?? [];
     return json({
       tenant: consoleTenant(url),
@@ -418,14 +424,15 @@ export function createApp(deps: AppDeps) {
   r.on("GET", "/api/console/checks", async (_req, _p, url) => {
     const limit = Math.min(200, Number(url.searchParams.get("limit") ?? 60));
     if (consoleTenant(url) === cfg.demoTenant) await ensureSeeded(checks, kv, cfg.demoTenant);
-    const list = await checks.list(consoleTenant(url), limit);
-    return json({ data: list.map(publicCheck) });
+    const list = await consoleList(consoleTenant(url), limit);
+    return json({ data: list.map(consoleView) });
   });
 
   r.on("GET", "/api/console/checks/:id", async (_req, p) => {
     const c = await checks.get(p.id);
     if (!c || (c.tenant !== cfg.demoTenant && c.tenant !== cfg.sandboxTenant)) throw new HttpError(404, "Check not found.", "not_found");
-    return json(publicCheck(c));
+    if (c.tenant === cfg.demoTenant && c.origin !== "eval-replay") throw new HttpError(404, "Check not found.", "not_found");
+    return json(consoleView(c));
   });
 
   // The research pattern library (72 patterns, India and global), compacted for the console.
@@ -467,7 +474,10 @@ export function createApp(deps: AppDeps) {
   // The text model's status and its published evaluation (ml/results/summary.json).
   r.on("GET", "/api/console/model", async () => json({ status: mlStatus(), results: readModelResults() }));
 
-  r.on("GET", "/api/console/reports", async () => {
+  r.on("GET", "/api/console/reports", async (req) => {
+    // Line reports are anonymised, but still private to the operator: a bank API key is required.
+    const tok = bearer(req);
+    if (!tok || !cfg.apiKeys.has(tok)) throw new HttpError(401, "Line reports are private to the operator. Send a bank API key.", "unauthorized");
     const ids = (await kv.get<string[]>("index:reports")) ?? [];
     const reports = [];
     for (const id of ids.slice(0, 100)) {
@@ -513,3 +523,23 @@ function visitorKey(req: Request): string {
 }
 
 export type RukoApp = ReturnType<typeof createApp>;
+
+/**
+ * What the public console may show about a check: no code word, masked phone numbers,
+ * and a transcript only for synthetic eval conversations (never a real caller's words).
+ */
+function consoleView(c: StoredCheck) {
+  const v = publicCheck(c) as Record<string, unknown> & ReturnType<typeof publicCheck>;
+  const synthetic = c.origin === "eval-replay";
+  const mask = (p?: string) => (p ? maskPhone(p) : p);
+  return {
+    ...v,
+    code_word: undefined,
+    customer: {
+      ...v.customer,
+      phone_e164: mask(v.customer.phone_e164),
+      trusted_contact: v.customer.trusted_contact ? { ...v.customer.trusted_contact, phone_e164: mask(v.customer.trusted_contact.phone_e164) } : v.customer.trusted_contact,
+    },
+    call: v.call ? { ...v.call, transcript: synthetic ? v.call.transcript : undefined, transcript_withheld: !synthetic && Boolean(v.call.transcript?.length) } : v.call,
+  };
+}

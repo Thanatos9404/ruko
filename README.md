@@ -13,7 +13,7 @@ Built on <a href="https://www.bolna.ai">Bolna</a> for the Bolna × Y Combinator 
 
 ---
 
-**Ruko** (Hindi for "wait") is an API for banks, UPI apps and NBFCs. When a payment looks coached, Ruko holds it, and within seconds a Bolna voice agent calls the customer in their language. The app shows a one-time **code word** that the agent says first, so the call can't be spoofed. The agent asks what a fraud officer would ask ("Is anyone on another call telling you what to do?"), records what it hears as evidence through tool calls, says the official truth out loud ("There's no 'digital arrest' in Indian law…"), and with consent calls the customer's trusted family contact. A deterministic, explained policy then **releases, delays or blocks** the payment. The LLM can make the outcome stricter but never more lenient, and Ruko never asks for an OTP, PIN, card or account number.
+**Ruko** (Hindi for "wait") is an API for banks, UPI apps and NBFCs. When a payment looks coached, Ruko holds it, and within seconds a Bolna voice agent calls the customer in their language. The app shows a one-time **code word** that the agent says first, so the call is hard to spoof. The agent asks what a fraud officer would ask ("Is anyone on another call telling you what to do?"), records what it hears as evidence through tool calls, says the official truth out loud ("There's no 'digital arrest' in Indian law…"), and with consent calls the customer's trusted family contact. A deterministic, explained policy then **releases, delays or blocks** the payment. The LLM can make the outcome stricter but never more lenient, and Ruko never asks for an OTP, PIN, card or account number.
 
 It also ships a free public **"Is this a scam?"** checker (text and voice) and a **fraud-ops console** for the bank.
 
@@ -23,7 +23,7 @@ It also ships a free public **"Is this a scam?"** checker (text and voice) and a
 | Free public checker | `/check` |
 | Fraud-ops console | `/console` (checks, transcripts with highlighted evidence, metrics, pattern library, eval, integration) |
 | Bank API | `POST /v1/checks`, `GET /v1/checks/:id`, `GET /v1/metrics` |
-| Docs | [Research](docs/RESEARCH.md) · [Business](docs/BUSINESS.md) · [One-page memo](docs/MEMO.md) · [Progress log](docs/PROGRESS.md) · [Bolna spend log](docs/BOLNA_SPEND.md) · [Demo script](DEMO_SCRIPT.md) · [Submission answers](SUBMISSION.md) |
+| Docs | [Research](docs/RESEARCH.md) · [Business](docs/BUSINESS.md) · [One-page memo](docs/MEMO.md) · [Progress log](docs/PROGRESS.md) · [Bolna spend log](docs/BOLNA_SPEND.md) · [Demo script](DEMO_SCRIPT.md) · [Submission answers](docs/SUBMISSION.md) · [Citation audit](docs/CITATIONS.md) |
 
 > **Status, honestly.** Everything below runs locally and is tested. The live Bolna path (web calls, tool calls from Bolna, webhooks) is fully wired and the three Bolna agents are created and saved unrestricted, but **no live Bolna call has been made yet**: the tool endpoints need a public URL, so live calls are tested once the app is deployed. The account has $5 of credit in total; see [docs/BOLNA_SPEND.md](docs/BOLNA_SPEND.md). Evaluation numbers are **text mode** (no audio); see [Results](#results).
 

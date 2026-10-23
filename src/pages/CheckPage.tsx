@@ -371,7 +371,7 @@ function Answer({ data, lang }: { data: Reply; lang: Lang }) {
         {data.model && data.model.scam_probability !== null && data.model.band !== "unlikely_scam" && (
           <>
             {" · "}
-            {lang === "hi" ? "टेक्स्ट मॉडल (सलाह भर)" : "Text model (advisory)"}: {MODEL_BAND[data.model.band]?.[lang] ?? data.model.band}, {Math.round(data.model.scam_probability * 100)}%
+            {lang === "hi" ? "टेक्स्ट मॉडल (सलाह भर)" : "Text model (advisory)"}: {MODEL_BAND[data.model.band]?.[lang] ?? data.model.band}
           </>
         )}
       </p>

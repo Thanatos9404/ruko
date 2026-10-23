@@ -74,7 +74,15 @@ export function Reports() {
             <Skeleton className="h-[320px] !rounded-[20px]" />
           </div>
         ) : (
-          <ErrorState error={res.error} onRetry={res.reload} title="Couldn't load line reports" />
+          /401|private|unauthor/i.test(String((res.error as { message?: string } | null)?.message ?? res.error ?? "")) ? (
+            <div className="surface">
+              <EmptyState icon={<Inbox />} title="Line reports are private" className="py-10">
+                Anonymised summaries from the public voice line are visible to the operator only, with a bank API key. The text checker stores nothing at all.
+              </EmptyState>
+            </div>
+          ) : (
+            <ErrorState error={res.error} onRetry={res.reload} title="Couldn't load line reports" />
+          )
         )
       ) : !data.reports.length ? (
         <Reveal>

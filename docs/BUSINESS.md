@@ -270,7 +270,7 @@ As of October 2026, we found no one selling Indian banks the full combination: a
 - the policy that cannot be talked down;
 - an official-source truth library in Indian languages;
 - an eval harness;
-- over time, labelled conversations and new scripts from the public line.
+- over time, labelled conversations from consenting bank partners, and new scripts from public advisories.
 
 ## 6. Why now
 
@@ -293,7 +293,7 @@ As of October 2026, we found no one selling Indian banks the full combination: a
 | **The model misses a coached customer** | The LLM can escalate a decision but never de-escalate it. The agent uses the bank's device signal ("your app shows you were on a call"). The trusted contact can raise a concern. This is still our weakest area: v2 caught 4 of 8 heavily coached customers on a clean held-out set. |
 | **Small scams with no call never reach Ruko** | The pre-call policy let 12 of 60 dev-set scams through without a call. Ruko acts on the bank's risk signals and does not replace them. |
 | **Scammers spoof Ruko** | The code word appears only in the bank's app, and calls come from 1600xx numbers. The agent never asks for an OTP or PIN and never moves money. On a mismatch, the customer is told to hang up and open the app. Residual risk: screen-sharing would expose the code word, so a running remote-access app is a hard hold, and the agent asks about it. |
-| **Scammers adapt their scripts** | Device signals don't depend on what the customer says. The public line collects new scripts, and the pattern library is updated. The policy cannot be talked down. |
+| **Scammers adapt their scripts** | Device signals don't depend on what the customer says. New scripts reach the pattern library through public advisories and bank partners' consented reports (the public checker stores nothing). The policy cannot be talked down. |
 | **The market for scam checks alone is modest** | About $15–57M a year across India, the UK core, Australia and Singapore (section 2.7). We plan for higher-priced markets and adjacent checks, and we say so. |
 | **Dependence on Bolna** | The engine, policy, tools and eval are provider-neutral HTTP. Risks are pricing changes, content-safety restriction and burst concurrency (paid accounts start at 10 concurrent calls). We will negotiate enterprise concurrency, and fall back to in-app confirmation and the bank's desk. |
 | **Regulation** | A mandated one-hour lag or trusted person would fit Ruko's design. See section 8. |
