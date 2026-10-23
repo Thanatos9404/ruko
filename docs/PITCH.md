@@ -2,7 +2,7 @@
 
 Everything needed to submit Ruko to the Bolna × Y Combinator Symphony Buildathon (due 31 October 2026) and to pitch it.
 
-**Live:** https://ruko-symphony.vercel.app · **Code:** https://github.com/Thanatos9404/ruko · **Demo video:** [link to add]
+**Live:** https://ruko-symphony.vercel.app · **Code:** https://github.com/Thanatos9404/ruko · **Demo video (2:49):** https://drive.google.com/file/d/1f2OE-d3mbBMDU0lZkZFAH0jkTYVZXan4/view?usp=sharing · **Deck (PDF):** https://drive.google.com/file/d/1ZaWkebC4p3mi0jBwqFbbyIPVRdyTgppH/view?usp=sharing
 
 | | |
 |---|---|

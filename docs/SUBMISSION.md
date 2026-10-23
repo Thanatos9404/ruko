@@ -1,6 +1,6 @@
 # Ruko: Bolna × YC Symphony Buildathon submission
 
-**Live:** https://ruko-symphony.vercel.app · **Code:** https://github.com/Thanatos9404/ruko · **Demo video:** [link to add]
+**Live:** https://ruko-symphony.vercel.app · **Code:** https://github.com/Thanatos9404/ruko · **Demo video (2:49):** https://drive.google.com/file/d/1f2OE-d3mbBMDU0lZkZFAH0jkTYVZXan4/view?usp=sharing · **Deck (PDF):** https://drive.google.com/file/d/1ZaWkebC4p3mi0jBwqFbbyIPVRdyTgppH/view?usp=sharing
 
 These are the exact answers for the official form, which is due 31 October 2026. Copy each one as written. Anything in square brackets still needs filling in before you submit. The form's e-mail field takes the address you registered with; it is left out of this public copy.
 
@@ -10,7 +10,7 @@ These are the exact answers for the official form, which is due 31 October 2026.
 | Name | Yashvardhan Thanvi |
 | Project description (max 200 characters) | Ruko holds a risky bank or UPI payment while a Bolna voice agent calls the customer in their language, names the scam and blocks the payment if needed. For Indian banks, UPI apps and NBFCs. |
 | Submission link (repo or live app) | https://github.com/Thanatos9404/ruko (live app: https://ruko-symphony.vercel.app) |
-| Pitch deck or pitch video (Google Drive or Luma) | [Google Drive link to `deck/Ruko-pitch.pdf` and the demo video. Set sharing to "Anyone with the link can view", then open the link in a private window to check it works] |
+| Pitch deck or pitch video (Google Drive or Luma) | Demo video (2:49): https://drive.google.com/file/d/1f2OE-d3mbBMDU0lZkZFAH0jkTYVZXan4/view?usp=sharing · Pitch deck (PDF): https://drive.google.com/file/d/1ZaWkebC4p3mi0jBwqFbbyIPVRdyTgppH/view?usp=sharing (both on Google Drive, "Anyone with the link can view") |
 
 ## Project description
 

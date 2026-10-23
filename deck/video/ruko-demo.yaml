@@ -1,218 +1,196 @@
-# Ruko pitch and demo video (Bolna × YC Symphony Buildathon). Target 2:30–2:45, hard limit 3:00.
-# Plan, shot list and fallbacks: DEMO_SCRIPT.md (repo root).
+# Ruko: demo and pitch video for the Bolna x Y Combinator Symphony Buildathon (due 31 Oct 2026). Limit 3:00.
+# This is the spec the submitted video (ruko-demo.mp4, 2:49) was rendered from; DEMO_SCRIPT.md describes it scene
+# by scene. Placeholders stand for folders outside this repo:
+#   <toolkit>  the vidkit toolkit (Piper voice en_US-ljspeech-high in its voices folder)
+#   <scenes>   the folder holding ruko/build.py, the scene driver (brand cards, the live-call scenes and one
+#              loudness-normalised mix), and ruko/assets/ (the Hindi call's console still)
+#   <videos>   where the video is written (videos and call audio never go into git)
+#   <repo>     this repository
 #
-# Built around the live Bolna web calls of 23 Oct 2026 (customer: a scripted text-to-speech voice):
-#   - call-en: the English call (execution b6818362), played as recorded. vidkit renders a placeholder card;
-#     splice the clip in with ffmpeg (DEMO_SCRIPT.md).
-#   - call-hi: the first live Hindi call (execution 9f893617), shown as transcript lines on a card with narration.
-#     Its audio is NOT used: the scripted customer there is Piper hi_IN-pratham (CC BY-NC-SA).
+# Render, from <scenes> (copy this file there):
+#   <toolkit>\.venv\Scripts\python.exe ruko\build.py ruko-demo.yaml                    # TTS -> record -> assemble
+#   <toolkit>\.venv\Scripts\python.exe ruko\build.py ruko-demo.yaml --reuse-recording  # re-assemble only
+#   <toolkit>\.venv\Scripts\python.exe ruko\build.py ruko-demo.yaml --tts-only         # narration timings
+# Each recording presses Pay twice in the production sandbox (warm-up + take): free, and no Bolna call is made.
+# Plain vidkit render.py also parses this file, but it cannot build the call scenes (they need ruko/build.py).
 #
-# Narration voice: Piper en_US-ljspeech-high (public-domain LJSpeech data); download it into <toolkit>\voices first.
+# Sources (read-only, from the Ruko repo; nothing is written there):
+#   - English live call #2, execution b6818362 (23 Oct 2026): Bolna's own recording (.data/live/smoke-en-2.flac,
+#     stereo: customer left, agent right, each side's silences removed by Bolna) and Bolna's transcript
+#     (.data/live/execution-smoke-en-2-*.json). Customer: scripted Windows "Zira" text-to-speech; Ruko: live Bolna
+#     agent. The two channels are not time-aligned in the file, so build.py cuts each utterance out unchanged and
+#     lays them in Bolna's transcript order (see ruko/build.py, CALL_EN). Bolna's recording ends before the agent's
+#     last line ("For your safety, this payment is stopped..."); the outro says so.
+#   - Hindi live call #5, execution 9f893617: transcript only. Its audio is NOT used (customer voice: Piper
+#     hi_IN-pratham, CC BY-NC-SA).
+#   - Engine events and decisions: .data/live/call-*.json and the public console (chk_B3RQU9A6M6, chk_KEFA2WGBYA).
+#   - Numbers: public/eval/results.json (v5, text mode) and docs/BOLNA_SPEND.md. No customers or pilots are claimed.
 #
-#   set PY=<toolkit>\.venv\Scripts\python.exe
-#   set R=<toolkit>\render.py
-#   %PY% %R% deck\video\ruko-demo.yaml --tts-only
-#   %PY% %R% deck\video\ruko-demo.yaml --only cold,title,problem,hold --output <videos>\ruko-part-a.mp4
-#   %PY% %R% deck\video\ruko-demo.yaml --only call-hi,decide,results,ask,end --output <videos>\ruko-part-b.mp4
-#
-# Fallback if the English call clip can't be used: render everything except "call-en" in one go:
-#   %PY% %R% deck\video\ruko-demo.yaml --only cold,title,problem,hold,call-recorded,call-hi,decide,results,ask,end --output <videos>\ruko-demo.mp4
-# (<toolkit> is your vidkit folder and <videos> a folder outside the repo; never write videos into git.)
-#
-# Every number spoken here is in docs/CITATIONS.md, eval/results or docs/BOLNA_SPEND.md; the results scene is
-# written by deck/tools/build.mjs from deck/results.config.json, so it always matches the deck.
+# Narration voice: Piper en_US-ljspeech-high (LJSpeech, public domain), in <toolkit>\voices\en_US-ljspeech-high\.
 title: "Ruko: a voice check that stops payment scams before the money leaves"
-output: ../../../_videos/ruko-demo.mp4   # next to the other demo videos, outside the repo
+output: <videos>/ruko-demo.mp4
 theme: carbon
 accent: "#e46157"
-sky: ["#101a2b", "#0c1320", "#0b111c"]
+sky: ["#0b111c", "#111a28", "#172133"]
 base_url: https://ruko-symphony.vercel.app
 viewport: [1600, 900]
 label: "Sandbox bank · fictional customer"
 label_position: top-right
-label_margin: [28, 22]
+label_margin: [28, 96]   # below the site's floating nav pill (painted scenes use their own spot)
 speedup_position: top-left
-caption_max_chars: 64
-narration_offset: 0.4
+caption_max_chars: 66
+narration_offset: 0.35
 pad_after: 0.45
-voice: en_US-ljspeech-high   # public-domain LJSpeech voice (Piper); not lessac, which is research-only
-length_scale: 1.0
+sentence_gap: 0.32
+voice: en_US-ljspeech-high/en_US-ljspeech-high   # public-domain LJSpeech voice; not lessac (research-only)
+length_scale: 0.95
 bed: true
-bed_gain_db: -26
+bed_gain_db: -27
 max_mb: 90
+default_timeout: 45
 pronounce:
-  Ruko: "Roo-ko"
-  "Ruko's": "Roo-ko's"
-  Bolna: "Bole-nah"
+  Ruko: "Rooko"          # espeak: /ɹˈʊkəʊ/, close to Hindi रुको
+  Bolna: "Bowlnah"       # espeak: /bˈəʊlnə/ (plain "Bolna" comes out /bˈɒlnə/)
   CBI: "C B I"
   OTPs: "O T Pees"
   OTP: "O T P"
-  UPI: "U P I"
-  NBFCs: "N B F Cs"
-  LLM: "L L M"
+  API: "A P I"
   "₹1,90,000": "one lakh ninety thousand rupees"
   "₹22,845 crore": "twenty-two thousand, eight hundred and forty-five crore rupees"
   "₹20 to ₹30": "twenty to thirty rupees"
   "2024": "twenty twenty-four"
-cards:
-  title:
-    eyebrow: "Bolna × Y Combinator Symphony Buildathon"
-    title: "Ruko"
-    tagline: "Stop the scam before the money *leaves.*"
-    subtitle: "A voice check for risky bank and UPI payments that decides in about a minute. Built on Bolna."
-    footer: ["Yashvardhan Thanvi", "ruko-symphony.vercel.app", "github.com/Thanatos9404/ruko"]
-  end:
-    eyebrow: "Built on Bolna"
-    title: "Only a voice breaks a *voice.*"
-    repo: "github.com/Thanatos9404/ruko"
-    lines:
-      - "Live: ruko-symphony.vercel.app"
-      - "Kamla, Ravi and Demo Bank are fictional. The trusted contact's phone rings in a browser tab."
-      - "Eval results are text mode: an LLM plays the customer. No customers or pilots yet."
-    disclosures:
-      - "Live calls: real Bolna web calls on 23 Oct 2026; the customer is a scripted text-to-speech voice."
+  "60 of 60": "sixty of sixty"
+  "15 of 18": "fifteen of eighteen"
+  "2 false holds in 10": "two false holds in ten"
+
+# Brand (deck/deck.css): ink/navy #161f2e, paper #fdfdfb, coral #e46157, dark slides #0b111c.
+ruko:
+  repo: <repo>
+  brand: { navy: "#0b111c", navy2: "#111a28", ink: "#161f2e", paper: "#fdfdfb", coral: "#e46157" }
+  call_en:
+    recording: .data/live/smoke-en-2.flac
+    execution: .data/live/execution-smoke-en-2-b6818362-8118-49fd-8f76-146432254c27.json
+    events: .data/live/call-2026-10-23T09-23-57-027Z.json
+    label: "Live Bolna web call · customer: scripted text-to-speech · Ruko: live Bolna agent"
+  call_hi:
+    execution: .data/live/execution-hero-hi-9f893617-24cd-4d04-a693-5ae88ee06554.json
+    events: .data/live/call-2026-10-23T14-56-28-122Z.json
+    still: <scenes>/ruko/assets/console-chk_KEFA2WGBYA.png
+    label: "First live Hindi call · shown as transcript"
+
+setup:
+  # Not in the video: open the sandbox, warm the hold endpoint once (a serverless cold start can take seconds;
+  # a sandbox hold is free and calls nobody), reset, pick the CBI scenario and bring the phone into view.
+  - goto: {url: /demo, settle: 1.5}
+  - wait_for: {selector: "text=CBI officer", timeout: 60}
+  - click: "text=CBI officer"
+  - click: "text=Pay ₹1,90,000"
+  - wait_for: {selector: "text=Payment paused", timeout: 60}
+  - click: "text=Reset"
+  - wait_for: {selector: "text=Pay ₹1,90,000", timeout: 20}
+  - click: "text=CBI officer"
+  # Phone low enough that the page's next section ("Hear a real call") stays below the frame and the captions
+  # only overlap the phone's bottom bezel.
+  - scroll: {to: "[aria-label='Sandbox bank app']", align: top, offset: 156, duration: 0.3}
+  - wait: 0.8
 
 scenes:
+  # Cold open: the coral "Payment paused" screen is up by about 3.5 s (inside the first 5 s).
   - id: cold
-    url: /demo
-    chapter: "Kamla's payment"
-    fade_in: 0.5
+    chapter: "Payment paused"
+    fade_in: 0.3
     actions:
-      - click: "text=CBI officer"
-      - scroll: {to: "[aria-label='Sandbox bank app']", align: center, duration: 1.2}
-      - point: {selector: "text=Safe Custody Account RBI", seconds: 2.4}
-      - point: {selector: "text=On a phone call", seconds: 2.4}
+      - point: {selector: "text=On a phone call", seconds: 0.9, pad: 6}
+      - click: {selector: "text=Pay ₹1,90,000", ms: 380, pause_before: 0.12, pause_after: 0.1}
+      # a server wait over 1.8 s is shown sped up and labelled (vidkit), so the coral screen lands by ~3 s
+      - wait_for: {selector: "text=Payment paused", timeout: 30, dead: true, settle: 0.1}
+      - scroll: {to: "[aria-label='Sandbox bank app']", align: top, offset: 156, duration: 0.5, pause_after: 0.1}
+      - point: {selector: "text=Payment paused", seconds: 2.8, pad: 10}
+      - point: {selector: "text=Code word", until: 12.0, pad: 10}
     narration: >-
-      Kamla is sixty-eight. A man calling himself a CBI officer has kept her on a video call for forty-seven minutes.
-      Now she is sending ₹1,90,000 to a safe custody account.
+      Kamla is sixty-eight. A man claiming to be a CBI officer has kept her on a video call for forty-seven minutes,
+      and she is sending ₹1,90,000 to a safe custody account. Ruko paused it.
 
   - id: title
-    card: title
+    card: {template: ruko-title}
     narration: "This is Ruko. It's Hindi for wait."
-    min_duration: 4.5
+    min_duration: 3.4
 
   - id: problem
-    card:
-      template: section
-      eyebrow: "The problem"
-      title: "The victim pays. The scammer is *on the other line.*"
-      bullets:
-        - "₹22,845 crore reported lost to cyber fraud in India in 2024 (MHA)"
-        - "'Digital arrest' and related scams: 5.7× in one year (MHA)"
-        - "OTPs and pop-ups don't help: the victim is the one paying"
     chapter: "The problem"
+    card: {template: ruko-problem}
     narration: >-
-      Indians reported ₹22,845 crore lost to cyber fraud in 2024. The victim makes the payment, often coached on another call,
-      so OTPs and pop-up warnings don't help. Only a voice breaks a voice.
+      In 2024, Indians reported ₹22,845 crore lost to cyber fraud. The victim makes the payment, coached on another
+      call, so OTPs don't help. Only a voice breaks a voice.
 
+  # Same page, same held payment as the cold open (no reload): the engine's side of the hold.
   - id: hold
-    url: /demo
     chapter: "Hold"
     actions:
-      - click: "text=CBI officer"
-      - scroll: {to: "[aria-label='Sandbox bank app']", align: center, duration: 0.8}
-      - click: "text=Pay ₹1,90,000"
-      - wait: 1.2
-      - scroll: {to: "section[aria-label='Ruko engine']", align: top, offset: 104, duration: 1.0}
-      - point: {selector: "text=Pre-payment risk", seconds: 3.0}
-      - point: {selector: "text=Code word", seconds: 3.0}
+      - wait: 0.3
+      - point: {selector: "text=Pre-payment risk", seconds: 2.6, pad: 8}
+      - point: {selector: "text=On a call while paying", seconds: 2.4, pad: 6}
+      - point: {selector: "text=Payee looks like a 'safe account'", seconds: 2.2, pad: 6}
+      - point: {selector: "text=Answer the call", until: 11.9, pad: 8}
     narration: >-
       Her bank sends the payment to Ruko's API. It is held, with a plain reason for every point of risk,
       and her app shows a one-time code word. Then a Bolna voice agent calls her.
 
-  # Placeholder for the English live call (execution b6818362, 23 Oct). Replace this segment with the clip
-  # (still frame + the call's recording + captions; DEMO_SCRIPT.md, "The English call").
+  # The English live call, execution b6818362. Three scenes, one continuous picture (ruko/build.py).
+  - id: call-intro
+    chapter: "A live Bolna call"
+    card: {template: ruko-call-en, phase: intro}
+    narration: "Here is a live Bolna call, with a scripted computer voice playing the customer."
   - id: call-en
-    label: "Live Bolna call · the customer is a scripted text-to-speech voice"
-    card:
-      template: section
-      eyebrow: "Live Bolna web call · 23 Oct 2026"
-      title: "English call clip goes *here.*"
-      subtitle: "Splice the recorded call (audio and captions) in place of this card."
-    min_duration: 36
-    chapter: "A live call"
-
-  # Fallback for the English call: the recorded run, narrated. Used only if the clip can't be used.
-  - id: call-recorded
-    url: /demo
-    label: "Recorded run: text mode, no audio"
-    chapter: "The call (recorded run)"
-    actions:
-      - click: "text=CBI officer"
-      - scroll: {to: "[aria-label='Sandbox bank app']", align: center, duration: 0.6}
-      - click: "text=Pay ₹1,90,000"
-      - wait: 1.0
-      - scroll: {to: "section[aria-label='Ruko engine']", align: top, offset: 104, duration: 0.8}
-      - click: "text=Watch the recorded run"
-      - wait_for: {selector: "text=decided by policy, not by the LLM", timeout: 120, dead: false}
-      - point: {selector: "text=decided by policy, not by the LLM", seconds: 2.5}
+    card: {template: ruko-call-en, phase: call}
+  - id: call-outro
+    card: {template: ruko-call-en, phase: outro}
     narration: >-
-      This is a recorded run: a text-mode conversation replayed through the live engine. The agent says the code word first,
-      then uses the bank's own signal: your app shows you were on a call while paying. Kamla admits a CBI officer is on the
-      other call. The agent says the official line: there is no digital arrest in Indian law. The money never leaves.
+      That is where Bolna's recording ends. Its transcript has the rest: the payment is stopped, and Ruko offers to call her son.
 
-  # The first live Hindi call (execution 9f893617, 23 Oct), as transcript only. Do not use its audio.
+  # The first live Hindi call, execution 9f893617: transcript lines over a still of its console page. No audio.
   - id: call-hi
-    label: "Live Bolna call #5 · transcript only · customer: a scripted text-to-speech voice"
-    card:
-      template: section
-      eyebrow: "Live Bolna web call · Hindi · 23 Oct 2026"
-      title: "The same scam, *live in Hindi.*"
-      bullets:
-        - "Ruko: आपके ऐप के अनुसार, भुगतान करते समय आप एक कॉल पर थे। (Your app shows you were on a call while paying.)"
-        - "Customer: उसने कहा वो सीबीआई से है। (He said he is from the CBI.)"
-        - "Customer: प्लीज़ यह पेमेंट रोक दीजिए। (Please stop this payment.)"
-        - "Blocked: the agent said delay; the policy, reading the evidence, blocked."
     chapter: "A live call in Hindi"
+    card: {template: ruko-call-hi}
     narration: >-
-      Then our first live call in Hindi. Bolna's Hindi speech-to-text understood the scripted customer, and Ruko answered in Hindi.
-      The agent recommended a delay. The policy, reading the recorded evidence, blocked the payment.
+      Next, our first live call in Hindi: Bolna understood the scripted customer, and Ruko answered in Hindi.
+      The agent recommended a delay; the policy, reading the evidence, blocked the payment.
 
   - id: decide
     url: /console/checks/chk_YEEMZU2H8H
     label: "Eval replay · synthetic customer"
     chapter: "Decide"
     actions:
-      - wait: 0.8
-      - point: {selector: "text=Deterministic policy", seconds: 2.6}
-      - scroll: {to: "text=Transcript", offset: 140, duration: 1.6}
-      - point: {selector: "text=Signals heard", seconds: 2.4}
+      - wait: 0.5
+      - scroll: {to: "text=Deterministic policy", align: top, offset: 190, duration: 0.9}
+      - point: {selector: "text=Deterministic policy", seconds: 2.0, pad: 8}
+      - point: {selector: "text=MULTIPLE_STRONG_SIGNS", seconds: 1.3, pad: 8}
+      # the transcript's highlighted evidence (left) next to the signals it backs (right); scroll the page to the
+      # Transcript heading first (the quotes sit in their own scroll box)
+      - scroll: {to: "text=Transcript", align: top, offset: 171, duration: 1.1}
+      - point: {selector: "mark", seconds: 1.8, pad: 6, scroll: false}
+      - point: {selector: "text=A stranger or 'official' is directing them on another call", until: 13.2, pad: 8, scroll: false}
     narration: >-
       A deterministic policy decides from the recorded evidence. The agent can make the outcome stricter, never softer,
       and it never asks for an OTP. The fraud team sees every quote, signal and reason.
 
-  # >>> results: written by deck/tools/build.mjs from deck/results.config.json; edit the template there
   - id: results
-    card:
-      template: section
-      eyebrow: "Results · text mode · v5"
-      title: "Tuned on one set. *Frozen* the other."
-      bullets:
-        - "Development set: 60/60 scams caught, 2/24 false holds"
-        - "Fresh held-out set 4, frozen before any run: 15/18 caught, 2/10 false holds"
-        - "5 live Bolna calls (customer: a scripted voice); 2 full runs blocked the scam"
     chapter: "Results"
+    card: {template: ruko-results}
     narration: >-
-      In text-mode tests, Ruko caught 60 of 60 scams on the set we tuned on, and 15 of 18 on a held-out set
-      we froze before any run, with 2 false holds in 10 genuine payments. The held-out number is the one we are improving. We have also made five live Bolna calls, with a scripted computer voice as the customer. Both calls that ran the full flow blocked the scam.
-  # <<< results
+      In our text-mode evaluation, Ruko caught 60 of 60 scams on the set we tuned it on, and 15 of 18 on a held-out set
+      frozen before any run, with 2 false holds in 10 genuine payments. In five live Bolna calls with a scripted
+      customer voice, both full runs blocked the scam.
 
   - id: ask
-    card:
-      template: section
-      eyebrow: "Business and the ask"
-      title: "Paid per completed check. *Nothing* when it passes."
-      bullets:
-        - "₹20–30 per completed check in India"
-        - "No customers or pilots yet"
-        - "Ask: introductions to Indian banks for shadow-mode pilots"
     chapter: "The ask"
+    card: {template: ruko-ask}
     narration: >-
-      Banks pay ₹20 to ₹30 per completed check, and nothing when the payment passes. We have no customers or pilots yet.
-      We are asking for introductions to Indian banks for shadow-mode pilots.
+      We plan to charge ₹20 to ₹30 per completed check, and nothing when the payment passes. We have no customers
+      or pilots yet. We're asking for introductions to Indian banks for shadow-mode pilots.
 
   - id: end
-    card: end
+    card: {template: ruko-end}
     narration: "Ruko. Built on Bolna."
-    min_duration: 6
+    min_duration: 5.5
     fade_out: 0.8

@@ -40,6 +40,11 @@ export function SiteFooter() {
             <li><a className="hover:text-ink" href="/check">Is this a scam? (free)</a></li>
             <li><a className="hover:text-ink" href="/console">Fraud-ops console</a></li>
             <li><a className="hover:text-ink" href="/console/eval">Evaluation</a></li>
+            <li>
+              <a className="hover:text-ink" href="https://drive.google.com/file/d/1f2OE-d3mbBMDU0lZkZFAH0jkTYVZXan4/view?usp=sharing" target="_blank" rel="noreferrer">
+                Watch the demo (2:49)
+              </a>
+            </li>
           </ul>
         </div>
         <div>
