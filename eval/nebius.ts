@@ -3,14 +3,14 @@
  * response cache so a finished eval can be re-scored and re-reported for free,
  * and a seeded rerun reproduces the same transcripts.
  *
- * The key is read at runtime from the NebiusXNvidia .env (outside this repo) and
+ * The key is read at runtime from NEBIUS_API_KEY or the dotenv file named by NEBIUS_ENV_FILE (outside this repo) and
  * is never logged or written anywhere.
  */
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { NEBIUS_ENV_PATH } from "../server/env.js";
+import { nebiusEnvPath } from "../server/env.js";
 
 export const NEBIUS_BASE = "https://api.tokenfactory.nebius.com/v1/";
 
@@ -48,8 +48,9 @@ export interface ChatResult {
 
 function readKey(): string {
   if (process.env.NEBIUS_API_KEY) return process.env.NEBIUS_API_KEY;
-  if (!existsSync(NEBIUS_ENV_PATH)) throw new Error(`Nebius key file not found at ${NEBIUS_ENV_PATH}`);
-  const m = readFileSync(NEBIUS_ENV_PATH, "utf8").match(/^NEBIUS_API_KEY\s*=\s*"?([^"\r\n]+)"?/m);
+  const file = nebiusEnvPath();
+  if (!file || !existsSync(file)) throw new Error("Set NEBIUS_API_KEY, or NEBIUS_ENV_FILE to a dotenv file that holds it (see README: Reproduce).");
+  const m = readFileSync(file, "utf8").match(/^NEBIUS_API_KEY\s*=\s*"?([^"\r\n]+)"?/m);
   if (!m) throw new Error("NEBIUS_API_KEY not found in the Nebius .env");
   return m[1].trim();
 }

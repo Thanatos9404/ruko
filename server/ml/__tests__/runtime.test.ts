@@ -80,7 +80,7 @@ describe("analyzeText with the shipped model", () => {
   it("never echoes phone numbers, UPI IDs, account numbers or URLs", () => {
     const text = GOLDEN.cases.find((c) => c.id === "pii_redaction")!.text;
     const out = JSON.stringify(analyzeText(text));
-    for (const raw of ["testuser", "okicici", "123456789012", "90000 12345", "example-pay"]) expect(out).not.toContain(raw);
+    for (const raw of ["testuser", "okdemo", "123456789012", "90000 12345", "example-pay"]) expect(out).not.toContain(raw);
   });
 
   it("handles empty, tiny and very long input", () => {

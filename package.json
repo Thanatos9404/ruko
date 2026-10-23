@@ -2,8 +2,17 @@
   "name": "ruko",
   "private": true,
   "version": "0.1.0",
-  "description": "Ruko: a 60-second voice check, built on Bolna, that stops a payment scam before money leaves.",
+  "description": "Ruko: a voice check of about a minute, built on Bolna, that stops a payment scam before the money leaves.",
   "license": "MIT",
+  "author": "Yashvardhan Thanvi",
+  "homepage": "https://ruko-symphony.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thanatos9404/ruko.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Thanatos9404/ruko/issues"
+  },
   "type": "module",
   "engines": {
     "node": ">=20"

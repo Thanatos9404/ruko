@@ -1344,7 +1344,7 @@
   {
    "id": "pii_redaction",
    "lang": "en",
-   "text": "send 5000 to testuser@okicici, account 123456789012, call +91 90000 12345 or visit www.example-pay.in/now",
+   "text": "send 5000 to testuser@okdemo, account 123456789012, call +91 90000 12345 or visit www.example-pay.in/now",
    "tokens": [
     "send",
     "0000",

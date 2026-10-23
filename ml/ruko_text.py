@@ -43,7 +43,7 @@ REDACTIONS: list[tuple[str, str]] = [
     ("xapk", r"[A-Za-z0-9_\-.]*[A-Za-z0-9_\-]\.[Aa][Pp][Kk](?![A-Za-z0-9])"),
     # URLs with a scheme or www.
     ("xurl", r"(?:[Hh][Tt][Tt][Pp][Ss]?://|[Ww][Ww][Ww]\.)[^ \t\r\n]+"),
-    # UPI IDs and e-mail addresses (name@bank, name@gmail.com)
+    # UPI IDs and e-mail addresses (name@bank, name@example.com)
     ("xhandle", r"[A-Za-z0-9][A-Za-z0-9._\-]*@[A-Za-z][A-Za-z0-9.\-]*[A-Za-z0-9]"),
     # bare domains like bit.ly/abc or kyc-update.xyz
     (

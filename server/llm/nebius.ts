@@ -1,11 +1,13 @@
 import { existsSync, readFileSync } from "node:fs";
-import { NEBIUS_ENV_PATH } from "../env.js";
+import { nebiusEnvPath } from "../env.js";
 
 /**
- * Minimal server-side client for Nebius Token Factory (OpenAI-compatible), used
- * by the free public text checker. The key comes from NEBIUS_API_KEY (set in
- * the deployment's environment) or, in local development, from the Nebius .env
- * outside this repo. It is never logged or sent to the browser.
+ * Minimal client for Nebius Token Factory (OpenAI-compatible), for LOCAL
+ * DEVELOPMENT AND EVALUATION ONLY. Production never calls it: nebiusKey() returns
+ * null on Vercel, so the public checker and the console's model opinion run on the
+ * on-server text classifier with no LLM. Locally (and only with RUKO_PUBLIC_LLM=nebius
+ * for the checker) the key comes from NEBIUS_API_KEY or the file named by
+ * NEBIUS_ENV_FILE. It is never logged or sent to the browser.
  */
 export const NEBIUS_BASE = "https://api.tokenfactory.nebius.com/v1/";
 
@@ -14,8 +16,9 @@ export function nebiusKey(): string | null {
   if (process.env.VERCEL || process.env.NODE_ENV === "test") return null;
   if (process.env.NEBIUS_API_KEY) return process.env.NEBIUS_API_KEY;
   try {
-    if (!existsSync(NEBIUS_ENV_PATH)) return null;
-    const m = readFileSync(NEBIUS_ENV_PATH, "utf8").match(/^NEBIUS_API_KEY\s*=\s*"?([^"\r\n]+)"?/m);
+    const file = nebiusEnvPath();
+    if (!file || !existsSync(file)) return null;
+    const m = readFileSync(file, "utf8").match(/^NEBIUS_API_KEY\s*=\s*"?([^"\r\n]+)"?/m);
     return m ? m[1].trim() : null;
   } catch {
     return null;

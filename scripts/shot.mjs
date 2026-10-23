@@ -5,7 +5,7 @@ import { existsSync } from "node:fs";
 import puppeteer from "puppeteer-core";
 
 const [url, w = "1440", h = "900", out = "shot.png", full = "", ...clicks] = process.argv.slice(2);
-const chrome = ["C:/Program Files/Google/Chrome/Application/chrome.exe", "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"].find((p) => existsSync(p));
+const chrome = [process.env.CHROME_PATH, "C:/Program Files/Google/Chrome/Application/chrome.exe", "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe", "/usr/bin/google-chrome", "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"].filter(Boolean).find((p) => existsSync(p));
 const browser = await puppeteer.launch({ executablePath: chrome, headless: true, args: ["--no-sandbox", "--use-fake-ui-for-media-stream"] });
 const page = await browser.newPage();
 await page.setViewport({ width: Number(w), height: Number(h), deviceScaleFactor: 1, isMobile: Number(w) < 500, hasTouch: Number(w) < 500 });

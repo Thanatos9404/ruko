@@ -2,7 +2,7 @@ Fonts in this folder are redistributed from Fontsource packages under the SIL Op
 Open Runde, Instrument Serif, Fragment Mono, Inter. Full licence texts follow.
 
 ==== open-runde ====
-Copyright (c) 2016 The Inter Project Authors (https://github.com/rsms/inter)
+Copyright (c) 2016 The Inter Project Authors (https://github.com/rsms/inter); Open Runde is a rounded derivative of Inter (https://github.com/lauridskern/open-runde)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
@@ -96,7 +96,7 @@ FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.
 
 ==== instrument-serif ====
-Google Inc.
+Copyright 2022 The Instrument Serif Project Authors (https://github.com/Instrument/instrument-serif)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
@@ -191,7 +191,7 @@ FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.
 
 ==== fragment-mono ====
-Google Inc.
+Copyright 2022 The Fragment Mono Project Authors (https://github.com/weiweihuanghuang/fragment-mono)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
@@ -286,7 +286,7 @@ FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.
 
 ==== inter ====
-Google Inc.
+Copyright (c) 2016 The Inter Project Authors (https://github.com/rsms/inter)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:

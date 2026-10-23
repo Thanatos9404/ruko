@@ -6,7 +6,7 @@ import { makeApp, req } from "./helpers.js";
 
 describe("public text checker", () => {
   it("redacts numbers, UPI IDs, emails and links before anything leaves the server", () => {
-    const s = redactPII("He called from +91 98765 43210, asked me to pay rk.desk@okaxis, mail me at a.b@gmail.com, see https://evil.example/x, OTP 482913");
+    const s = redactPII("He called from +91 98765 43210, asked me to pay rk.desk@okdemo, mail me at a.b@example.com, see https://evil.example/x, OTP 482913");
     expect(s).not.toMatch(/98765|43210|rk\.desk|okaxis|gmail|evil\.example|482913/);
     expect(s).toMatch(/\[number\]/);
     expect(s).toMatch(/\[upi id\]|\[email\]/);
@@ -22,7 +22,7 @@ describe("public text checker", () => {
     };
     const r = await publicChat(
       kv,
-      { language: "en", messages: [{ role: "user", content: "A CBI officer on video call from +91 98765 43210 says I am under digital arrest and must pay to rk.safe@okicici" }] },
+      { language: "en", messages: [{ role: "user", content: "A CBI officer on video call from +91 98765 43210 says I am under digital arrest and must pay to rk.safe@okdemo" }] },
       { visitorKey: "v1", dailyCap: 10, perHour: 10, llm: fakeLlm as never },
     );
     expect(r.method).toBe("llm+library");

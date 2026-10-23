@@ -18,5 +18,13 @@ export function loadDotEnv(path = ".env", only?: string[]): void {
   }
 }
 
-/** The Nebius key lives outside this repo; the eval reads it at runtime and never logs it. */
-export const NEBIUS_ENV_PATH = "C:/Desktop/COLLEGE/Coding/Hackathon/NebiusXNvidia/.env";
+/**
+ * Local evaluation only: the path of a dotenv file outside this repo that holds
+ * NEBIUS_API_KEY, from NEBIUS_ENV_FILE (in the environment or this repo's .env).
+ * Returns null when it isn't set; callers then need NEBIUS_API_KEY in the environment.
+ * The key is read at runtime and never logged.
+ */
+export function nebiusEnvPath(): string | null {
+  if (!process.env.NEBIUS_ENV_FILE) loadDotEnv(".env", ["NEBIUS_ENV_FILE"]);
+  return process.env.NEBIUS_ENV_FILE || null;
+}

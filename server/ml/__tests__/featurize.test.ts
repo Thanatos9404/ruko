@@ -3,7 +3,7 @@ import { analyze, normalize, tokenize } from "../featurize.js";
 
 describe("featurize: PII redaction", () => {
   it("replaces phone numbers, UPI IDs, account numbers, cards and URLs with placeholders", () => {
-    const text = "Pay to rahul.k@okaxis or call +91 90000 12345, a/c 123456789012, card 4111 1111 1111 1111, see http://sbi-kyc.xyz/x and bit.ly/abc";
+    const text = "Pay to rahul.k@okdemo or call +91 90000 12345, a/c 123456789012, card 4111 1111 1111 1111, see http://sbi-kyc.xyz/x and bit.ly/abc";
     const toks = tokenize(text).map((t) => t.text);
     expect(toks).toEqual(expect.arrayContaining(["xhandle", "xphone", "xnum", "xurl"]));
     const joined = toks.join(" ");

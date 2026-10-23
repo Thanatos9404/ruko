@@ -16,8 +16,8 @@ Formats
 
 Generators: model A (training + in-distribution test) and model B (held out,
 cross-generator test only). Responses are cached under ml/.cache/nebius (git-ignored),
-so re-running is free and reproducible. The API key is read at runtime from the
-NebiusXNvidia .env and is never printed or written anywhere.
+so re-running is free and reproducible. The API key is read at runtime from
+NEBIUS_API_KEY or the dotenv file named by NEBIUS_ENV_FILE, and is never printed or written anywhere.
 
 Usage
   ml/.venv/Scripts/python -X utf8 ml/synth/generate.py --plan            # print the job plan and token estimate
@@ -44,7 +44,20 @@ sys.path.insert(0, str(ROOT / "ml"))
 from pii import scrub  # noqa: E402
 
 NEBIUS_BASE = "https://api.tokenfactory.nebius.com/v1/"
-NEBIUS_ENV_PATH = Path("C:/Desktop/COLLEGE/Coding/Hackathon/NebiusXNvidia/.env")
+def _nebius_env_path() -> Path | None:
+    """NEBIUS_ENV_FILE (environment, or this repo's .env): a dotenv file outside the repo holding NEBIUS_API_KEY."""
+    if os.environ.get("NEBIUS_ENV_FILE"):
+        return Path(os.environ["NEBIUS_ENV_FILE"])
+    local = ROOT / ".env"
+    if local.exists():
+        for line in local.read_text(encoding="utf-8").splitlines():
+            key, _, value = line.partition("=")
+            if key.strip() == "NEBIUS_ENV_FILE" and value.strip():
+                return Path(value.strip().strip('"'))
+    return None
+
+
+NEBIUS_ENV_PATH = _nebius_env_path()
 CACHE_DIR = ROOT / "ml" / ".cache" / "nebius"
 LIBRARY = ROOT / "data" / "patterns" / "library.json"
 GENUINE = ROOT / "ml" / "synth" / "genuine_scenarios.json"
@@ -122,6 +135,8 @@ COACHING = {
 def read_key() -> str:
     if os.environ.get("NEBIUS_API_KEY"):
         return os.environ["NEBIUS_API_KEY"]
+    if NEBIUS_ENV_PATH is None or not NEBIUS_ENV_PATH.exists():
+        raise SystemExit("Set NEBIUS_API_KEY, or NEBIUS_ENV_FILE to a dotenv file that holds it")
     m = re.search(r'^NEBIUS_API_KEY\s*=\s*"?([^"\r\n]+)"?', NEBIUS_ENV_PATH.read_text(encoding="utf-8"), re.M)
     if not m:
         raise SystemExit("NEBIUS_API_KEY not found")

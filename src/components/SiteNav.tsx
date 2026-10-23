@@ -25,7 +25,13 @@ export function SiteFooter() {
           <p className="mt-4 max-w-[38ch] text-[14px] leading-relaxed text-ink-2">
             Ruko holds a risky payment and calls the customer in their language, using a Bolna voice agent, before the money leaves. Built for the Bolna × YC Symphony Buildathon, Oct 2026.
           </p>
-          <p className="mt-4 text-[12.5px] text-muted">Logo concept by Yashvardhan Thanvi. Code under the MIT licence.</p>
+          <p className="mt-4 text-[12.5px] text-muted">
+            Logo concept by Yashvardhan Thanvi.{" "}
+            <a className="underline underline-offset-2 hover:text-ink" href="https://github.com/Thanatos9404/ruko" target="_blank" rel="noreferrer">
+              Code on GitHub
+            </a>{" "}
+            under the MIT licence.
+          </p>
         </div>
         <div>
           <p className="t-eyebrow mb-4">Product</p>
@@ -46,7 +52,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="container-x border-t border-hair py-5 text-[12px] text-muted">
-        Demo Bank is fictional. People, payees and numbers in the demo are invented; phone numbers use the reserved UK drama range. Ruko is not affiliated with Bolna, RBI, NPCI or any bank.
+        Demo Bank is fictional. People, payees and numbers in the demo are invented; phone numbers use the reserved UK drama range. Ruko is not affiliated with Bolna, Y Combinator, RBI, NPCI or any bank.
       </div>
     </footer>
   );

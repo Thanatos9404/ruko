@@ -26,7 +26,7 @@
     {"id": "en_surprise_secret", "lang": "en", "expect": "genuine", "adversarial": "benign secrecy", "text": "Please don't tell my wife, it's a surprise anniversary trip. I'm booking the hotel on MakeMyTrip myself."},
     {"id": "en_sip_zerodha", "lang": "en", "expect": "genuine", "adversarial": "genuine investment", "text": "I'm starting a monthly SIP in an index fund through Zerodha Coin in my own demat account."},
     {"id": "bn_rent", "lang": "bn", "expect": "genuine", "text": "আমি আমার বাড়িওয়ালাকে প্রতি মাসের মতো ভাড়া পাঠাচ্ছি, ওনাকে দুই বছর ধরে চিনি।"},
-    {"id": "pii_redaction", "lang": "en", "text": "send 5000 to testuser@okicici, account 123456789012, call +91 90000 12345 or visit www.example-pay.in/now"},
+    {"id": "pii_redaction", "lang": "en", "text": "send 5000 to testuser@okdemo, account 123456789012, call +91 90000 12345 or visit www.example-pay.in/now"},
     {"id": "short_ok", "lang": "en", "text": "ok"},
     {"id": "empty", "lang": "en", "text": ""}
   ]

@@ -11,7 +11,7 @@ const base = (process.argv[2] ?? "http://localhost:5430").replace(/\/$/, "");
 const outDir = process.argv[3] ?? "docs/screenshots";
 const only = process.argv[4];
 mkdirSync(outDir, { recursive: true });
-const chrome = ["C:/Program Files/Google/Chrome/Application/chrome.exe", "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"].find((p) => existsSync(p));
+const chrome = [process.env.CHROME_PATH, "C:/Program Files/Google/Chrome/Application/chrome.exe", "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe", "/usr/bin/google-chrome", "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"].filter(Boolean).find((p) => existsSync(p));
 const browser = await puppeteer.launch({ executablePath: chrome, headless: true });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
