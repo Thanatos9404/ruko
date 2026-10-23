@@ -1,23 +1,23 @@
 {
  "scenario": "task-job",
  "lang": "en",
- "recorded_code_word": "MOR 41",
+ "recorded_code_word": "SURAJ 46",
  "recorded_decision": "block",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "Hi Neha, Ruko here, Demo Bank's automated safety line, on a recorded call. Your code word is MOR 41. Does it match your app?"
+   "text": "Hi Neha, Ruko here, Demo Bank's automated safety line, on a recorded call. Your code word is SURAJ 46. Does it match your app?"
   },
   {
    "role": "customer",
-   "text": "Haan, MOR 41 matches. But I'm a bit worried, I just got a message asking for ₹12,000 to get my commission, is that normal?"
+   "text": "Haan, SURAJ 46 matches. But why are you calling? I'm in the middle of a task."
   },
   {
    "role": "tool",
    "tool": "get_check_context",
    "args": {
-    "check_id": "chk_XXAWTMFQL8",
+    "check_id": "chk_VDYWBETFA7",
     "execution_id": "eval-demo-task-job-en"
    }
   },
@@ -27,15 +27,16 @@
   },
   {
    "role": "customer",
-   "text": "It's for a prepaid task on Telegram, they want me to send ₹12,000 to get my ₹38,000 commission. No, nobody is on a call, it's just chat messages."
+   "text": "It’s for a prepaid task—I need to pay ₹12,000 to get my commission. And no, nobody’s on call with me right now."
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_XXAWTMFQL8",
+    "check_id": "chk_VDYWBETFA7",
+    "execution_id": "eval-demo-task-job-en",
     "signal": "pay_to_earn",
-    "evidence": "Must pay ₹12,000 to get ₹38,000 commission",
+    "evidence": "Must pay ₹12,000 to get commission",
     "confidence": "high",
     "pattern_hint": "task_job"
    }
@@ -46,15 +47,16 @@
   },
   {
    "role": "customer",
-   "text": "Arre, that makes sense, I don’t have to pay anything to earn. I’ll stop this right now, thanks for warning me."
+   "text": "Oh... you're right. I shouldn't have to pay to get my money. I'll stop this now."
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_XXAWTMFQL8",
+    "check_id": "chk_VDYWBETFA7",
+    "execution_id": "eval-demo-task-job-en",
     "signal": "wants_to_cancel",
-    "evidence": "I’ll stop this right now",
+    "evidence": "I'll stop this now",
     "confidence": "high",
     "pattern_hint": "none"
    }
@@ -63,14 +65,15 @@
    "role": "tool",
    "tool": "set_decision",
    "args": {
-    "check_id": "chk_XXAWTMFQL8",
+    "check_id": "chk_VDYWBETFA7",
+    "execution_id": "eval-demo-task-job-en",
     "recommendation": "block",
-    "reason": "Payment is for a task job that requires upfront payment, which is a scam pattern."
+    "reason": "Payment is for a task job and must be paid to receive money—this is a scam pattern."
    }
   },
   {
    "role": "agent",
-   "text": "For your safety, this payment is stopped. Your money is safe in your account. If someone has been pressuring you, call 1930. Thank you for being careful. Goodbye."
+   "text": "For your safety, this payment is stopped. Your money is safe in your account. If someone has been pressuring you, call one nine three zero. Thank you, Neha. Have a great day."
   }
  ]
 }

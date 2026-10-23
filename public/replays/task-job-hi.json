@@ -1,52 +1,79 @@
 {
  "scenario": "task-job",
  "lang": "hi",
- "recorded_code_word": "दीया 56",
+ "recorded_code_word": "इलायची 95",
  "recorded_decision": "block",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "नमस्ते Neha जी, मैं रुको, Demo Bank की ऑटोमेटेड सुरक्षा लाइन; यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है दीया 56। क्या यह ऐप से मिलता है?"
+   "text": "नमस्ते Neha जी, मैं रुको, Demo Bank की ऑटोमेटेड सुरक्षा लाइन; यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है इलायची 95। क्या यह ऐप से मिलता है?"
   },
   {
    "role": "customer",
-   "text": "नमस्ते, मुझे ऐप से कोई कोड शब्द नहीं मिला। यह कॉल किस बारे में है?"
+   "text": "हाँ, यह कोड शब्द मेरे ऐप में दिख रहा है।"
   },
   {
    "role": "tool",
-   "tool": "codeword_mismatch",
+   "tool": "get_check_context",
    "args": {
-    "check_id": "chk_LQDVTHGN9W",
-    "signal": "codeword_mismatch",
-    "evidence": "कोड शब्द ऐप में नहीं मिला",
-    "confidence": "high",
-    "pattern_hint": "none"
+    "check_id": "chk_SKQL63DHP4",
+    "execution_id": "eval-demo-task-job-hi"
    }
+  },
+  {
+   "role": "agent",
+   "text": "यह भुगतान किस लिए है, और क्या कोई और कॉल पर आपको बता रहा है कि क्या करना है?"
+  },
+  {
+   "role": "customer",
+   "text": "यह प्रीपेड टास्क के लिए है, और कोई कॉल पर नहीं है।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_LQDVTHGN9W",
-    "signal": "codeword_mismatch",
-    "evidence": "कोड शब्द ऐप में नहीं मिला",
+    "check_id": "chk_SKQL63DHP4",
+    "execution_id": "eval-demo-task-job-hi",
+    "signal": "pay_to_earn",
+    "evidence": "प्रीपेड टास्क के लिए",
     "confidence": "high",
-    "pattern_hint": "none"
+    "pattern_hint": "task_job"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "नौकरी देने वाली कोई भी असली कंपनी आपसे पैसे नहीं माँगती। क्या काम या टास्क की कमाई पाने के लिए यह भुगतान करना ज़रूरी बताया गया है?"
+  },
+  {
+   "role": "customer",
+   "text": "हाँ, लेकिन अब मुझे लगता है कि यह सही नहीं है, मैं पैसे नहीं भेजूँगी।"
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_SKQL63DHP4",
+    "execution_id": "eval-demo-task-job-hi",
+    "signal": "wants_to_cancel",
+    "evidence": "अब मुझे लगता है कि यह सही नहीं है, मैं पैसे नहीं भेजूँगी",
+    "confidence": "high",
+    "pattern_hint": "task_job"
    }
   },
   {
    "role": "tool",
    "tool": "set_decision",
    "args": {
-    "check_id": "chk_LQDVTHGN9W",
+    "check_id": "chk_SKQL63DHP4",
+    "execution_id": "eval-demo-task-job-hi",
     "recommendation": "block",
-    "reason": "कोड शब्द में मिसमैच हुआ है, इसलिए भुगतान रोक दिया गया है।"
+    "reason": "ग्राहक ने भुगतान रद्द करने की इच्छा जताई है।"
    }
   },
   {
    "role": "agent",
-   "text": "आपकी सुरक्षा के लिए यह भुगतान रोक दिया गया है। पैसा आपके खाते में सुरक्षित है। अगर किसी ने दबाव डाला है, तो 1930 पर कॉल करें। धन्यवाद, आपका दिन शुभ हो।"
+   "text": "आपकी सुरक्षा के लिए यह भुगतान रोक दिया गया है। पैसा आपके खाते में सुरक्षित है। अगर किसी ने दबाव डाला है, तो एक नौ तीन शून्य पर कॉल करें। धन्यवाद, आपका दिन अच्छा रहे।"
   }
  ]
 }

@@ -1,41 +1,42 @@
 {
  "scenario": "flat-deposit",
  "lang": "hi",
- "recorded_code_word": "मोगरा 82",
+ "recorded_code_word": "अनार 16",
  "recorded_decision": "release",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "नमस्ते Priya जी, मैं रुको, Demo Bank की ऑटोमेटेड सुरक्षा लाइन; यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है मोगरा 82। क्या यह ऐप से मिलता है?"
+   "text": "नमस्ते Priya जी, मैं रुको, Demo Bank की ऑटोमेटेड सुरक्षा लाइन; यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है अनार 16। क्या यह ऐप से मिलता है?"
   },
   {
    "role": "customer",
-   "text": "जी, हाँ। मोगरा 82 ही मेरा कोड शब्द है।"
+   "text": "हाँ, अनार 16 सही है।"
   },
   {
    "role": "tool",
    "tool": "get_check_context",
    "args": {
-    "check_id": "chk_5SZCWNP4H3",
+    "check_id": "chk_SZ8UDVB6VL",
     "execution_id": "eval-demo-flat-deposit-hi"
    }
   },
   {
    "role": "agent",
-   "text": "आपके ऐप के अनुसार भुगतान करते समय आप एक कॉल पर थीं। यह भुगतान किस लिए है, और आप किससे बात कर रही थीं?"
+   "text": "आपके ऐप के अनुसार भुगतान करते समय आप एक कॉल पर थे। यह भुगतान किस लिए है, और आप किससे बात कर रहे थे?"
   },
   {
    "role": "customer",
-   "text": "यह फ्लैट B-1204 की बुकिंग राशि है, मैं श्री गणेश बिल्डर्स को दे रही हूँ।"
+   "text": "यह फ्लैट की बुकिंग राशि है, और मैं अपने पति अनिल से बात कर रही थी।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_5SZCWNP4H3",
-    "signal": "purpose_consistent",
-    "evidence": "भुगतान फ्लैट बुकिंग के लिए है",
+    "check_id": "chk_SZ8UDVB6VL",
+    "execution_id": "eval-demo-flat-deposit-hi",
+    "signal": "family_helping",
+    "evidence": "पति अनिल से बात कर रही है",
     "confidence": "high",
     "pattern_hint": "none"
    }
@@ -46,15 +47,36 @@
   },
   {
    "role": "customer",
-   "text": "नहीं, किसी ने नहीं बताया। मैं अपने पति अनिल से फोन पर हूँ, वे लेटर से खाता नंबर पढ़ रहे हैं।"
+   "text": "नहीं, किसी ने नहीं बताया। मैं खुद से यह भुगतान कर रही हूँ।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_5SZCWNP4H3",
-    "signal": "family_helping",
-    "evidence": "पति अनिल लेटर से खाता नंबर पढ़ रहे हैं",
+    "check_id": "chk_SZ8UDVB6VL",
+    "execution_id": "eval-demo-flat-deposit-hi",
+    "signal": "own_initiative",
+    "evidence": "खुद से भुगतान कर रही हूँ",
+    "confidence": "high",
+    "pattern_hint": "none"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "अगर कोई अब भी दूसरी कॉल पर है, तो क्या आप वह कॉल काट सकते हैं? मैं इंतज़ार करूँगी।"
+  },
+  {
+   "role": "customer",
+   "text": "कोई और कॉल नहीं है, मैं अकेली हूँ।"
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_SZ8UDVB6VL",
+    "execution_id": "eval-demo-flat-deposit-hi",
+    "signal": "knows_payee",
+    "evidence": "पति अनिल से बात कर रही है, फ्लैट की बुकिंग",
     "confidence": "high",
     "pattern_hint": "none"
    }
@@ -63,9 +85,10 @@
    "role": "tool",
    "tool": "set_decision",
    "args": {
-    "check_id": "chk_5SZCWNP4H3",
+    "check_id": "chk_SZ8UDVB6VL",
+    "execution_id": "eval-demo-flat-deposit-hi",
     "recommendation": "release",
-    "reason": "भुगतान फ्लैट बुकिंग के लिए है, पति अनिल इसमें मदद कर रहे हैं, और कोई चेतावनी नहीं है।"
+    "reason": "भुगतान फ्लैट बुकिंग के लिए है, पति अनिल से बात हुई, और ग्राहक ने खुद इसे शुरू किया।"
    }
   },
   {

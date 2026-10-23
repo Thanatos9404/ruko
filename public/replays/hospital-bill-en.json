@@ -1,23 +1,23 @@
 {
  "scenario": "hospital-bill",
  "lang": "en",
- "recorded_code_word": "HAVA 81",
+ "recorded_code_word": "TULSI 85",
  "recorded_decision": "release",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "Hi Mohan, Ruko here, Demo Bank's automated safety line, on a recorded call. Your code word is HAVA 81. Does it match your app?"
+   "text": "Hi Mohan, Ruko here, Demo Bank's automated safety line, on a recorded call. Your code word is TULSI 85. Does it match your app?"
   },
   {
    "role": "customer",
-   "text": "Haan, HAVA 81, matches. Kya hua? Main hospital mein hoon, jaldi batao."
+   "text": "Yes, TULSI 85 matches. I'm in a hurry, just confirm the payment."
   },
   {
    "role": "tool",
    "tool": "get_check_context",
    "args": {
-    "check_id": "chk_KGQF2G5Y33",
+    "check_id": "chk_BEHHJHNAFW",
     "execution_id": "eval-demo-hospital-bill-en"
    }
   },
@@ -27,15 +27,16 @@
   },
   {
    "role": "customer",
-   "text": "It's for my father's surgery deposit at City Care Hospital, ₹85,000. I was on call with my brother, he was just telling me which counter to go to."
+   "text": "It’s for my father’s surgery deposit, and my brother was on the line from the ward. Just finish it, please."
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_KGQF2G5Y33",
+    "check_id": "chk_BEHHJHNAFW",
+    "execution_id": "eval-demo-hospital-bill-en",
     "signal": "family_helping",
-    "evidence": "Speaking with brother, helping with payment",
+    "evidence": "My brother was on the line from the ward",
     "confidence": "high",
     "pattern_hint": "none"
    }
@@ -46,15 +47,16 @@
   },
   {
    "role": "customer",
-   "text": "No, nobody told me anything. Just my brother on the phone, and the hospital staff. Why, is there a problem?"
+   "text": "No, nobody told me anything. Just process the payment, I need to get back."
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_KGQF2G5Y33",
+    "check_id": "chk_BEHHJHNAFW",
+    "execution_id": "eval-demo-hospital-bill-en",
     "signal": "own_initiative",
-    "evidence": "No one told him what to say",
+    "evidence": "Nobody told me anything",
     "confidence": "high",
     "pattern_hint": "none"
    }
@@ -65,15 +67,16 @@
   },
   {
    "role": "customer",
-   "text": "Okay, one second... done, he's off. Now what's the issue?"
+   "text": "Yes, just a second, let me put him on hold."
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_KGQF2G5Y33",
+    "check_id": "chk_BEHHJHNAFW",
+    "execution_id": "eval-demo-hospital-bill-en",
     "signal": "purpose_consistent",
-    "evidence": "Payment for father's surgery deposit at hospital",
+    "evidence": "Payment for father’s surgery deposit to City Care Hospital",
     "confidence": "high",
     "pattern_hint": "none"
    }
@@ -82,14 +85,15 @@
    "role": "tool",
    "tool": "set_decision",
    "args": {
-    "check_id": "chk_KGQF2G5Y33",
+    "check_id": "chk_BEHHJHNAFW",
+    "execution_id": "eval-demo-hospital-bill-en",
     "recommendation": "release",
-    "reason": "The payment is for a hospital surgery deposit, matches the payee, and Mohan acted on his own initiative with help from his brother."
+    "reason": "The payment is for a hospital deposit, matches the payee, and the customer acted on their own initiative."
    }
   },
   {
    "role": "agent",
-   "text": "Thank you. Your payment of 85 thousand rupees is going through now. Have a safe day."
+   "text": "Thank you. Your payment of 85 thousand rupees is going through now. The money is safe in your account until the payment completes. Have a good day."
   }
  ]
 }

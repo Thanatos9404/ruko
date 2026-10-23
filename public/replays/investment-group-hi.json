@@ -1,41 +1,42 @@
 {
  "scenario": "investment-group",
  "lang": "hi",
- "recorded_code_word": "धूप 40",
+ "recorded_code_word": "पतंग 84",
  "recorded_decision": "block",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "नमस्ते Rohan जी, मैं रुको, Demo Bank की ऑटोमेटेड सुरक्षा लाइन; यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है धूप 40। क्या यह ऐप से मिलता है?"
+   "text": "नमस्ते Rohan जी, मैं रुको, Demo Bank की ऑटोमेटेड सुरक्षा लाइन; यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है पतंग 84। क्या यह ऐप से मिलता है?"
   },
   {
    "role": "customer",
-   "text": "नमस्ते, मैं रोहन बोल रहा हूँ। हाँ, मुझे यह कोड शब्द मिला है, पर मैं समझ नहीं पा रहा हूँ कि यह किसलिए है। क्या आप बता सकते हैं?"
+   "text": "हाँ, कोड शब्द पतंग 84 ऐप से मेल खाता है। मैं रोहन हूँ, क्या बात है?"
   },
   {
    "role": "tool",
    "tool": "get_check_context",
    "args": {
-    "check_id": "chk_WWLLE7SDEB",
+    "check_id": "chk_PLVCA8XU8C",
     "execution_id": "eval-demo-investment-group-hi"
    }
   },
   {
    "role": "agent",
-   "text": "रोहन जी, आपका भुगतान 75 हज़ार रुपये का है, और यह पहली बार अल्फा ट्रेड डेस्क को भेजा जा रहा है। यह भुगतान किस लिए है?"
+   "text": "यह भुगतान किस लिए है, और क्या कोई और कॉल पर आपको बता रहा है कि क्या करना है?"
   },
   {
    "role": "customer",
-   "text": "मैंने सोचा था यह प्रॉफ़िट टैक्स है, जो उन्होंने मेरे ₹3.4 लाख के मुनाफ़े पर निकालने के लिए माँगा था। पर अब मुझे शक हो रहा है, क्या यह सही है?"
+   "text": "यह स्टॉक ट्रेडिंग के मुनाफ़े पर टैक्स है, और ग्रुप वाले ही कॉल पर बता रहे हैं।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_WWLLE7SDEB",
+    "check_id": "chk_PLVCA8XU8C",
+    "execution_id": "eval-demo-investment-group-hi",
     "signal": "promised_returns",
-    "evidence": "प्रॉफ़िट टैक्स के नाम पर भुगतान माँगा गया",
+    "evidence": "स्टॉक ट्रेडिंग के मुनाफ़े पर टैक्स",
     "confidence": "high",
     "pattern_hint": "investment_trading"
    }
@@ -46,47 +47,50 @@
   },
   {
    "role": "customer",
-   "text": "हाँ, यह उसी स्टॉक टिप्स ग्रुप के लिए है। पर अब मुझे लगता है मैं गलती कर रहा हूँ, मैं यह भुगतान रोक दूँगा। मैं अपनी बहन मीरा को कॉल करके बताता हूँ।"
+   "text": "मैं समझ गया, यह धोखा है। मैं भुगतान रोक दूँगा, और अपनी बहन मीरा को कॉल करूँगा।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_WWLLE7SDEB",
+    "check_id": "chk_PLVCA8XU8C",
+    "execution_id": "eval-demo-investment-group-hi",
     "signal": "wants_to_cancel",
-    "evidence": "मैं यह भुगतान रोक दूँगा",
+    "evidence": "मैं भुगतान रोक दूँगा",
     "confidence": "high",
-    "pattern_hint": "investment_trading"
+    "pattern_hint": "none"
    }
   },
   {
    "role": "tool",
    "tool": "set_decision",
    "args": {
-    "check_id": "chk_WWLLE7SDEB",
+    "check_id": "chk_PLVCA8XU8C",
+    "execution_id": "eval-demo-investment-group-hi",
     "recommendation": "block",
-    "reason": "भुगतान निवेश या ट्रेडिंग ऐप के लिए है, जिसमें फ़ीस माँगी जा रही है। यह धोखाधड़ी का संकेत है।"
+    "reason": "भुगतान रोक दिया गया है। पैसा खाते में सुरक्षित है।"
    }
   },
   {
    "role": "agent",
-   "text": "आपकी सुरक्षा के लिए यह भुगतान रोक दिया गया है। पैसा आपके खाते में सुरक्षित है। अगर किसी ने दबाव डाला है, तो 1930 पर कॉल करें। क्या मैं आपकी बहन Meera जी को कॉल करवाऊँ, ताकि आप उनसे बात कर लें?"
+   "text": "आपकी सुरक्षा के लिए यह भुगतान रोक दिया गया है। पैसा आपके खाते में सुरक्षित है। अगर किसी ने दबाव डाला है, तो एक नौ तीन शून्य पर कॉल करें। क्या मैं आपकी बहन Meera जी को कॉल करवाऊँ, ताकि आप उनसे बात कर लें?"
   },
   {
    "role": "customer",
-   "text": "हाँ, कृपया मीरा को कॉल करवा दीजिए। मैं उनसे बात करके आगे की सलाह लूँगा, और धन्यवाद जो आपने मुझे सचेत किया।"
+   "text": "हाँ, कृपया मीरा को कॉल करवा दीजिए, मैं उनसे बात करना चाहता हूँ। धन्यवाद।"
   },
   {
    "role": "tool",
    "tool": "call_trusted_contact",
    "args": {
-    "check_id": "chk_WWLLE7SDEB",
+    "check_id": "chk_PLVCA8XU8C",
+    "execution_id": "eval-demo-investment-group-hi",
     "customer_consent": "yes"
    }
   },
   {
    "role": "agent",
-   "text": "मैंने Meera को कॉल करने के लिए कह दिया है। जब तक आप उनसे बात नहीं कर लेते, पैसा आपके खाते में ही रहेगा। धन्यवाद आपका, आपकी सुरक्षा के लिए खुशी हुई। अच्छा दिन रहे।"
+   "text": "मैंने Meera को कॉल करने के लिए कह दिया है। जब तक आप उनसे बात नहीं कर लेते, पैसा आपके खाते में ही रहेगा। धन्यवाद, आपकी सुरक्षा के लिए धन्यवाद। अच्छा दिन रहे।"
   }
  ]
 }

@@ -1,23 +1,23 @@
 {
  "scenario": "flat-deposit",
  "lang": "en",
- "recorded_code_word": "TOTA 53",
+ "recorded_code_word": "MOTI 50",
  "recorded_decision": "release",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "Hi Priya, Ruko here, Demo Bank's automated safety line, on a recorded call. Your code word is TOTA 53. Does it match your app?"
+   "text": "Hi Priya, Ruko here, Demo Bank's automated safety line, on a recorded call. Your code word is MOTI 50. Does it match your app?"
   },
   {
    "role": "customer",
-   "text": "Yes, TOTA 53 matches. Please go ahead."
+   "text": "Yes, that's right. Go ahead."
   },
   {
    "role": "tool",
    "tool": "get_check_context",
    "args": {
-    "check_id": "chk_LBEAR6PBVE",
+    "check_id": "chk_7U3TX6KCDE",
     "execution_id": "eval-demo-flat-deposit-en"
    }
   },
@@ -27,13 +27,14 @@
   },
   {
    "role": "customer",
-   "text": "Yes, that’s my husband Anil on the line—he’s just reading out the account number from the allotment letter. This payment is the booking amount for flat B-1204 with Shree Ganesh Builders."
+   "text": "It's for my flat booking at Shree Ganesh Builders. My husband Anil is just reading the account number from our allotment letter to me."
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_LBEAR6PBVE",
+    "check_id": "chk_7U3TX6KCDE",
+    "execution_id": "eval-demo-flat-deposit-en",
     "signal": "family_helping",
     "evidence": "Husband Anil is helping with the payment",
     "confidence": "high",
@@ -46,15 +47,16 @@
   },
   {
    "role": "customer",
-   "text": "No, nobody has told me anything. My husband is just helping me read out the account details from the letter, that's all."
+   "text": "No, no one told me anything. Please just process it quickly, I'm in a bit of a rush."
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_LBEAR6PBVE",
+    "check_id": "chk_7U3TX6KCDE",
+    "execution_id": "eval-demo-flat-deposit-en",
     "signal": "own_initiative",
-    "evidence": "Customer says no one told her what to say",
+    "evidence": "No one told her what to say to the bank",
     "confidence": "high",
     "pattern_hint": "none"
    }
@@ -65,15 +67,16 @@
   },
   {
    "role": "customer",
-   "text": "Sure, just a second—I'll put Anil on hold. Go ahead."
+   "text": "Okay, done, he's off the line now. Please go ahead."
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_LBEAR6PBVE",
+    "check_id": "chk_7U3TX6KCDE",
+    "execution_id": "eval-demo-flat-deposit-en",
     "signal": "purpose_consistent",
-    "evidence": "Payment is for flat booking with Shree Ganesh Builders",
+    "evidence": "Payment is for flat booking, payee is builders",
     "confidence": "high",
     "pattern_hint": "none"
    }
@@ -82,9 +85,10 @@
    "role": "tool",
    "tool": "set_decision",
    "args": {
-    "check_id": "chk_LBEAR6PBVE",
+    "check_id": "chk_7U3TX6KCDE",
+    "execution_id": "eval-demo-flat-deposit-en",
     "recommendation": "release",
-    "reason": "Customer knows the payee, the purpose fits, and made the payment on their own initiative."
+    "reason": "The payment is for a flat booking, the payee matches, and Priya acted on her own with her husband's help."
    }
   },
   {

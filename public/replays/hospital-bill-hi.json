@@ -1,23 +1,23 @@
 {
  "scenario": "hospital-bill",
  "lang": "hi",
- "recorded_code_word": "मोती 33",
+ "recorded_code_word": "आम 77",
  "recorded_decision": "release",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "नमस्ते Mohan जी, मैं रुको, Demo Bank की ऑटोमेटेड सुरक्षा लाइन; यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है मोती 33। क्या यह ऐप से मिलता है?"
+   "text": "नमस्ते Mohan जी, मैं रुको, Demo Bank की ऑटोमेटेड सुरक्षा लाइन; यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है आम 77। क्या यह ऐप से मिलता है?"
   },
   {
    "role": "customer",
-   "text": "हाँ, यह ऐप से मिलता है। पर मैं अभी अस्पताल में हूँ, जल्दी में हूँ। यह कौन सी लाइन है? मुझे अपने भाई से बात करनी है।"
+   "text": "हाँ, ऐप से मिल गया।"
   },
   {
    "role": "tool",
    "tool": "get_check_context",
    "args": {
-    "check_id": "chk_9W8955MCM7",
+    "check_id": "chk_LQK7WRS3M6",
     "execution_id": "eval-demo-hospital-bill-hi"
    }
   },
@@ -27,15 +27,16 @@
   },
   {
    "role": "customer",
-   "text": "यह मेरे पिता के इलाज का भुगतान है, सर्जरी के लिए। मैं अपने भाई से बात कर रहा था, वह वार्ड में है। कृपया जल्दी बताइए, क्या कोई दिक्कत है?"
+   "text": "यह मेरे पिताजी की सर्जरी का भुगतान है, और मैं अपने भाई से बात कर रहा था।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_9W8955MCM7",
+    "check_id": "chk_LQK7WRS3M6",
+    "execution_id": "eval-demo-hospital-bill-hi",
     "signal": "family_helping",
-    "evidence": "मेरा भाई वार्ड में है",
+    "evidence": "मैं अपने भाई से बात कर रहा था",
     "confidence": "high",
     "pattern_hint": "none"
    }
@@ -46,15 +47,16 @@
   },
   {
    "role": "customer",
-   "text": "नहीं, किसी ने नहीं बताया। मैं सिर्फ भुगतान कर रहा हूँ, बस। अब मुझे अपने भाई से बात करनी है, कृपया लाइन दीजिए।"
+   "text": "नहीं, किसी ने नहीं बताया। बस भाई ने काउंटर बताया था।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_9W8955MCM7",
+    "check_id": "chk_LQK7WRS3M6",
+    "execution_id": "eval-demo-hospital-bill-hi",
     "signal": "own_initiative",
-    "evidence": "मैं सिर्फ भुगतान कर रहा हूँ, बस",
+    "evidence": "बस भाई ने काउंटर बताया था",
     "confidence": "high",
     "pattern_hint": "none"
    }
@@ -65,15 +67,16 @@
   },
   {
    "role": "customer",
-   "text": "नहीं, मैं किसी और कॉल पर नहीं हूँ। मेरा भाई वार्ड से फ़ोन पर है, बस वही। क्या आप असली बैंक लाइन हैं? मैं भुगतान करने की जल्दी में हूँ, कृपया मुझे काउंटर पर जाने दीजिए।"
+   "text": "हाँ, काट रहा हूँ। बस बताइए क्या करना है।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_9W8955MCM7",
+    "check_id": "chk_LQK7WRS3M6",
+    "execution_id": "eval-demo-hospital-bill-hi",
     "signal": "purpose_consistent",
-    "evidence": "पिता के इलाज के लिए सर्जरी का भुगतान",
+    "evidence": "पिताजी की सर्जरी का भुगतान",
     "confidence": "high",
     "pattern_hint": "none"
    }
@@ -82,9 +85,10 @@
    "role": "tool",
    "tool": "set_decision",
    "args": {
-    "check_id": "chk_9W8955MCM7",
+    "check_id": "chk_LQK7WRS3M6",
+    "execution_id": "eval-demo-hospital-bill-hi",
     "recommendation": "release",
-    "reason": "भुगतान का कारण अस्पताल के इलाज से मेल खाता है, और ग्राहक ने खुद की योजना बताई है।"
+    "reason": "भुगतान का कारण पिताजी की सर्जरी है, और आप अपने भाई से बात कर रहे थे। भुगतान रुका है, पैसा सुरक्षित है।"
    }
   },
   {

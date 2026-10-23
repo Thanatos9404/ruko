@@ -1,60 +1,46 @@
 {
  "scenario": "digital-arrest",
  "lang": "hi",
- "recorded_code_word": "पर्वत 59",
+ "recorded_code_word": "पर्वत 48",
  "recorded_decision": "block",
  "note": "Recorded text-mode conversation (Nebius-hosted stand-in LLM, same prompt and tools as the Bolna agent). Replayed tool calls run through the live engine.",
  "turns": [
   {
    "role": "agent",
-   "text": "नमस्ते Kamla जी, मैं रुको, Demo Bank की ऑटोमेटेड सुरक्षा लाइन; यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है पर्वत 59। क्या यह ऐप से मिलता है?"
+   "text": "नमस्ते Kamla जी, मैं रुको, Demo Bank की ऑटोमेटेड सुरक्षा लाइन; यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है पर्वत 48। क्या यह ऐप से मिलता है?"
   },
   {
    "role": "customer",
-   "text": "जी, हाँ, पर्वत 59 ही मेरा कोड शब्द है।"
-  },
-  {
-   "role": "tool",
-   "tool": "get_check_context",
-   "args": {
-    "check_id": "chk_YNMGUAGAV3",
-    "execution_id": "eval-demo-digital-arrest-hi"
-   }
-  },
-  {
-   "role": "agent",
-   "text": "आपके ऐप के अनुसार भुगतान करते समय आप एक कॉल पर थे। यह भुगतान किस लिए है, और आप किससे बात कर रहे थे?"
-  },
-  {
-   "role": "customer",
-   "text": "पैसा कुछ वेरिफिकेशन के लिए भेज रही हूँ... बस वही।"
+   "text": "हाँ, पर्वत 48 मेरे कोड शब्द हैं। लेकिन सुनिए, मैं अभी कुछ मुश्किल में हूँ... एक सीबीआई अफसर मुझे वीडियो कॉल पर रोके हुए हैं।"
   },
   {
    "role": "tool",
    "tool": "record_signal",
    "args": {
-    "check_id": "chk_YNMGUAGAV3",
-    "signal": "pay_to_receive",
-    "evidence": "पैसा कुछ वेरिफिकेशन के लिए भेज रही हूँ",
-    "confidence": "high",
-    "pattern_hint": "none"
-   }
-  },
-  {
-   "role": "agent",
-   "text": "जिस लॉटरी में हिस्सा नहीं लिया, उसे जीत नहीं सकते, और असली इनाम फ़ीस नहीं माँगता। क्या यह कोई इनाम, गिफ़्ट या लोन पाने के लिए फ़ीस है?"
-  },
-  {
-   "role": "customer",
-   "text": "नहीं, यह कोई इनाम नहीं है... असल में सीबीआई अफ़सर अभी मुझसे वीडियो कॉल पर बात कर रहे हैं, उन्होंने कहा है कि मेरे आधार से ड्रग्स वाला पार्सल मिला है।"
-  },
-  {
-   "role": "tool",
-   "tool": "record_signal",
-   "args": {
-    "check_id": "chk_YNMGUAGAV3",
+    "check_id": "chk_3CA2H66Z7M",
+    "execution_id": "eval-demo-digital-arrest-hi",
     "signal": "authority_threat",
-    "evidence": "सीबीआई अफ़सर वीडियो कॉल पर बात कर रहे हैं, ड्रग्स वाला पार्सल मिला है",
+    "evidence": "एक सीबीआई अफसर वीडियो कॉल पर है",
+    "confidence": "high",
+    "pattern_hint": "digital_arrest"
+   }
+  },
+  {
+   "role": "agent",
+   "text": "क़ानून में 'डिजिटल अरेस्ट' जैसी कोई चीज़ नहीं है। पुलिस या सीबीआई वीडियो कॉल पर पूछताछ नहीं करती। क्या उस व्यक्ति ने कहा कि वह पुलिस, सीबीआई, कस्टम या अदालत से है, या आपसे वीडियो कॉल पर बने रहने को कहा?"
+  },
+  {
+   "role": "customer",
+   "text": "हाँ, उसने कहा वह सीबीआई अफसर है और मुझे वीडियो कॉल पर ही रहने को कहा है। उसने बेटे को बताने से मना किया है... क्या आप मेरा पैसा रोक सकती हैं?"
+  },
+  {
+   "role": "tool",
+   "tool": "record_signal",
+   "args": {
+    "check_id": "chk_3CA2H66Z7M",
+    "execution_id": "eval-demo-digital-arrest-hi",
+    "signal": "secrecy_demand",
+    "evidence": "बेटे को बताने से मना किया",
     "confidence": "high",
     "pattern_hint": "digital_arrest"
    }
@@ -63,24 +49,26 @@
    "role": "tool",
    "tool": "set_decision",
    "args": {
-    "check_id": "chk_YNMGUAGAV3",
+    "check_id": "chk_3CA2H66Z7M",
+    "execution_id": "eval-demo-digital-arrest-hi",
     "recommendation": "block",
-    "reason": "क़ानून में 'डिजिटल अरेस्ट' जैसी कोई चीज़ नहीं है। पुलिस या सीबीआई वीडियो कॉल पर पूछताछ नहीं करती।"
+    "reason": "वीडियो कॉल पर सीबीआई अफसर का दावा और रिश्तेदार को बताने से मना करना दोनों धोखाधड़ी के संकेत हैं।"
    }
   },
   {
    "role": "agent",
-   "text": "आपकी सुरक्षा के लिए यह भुगतान रोक दिया गया है। पैसा आपके खाते में सुरक्षित है। अगर किसी ने दबाव डाला है, तो 1930 पर कॉल करें। क्या मैं आपके बेटे Ravi जी को कॉल करवाऊँ, ताकि आप उनसे बात कर लें?"
+   "text": "आपकी सुरक्षा के लिए यह भुगतान रोक दिया गया है। पैसा आपके खाते में सुरक्षित है। अगर किसी ने दबाव डाला है, तो एक नौ तीन शून्य पर कॉल करें। क्या मैं आपके बेटे Ravi जी को कॉल करवाऊँ, ताकि आप उनसे बात कर लें?"
   },
   {
    "role": "customer",
-   "text": "जी, हाँ, कृपया रवि को कॉल करवा दीजिए। मुझे अब समझ आया कि यह धोखा था। पैसा रोकने के लिए धन्यवाद।"
+   "text": "हाँ, कृपया रवि को कॉल करवा दीजिए... और धन्यवाद, आपने मेरी बहुत मदद की।"
   },
   {
    "role": "tool",
    "tool": "call_trusted_contact",
    "args": {
-    "check_id": "chk_YNMGUAGAV3",
+    "check_id": "chk_3CA2H66Z7M",
+    "execution_id": "eval-demo-digital-arrest-hi",
     "customer_consent": "yes"
    }
   },

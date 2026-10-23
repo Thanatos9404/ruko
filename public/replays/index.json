@@ -9,7 +9,7 @@
   "id": "digital-arrest",
   "lang": "hi",
   "decision": "block",
-  "turns": 4
+  "turns": 3
  },
  {
   "id": "investment-group",
@@ -33,7 +33,7 @@
   "id": "flat-deposit",
   "lang": "hi",
   "decision": "release",
-  "turns": 3
+  "turns": 4
  },
  {
   "id": "task-job",
@@ -45,7 +45,7 @@
   "id": "task-job",
   "lang": "hi",
   "decision": "block",
-  "turns": 1
+  "turns": 3
  },
  {
   "id": "hospital-bill",
