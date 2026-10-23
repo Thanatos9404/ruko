@@ -1,7 +1,7 @@
 import type { Confidence, ContactStatus, Lang, Outcome } from "../../shared/types.js";
 import { signalDef } from "../../shared/signals.js";
 import { matchText, patternById, truthFor } from "../../shared/patterns.js";
-import { amountForSpeech, formatINR, relationFor, yourRelationHi } from "../../shared/format.js";
+import { amountForSpeech, formatINR, relationFor, speakable, yourRelationHi } from "../../shared/format.js";
 import { CheckService, NotFoundError, ValidationError, scrubEvidence, type StoredCheck } from "./checks.js";
 import { criticalRisk } from "./decision.js";
 import { codeWordHi, newReportId } from "./ids.js";
@@ -171,7 +171,7 @@ export async function recordSignal(deps: ToolDeps, args: Args, source: "agent" |
       decide_now: "yes",
       next: "Call set_decision now. Do not ask another question.",
       likely_pattern: g.likely_pattern ?? "not clear yet",
-      say_this: g.say_this ?? "",
+      say_this: speakable(g.say_this ?? "", lang(check)),
       tip: g.tip,
     };
   }
@@ -179,7 +179,7 @@ export async function recordSignal(deps: ToolDeps, args: Args, source: "agent" |
     recorded: true,
     duplicate,
     likely_pattern: g.likely_pattern ?? "not clear yet",
-    say_this: g.say_this ?? "",
+    say_this: speakable(g.say_this ?? "", lang(check)),
     ask_next: g.ask_next ?? (g.strong_signs > 0 && mlAsk ? mlAsk : ""),
     decide_now: g.decide_now ? "yes" : "no",
     tip: g.tip,
@@ -270,7 +270,7 @@ export async function setDecision(deps: ToolDeps, args: Args): Promise<ToolResul
   const offer = contactOffer(c);
   return {
     final_decision: d.outcome,
-    tell_customer: d.customer_message,
+    tell_customer: speakable(d.customer_message, lang(c)),
     pattern: p ? p.name[lang(c)] : "none",
     offer_contact: offer ?? "",
     then: offer

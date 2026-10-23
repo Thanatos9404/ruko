@@ -14,6 +14,10 @@ import { PATTERNS } from "../../shared/patterns.js";
 export interface ToolDef {
   name: string;
   description: string;
+  /**
+   * What the voice says while the tool runs. One agent serves English and Hindi, so fillers are
+   * a neutral "Okay." (said the same in both), or empty for the quick tools so nothing is said.
+   */
   pre_call_message?: string;
   parameters: {
     type: "object";
@@ -28,6 +32,7 @@ const executionId = { type: "string" as const, description: "This call's referen
 export const CHECK_AGENT_TOOLS: ToolDef[] = [
   {
     name: "get_check_context",
+    pre_call_message: "Okay.",
     description:
       "Call this once, right after the customer confirms the code word. Returns the payment details, why the bank paused it, whether a trusted contact is on file, and the first question to ask.",
     parameters: {
@@ -38,6 +43,7 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
   },
   {
     name: "record_signal",
+    pre_call_message: "",
     description:
       "Record something the customer said that matters for the safety check, as soon as you hear it: warning signs (someone on another call directing them, threats of arrest or investigation, secrecy, remote-access apps, pressure, promises of returns, fees to receive money) and reassuring facts (knows the payee, their own idea, purpose fits). One signal per call. Returns guidance: the likely fraud pattern, an official sentence to say, the next question, and decide_now (yes = call set_decision now).",
     parameters: {
@@ -65,7 +71,7 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
     name: "call_trusted_contact",
     description:
       "Phone the customer's trusted contact (a family member they chose in advance) so they can talk before any money moves. Only after you recorded a warning sign, offered the call (set_decision's offer_contact), and the customer said yes to that offer.",
-    pre_call_message: "One moment, I'm asking them to call you.",
+    pre_call_message: "Okay.",
     parameters: {
       type: "object",
       properties: {
@@ -78,11 +84,13 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
   },
   {
     name: "check_trusted_contact",
+    pre_call_message: "",
     description: "Only if the customer asks: check whether the trusted contact has been reached yet. Never wait on the line for it.",
     parameters: { type: "object", properties: { check_id: checkId }, required: ["check_id"] },
   },
   {
     name: "set_decision",
+    pre_call_message: "",
     description:
       "Call this once, as soon as you have enough to recommend. The bank's policy makes the final decision from the recorded signals and returns the exact message to tell the customer, plus offer_contact when the trusted contact should be offered.",
     parameters: {
@@ -105,6 +113,7 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
 export const CONTACT_AGENT_TOOLS: ToolDef[] = [
   {
     name: "report_contact_outcome",
+    pre_call_message: "",
     description: "Call this once before ending, to record what the trusted contact said.",
     parameters: {
       type: "object",
@@ -125,7 +134,7 @@ export const PUBLIC_LINE_TOOLS: ToolDef[] = [
     name: "lookup_pattern",
     description:
       "Look up which known fraud pattern a caller's story matches, with the official advice. Call it once you have heard what happened.",
-    pre_call_message: "Let me check that against known patterns.",
+    pre_call_message: "Okay.",
     parameters: {
       type: "object",
       properties: {
@@ -137,6 +146,7 @@ export const PUBLIC_LINE_TOOLS: ToolDef[] = [
   },
   {
     name: "log_report",
+    pre_call_message: "",
     description:
       "Log an anonymised summary of the caller's story so new patterns can be spotted. Call once near the end. Never include names, numbers or other personal details.",
     parameters: {
@@ -163,7 +173,7 @@ export function bolnaApiTools(tools: ToolDef[], baseUrl: string, toolToken: stri
       name: t.name,
       description: t.description,
       parameters: t.parameters,
-      ...(t.pre_call_message ? { pre_call_message: t.pre_call_message } : {}),
+      ...(t.pre_call_message !== undefined ? { pre_call_message: t.pre_call_message } : {}),
     })),
     tools_params: Object.fromEntries(
       tools.map((t) => [

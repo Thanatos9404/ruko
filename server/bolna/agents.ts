@@ -1,6 +1,6 @@
 import type { Check, Lang } from "../../shared/types.js";
 import { relationFor, amountForSpeech } from "../../shared/format.js";
-import { codeWordHi } from "../engine/ids.js";
+import { CODE_WORDS, codeWordHi } from "../engine/ids.js";
 import {
   CHECK_HANGUP,
   CHECK_PROMPT_EN,
@@ -64,6 +64,8 @@ function task(opts: {
         encoding: "linear16",
         sampling_rate: 16000,
         endpointing: 250,
+        // Deepgram nova-3 keyterm prompting: the words a scam call actually contains.
+        keywords: TRANSCRIBER_KEYWORDS,
       },
       synthesizer: {
         provider: VOICES.en.provider,
@@ -107,11 +109,14 @@ function task(opts: {
       hangup_after_LLMCall: true,
       call_cancellation_prompt:
         "End the call only after the assistant has told the customer the final message and said goodbye, or if the customer asks to end the call.",
-      call_hangup_message: opts.hangup,
+      // The agent says goodbye itself; a second, canned goodbye would be one too many.
+      call_hangup_message: "",
       number_of_words_for_interruption: 2,
       incremental_delay: 400,
       check_if_user_online: true,
       trigger_user_online_message_after: 8,
+      // "Hello?" is the same in English and Hindi.
+      check_user_online_message: "Hello? Are you there?",
       backchanneling: false,
       voicemail: false,
     },
@@ -130,6 +135,16 @@ function agent(name: string, welcome: string, t: ReturnType<typeof task>, prompt
     agent_prompts: { task_1: { system_prompt: promptEn } },
   };
 }
+
+/** 20–50 terms is Deepgram's sweet spot for keyterm prompting. Code words are added from ids.ts. */
+export const TRANSCRIBER_KEYWORDS = [
+  "Ruko", "Demo Bank", "code word", "CBI", "RBI", "ED", "NCB", "customs", "police", "warrant",
+  "digital arrest", "safe custody", "verification", "Aadhaar", "KYC", "UPI", "AnyDesk", "TeamViewer",
+  "screen share", "WhatsApp", "Telegram", "video call", "courier", "FedEx", "parcel", "trading app",
+  "stock tips", "commission", "task", "refund", "cashback", "lottery", "KBC", "electricity", "SIM",
+  "TRAI", "cybercrime", "nineteen thirty", "Ravi", "beta", "bhai", "hospital",
+  ...CODE_WORDS.slice(0, 8),
+].join(", ");
 
 export function checkAgentConfig(o: AgentBuildOptions) {
   const t = task({

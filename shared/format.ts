@@ -103,3 +103,12 @@ const YOUR_RELATION_HI: Record<string, string> = {
 export function yourRelationHi(relation: string): string {
   return YOUR_RELATION_HI[relation.trim().toLowerCase()] ?? `आपके ${relation}`;
 }
+
+/**
+ * The speech form of a sentence the agent reads aloud: helpline numbers as single digits,
+ * so 1930 is never read as "nineteen thirty". Screens keep the plain text.
+ */
+export function speakable(text: string, lang: Lang): string {
+  const digits = lang === "hi" ? ["शून्य", "एक", "दो", "तीन", "चार", "पाँच", "छह", "सात", "आठ", "नौ"] : ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+  return text.replace(/\b(1930|112)\b/g, (m) => m.split("").map((d) => digits[Number(d)]).join(" "));
+}

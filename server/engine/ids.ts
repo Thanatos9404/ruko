@@ -28,7 +28,7 @@ export function safeEqual(a: string, b: string): boolean {
  * speakers, plus two digits. The app shows it; the agent says it first, so a
  * caller who cannot see the app cannot pretend to be this check.
  */
-const WORDS = [
+export const CODE_WORDS: readonly string[] = [
   "NEEM", "TULSI", "GULAB", "KAMAL", "MOTI", "BADAL", "SURAJ", "TARA", "SAGAR", "NADI",
   "PARVAT", "PEEPAL", "ASHOK", "MOR", "HIRAN", "TOTA", "AAM", "ANAR", "KELA", "JAMUN",
   "CHANDA", "DHOOP", "BARISH", "HAVA", "DIYA", "PATANG", "KESAR", "ELAICHI", "MOGRA", "CHAMPA",
@@ -43,7 +43,7 @@ const WORDS_HI: Record<string, string> = {
 
 export function newCodeWord(): string {
   const b = randomBytes(2);
-  const word = WORDS[b[0] % WORDS.length];
+  const word = CODE_WORDS[b[0] % CODE_WORDS.length];
   const num = 10 + (b[1] % 90);
   return `${word} ${num}`;
 }
