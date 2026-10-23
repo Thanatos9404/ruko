@@ -25,7 +25,7 @@ It also ships a free public **"Is this a scam?"** checker (text and voice) and a
 | Bank API | `POST /v1/checks`, `GET /v1/checks/:id`, `GET /v1/metrics` |
 | Docs | [Research](docs/RESEARCH.md) · [Business](docs/BUSINESS.md) · [One-page memo](docs/MEMO.md) · [Progress log](docs/PROGRESS.md) · [Bolna spend log](docs/BOLNA_SPEND.md) · [Demo script](DEMO_SCRIPT.md) · [Submission answers](docs/SUBMISSION.md) · [Citation audit](docs/CITATIONS.md) |
 
-> **Status, honestly.** Everything below runs locally and is tested. The live Bolna path (web calls, tool calls from Bolna, webhooks) is fully wired and the three Bolna agents are created and saved unrestricted, but **no live Bolna call has been made yet**: the tool endpoints need a public URL, so live calls are tested once the app is deployed. The account has $5 of credit in total; see [docs/BOLNA_SPEND.md](docs/BOLNA_SPEND.md). Evaluation numbers are **text mode** (no audio); see [Results](#results).
+> **Status, honestly.** Everything below runs and is tested. Five live Bolna web calls have run against the production deployment (23 Oct: four in English, one in Hindi). **In every one, the customer is a scripted text-to-speech voice, not a real person**; Ruko is the live Bolna agent. On the landing page and `/demo` you can play the English call's recording and read the Hindi call's transcript. The Hindi audio isn't published, because its scripted customer voice is licensed for non-commercial use only. Every call and its cost is in [docs/BOLNA_SPEND.md](docs/BOLNA_SPEND.md): 41.25¢ in all, wallet 458.75¢ of the $5 credit. Evaluation numbers are **text mode** (no audio); see [Results](#results).
 
 ## Why
 
@@ -69,9 +69,9 @@ sequenceDiagram
 | Bolna feature | How Ruko uses it | Status |
 |---|---|---|
 | Agent API v2 | Three agents built and kept in sync by `npm run bolna:setup`: payment safety check, trusted-contact call, public safety line. All saved with `restricted: false` under Bolna's content-safety checks; `npm run bolna:check` diffs the saved agents against the repo. | in use (synced, no drift) |
-| Multilingual config | English + Hindi with mid-call switching; the call starts in the customer's language via `agent_language`. | configured; first live Hindi call pending |
+| Multilingual config | English + Hindi with mid-call switching; the call starts in the customer's language via `agent_language`. | live in Hindi: first Hindi call 23 Oct (execution `9f893617…`, Sarvam saaras:v3 + bulbul:v3); mid-call switching not yet tried live |
 | Custom functions | `get_check_context`, `record_signal`, `call_trusted_contact`, `check_trusted_contact`, `set_decision` (+ `report_contact_outcome`, `lookup_pattern`, `log_report`). Prompt variables fill `check_id` and the call reference; every parameter is required because Bolna fills requests from `%(name)s` templates. | live: exercised on the first calls (execution `b6818362…`, 23 Oct) |
-| Web Call SDK (`@bolna/web-call`) | Browser calls in the demo, the trusted contact's "phone" and the public line. Sessions are minted server-side, single-use, behind an access code, a daily cap, a per-code cap and a wallet floor read from `GET /user/me`. | live: 2 calls from the production demo (23 Oct) |
+| Web Call SDK (`@bolna/web-call`) | Browser calls in the demo, the trusted contact's "phone" and the public line. Sessions are minted server-side, single-use, behind an access code, a daily cap, a per-code cap and a wallet floor read from `GET /user/me`. | live: 5 calls from the production demo (23 Oct) |
 | Webhooks | Token-protected, optional IP allowlist (Bolna's three published IPs), idempotent per execution and status; terminal events are **re-read from Bolna's API** before they can change a decision. | live: verified on the first calls |
 | Preferred models | gpt-4.1-mini, Deepgram nova-3, Sarvam saaras:v3, ElevenLabs eleven_turbo_v2_5, Sarvam bulbul:v3: all inside Bolna's flat per-minute rate. | configured |
 | Transfer to a human | Documented option for banks that need a human in the loop (UK FCA FG24/6): add Bolna's transfer tool with the bank's fraud-desk number. | documented |
@@ -87,7 +87,7 @@ Current version (**v5**, text model `ruko-text-1.0.0`, sha256 `8a85ef11…`):
 
 | Set | Scams caught | False holds on genuine payments | Median time to decision (est.) |
 |---|---|---|---|
-| **Fresh held-out set 4** (28, written and frozen before v5 ran; 16 of 18 scam calls heavily coached in Hindi/Hinglish) | **15/18** (83%) | **2/10** (both delays) | 58 s |
+| **Fresh held-out set 4** (28, written and frozen before v5 ran; 16 of its 18 scam calls heavily coached, including all 14 in Hindi/Hinglish) | **15/18** (83%) | **2/10** (both delays) | 58 s |
 | Held-out set 3 (28, previously seen by v4) | 13/16 | 1/12 | 58 s |
 | Held-out set 2 (28, previously seen by v3/v4) | 15/16 | 2/12 | 51 s |
 | Held-out set 1 (28, previously seen) | 15/16 | 1/12 | 54 s |
@@ -96,20 +96,21 @@ Current version (**v5**, text model `ruko-text-1.0.0`, sha256 `8a85ef11…`):
 - **The agent asked for an OTP, PIN, card or account number 0 times** in v5 (208 conversations, 959 agent turns; every mention judged by a separate model). Across all versions there was 1 flag in 3,487 turns: v4 asked whether a code had *already* been shared with the caller; v5 never says OTP or PIN in a question.
 - **Speed:** a median of about 1 minute to a decision on every set (estimated from transcript length at speaking pace, not measured on calls); the whole call, with the goodbye and the trusted-contact offer, is about 70–80 s.
 - **Hardest case:** heavily coached customers who stick to a cover story. On the fresh set 13 of 16 were caught. When pre-call risk is critical, Ruko never releases on a cover story alone (the safe default): it delays, with an in-app confirm, a call-back and the fraud desk.
-- **The trade-off we chose:** v5's safe default delays a few more genuine payments than v3 did (v3: 1/48 on its held-out sets), in exchange for not releasing coached victims. Every false hold on the fresh set is a delay, not a block.
-- **Version history** (every run is published, including the worse ones): v3 caught 16/16 on its clean held-out set in about 74 s; v4 cut the time to about 55 s but caught only 12/16 on its fresh set 3; v5 restores recall with adaptive probes and the safe default while keeping the call around a minute.
+- **The trade-off we chose:** v5's safe default delays a few more genuine payments than v3 did (v3: 1/24 on its held-out sets, 1/48 including dev), in exchange for not releasing coached victims. Every false hold on the fresh set is a delay, not a block.
+- **Version history** (every run is published, including the worse ones): v3 caught 16/16 on its clean held-out set in about 76 s; v4 cut the time to about 55 s but caught only 12/16 on its fresh set 3; v5 restores recall with adaptive probes and the safe default while keeping the call around a minute.
 - **End to end**, the pre-call policy alone lets small scams with no active call through without a call (12/60 on the dev set). In production the bank's own fraud signals (FRI, mule lists) would feed it.
+- **The checker's text classifier** (advisory only; it never decides a payment) scores AUROC 0.957 on 165 cited real Indian scam and genuine cases and messages, catching 86% with 7.3% false alarms at P ≥ 0.5 ([ml/MODEL_CARD.md](ml/MODEL_CARD.md)).
 - Tool endpoint latency on the local dev server: p50 74 ms, p95 303 ms (`npm run latency`). Every run, transcript and miss is in [eval/results/](eval/results/) and the console's Evaluation page; each run records the text-model hash and git commit in `environment.json`.
 
-Reproduce (uses Nebius; cached, so a re-run with the same settings is free):
+Reproduce (uses Nebius Token Factory, locally only; cached, so a re-run with the same settings is free). Give the eval a key in one of two ways: `NEBIUS_API_KEY=... npm run eval`, or set `NEBIUS_ENV_FILE` in `.env` to a dotenv file outside the repo that holds `NEBIUS_API_KEY`.
 
 ```bash
-npm run eval                                   # 96-scenario dev set
+NEBIUS_API_KEY=... npm run eval                # 96-scenario dev set
 npm run eval -- --set holdout4                 # fresh held-out set for v5
 npx tsx eval/publish.ts                        # publish to public/eval/results.json
 ```
 
-The Nebius key is read at runtime from a `.env` outside this repo (`server/env.ts`) and is never logged.
+The key is read at runtime (`server/env.ts`, `eval/nebius.ts`) and is never logged. No deployment has a Nebius key: production never calls an LLM.
 
 ## Run it locally
 
@@ -124,7 +125,7 @@ npm run dev                   # http://localhost:5410 (app + API on one server)
 Without a Bolna key everything works except live calls: the sandbox shows the recorded run, which replays a text-mode conversation's tool calls into the live engine.
 
 ```bash
-npm run check                 # type-check, lint, unit tests (105), text-model tests (73), secret scan
+npm run check                 # type-check, lint, unit tests (122), text-model tests (73), secret scan
 npm run build && npx tsx scripts/serve-prod.ts 5430   # production build, served like Vercel
 node scripts/e2e.mjs http://localhost:5430            # every scenario + a full recorded run
 node scripts/screenshots.mjs http://localhost:5430    # docs/screenshots at 1440 and 375
@@ -151,7 +152,7 @@ Environment variables (Project → Settings → Environment Variables):
 | `RUKO_API_KEYS` | bank API keys, `tenant:key` pairs |
 | `RUKO_ACCESS_CODES` | access codes for live calls (give to judges); without them, live calls are off |
 | `RUKO_DAILY_CALL_CAP`, `RUKO_PER_VISITOR_DAILY_CAP`, `RUKO_WALLET_FLOOR_CENTS` | the credit-budget gate |
-| `NEBIUS_API_KEY` | local evaluation only (read from a `.env` outside the repo); never set on a deployment, which never calls an LLM for the public checker |
+| `NEBIUS_API_KEY` or `NEBIUS_ENV_FILE` | local evaluation only: the key itself, or the path of a dotenv file outside the repo that holds it. Never set on a deployment; production never calls an LLM |
 | `BLOB_READ_WRITE_TOKEN` | optional durable audit archive |
 
 After the first deploy, point the Bolna agents' tools and webhook at it (free; no call placed):
@@ -179,14 +180,14 @@ Returns `action: "hold"`, the code word, every risk reason with its weight, and 
 - **No secrets in the browser.** Web-call sessions are minted server-side; the Bolna key never leaves the server.
 - **Bolna → Ruko** tool calls carry a bearer token (constant-time compared) and can be restricted to Bolna's published IPs; webhooks need a secret URL token and are verified by fetching the execution back from Bolna.
 - **Never asks for secrets.** The prompts forbid OTP/PIN/card/account requests; evidence quotes are scrubbed of digit runs before they enter the audit log; the eval audits every agent turn.
-- **Public checker:** official-advisory library + on-server text classifier; no LLM, and nothing the person types is stored. Phone numbers, UPI IDs, e-mails, links and long digit runs are redacted on the server before the classifier runs; only anonymous counters are kept (production traffic only, small groups folded).
+- **Public checker:** the typed checker uses the official-advisory library and an on-server text classifier, with no LLM, and stores nothing the person types. The voice line is different: it is a Bolna agent (an LLM voice agent) that says at the start that the call is recorded. Phone numbers, UPI IDs, e-mails, links and long digit runs are redacted on the server before the classifier runs; only anonymous counters are kept (production traffic only, small groups folded).
 - **Disclosure:** every agent's greeting says it is automated and that the call is recorded (our policy, and the DPDP notice). Separately, TRAI PR 119/2026 requires banks to pre-declare automated calls and their caller IDs to the operator. The trusted contact is only called after a warning sign and the customer's consent (data minimisation).
 - **No real personal data:** demo people and payees are invented; phone numbers use the UK Ofcom drama range (+44 7700 900xxx), since India has no reserved fictional range.
 - `npm run scan:secrets` checks every file git would commit for key patterns and for the literal values in local env files.
 
 ## Honest limits
 
-- **Only two live calls so far** (23 Oct, scripted text-to-speech customer, English; see [docs/BOLNA_SPEND.md](docs/BOLNA_SPEND.md)). The second ran the whole flow and blocked a coached digital-arrest victim in 78 s. Everything else is measured in text mode with a stand-in LLM and estimated call times; Hindi has not yet run live.
+- **Five live calls so far, none with a real person** (23 Oct, 41.25¢; see [docs/BOLNA_SPEND.md](docs/BOLNA_SPEND.md)). The customer is always a scripted text-to-speech voice: four calls in English, one in Hindi. Two ran the whole flow and blocked a coached digital-arrest victim (English, 78 s; Hindi, 146 s). The other three ended on a safe hold after test set-up faults: audio that never reached the browser, a line speech-to-text missed, and our scripted customer talking over Ruko. Everything else is measured in text mode with a stand-in LLM and estimated call times. Mid-call language switching has not been tried live, and Bolna's "Hello? Are you there?" check-in line is still English in Hindi calls.
 - **Voice languages:** English and Hindi (with Hinglish). Tamil, Bengali and Marathi truth lines in the library are drafts awaiting native review.
 - **Phone calls are switched off** (`RUKO_ALLOW_PHONE_CALLS=false`) to protect the $5 budget; in the demo the trusted contact's call rings in a browser tab instead.
 - **The pre-call policy's weights are hand-set**, not learned; a bank would tune them on its own data and feed in its own signals (FRI, mule lists, device telemetry). The device signals in the sandbox are simulated.
@@ -215,8 +216,9 @@ research/, data/patterns/, ml/, server/ml/   extended pattern library and text c
 - Fonts: Open Runde, Inter, Instrument Serif, Fragment Mono, Silkscreen (all SIL Open Font License, self-hosted via Fontsource).
 - Icons: Lucide (ISC).
 - Scam-pattern facts and wording come from public advisories by MHA/I4C, RBI, CERT-In, DoT, TRAI, SEBI and NPCI; each pattern cites its sources ([shared/sources.ts](shared/sources.ts)).
-- Voice by [Bolna](https://www.bolna.ai). Evaluation LLMs via Nebius Token Factory.
+- Voice by [Bolna](https://www.bolna.ai). Evaluation LLMs via Nebius Token Factory (local evaluation only).
+- **Data:** the text classifier is trained and evaluated on third-party datasets and our own synthetic data; every dataset, its authors, licence and link, and the voices used for scripted test customers are listed in [NOTICE](NOTICE). The model and data cards are [ml/MODEL_CARD.md](ml/MODEL_CARD.md) and [ml/DATA_CARD.md](ml/DATA_CARD.md).
 
-Ruko is not affiliated with Bolna, RBI, NPCI, I4C or any bank. Demo Bank is fictional.
+Ruko is not affiliated with Bolna, Y Combinator, RBI, NPCI, I4C or any bank. Demo Bank is fictional.
 
 MIT © 2026 Yashvardhan Thanvi

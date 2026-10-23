@@ -19,3 +19,12 @@ eval/results/smoke-*/
 
 # source PDFs stay out of git (cited by URL)
 docs/*.pdf
+
+# Call recordings: only encoded clips we may redistribute are committed (see public/calls/)
+public/calls/*.wav
+public/calls/*.flac
+# Local tooling and key material
+.claude/
+*.pem
+*.key
+.npmrc

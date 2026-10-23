@@ -41,7 +41,7 @@ const CLIPS = {
   help: clip("c7_help"),
 };
 
-const chrome = ["C:/Program Files/Google/Chrome/Application/chrome.exe", "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"].find((p) => existsSync(p));
+const chrome = [process.env.CHROME_PATH, "C:/Program Files/Google/Chrome/Application/chrome.exe", "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe", "/usr/bin/google-chrome", "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"].filter(Boolean).find((p) => existsSync(p));
 const browser = await puppeteer.launch({
   executablePath: chrome,
   headless: false,
@@ -161,6 +161,10 @@ await page.evaluateOnNewDocument(
       let floor = 1;
       let peak = 0;
       let tick = 0;
+      let lastClip = null;
+      let lastClipEnd = 0;
+      let lastAgentAt = Date.now();
+      let repeated = false;
       for (;;) {
         await new Promise((r) => setTimeout(r, 100));
         // Two views of the agent's voice: our own analyser on the remote stream, and the SDK's
@@ -177,12 +181,24 @@ await page.evaluateOnNewDocument(
         if (loud) {
           spokeMs += 100;
           quietSince = 0;
+          lastAgentAt = Date.now();
           continue;
         }
-        // A short filler ("Okay.") isn't a turn: wait for real speech, then 1.6 s of quiet.
-        if (spokeMs < 900) continue;
+        // If the agent hasn't said anything for 7 s since our last line, it probably didn't hear
+        // us (its audio, or ours, dropped): say the same line once more.
+        if (lastClip && !repeated && spokeMs < 900 && Date.now() - Math.max(lastClipEnd, lastAgentAt) > 7000) {
+          repeated = true;
+          busy = true;
+          log(`no reply heard; repeating: ${lastClip}`);
+          await play(lastClip);
+          lastClipEnd = Date.now();
+          busy = false;
+          continue;
+        }
+        // A short filler ("Okay.") isn't a turn: wait for real speech (1.5 s), then 2.2 s of quiet,
+        // because the agent's streamed speech can pause mid-sentence.
+        if (spokeMs < 1500) continue;
         if (!quietSince) quietSince = Date.now();
-        // 2.2 s: the agent's streamed speech can pause mid-sentence; don't talk over it.
         if (Date.now() - quietSince < 2200) continue;
         spokeMs = 0;
         quietSince = 0;
@@ -196,7 +212,12 @@ await page.evaluateOnNewDocument(
           next = "thanks";
           done = true;
         } else next = queue.shift() ?? null;
-        if (next) await play(next);
+        if (next) {
+          await play(next);
+          lastClip = next;
+          lastClipEnd = Date.now();
+          repeated = false;
+        }
         busy = false;
       }
     })();
@@ -237,7 +258,8 @@ const clickText = (t) =>
     return Boolean(el);
   }, t);
 
-await page.goto(`${base}/demo`, { waitUntil: "load", timeout: 60000 });
+// scripted_test=1 tags the check as a scripted test run (owner's code only), so the console says the customer is TTS.
+await page.goto(`${base}/demo?scripted_test=1`, { waitUntil: "load", timeout: 60000 });
 // Wait until the app is really up (a fresh deployment can be slow on its first request).
 await page.waitForSelector("[role=radio]", { timeout: 60000 });
 await page.waitForSelector("#__ruko_rec", { timeout: 30000 });

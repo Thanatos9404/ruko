@@ -8,7 +8,7 @@ import { existsSync } from "node:fs";
 import puppeteer from "puppeteer-core";
 
 const base = (process.argv[2] ?? "http://localhost:5410").replace(/\/$/, "");
-const chrome = ["C:/Program Files/Google/Chrome/Application/chrome.exe", "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"].find((p) => existsSync(p));
+const chrome = [process.env.CHROME_PATH, "C:/Program Files/Google/Chrome/Application/chrome.exe", "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe", "/usr/bin/google-chrome", "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"].filter(Boolean).find((p) => existsSync(p));
 const browser = await puppeteer.launch({ executablePath: chrome, headless: true });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const scenarios = await (await fetch(`${base}/api/demo/scenarios`)).json();
@@ -163,6 +163,42 @@ for (const sc of scenarios.data) {
     console.log(`${held ? "PASS" : "FAIL"} landing embed pay  → ${held ? "held" : "no hold screen"}`);
     if (!held) failures++;
   }
+  await ctx.close();
+}
+
+// "Hear a real call": both takes load and every take says the customer is a scripted voice.
+// A take with audio must serve it (never a .wav); a transcript-only take explains why and
+// shows its still frame.
+{
+  const ctx = await browser.createBrowserContext();
+  const page = await ctx.newPage();
+  await page.setViewport({ width: 1440, height: 900 });
+  await page.goto(`${base}/`, { waitUntil: "load", timeout: 60000 });
+  await page.waitForSelector('[data-testid="real-call"]', { timeout: 15000 }).catch(() => null);
+  const tabs = await page.$$eval('[data-testid="real-call"] [role=tab]', (els) => els.map((e) => e.textContent));
+  const takes = [];
+  for (let i = 0; i < Math.max(1, tabs.length); i++) {
+    if (tabs.length) await page.$$eval('[data-testid="real-call"] [role=tab]', (els, k) => els[k].click(), i);
+    await sleep(300);
+    takes.push(
+      await page.evaluate(async () => {
+        const root = document.querySelector('[data-testid="real-call"]');
+        const status = (u) => (u ? fetch(u, { method: "HEAD" }).then((r) => r.status).catch(() => 0) : 0);
+        const src = root?.querySelector("audio")?.getAttribute("src") ?? "";
+        const img = root?.querySelector("figure img")?.getAttribute("src") ?? "";
+        const note = root?.querySelector('[data-testid="audio-note"]')?.textContent ?? "";
+        return {
+          label: /scripted text-to-speech voice, not a real person/.test(root?.querySelector('[data-testid="scripted-label"]')?.textContent ?? ""),
+          lines: root?.querySelectorAll("ol li").length ?? 0,
+          audio: src ? (/.wav$/i.test(src) ? -1 : await status(src)) : 0,
+          still: !src && note.length > 20 ? await status(img) : 0,
+        };
+      }),
+    );
+  }
+  const ok = tabs.length >= 2 && takes.every((t) => t.label && t.lines > 3 && (t.audio === 200 || t.still === 200));
+  console.log(`${ok ? "PASS" : "FAIL"} real-call player   → ${tabs.length} takes (${tabs.join(", ")}); ${takes.map((t) => `${t.lines} lines, ${t.audio ? `audio ${t.audio}` : `transcript only, still ${t.still}`}, ${t.label ? "scripted label" : "NO LABEL"}`).join("; ")}`);
+  if (!ok) failures++;
   await ctx.close();
 }
 

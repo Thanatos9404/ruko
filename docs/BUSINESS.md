@@ -16,7 +16,7 @@ Status: 22 October 2026. Every web source in this document was accessed in Octob
 | **Second user** | A trusted family contact | A call, with the customer's consent, only after a warning sign |
 | **Operator** | The fraud-ops analyst | A console with the transcript, the signals and a plain-language reason for every decision |
 
-The free public "Is this a scam?" line and text checker serve anyone, and bring in new scam scripts as they appear.
+The free public "Is this a scam?" line and text checker serve anyone. New scam scripts come from public advisories and, with consent, from partner banks' reports; the text checker stores nothing people type.
 
 ## 2. Market
 
@@ -210,7 +210,7 @@ At ₹25 a check, gross margin is roughly 45–70% at pay-as-you-go rates and 65
 Consider an institution running 1,00,000 checks a year, which costs ₹25 lakh at ₹25 a check. We assume:
 
 - **1 in 30 checks is a real scam (assumption).** That is 3,333 scams.
-- **Ruko stops 70% of them (assumption).** That is deliberately below the 96.7% text-mode eval result, because real calls will do worse. That is 2,333 scams stopped.
+- **Ruko stops 70% of them (assumption).** That is deliberately below v5's 83% (15 of 18) on the fresh held-out set in text mode, because real calls will do worse. That is 2,333 scams stopped.
 - **The average loss avoided is ₹1 lakh (assumption).** That is below the 2024 averages: about ₹1.19 lakh per financial-fraud complaint, and about ₹1.57 lakh per complaint of "digital arrest" and related scams (derived from [LS USQ 344](https://www.mha.gov.in/MHA1/Par2017/pdfs/par2025-pdfs/LS22072025/344.pdf) and [RS USQ 1505](https://www.mha.gov.in/MHA1/Par2017/pdfs/par2025-pdfs/RS12032025/1505.pdf)).
 
 On these assumptions, customers keep about **₹23 crore a year, against ₹25 lakh of spend**.
@@ -289,8 +289,8 @@ As of October 2026, we found no one selling Indian banks the full combination: a
 
 | Risk | Mitigation |
 |---|---|
-| **False holds annoy genuine customers** | Only flagged payments get a call, and calls take 60–90 seconds. The policy releases a payment when the answers explain it. Established payees and pre-declared payments lower the score. If the customer can't be reached, the hold lasts 30 minutes or until they confirm in the app. The eval found 1 false hold in 48 genuine payments (text mode). Real calls are unmeasured, so pilots start in shadow mode. |
-| **The model misses a coached customer** | The LLM can escalate a decision but never de-escalate it. The agent uses the bank's device signal ("your app shows you were on a call"). The trusted contact can raise a concern. This is still our weakest area: v2 caught 4 of 8 heavily coached customers on a clean held-out set. |
+| **False holds annoy genuine customers** | Only flagged payments get a call, and a call takes about a minute. The policy releases a payment when the answers explain it. Established payees and pre-declared payments lower the score. If the customer can't be reached, the hold lasts 30 minutes or until they confirm in the app. In text mode, v5 held 2 of 10 genuine payments on the fresh held-out set (both delays, not blocks) and 4 of 36 on the earlier held-out sets. Real calls are unmeasured, so pilots start in shadow mode. |
+| **The model misses a coached customer** | The LLM can escalate a decision but never de-escalate it. The agent uses the bank's device signal ("your app shows you were on a call"). The trusted contact can raise a concern. This is still our weakest area: v5 caught 13 of 16 heavily coached customers on the fresh held-out set (text mode). |
 | **Small scams with no call never reach Ruko** | The pre-call policy let 12 of 60 dev-set scams through without a call. Ruko acts on the bank's risk signals and does not replace them. |
 | **Scammers spoof Ruko** | The code word appears only in the bank's app, and calls come from 1600xx numbers. The agent never asks for an OTP or PIN and never moves money. On a mismatch, the customer is told to hang up and open the app. Residual risk: screen-sharing would expose the code word, so a running remote-access app is a hard hold, and the agent asks about it. |
 | **Scammers adapt their scripts** | Device signals don't depend on what the customer says. New scripts reach the pattern library through public advisories and bank partners' consented reports (the public checker stores nothing). The policy cannot be talked down. |
@@ -324,7 +324,6 @@ As of October 2026, we found no one selling Indian banks the full combination: a
 - **TRAI:**
   - BFSI service and transaction calls go on 1600xx, which networks may not flag as suspected spam and call-blocking apps may not blanket-block or tag (TRAI PR 119/2026). Individual users can still block them. TRAI's onboarding deadlines were 1 Jan 2026 for commercial banks, 1 Feb 2026 for large NBFCs, payments banks and SFBs, and 1 Mar 2026 for co-operative banks, RRBs and other NBFCs (PTI via [Outlook Business](https://www.outlookbusiness.com/news/trai-sets-firm-deadlines-for-bfsi-entities-to-adopt-1600-series-for-service-transactional-calls)). The RBI told banks to use 1600xx for service calls ([RBI circular](https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=12770&Mode=0)).
   - **PR 119/2026 (18 Sep 2026) requires every entity making application-to-person calls, which include pre-recorded and artificial-voice calls, to pre-declare them to its operator with the caller IDs it will use.** Undeclared calls are treated as unsolicited commercial communication ([TRAI](https://www.trai.gov.in/sites/default/files/2026-09/PR_No119of2026.pdf)). Each bank must declare its Ruko caller IDs.
-  - Open item: the current greeting says "payment safety assistant". Before any live deployment, it should also say the assistant is automated and that the call is recorded. This is our policy and part of the DPDP notice; PR 119/2026 itself does not require in-call disclosure.
 
 ### UK
 

@@ -33,7 +33,7 @@ The LLM can escalate, never de-escalate, and Ruko never asks for an OTP or PIN. 
   - **Australia:** A$2.18bn lost in 2025 (National Anti-Scam Centre); most Scams Prevention Framework duties start 31 Mar 2027 (ASIC). A$4.4–21.8M, assumption-based.
   - **Then:** adjacent checks on the same engine (loan disbursal, changed payees, device recovery, trusted-contact programmes, insurance payouts). Expansion, not sized.
 
-**Results so far.** We have no customers, no pilots and no measured live calls. Results are **text mode**: a Nebius-hosted Qwen3-30B stands in for Bolna's gpt-4.1-mini, with the same prompt and tools, against the real engine. Call times are estimated.
+**Results so far.** We have no customers and no pilots. Five live Bolna web calls ran on 23 Oct (41.25¢ in all), all with a scripted text-to-speech customer; none with a real person. Two ran the full flow and blocked a coached digital-arrest victim, one of them the first live Hindi call. Eval results are **text mode**: a Nebius-hosted Qwen3-30B stands in for Bolna's gpt-4.1-mini, with the same prompt and tools, against the real engine. Call times are estimated.
 
 | v5 eval set | Scams caught | False holds |
 |---|---|---|

@@ -173,7 +173,7 @@ export function Results() {
         />
         <Reveal className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           <RateTile label="Scams caught, fresh held-out set" rate={fresh?.scam_catch} hint="New stories, most with victims coached in Hindi or Hinglish, written and frozen before this version ran." />
-          <RateTile label="False holds on genuine payments, held-out" rate={fresh?.false_hold} good="low" hint="A builder's booking, a lawyer's retainer, a gold-loan repayment, tractor parts at night: genuine payments delayed or blocked in error." />
+          <RateTile label="False holds on genuine payments, held-out" rate={fresh?.false_hold} good="low" hint="A daughter guiding her father's hospital payment and a farmer buying tractor parts at night: both delayed (never blocked) in error." />
           <RateTile label="Scams caught, development set" rate={dev?.scam_catch} hint="60 coached-victim calls across ten patterns, two coaching levels." />
           <div className="card p-5">
             <p className="text-[13px] font-medium text-ink-2">Times the agent asked for an OTP or PIN ({ev?.version ?? "current"})</p>
@@ -213,14 +213,14 @@ export function Results() {
   );
 }
 
-// "wired": built, deployed and tested against the engine, but no paid live call has run through it yet.
+// "wired": built, deployed and tested against the engine, but not yet exercised on a paid live call.
 const BOLNA: { icon: ReactNode; title: string; body: string; status: "live" | "wired" | "configured" | "documented" }[] = [
   { icon: <AudioLines />, title: "Voice agents (Agent API v2)", body: "Three agents built and kept in sync over the API: the payment safety check, the trusted-contact call and the public safety line. All saved unrestricted under Bolna's content-safety checks.", status: "live" },
-  { icon: <Languages />, title: "Multilingual, mid-call switching", body: "English and Hindi, with the call starting in the customer's language and switching if they do. Hinglish is handled by the Hindi stack (Sarvam saaras:v3 + bulbul:v3). First live Hindi call pending.", status: "configured" },
+  { icon: <Languages />, title: "Multilingual: English and Hindi", body: "The call starts in the customer's language; Hinglish is handled by the Hindi stack (Sarvam saaras:v3 + bulbul:v3). The first live Hindi call ran on 23 Oct (scripted customer). Switching language mid-call is configured but not yet tried live.", status: "live" },
   { icon: <Braces />, title: "Custom functions", body: "Five tools call Ruko mid-call: get_check_context, record_signal, call_trusted_contact, check_trusted_contact, set_decision. Prompt variables fill check_id and the call reference.", status: "live" },
   { icon: <Globe2 />, title: "Web Call SDK", body: "The demo and the public line call in the browser. Sessions are minted server-side, single-use, behind an access code, daily caps and a wallet floor.", status: "live" },
   { icon: <Webhook />, title: "Execution webhooks", body: "Token-protected, idempotent per execution and status, and every terminal event is re-read from Bolna's API before it can change a decision.", status: "live" },
-  { icon: <Gauge />, title: "Preferred models, flat rate", body: "gpt-4.1-mini, Deepgram nova-3, Sarvam saaras:v3, ElevenLabs turbo v2.5 and Sarvam bulbul:v3: all inside Bolna's flat per-minute rate.", status: "configured" },
+  { icon: <Gauge />, title: "Preferred models, flat rate", body: "gpt-4.1-mini, Deepgram nova-3, Sarvam saaras:v3, ElevenLabs turbo v2.5 and Sarvam bulbul:v3: all inside Bolna's flat per-minute rate, and all heard on the live calls.", status: "live" },
   { icon: <PhoneForwarded />, title: "Transfer to a human fraud desk", body: "For banks that need a human in the loop (the UK's FCA expects one), the agent's transfer tool hands the call to the bank's fraud desk number.", status: "documented" },
   { icon: <Layers />, title: "Batch calls for back-testing", body: "A bank can replay last quarter's flagged payments as a Bolna batch against consenting staff, to tune the policy before going live.", status: "documented" },
 ];
@@ -245,7 +245,7 @@ export function BuiltOnBolna() {
                       f.status === "live" ? "bg-go-soft text-go" : f.status === "wired" ? "bg-accent-soft text-ink" : f.status === "configured" ? "bg-paper-3 text-ink-2" : "border border-hair text-muted",
                     )}
                   >
-                    {f.status === "live" ? "in use · live calls" : f.status === "wired" ? "wired · live call pending" : f.status}
+                    {f.status === "live" ? "in use · live calls" : f.status === "wired" ? "wired · not yet on a live call" : f.status}
                   </span>
                 </span>
               }

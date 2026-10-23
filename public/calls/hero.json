@@ -1,0 +1,80 @@
+{
+ "title": "English: a coached 'digital arrest' victim, payment blocked",
+ "audio": "/calls/live-en.mp3",
+ "duration_s": 32,
+ "call_s": 78,
+ "execution_id": "b6818362-8118-49fd-8f76-146432254c27",
+ "recorded_at": "2026-10-23T09:21:22.093056+00:00",
+ "cost_cents": 8.25,
+ "note": "Customer: a scripted text-to-speech voice, not a real person. Ruko: the live Bolna agent.",
+ "detail": "Our second test call (23 Oct). The customer admits a 'CBI officer' is on a video call with her; Ruko stops the payment and offers to call her son. It still has Bolna's default filler line ('Just give me a moment…'), which we have since replaced.",
+ "timing": "Transcript from Bolna. The highlight is timed to Bolna's recording, which leaves out silences, so it is approximate.",
+ "turns": [
+  {
+   "role": "agent",
+   "text": "Hi Kamla, Ruko here, Demo Bank's automated safety line, on a recorded call. Your code word is BADAL 84. Does it match your app?",
+   "start": 1.05,
+   "end": 4.3
+  },
+  {
+   "role": "customer",
+   "text": "yes",
+   "start": 10.3,
+   "end": 11.9
+  },
+  {
+   "role": "agent",
+   "text": "Okay. Your app shows you were on a call while paying. What's this payment for, and who were you speaking with?",
+   "start": 4.3,
+   "end": 8.35
+  },
+  {
+   "role": "customer",
+   "text": "it's for my nephew's college fees",
+   "start": 13.2,
+   "end": 17.4
+  },
+  {
+   "role": "agent",
+   "text": "Just give me a moment, I'll be back with you. Has someone said RBI is holding money, a prize or a payout for you?",
+   "start": 12.1,
+   "end": 15.45
+  },
+  {
+   "role": "customer",
+   "text": "actually",
+   "start": 18.7,
+   "end": 20.25
+  },
+  {
+   "role": "agent",
+   "text": "Has someone said RBI is holding money, a",
+   "start": 15.45,
+   "end": 17.5
+  },
+  {
+   "role": "customer",
+   "text": "acbi officer is on a video call with me",
+   "start": 21.25,
+   "end": 24.15
+  },
+  {
+   "role": "agent",
+   "text": "Just give me a moment, I'll be back with you.",
+   "start": 18,
+   "end": 19.25
+  },
+  {
+   "role": "customer",
+   "text": "and i must move my savings to a safe custody account",
+   "start": 25.2,
+   "end": 30.8
+  },
+  {
+   "role": "agent",
+   "text": "For your safety, this payment is stopped. Your money is safe in your account. Shall I call Ravi, your son, so you can talk it over? Hello? Are you there?",
+   "start": 19.25,
+   "end": 27.2
+  }
+ ]
+}

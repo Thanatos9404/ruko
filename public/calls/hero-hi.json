@@ -1,0 +1,177 @@
+{
+ "title": "Hindi: the same scam, payment blocked",
+ "image": "/calls/hero-hi.jpg",
+ "image_alt": "The sandbox during the Hindi call, 58 seconds after the hold: the phone shows the live Bolna web call in Hindi, and the engine shows the 100/100 pre-payment risk and the hold.",
+ "audio_note": "We don't publish this recording: the scripted Hindi customer voice (Piper hi_IN-pratham) is licensed for non-commercial use only. Here is Bolna's transcript and a still from the screen recording.",
+ "duration_s": 57,
+ "call_s": 145.5,
+ "execution_id": "9f893617-24cd-4d04-a693-5ae88ee06554",
+ "recorded_at": "2026-10-23T14:53:52.881586+00:00",
+ "cost_cents": 13.75,
+ "note": "Customer: a scripted text-to-speech voice, not a real person. Ruko: the live Bolna agent.",
+ "detail": "Our first live Hindi call (23 Oct). Bolna's Hindi speech-to-text understood the customer and Ruko answered in Hindi. In the second half our scripted customer talks over Ruko (a timing fault in our test script, not the agent), so Ruko's explanation that there is no 'digital arrest' in law is cut off several times. The customer asked to stop the payment and it was blocked. 'Hello? Are you there?' is Bolna's check-in line, still in English.",
+ "turns": [
+  {
+   "role": "agent",
+   "text": "नमस्ते Kamla जी, मैं रुको, Demo Bank की ऑटोमेटेड सुरक्षा लाइन; यह कॉल रिकॉर्ड हो रही है। आपका कोड शब्द है तोता 52। क्या यह ऐप से मिलता है?",
+   "start": 2.8,
+   "end": 5.8
+  },
+  {
+   "role": "customer",
+   "text": "कोड मैच करता है।",
+   "start": 18.95,
+   "end": 20.55
+  },
+  {
+   "role": "agent",
+   "text": "Okay. आपके ऐप के अनुसार, भुगतान करते समय आप एक कॉल पर थे। यह भुगतान किस लिए है, और आप किससे बात कर रहे थे?",
+   "start": 5.8,
+   "end": 9
+  },
+  {
+   "role": "customer",
+   "text": "यह मेरे भतीजे की कॉलेज फीस है।",
+   "start": 21.15,
+   "end": 24.4
+  },
+  {
+   "role": "agent",
+   "text": "Okay. क्या किसी ने आपको बताया है कि इस भुगतान के बारे में बैंक को क्या कहना है? Hello? Are you there?",
+   "start": 9.5,
+   "end": 11.75
+  },
+  {
+   "role": "customer",
+   "text": "सच बताऊँ तो,",
+   "start": 24.95,
+   "end": 27.95
+  },
+  {
+   "role": "agent",
+   "text": "जी, कृपया",
+   "start": 11.75,
+   "end": 14.05
+  },
+  {
+   "role": "customer",
+   "text": "एक सीबी राई ऑफिसर वीडियो कॉल पर है।",
+   "start": 27.95,
+   "end": 30.95
+  },
+  {
+   "role": "agent",
+   "text": "मैं",
+   "start": 20.95,
+   "end": 23.7
+  },
+  {
+   "role": "customer",
+   "text": "वो कहता है मैं डिजिटल अरेस्ट में हूँ। और मुझे अपनी सेविंग सेफ करना।",
+   "start": 30.95,
+   "end": 33.95
+  },
+  {
+   "role": "agent",
+   "text": "कृपया यह किसी को न बताएँ, मुझे भी नहीं। मैं आपकी मदद करूँगी।",
+   "start": 23.7,
+   "end": 26.4
+  },
+  {
+   "role": "customer",
+   "text": "वो अभी भी वीडियो कॉल पर है।",
+   "start": 34.45,
+   "end": 36.95
+  },
+  {
+   "role": "agent",
+   "text": "क़ानून में",
+   "start": 27.55,
+   "end": 28.9
+  },
+  {
+   "role": "customer",
+   "text": "उसने कहा किसी को मत बताना। बेटे को भी नहीं। हाँ। उसने कहा वो सीबीआई से है।",
+   "start": 36.95,
+   "end": 39.45
+  },
+  {
+   "role": "agent",
+   "text": "क़ानून में",
+   "start": 30.35,
+   "end": 31.35
+  },
+  {
+   "role": "customer",
+   "text": "और अभी भी वीडियो कॉल पर है।",
+   "start": 39.45,
+   "end": 41.95
+  },
+  {
+   "role": "agent",
+   "text": "क़ानून में 'डिजिटल",
+   "start": 33.4,
+   "end": 36.45
+  },
+  {
+   "role": "customer",
+   "text": "मुझे डर लग रहा है।",
+   "start": 41.95,
+   "end": 44.45
+  },
+  {
+   "role": "agent",
+   "text": "पैसा",
+   "start": 38,
+   "end": 39.95
+  },
+  {
+   "role": "customer",
+   "text": "प्लीज़ यह पेमेंट रोक दीजिए।",
+   "start": 45.1,
+   "end": 47.85
+  },
+  {
+   "role": "agent",
+   "text": "Okay. क़ानून",
+   "start": 43.7,
+   "end": 46.45
+  },
+  {
+   "role": "customer",
+   "text": "मुझे डर लग रहा है।",
+   "start": 47.85,
+   "end": 50.85
+  },
+  {
+   "role": "agent",
+   "text": "पैसा",
+   "start": 47.55,
+   "end": 49.9
+  },
+  {
+   "role": "customer",
+   "text": "प्लीज यह पेमेंट रोक दीजिए",
+   "start": 50.85,
+   "end": 53.85
+  },
+  {
+   "role": "agent",
+   "text": "Okay. क़ानून में 'डिजिटल",
+   "start": 51,
+   "end": 53.75
+  },
+  {
+   "role": "customer",
+   "text": "प्लीज़ रवि को कॉल कीजिए",
+   "start": 53.85,
+   "end": 56.7
+  },
+  {
+   "role": "agent",
+   "text": "Okay. मैंने Ravi को कॉल",
+   "start": 53.75,
+   "end": 56.7
+  }
+ ]
+}

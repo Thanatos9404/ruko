@@ -6,7 +6,7 @@ import { SiteFooter, SiteNav } from "../components/SiteNav";
 import { RukoIntro } from "../components/brand/RukoLogo";
 import { Arcs } from "../components/Arcs";
 import { StopLine } from "../components/brand/StopLine";
-import { RealCallPlayer, useRealCall } from "../components/RealCallPlayer";
+import { RealCallPlayer, useRealCalls } from "../components/RealCallPlayer";
 import { DemoExperience } from "../components/demo/DemoExperience";
 import { useEvalResults } from "../lib/useEvalResults";
 import { BuiltOnBolna, Business, FreeChecker, HowItWorks, Problem, Results } from "./landing/sections";
@@ -75,7 +75,7 @@ function DemoSection() {
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: stage, offset: ["start end", "start 35%"] });
   const spring = { stiffness: 400, damping: 100, mass: 1 };
-  const call = useRealCall();
+  const takes = useRealCalls();
   const rotateX = useSpring(useTransform(scrollYProgress, [0, 1], [14, 0]), spring);
   const scale = useSpring(useTransform(scrollYProgress, [0, 1], [0.92, 1]), spring);
   const y = useSpring(useTransform(scrollYProgress, [0, 1], [48, 0]), spring);
@@ -96,7 +96,7 @@ function DemoSection() {
             <DemoExperience compact scenarios={["digital-arrest", "investment-group", "flat-deposit", "rent"]} />
           </motion.div>
         </div>
-        {call && <RealCallPlayer call={call} className="mt-6" />}
+        {takes.length > 0 && <RealCallPlayer takes={takes} className="mt-6" />}
       </div>
     </section>
   );
@@ -119,7 +119,7 @@ export default function Landing() {
               "ElevenLabs (via Bolna)",
               "Deepgram (via Bolna)",
               "gpt-4.1-mini (via Bolna)",
-              "Nebius Token Factory (eval and checker)",
+              "Nebius Token Factory (evaluation only)",
               "Vercel",
               "Official advisories: MHA · I4C · RBI · CERT-In · DoT · SEBI · NPCI",
             ]}

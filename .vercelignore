@@ -21,3 +21,7 @@ brand/source/
 coverage/
 node_modules/
 dist/
+
+# Never deploy raw call recordings
+public/calls/*.wav
+public/calls/*.flac

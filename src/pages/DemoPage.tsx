@@ -2,11 +2,11 @@ import { Reveal } from "../kit";
 import { SiteFooter, SiteNav } from "../components/SiteNav";
 import { DemoExperience } from "../components/demo/DemoExperience";
 import { useEvalResults } from "../lib/useEvalResults";
-import { RealCallPlayer, useRealCall } from "../components/RealCallPlayer";
+import { RealCallPlayer, useRealCalls } from "../components/RealCallPlayer";
 
 export default function DemoPage() {
   const ev = useEvalResults();
-  const call = useRealCall();
+  const takes = useRealCalls();
   return (
     <>
       <SiteNav />
@@ -23,13 +23,13 @@ export default function DemoPage() {
           <div className="mt-10">
             <DemoExperience />
           </div>
-          {call && <RealCallPlayer call={call} className="mt-6" />}
+          {takes.length > 0 && <RealCallPlayer takes={takes} className="mt-6" />}
           <Reveal className="mt-12 grid gap-4 text-[13px] leading-relaxed text-muted md:grid-cols-3">
             <p>
               <strong className="text-ink-2">What's real.</strong> The risk policy, the hold, the code word, the engine's tool endpoints, the decision policy and the audit trail. Live calls are real Bolna web calls.
             </p>
             <p>
-              <strong className="text-ink-2">What's simulated.</strong> The bank, the customers and the device signals (such as "on a call for 47 minutes") are sandbox data. Recorded runs are text-mode conversations without audio.
+              <strong className="text-ink-2">What's simulated.</strong> The bank, the customers and the device signals (such as "on a call for 47 minutes") are sandbox data. In the live calls shown here, the customer is a scripted text-to-speech voice, not a person. Recorded runs are text-mode conversations without audio.
             </p>
             <p>
               <strong className="text-ink-2">What's never asked.</strong> Ruko never asks for an OTP, PIN, card or account number.
