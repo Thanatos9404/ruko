@@ -16,7 +16,8 @@ export interface ToolDef {
   description: string;
   /**
    * What the voice says while the tool runs. One agent serves English and Hindi, so fillers are
-   * a neutral "Okay." (said the same in both), or empty for the quick tools so nothing is said.
+   * a neutral "Okay." (said the same in both). An empty filler is not silent on Bolna: it falls
+   * back to an English "Just give me a moment, I'll be back with you." (seen on the first live calls).
    */
   pre_call_message?: string;
   parameters: {
@@ -43,7 +44,7 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
   },
   {
     name: "record_signal",
-    pre_call_message: "",
+    pre_call_message: "Okay.",
     description:
       "Record something the customer said that matters for the safety check, as soon as you hear it: warning signs (someone on another call directing them, threats of arrest or investigation, secrecy, remote-access apps, pressure, promises of returns, fees to receive money) and reassuring facts (knows the payee, their own idea, purpose fits). One signal per call. Returns guidance: the likely fraud pattern, an official sentence to say, the next question, and decide_now (yes = call set_decision now).",
     parameters: {
@@ -84,13 +85,13 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
   },
   {
     name: "check_trusted_contact",
-    pre_call_message: "",
+    pre_call_message: "Okay.",
     description: "Only if the customer asks: check whether the trusted contact has been reached yet. Never wait on the line for it.",
     parameters: { type: "object", properties: { check_id: checkId }, required: ["check_id"] },
   },
   {
     name: "set_decision",
-    pre_call_message: "",
+    pre_call_message: "Okay.",
     description:
       "Call this once, as soon as you have enough to recommend. The bank's policy makes the final decision from the recorded signals and returns the exact message to tell the customer, plus offer_contact when the trusted contact should be offered.",
     parameters: {
@@ -113,7 +114,7 @@ export const CHECK_AGENT_TOOLS: ToolDef[] = [
 export const CONTACT_AGENT_TOOLS: ToolDef[] = [
   {
     name: "report_contact_outcome",
-    pre_call_message: "",
+    pre_call_message: "Okay.",
     description: "Call this once before ending, to record what the trusted contact said.",
     parameters: {
       type: "object",
@@ -146,7 +147,7 @@ export const PUBLIC_LINE_TOOLS: ToolDef[] = [
   },
   {
     name: "log_report",
-    pre_call_message: "",
+    pre_call_message: "Okay.",
     description:
       "Log an anonymised summary of the caller's story so new patterns can be spotted. Call once near the end. Never include names, numbers or other personal details.",
     parameters: {

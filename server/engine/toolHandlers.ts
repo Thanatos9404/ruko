@@ -268,9 +268,11 @@ export async function setDecision(deps: ToolDeps, args: Args): Promise<ToolResul
   const d = c.decision!;
   const p = d.pattern ? patternById(d.pattern.id) : undefined;
   const offer = contactOffer(c);
+  // On a hold, the official truth line is part of what the agent reads, so it is always said.
+  const truth = d.outcome !== "release" && p ? truthFor(p, lang(c)) : "";
   return {
     final_decision: d.outcome,
-    tell_customer: speakable(d.customer_message, lang(c)),
+    tell_customer: speakable(truth ? `${truth} ${d.customer_message}` : d.customer_message, lang(c)),
     pattern: p ? p.name[lang(c)] : "none",
     offer_contact: offer ?? "",
     then: offer

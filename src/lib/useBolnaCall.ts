@@ -71,6 +71,8 @@ export function useBolnaCall(mint: (signal: AbortSignal) => Promise<unknown>) {
       step: setStep,
       level: (v) => {
         if (!meter.current.ours) level.set(v);
+        // Exposed for scripted test calls (scripts/live-call.mjs), which wait for the agent to finish.
+        (window as unknown as { __rukoAgentLevel?: number }).__rukoAgentLevel = v;
       },
       error: setError,
       end: setEndReason,

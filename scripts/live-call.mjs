@@ -160,15 +160,17 @@ await page.evaluateOnNewDocument(
       let tick = 0;
       for (;;) {
         await new Promise((r) => setTimeout(r, 100));
-        // Adaptive threshold: a little above the quietest level heard recently.
+        // Two views of the agent's voice: our own analyser on the remote stream, and the SDK's
+        // own volume-level (exposed by the app), whichever hears it.
+        const sdk = Number(window.__rukoAgentLevel ?? 0);
         floor = Math.min(floor * 1.02 + 0.0002, agentLevel);
-        peak = Math.max(peak, agentLevel);
-        if (++tick % 10 === 0) {
-          log(`level max ${peak.toFixed(3)} floor ${floor.toFixed(3)} spoke ${spokeMs} ms${busy ? " (customer talking)" : ""}`);
+        peak = Math.max(peak, agentLevel, sdk);
+        if (++tick % 20 === 0) {
+          log(`level max ${peak.toFixed(3)} spoke ${spokeMs} ms${busy ? " (customer talking)" : ""}`);
           peak = 0;
         }
         if (busy || done) continue;
-        const loud = agentLevel > Math.max(0.006, floor + 0.008);
+        const loud = sdk > 0.03 || agentLevel > Math.max(0.006, floor + 0.008);
         if (loud) {
           spokeMs += 100;
           quietSince = 0;
