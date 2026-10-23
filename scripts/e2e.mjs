@@ -190,7 +190,7 @@ for (const sc of scenarios.data) {
         return {
           label: /scripted text-to-speech voice, not a real person/.test(root?.querySelector('[data-testid="scripted-label"]')?.textContent ?? ""),
           lines: root?.querySelectorAll("ol li").length ?? 0,
-          audio: src ? (/.wav$/i.test(src) ? -1 : await status(src)) : 0,
+          audio: src ? (/\.wav$/i.test(src) ? -1 : await status(src)) : 0,
           still: !src && note.length > 20 ? await status(img) : 0,
         };
       }),
@@ -199,6 +199,45 @@ for (const sc of scenarios.data) {
   const ok = tabs.length >= 2 && takes.every((t) => t.label && t.lines > 3 && (t.audio === 200 || t.still === 200));
   console.log(`${ok ? "PASS" : "FAIL"} real-call player   → ${tabs.length} takes (${tabs.join(", ")}); ${takes.map((t) => `${t.lines} lines, ${t.audio ? `audio ${t.audio}` : `transcript only, still ${t.still}`}, ${t.label ? "scripted label" : "NO LABEL"}`).join("; ")}`);
   if (!ok) failures++;
+
+  // The English clip: an MP3 whose turns never overlap. Its decoded length must match the sum of
+  // its utterances plus the gaps, lead and tail (a mono mix of Bolna's drifting channels would not),
+  // and the lines Bolna's recording lacks must say so.
+  const clip = await page.evaluate(async () => {
+    const meta = await fetch("/calls/hero.json").then((r) => r.json());
+    const segs = meta.segments ?? [];
+    const overlaps = segs.filter((s, i) => i > 0 && s.start < segs[i - 1].end - 1e-3).length;
+    const spoken = segs.reduce((s, x) => s + (x.end - x.start), 0);
+    const silent = segs.length ? segs[0].start + segs.slice(1).reduce((s, x, i) => s + (x.start - segs[i].end), 0) : 0;
+    const audio = new Audio(meta.audio);
+    audio.preload = "metadata";
+    const duration = await new Promise((res) => {
+      audio.onloadedmetadata = () => res(audio.duration);
+      audio.onerror = () => res(-1);
+      setTimeout(() => res(-2), 15000);
+    });
+    const tail = duration - (segs.at(-1)?.end ?? 0);
+    return { mp3: /\.mp3$/.test(meta.audio), duration, spoken, silent, overlaps, tail, label: meta.audio_label ?? "" };
+  });
+  const clipOk =
+    clip.mp3 &&
+    clip.overlaps === 0 &&
+    clip.duration > 0 &&
+    Math.abs(clip.duration - (clip.spoken + clip.silent + clip.tail)) < 0.3 &&
+    clip.tail >= 0 &&
+    clip.tail < 1.2 &&
+    /turns in transcript order/.test(clip.label);
+  console.log(
+    `${clipOk ? "PASS" : "FAIL"} real-call clip     → mp3 ${clip.duration.toFixed(2)} s = ${clip.spoken.toFixed(2)} s of turns + ${clip.silent.toFixed(2)} s gaps + ${clip.tail.toFixed(2)} s tail; ${clip.overlaps} overlaps; "${clip.label}"`,
+  );
+  if (!clipOk) failures++;
+  // Back to the English take, whose lines past the end of Bolna's recording must be marked.
+  await page.$$eval('[data-testid="real-call"] [role=tab]', (els) => els[0]?.click());
+  await sleep(300);
+  const notRecorded = await page.$$eval('[data-testid="real-call"] li[data-recorded="false"]', (els) => els.map((e) => e.textContent ?? ""));
+  const tailOk = notRecorded.length >= 1 && notRecorded.every((t) => /not in its recording/.test(t)) && notRecorded.some((t) => /Shall I call Ravi/.test(t));
+  console.log(`${tailOk ? "PASS" : "FAIL"} not-recorded lines → ${notRecorded.length} marked "in Bolna's transcript, not in its recording"`);
+  if (!tailOk) failures++;
   await ctx.close();
 }
 

@@ -16,6 +16,10 @@ export interface RealCall {
   image?: string;
   image_alt?: string;
   audio_note?: string;
+  /** How the audio was prepared from Bolna's recording, shown next to its length. */
+  audio_label?: string;
+  /** Where each side's utterances sit in the audio (no two overlap). */
+  segments?: { role: "agent" | "customer"; start: number; end: number }[];
   /** Length of Bolna's recording, which leaves out silences. */
   duration_s: number;
   /** Length of the call itself. */
@@ -26,7 +30,8 @@ export interface RealCall {
   note?: string;
   detail?: string;
   timing?: string;
-  turns: { role: "agent" | "customer"; text: string; start: number; end: number }[];
+  /** in_recording: false marks a line that is in Bolna's transcript but not in its recording. */
+  turns: { role: "agent" | "customer"; text: string; start: number; end: number; in_recording?: boolean }[];
 }
 
 export const REAL_CALLS: { name: string; label: string }[] = [
@@ -155,7 +160,7 @@ export function RealCallPlayer({ takes, className }: { takes: RealCallTake[]; cl
         <div className="min-w-0 flex-1">
           <p className="font-display text-[16px] font-semibold text-ink">{call.title}</p>
           <p className="mt-0.5 text-[12.5px] text-muted">
-            {hasAudio ? `Bolna's own recording ${clock(call.duration_s)} (silences removed)` : "Transcript only"}
+            {hasAudio ? `Bolna's own recording ${clock(call.duration_s)} (${call.audio_label ?? "silences removed"})` : "Transcript only"}
             {typeof call.call_s === "number" ? ` · call ${Math.round(call.call_s)} s` : ""} · {new Date(call.recorded_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })} · execution{" "}
             <span className="font-mono">{call.execution_id.slice(0, 8)}</span>
             {typeof call.cost_cents === "number" ? ` · cost ${call.cost_cents.toFixed(2)}¢` : ""}
@@ -181,24 +186,30 @@ export function RealCallPlayer({ takes, className }: { takes: RealCallTake[]; cl
       )}
 
       <ol ref={list} data-lenis-prevent className="relative mt-3 max-h-[280px] space-y-2 overflow-y-auto pr-1" aria-label="Transcript">
-        {call.turns.map((x, i) => (
-          <li key={i}>
-            <button
-              onClick={() => hasAudio && seek(x.start)}
-              tabIndex={hasAudio ? 0 : -1}
-              className={cn(
-                "ring-focus w-full rounded-2xl px-4 py-2.5 text-left text-[14px] leading-snug transition",
-                x.role === "agent" ? "bg-[#16233a] text-[#e6eefb]" : "bg-paper-3 text-ink",
-                active[i] ? "opacity-100 ring-2 ring-[var(--coral)]" : playing || t > 0 ? "opacity-60" : "opacity-100",
-              )}
-            >
-              <span className="mb-0.5 block text-[10.5px] font-semibold uppercase tracking-wide opacity-60">
-                {x.role === "agent" ? "Ruko (live Bolna agent)" : "Customer (scripted voice)"}
-              </span>
-              {x.text}
-            </button>
-          </li>
-        ))}
+        {call.turns.map((x, i) => {
+          const recorded = x.in_recording !== false;
+          const seekable = hasAudio && recorded;
+          return (
+            <li key={i} data-recorded={recorded ? undefined : "false"}>
+              <button
+                onClick={() => seekable && seek(x.start)}
+                tabIndex={seekable ? 0 : -1}
+                className={cn(
+                  "ring-focus w-full rounded-2xl px-4 py-2.5 text-left text-[14px] leading-snug transition",
+                  x.role === "agent" ? "bg-[#16233a] text-[#e6eefb]" : "bg-paper-3 text-ink",
+                  !recorded && "border border-dashed border-[var(--hair-strong)] bg-transparent text-ink-2",
+                  active[i] ? "opacity-100 ring-2 ring-[var(--coral)]" : playing || t > 0 ? "opacity-60" : "opacity-100",
+                )}
+              >
+                <span className="mb-0.5 block text-[10.5px] font-semibold uppercase tracking-wide opacity-60">
+                  {x.role === "agent" ? "Ruko (live Bolna agent)" : "Customer (scripted voice)"}
+                  {!recorded && " · in Bolna's transcript, not in its recording"}
+                </span>
+                {x.text}
+              </button>
+            </li>
+          );
+        })}
       </ol>
 
       {call.detail && <p className="mt-3 text-[12.5px] leading-relaxed text-muted">{call.detail}</p>}

@@ -4,6 +4,9 @@
 // the owner downloaded from the execution's recording_url into public/calls/).
 // Captions are timed by finding each speaker's speech segments in the recording (the
 // stereo original when given) and laying that speaker's turns over them in order.
+// Bolna removes each channel's silences separately, so the two sides drift apart and a mono
+// mix overlaps them: for a clip people will listen to, use scripts/splice-call.mjs instead
+// (it builds the English call #2 clip the site plays).
 //
 //   node scripts/build-call.mjs .data/live/execution-<id>.json public/calls/live-en.wav hero .data/live/smoke-en-2.flac
 // WAVs are git-ignored: encode the WAV to MP3 for the site and set CALL_AUDIO=/calls/live-en.mp3.
@@ -72,7 +75,7 @@ const { duration, channels } = await page.evaluate(async (b64) => {
 }, readFileSync(timingPath).toString("base64"));
 await browser.close();
 
-const words = (t) => t.split(/s+/).length;
+const words = (t) => t.trim().split(/\s+/).length;
 // Lays one speaker's turns over that speaker's speech segments. The turns split the speech
 // time between them by word count; a dynamic program picks the cut points, preferring the gaps
 // between segments and charging a penalty for cutting through the middle of one.

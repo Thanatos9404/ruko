@@ -13,6 +13,7 @@ Built on <a href="https://www.bolna.ai">Bolna</a> for the Bolna × Y Combinator 
 
 <p align="center">
 <a href="https://ruko-symphony.vercel.app"><b>Live app</b></a> ·
+<a href="https://drive.google.com/file/d/1f2OE-d3mbBMDU0lZkZFAH0jkTYVZXan4/view?usp=sharing"><b>Demo video (2:49)</b></a> ·
 <a href="https://ruko-symphony.vercel.app/demo">Sandbox demo</a> ·
 <a href="https://ruko-symphony.vercel.app/check">Is this a scam?</a> ·
 <a href="https://ruko-symphony.vercel.app/console">Fraud-ops console</a> ·
@@ -34,7 +35,7 @@ It also ships a free public **"Is this a scam?"** checker (text and voice) and a
 | Bank API | `POST /v1/checks`, `GET /v1/checks/:id`, `GET /v1/metrics` |
 | Docs | [Research](docs/RESEARCH.md) · [Business](docs/BUSINESS.md) · [One-page memo](docs/MEMO.md) · [Progress log](docs/PROGRESS.md) · [Bolna spend log](docs/BOLNA_SPEND.md) · [Demo script](DEMO_SCRIPT.md) · [Submission answers](docs/SUBMISSION.md) · [Citation audit](docs/CITATIONS.md) |
 
-> **Status, honestly.** Everything below runs and is tested. Five live Bolna web calls have run against the production deployment (23 Oct: four in English, one in Hindi). **In every one, the customer is a scripted text-to-speech voice, not a real person**; Ruko is the live Bolna agent. On the landing page and `/demo` you can play the English call's recording and read the Hindi call's transcript. The Hindi audio isn't published, because its scripted customer voice is licensed for non-commercial use only. Every call and its cost is in [docs/BOLNA_SPEND.md](docs/BOLNA_SPEND.md): 41.25¢ in all, wallet 458.75¢ of the $5 credit. Evaluation numbers are **text mode** (no audio); see [Results](#results).
+> **Status, honestly.** Everything below runs and is tested. Five live Bolna web calls have run against the production deployment (23 Oct: four in English, one in Hindi). **In every one, the customer is a scripted text-to-speech voice, not a real person**; Ruko is the live Bolna agent. On the landing page and `/demo` you can play the English call from Bolna's recording and read the Hindi call's transcript. Bolna removes each side's silences separately, so the English clip plays each turn cut unchanged from its own channel, in the order of Bolna's transcript; its last line, where Ruko stops the payment, is in Bolna's transcript but not in its recording, and is shown as text. The Hindi audio isn't published, because its scripted customer voice is licensed for non-commercial use only. Every call and its cost is in [docs/BOLNA_SPEND.md](docs/BOLNA_SPEND.md): 41.25¢ in all, wallet 458.75¢ of the $5 credit. Evaluation numbers are **text mode** (no audio); see [Results](#results).
 
 ## Why
 

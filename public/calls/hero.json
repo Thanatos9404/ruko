@@ -1,80 +1,175 @@
 {
  "title": "English: a coached 'digital arrest' victim, payment blocked",
  "audio": "/calls/live-en.mp3",
- "duration_s": 32,
- "call_s": 78,
+ "audio_label": "silences removed by Bolna; turns in transcript order",
+ "duration_s": 42.82,
+ "call_s": 78.1,
  "execution_id": "b6818362-8118-49fd-8f76-146432254c27",
  "recorded_at": "2026-10-23T09:21:22.093056+00:00",
  "cost_cents": 8.25,
  "note": "Customer: a scripted text-to-speech voice, not a real person. Ruko: the live Bolna agent.",
- "detail": "Our second test call (23 Oct). The customer admits a 'CBI officer' is on a video call with her; Ruko stops the payment and offers to call her son. It still has Bolna's default filler line ('Just give me a moment…'), which we have since replaced.",
- "timing": "Transcript from Bolna. The highlight is timed to Bolna's recording, which leaves out silences, so it is approximate.",
+ "detail": "Our second test call (23 Oct). The customer admits a 'CBI officer' is on a video call with her. Bolna's transcript then has Ruko stop the payment and offer to call her son, but Bolna's recording ends before that line, so it is shown as text only. The call still has Bolna's default filler line ('Just give me a moment…'), which we have since replaced.",
+ "timing": "Bolna records the customer and Ruko on separate channels and removes each side's silences separately, so the two drift apart. Each turn here is cut unchanged from its own channel and played in the order of Bolna's transcript, with a short gap.",
+ "segments": [
+  {
+   "role": "agent",
+   "start": 0.25,
+   "end": 7.91,
+   "source": [
+    0.91,
+    8.57
+   ]
+  },
+  {
+   "role": "customer",
+   "start": 8.33,
+   "end": 10.23,
+   "source": [
+    10.23,
+    12.13
+   ]
+  },
+  {
+   "role": "agent",
+   "start": 10.65,
+   "end": 16.44,
+   "source": [
+    12.03,
+    17.82
+   ]
+  },
+  {
+   "role": "customer",
+   "start": 16.86,
+   "end": 21.45,
+   "source": [
+    13.13,
+    17.72
+   ]
+  },
+  {
+   "role": "agent",
+   "start": 21.87,
+   "end": 27.14,
+   "source": [
+    17.9,
+    23.17
+   ]
+  },
+  {
+   "role": "customer",
+   "start": 27.56,
+   "end": 33.33,
+   "source": [
+    18.59,
+    24.36
+   ]
+  },
+  {
+   "role": "agent",
+   "start": 33.75,
+   "end": 35.91,
+   "source": [
+    25.27,
+    27.43
+   ]
+  },
+  {
+   "role": "customer",
+   "start": 36.33,
+   "end": 42.32,
+   "source": [
+    25.04,
+    31.03
+   ]
+  }
+ ],
  "turns": [
   {
    "role": "agent",
-   "text": "Hi Kamla, Ruko here, Demo Bank's automated safety line, on a recorded call. Your code word is BADAL 84. Does it match your app?",
-   "start": 1.05,
-   "end": 4.3
+   "text": "Hi Kamla, Ruko here, Demo Bank's automated safety line, on a recorded call.",
+   "start": 0.25,
+   "end": 4.96
+  },
+  {
+   "role": "agent",
+   "text": "Your code word is BADAL 84. Does it match your app?",
+   "start": 4.96,
+   "end": 7.91
   },
   {
    "role": "customer",
    "text": "yes",
-   "start": 10.3,
-   "end": 11.9
+   "start": 8.33,
+   "end": 10.23
   },
   {
    "role": "agent",
-   "text": "Okay. Your app shows you were on a call while paying. What's this payment for, and who were you speaking with?",
-   "start": 4.3,
-   "end": 8.35
+   "text": "Okay. Your app shows you were on a call while paying.",
+   "start": 10.65,
+   "end": 13.82
+  },
+  {
+   "role": "agent",
+   "text": "What's this payment for, and who were you speaking with?",
+   "start": 13.82,
+   "end": 16.44
   },
   {
    "role": "customer",
    "text": "it's for my nephew's college fees",
-   "start": 13.2,
-   "end": 17.4
-  },
-  {
-   "role": "agent",
-   "text": "Just give me a moment, I'll be back with you. Has someone said RBI is holding money, a prize or a payout for you?",
-   "start": 12.1,
-   "end": 15.45
-  },
-  {
-   "role": "customer",
-   "text": "actually",
-   "start": 18.7,
-   "end": 20.25
-  },
-  {
-   "role": "agent",
-   "text": "Has someone said RBI is holding money, a",
-   "start": 15.45,
-   "end": 17.5
-  },
-  {
-   "role": "customer",
-   "text": "acbi officer is on a video call with me",
-   "start": 21.25,
-   "end": 24.15
+   "start": 16.86,
+   "end": 21.45
   },
   {
    "role": "agent",
    "text": "Just give me a moment, I'll be back with you.",
-   "start": 18,
-   "end": 19.25
+   "start": 21.87,
+   "end": 24.02
+  },
+  {
+   "role": "agent",
+   "text": "Has someone said RBI is holding money, a prize or a payout for you?",
+   "start": 24.02,
+   "end": 27.14
+  },
+  {
+   "role": "customer",
+   "text": "actually",
+   "start": 27.56,
+   "end": 29.67
+  },
+  {
+   "role": "customer",
+   "text": "acbi officer is on a video call with me",
+   "start": 29.67,
+   "end": 33.33
+  },
+  {
+   "role": "agent",
+   "text": "Just give me a moment, I'll be back with you.",
+   "start": 33.75,
+   "end": 35.91
   },
   {
    "role": "customer",
    "text": "and i must move my savings to a safe custody account",
-   "start": 25.2,
-   "end": 30.8
+   "start": 36.33,
+   "end": 42.32
   },
   {
    "role": "agent",
-   "text": "For your safety, this payment is stopped. Your money is safe in your account. Shall I call Ravi, your son, so you can talk it over? Hello? Are you there?",
-   "start": 19.25,
-   "end": 27.2
+   "text": "For your safety, this payment is stopped. Your money is safe in your account. Shall I call Ravi, your son, so you can talk it over?",
+   "start": 42.82,
+   "end": 42.82,
+   "in_recording": false
+  },
+  {
+   "role": "agent",
+   "text": "Hello? Are you there?",
+   "start": 42.82,
+   "end": 42.82,
+   "in_recording": false
   }
  ]
 }
