@@ -37,6 +37,8 @@ const CLIPS = {
   still: clip("c4_still"),
   consent: clip("c5_consent"),
   thanks: clip("c6_thanks"),
+  cbi: clip("c5_cbi"),
+  help: clip("c7_help"),
 };
 
 const chrome = ["C:/Program Files/Google/Chrome/Application/chrome.exe", "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"].find((p) => existsSync(p));
@@ -146,7 +148,8 @@ await page.evaluateOnNewDocument(
     };
 
     // Turn-taking: answer after the agent has spoken and then been quiet for 1.3 s.
-    const queue = ["match", "cover", "admit", "still"];
+    // After these, any further question gets "cbi", then "help", so the call never stalls on silence.
+    const queue = ["match", "cover", "admit", "still", "cbi", "help"];
     let saidConsent = false;
     let done = false;
     window.__rukoCall = { get status() { return status; }, get done() { return done; }, ids };
@@ -179,7 +182,8 @@ await page.evaluateOnNewDocument(
         // A short filler ("Okay.") isn't a turn: wait for real speech, then 1.6 s of quiet.
         if (spokeMs < 900) continue;
         if (!quietSince) quietSince = Date.now();
-        if (Date.now() - quietSince < 1600) continue;
+        // 2.2 s: the agent's streamed speech can pause mid-sentence; don't talk over it.
+        if (Date.now() - quietSince < 2200) continue;
         spokeMs = 0;
         quietSince = 0;
         busy = true;
