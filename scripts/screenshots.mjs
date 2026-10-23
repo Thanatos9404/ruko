@@ -54,7 +54,7 @@ for (const s of shots) {
     const ctx = await browser.createBrowserContext();
     const page = await ctx.newPage();
     await page.setViewport({ width, height: width > 500 ? 900 : 812, isMobile: width < 500, hasTouch: width < 500 });
-    await page.goto(`${base}${s.path}`, { waitUntil: "networkidle0", timeout: 60000 });
+    await page.goto(`${base}${s.path}`, { waitUntil: "load", timeout: 60000 });
     await sleep(2600);
     for (const [text, wait] of s.steps ?? []) {
       if (text === "__first_check__") {
