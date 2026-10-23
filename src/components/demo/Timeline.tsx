@@ -85,7 +85,7 @@ function rows(status: AppStatus): Row[] {
         // "Hold expired; policy applied: block." and "delay → block (…)" both name the outcome in words.
         const applied = e.detail.match(/policy applied:\s*(block|release|delay)/i)?.[1]?.toLowerCase();
         const head = (e.detail.split(":")[0].split("→").pop() ?? "").trim();
-        const outc = (applied ?? head.match(/(block|release|delay)/gi)?.pop()?.toLowerCase() ?? "delay") as "block" | "release" | "delay";
+        const outc = (applied ?? head.match(/\b(block|release|delay)\b/gi)?.pop()?.toLowerCase() ?? "delay") as "block" | "release" | "delay";
         out.push({
           key,
           t,

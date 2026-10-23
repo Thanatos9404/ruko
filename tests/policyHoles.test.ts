@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { MemoryStore } from "../server/store/store.js";
-import { CheckService, HOLD_MINUTES, validateCreate } from "../server/engine/checks.js";
+import { CheckService, validateCreate } from "../server/engine/checks.js";
 import { DEFAULT_POLICY } from "../server/engine/policy.js";
 import { runTool, type ToolDeps } from "../server/engine/toolHandlers.js";
 import { bank, customer, device, fakeBolna, makeApp, payment, req, tool, WEBHOOK_TOKEN } from "./helpers.js";

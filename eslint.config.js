@@ -4,7 +4,7 @@ import reactHooks from "eslint-plugin-react-hooks";
 import globals from "globals";
 
 export default tseslint.config(
-  { ignores: ["dist", "node_modules", ".vercel", ".data", "eval/results", "deck/vendor", "coverage", "ml/.venv", "ml/work", "ml/.cache"] },
+  { ignores: ["dist", "node_modules", ".vercel", ".data", "eval/results", "deck", "coverage", "ml/.venv", "ml/work", "ml/.cache"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {

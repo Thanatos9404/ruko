@@ -134,13 +134,15 @@ export async function recordSignal(deps: ToolDeps, args: Args, source: "agent" |
   }
   const conf = (["high", "medium", "low"].includes(str(args.confidence)) ? str(args.confidence) : "medium") as Confidence;
   const hint = str(args.pattern_hint);
-  let { check, duplicate } = await deps.checks.recordSignal(id, {
+  const recorded = await deps.checks.recordSignal(id, {
     type,
     evidence: str(args.evidence) || "(no quote given)",
     confidence: conf,
     pattern_hint: hint && hint !== "none" ? hint : undefined,
     source,
   });
+  const duplicate = recorded.duplicate;
+  let check = recorded.check;
   // "Family is on the call", but the bank sees a caller who isn't in their contacts: the story conflicts.
   if (type === "family_helping" && check.device.active_call && check.device.caller_in_contacts === false && !check.signals.some((s) => s.type === "story_conflict")) {
     ({ check } = await deps.checks.recordSignal(id, {
